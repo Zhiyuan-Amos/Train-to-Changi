@@ -1,0 +1,6 @@
+framework module Pods_TrainToChangi {
+  umbrella header "Pods-TrainToChangi-umbrella.h"
+
+  export *
+  module * { export * }
+}
