@@ -1,5 +1,5 @@
 struct Queue<T> {
-    var array = [T]()
+    private var array = [T]()
 
     var count: Int {
         return array.count

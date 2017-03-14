@@ -28,7 +28,6 @@
 		D76FA8421E76ADC500CCCFBE /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */; };
 		D7983CE01E76D83000E650ED /* ModelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CDF1E76D83000E650ED /* ModelState.swift */; };
 		D7983CE21E76D9A400E650ED /* LoopCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* LoopCommand.swift */; };
-		D7983CE41E76DA0800E650ED /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE31E76DA0800E650ED /* Stack.swift */; };
 		D7983CE61E76E99C00E650ED /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE51E76E99C00E650ED /* Queue.swift */; };
 		D7983CE81E76ECE500E650ED /* CopyFromCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE71E76ECE500E650ED /* CopyFromCommand.swift */; };
 		D7983CEA1E76ED2200E650ED /* CopyToCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE91E76ED2200E650ED /* CopyToCommand.swift */; };
@@ -73,7 +72,6 @@
 		D76FA8431E76ADC500CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7983CDF1E76D83000E650ED /* ModelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelState.swift; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* LoopCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopCommand.swift; sourceTree = "<group>"; };
-		D7983CE31E76DA0800E650ED /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		D7983CE51E76E99C00E650ED /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		D7983CE71E76ECE500E650ED /* CopyFromCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyFromCommand.swift; sourceTree = "<group>"; };
 		D7983CE91E76ED2200E650ED /* CopyToCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToCommand.swift; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 				D75BC4291E76C53700ED2A1B /* Model.swift */,
 				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
 				D7983CDF1E76D83000E650ED /* ModelState.swift */,
-				D7983CE31E76DA0800E650ED /* Stack.swift */,
 				D7983CE51E76E99C00E650ED /* Queue.swift */,
 				D70813CF1E778E0D0066B53D /* GameState.swift */,
 				D70813CD1E778ACB0066B53D /* Constant.swift */,
@@ -406,7 +403,6 @@
 				D7983CE21E76D9A400E650ED /* LoopCommand.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
 				D70813CE1E778ACB0066B53D /* Constant.swift in Sources */,
-				D7983CE41E76DA0800E650ED /* Stack.swift in Sources */,
 				D7983CE81E76ECE500E650ED /* CopyFromCommand.swift in Sources */,
 				D70813D01E778E0D0066B53D /* GameState.swift in Sources */,
 				D7983CE01E76D83000E650ED /* ModelState.swift in Sources */,

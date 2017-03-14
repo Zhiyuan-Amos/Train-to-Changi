@@ -2,8 +2,8 @@
 
 import Foundation
 class LogicManager {
-    var model: Model
-    var modelState: [ModelState]
+    private var model: Model
+    private var modelState: [ModelState]
     private var gameStatePointer: Int
 
     init(model: Model) {
@@ -24,6 +24,10 @@ class LogicManager {
 
         while GameState.running {
             let commandResult = commands[i].execute()
+            if commandResult.result == .fail {
+                // update game state
+                break
+            }
             i += 1
             
             // Stores current game state
