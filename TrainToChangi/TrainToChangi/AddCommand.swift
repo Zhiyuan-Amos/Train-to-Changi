@@ -25,6 +25,6 @@ class AddCommand: Command {
             fatalError("Should not happen")
         }
 
-        return CommandResult(errorMessage: nil)
+        return CommandResult()
     }
 }

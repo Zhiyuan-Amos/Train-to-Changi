@@ -13,11 +13,12 @@ class LogicManager {
     // Executes the list of commands in `model.commands`.
     func executeCommands() {
         var commandIndex = 0
-
+        //TODO: Clean up this after finishing up JumpCommand
         let commands = model.getCurrentCommands()
         while model.getRunState() == .running {
             let commandResult = commands[commandIndex].execute()
-            if let errorMessage = commandResult.errorMessage {
+            if !commandResult.isSuccessful {
+                let errorMessage = commandResult.errorMessage!
                 model.updateRunState(to: .lost)
 
                 NotificationCenter.default.post(name: Notification.Name(

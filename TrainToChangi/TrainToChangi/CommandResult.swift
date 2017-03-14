@@ -4,8 +4,10 @@
 //
 
 struct CommandResult {
-    // Execution is successful if errorMessage == nil. Otherwise, an error has occured.
     let errorMessage: ModelError?
+    var isSuccessful: Bool {
+        return errorMessage == nil
+    }
 
     init(errorMessage: ModelError? = nil) {
         self.errorMessage = errorMessage

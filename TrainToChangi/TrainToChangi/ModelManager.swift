@@ -163,7 +163,8 @@ class ModelManager: Model {
 
     // TODO @Desmond
     func getValueFromMemoryWithoutTransfer(location: Int) -> Int? {
-        guard location >= 0 && location < undoStack.top!.memoryValues.count else {
+        guard location >= 0, let numElements = undoStack.top?.memoryValues.count,
+            location < numElements else {
             fatalError("Array out of bounds")
         }
 

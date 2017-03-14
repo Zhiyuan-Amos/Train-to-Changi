@@ -2,14 +2,15 @@
 // Interface for `LogicManager` to work with `ModelManager`.
 //
 protocol Model {
+    func getCurrentCommands() -> [Command]
+
     func undo() throws
     func redo() throws
 
     func getRunState() -> RunState
     func updateRunState(to newState: RunState)
 
-    func getCurrentCommands() -> [Command]
-
+    // Returns the dequeued value from inbox
     func dequeueValueFromInbox() throws
     func putValueIntoOutbox() throws
 

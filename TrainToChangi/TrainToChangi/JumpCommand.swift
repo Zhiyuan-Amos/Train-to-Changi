@@ -10,7 +10,7 @@ class JumpCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        return CommandResult(errorMessage: nil)
+        return CommandResult()
         //TODO: edit pointer value
     }
 }
