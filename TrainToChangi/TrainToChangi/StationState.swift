@@ -53,7 +53,6 @@ class StationState {
         outputConveyorBelt?.append(value)
     }
 
-
     // TODO: Currently a stub method, to integrate with storageManager
     private func initFromStorage(_ stationName: String) -> Bool {
         inputConveyorBelt = Queue<Int>()

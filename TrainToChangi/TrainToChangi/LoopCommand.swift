@@ -8,6 +8,7 @@ class LoopCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        // edit pointer value
+        return CommandResult(result: .success)
+        //TODO: edit pointer value
     }
 }

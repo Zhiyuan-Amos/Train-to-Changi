@@ -9,11 +9,6 @@ class CopyToCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        guard let value = model.person else {
-            return CommandResult(result: .fail, errorMessage: .noPersonValue)
-        }
-
-        model.memory[memoryIndex] = value
-        return CommandResult(result: .success)
+        return model.copyToMemory(index: memoryIndex)
     }
 }

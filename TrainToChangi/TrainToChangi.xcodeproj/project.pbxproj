@@ -32,7 +32,8 @@
 		D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D41E7796C300DE5774 /* CopyFromCommand.swift */; };
 		D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D51E7796C300DE5774 /* CopyToCommand.swift */; };
 		D7A267D91E7796CE00DE5774 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D81E7796CE00DE5774 /* GameState.swift */; };
-		D7A267DB1E7796DF00DE5774 /* ModelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DA1E7796DF00DE5774 /* ModelState.swift */; };
+		D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DC1E77A01D00DE5774 /* Stack.swift */; };
+		D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267E01E77ABEB00DE5774 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +79,8 @@
 		D7A267D41E7796C300DE5774 /* CopyFromCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyFromCommand.swift; sourceTree = "<group>"; };
 		D7A267D51E7796C300DE5774 /* CopyToCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToCommand.swift; sourceTree = "<group>"; };
 		D7A267D81E7796CE00DE5774 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
-		D7A267DA1E7796DF00DE5774 /* ModelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelState.swift; sourceTree = "<group>"; };
+		D7A267DC1E77A01D00DE5774 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		D7A267E01E77ABEB00DE5774 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +109,7 @@
 			children = (
 				D7A267D21E7796BD00DE5774 /* Constant.swift */,
 				D7983CE51E76E99C00E650ED /* Queue.swift */,
+				D7A267DC1E77A01D00DE5774 /* Stack.swift */,
 			);
 			name = Commons;
 			sourceTree = "<group>";
@@ -116,11 +119,11 @@
 			children = (
 				D75BC4251E76BA9000ED2A1B /* Command.swift */,
 				D7A267D01E7796B800DE5774 /* CommandResult.swift */,
+				D75BC42D1E76C6D200ED2A1B /* InputCommand.swift */,
+				D75BC4311E76D6CA00ED2A1B /* OutputCommand.swift */,
 				D7A267D41E7796C300DE5774 /* CopyFromCommand.swift */,
 				D7A267D51E7796C300DE5774 /* CopyToCommand.swift */,
 				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
-				D75BC42D1E76C6D200ED2A1B /* InputCommand.swift */,
-				D75BC4311E76D6CA00ED2A1B /* OutputCommand.swift */,
 				D7983CE11E76D9A400E650ED /* LoopCommand.swift */,
 			);
 			name = Commands;
@@ -132,8 +135,8 @@
 				3B1680501E778A2D002286F6 /* StationState.swift */,
 				3B1680481E7786B9002286F6 /* Person.swift */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
-				D7A267DA1E7796DF00DE5774 /* ModelState.swift */,
 				D7A267D81E7796CE00DE5774 /* GameState.swift */,
+				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -448,7 +451,7 @@
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
 				D7A267D31E7796BD00DE5774 /* Constant.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
-				D7A267DB1E7796DF00DE5774 /* ModelState.swift in Sources */,
+				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* LoopCommand.swift in Sources */,
 				3B1680491E7786B9002286F6 /* Person.swift in Sources */,
 				D7A267D91E7796CE00DE5774 /* GameState.swift in Sources */,
@@ -461,6 +464,7 @@
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				3B1680511E778A2D002286F6 /* StationState.swift in Sources */,
+				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

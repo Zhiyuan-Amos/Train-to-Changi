@@ -9,15 +9,6 @@ class AddCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        guard let value = model.memory[memoryIndex] else {
-            return CommandResult(result: .fail, errorMessage: .noMemoryValue)
-        }
-
-        guard model.person != nil else {
-            return CommandResult(result: .fail, errorMessage: .noPersonValue)
-        }
-
-        model.person! += value
-        return CommandResult(result: .success)
+        return model.addToPersonValue(from: memoryIndex)
     }
 }

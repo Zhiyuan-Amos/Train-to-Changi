@@ -59,28 +59,31 @@ class ModelManager {
         return true
     }
 
-    func dequeueValueFromInbox() {
+    func dequeueValueFromInbox() -> CommandResult {
         guard let topStation = undoStack.top else {
-            return
+            // not sure what this does
+            return CommandResult(result: .fail, errorMessage: .noInboxValue)
         }
 
         if topStation.getValueOnPerson() != nil {
-            return
+            return CommandResult(result: .fail, errorMessage: .noInboxValue)
         }
 
-        
         let newStation = StationState(station: topStation)
         newStation.setValueOnPerson(to: newStation.dequeueFromInput())
         undoStack.push(newStation)
+
+        return CommandResult(result: .success)
     }
 
-    func putValueIntoOutbox() {
+    func putValueIntoOutbox() -> CommandResult {
         guard let topStation = undoStack.top else {
-            return
+            // not sure what this does
+            return CommandResult(result: .fail, errorMessage: .noPersonValue)
         }
 
         guard let personValue = topStation.getValueOnPerson() else {
-            return
+            return CommandResult(result: .fail, errorMessage: .noPersonValue)
         }
 
         let newStation = StationState(station: topStation)
@@ -88,6 +91,8 @@ class ModelManager {
         newStation.addValueToOutput(value: personValue)
         newStation.setValueOnPerson(to: nil)
         undoStack.push(newStation)
+
+        return CommandResult(result: .success)
     }
 
     func getValueOnPerson() -> Int? {
@@ -102,6 +107,4 @@ class ModelManager {
         newStation.setValueOnPerson(to: newValue)
         undoStack.push(newStation)
     }
-
-
 }
