@@ -1,6 +1,8 @@
 //
+// The command that causes the `Person` to store the item that he is currently holding
+// on to the memory located at `memoryIndex`.
+//
 
-import Foundation
 class CopyToCommand: Command {
     let memoryIndex: Int
 

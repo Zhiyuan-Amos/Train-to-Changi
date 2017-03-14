@@ -1,6 +1,8 @@
 //
+// The command that causes the `Person` to pick up the item from the memory located
+// at `memoryIndex`.
+//
 
-import Foundation
 class CopyFromCommand: Command {
     let memoryIndex: Int
 

@@ -1,6 +1,8 @@
 //
+// The command that causes the `Person` to add the value of the item located
+// at the memory at `memoryIndex` with the value that he is currently holding on.
+//
 
-import Foundation
 class AddCommand: Command {
     let memoryIndex: Int
 

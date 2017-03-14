@@ -1,3 +1,7 @@
+//
+// Interface for `LogicManager` to work with `ModelManager`.
+//
+
 protocol Model {
     var gameState: GameState { get }
     var commands: [Command] { get }

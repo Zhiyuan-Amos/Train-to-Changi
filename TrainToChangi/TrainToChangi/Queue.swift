@@ -1,3 +1,7 @@
+//
+// Queue Data Structure: Copied from raywenderlich
+//
+
 struct Queue<T> {
     private var array = [T]()
 

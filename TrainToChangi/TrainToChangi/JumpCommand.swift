@@ -1,4 +1,6 @@
 //
+// The command that causes the command execution pointer to jump to `targetIndex`.
+//
 
 class JumpCommand: Command {
     let targetIndex: Int

@@ -1,4 +1,6 @@
 //
+// Manages the logic required to update the model when commands are executed.
+//
 
 import Foundation
 class LogicManager {
@@ -8,6 +10,7 @@ class LogicManager {
         self.model = model
     }
 
+    // Executes the list of commands in `model.commands`.
     func executeCommands() {
         var commandIndex = 0
 
@@ -25,6 +28,7 @@ class LogicManager {
         }
     }
 
+    // Reverts the state of the model by one command execution backward.
     func undo() {
         if !model.undo() {
             fatalError("User should not be allowed to undo")
@@ -37,6 +41,7 @@ class LogicManager {
             rawValue: "nonEmptyRedoStack"), object: nil, userInfo: nil)
     }
 
+    // Reverts the state of the model by one command execution forward.
     func redo() {
         if !model.redo() {
             fatalError("User should not be allowed to redo")

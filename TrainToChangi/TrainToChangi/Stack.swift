@@ -1,29 +1,33 @@
-public struct Stack<T> {
+//
+// Stack Data Structure: Copied from raywenderlich
+//
+
+struct Stack<T> {
     fileprivate var array = [T]()
 
-    public var isEmpty: Bool {
+    var isEmpty: Bool {
         return array.isEmpty
     }
 
-    public var count: Int {
+    var count: Int {
         return array.count
     }
 
-    public mutating func push(_ element: T) {
+    mutating func push(_ element: T) {
         array.append(element)
     }
 
-    public mutating func pop() -> T? {
+    mutating func pop() -> T? {
         return array.popLast()
     }
 
-    public var top: T? {
+    var top: T? {
         return array.last
     }
 }
 
 extension Stack: Sequence {
-    public func makeIterator() -> AnyIterator<T> {
+    func makeIterator() -> AnyIterator<T> {
         var curr = self
         return AnyIterator {_ -> T? in
             return curr.pop()
