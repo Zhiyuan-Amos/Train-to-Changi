@@ -1,16 +1,10 @@
 //
 
 struct CommandResult {
-    let result: Result
     let errorMessage: Error?
 
-    init(result: Result, errorMessage: Error? = nil) {
-        self.result = result
+    init(errorMessage: Error? = nil) {
         self.errorMessage = errorMessage
-    }
-
-    enum Result {
-        case success, fail
     }
 
     enum Error {

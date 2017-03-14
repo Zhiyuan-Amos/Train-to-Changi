@@ -9,24 +9,19 @@ class LogicManager {
     }
 
     func executeCommands() {
-        var i = 0
+        var commandIndex = 0
 
         while model.gameState == .running {
-            let commandResult = model.commands[i].execute()
-            if commandResult.result == .fail {
+            let commandResult = model.commands[commandIndex].execute()
+            if let errorMessage = commandResult.errorMessage {
                 model.updateGameState(.lost)
-                guard let errorMessage = commandResult.errorMessage else {
-                    fatalError("Model did not return error message")
-                }
 
                 NotificationCenter.default.post(name: Notification.Name(
                     rawValue: "gameLost"), object: errorMessage, userInfo: nil)
                 break
             }
 
-            i += 1
-
-            model.storeStationState()
+            commandIndex += 1
         }
     }
 
@@ -43,7 +38,7 @@ class LogicManager {
     }
 
     func redo() {
-        if !model.undo() {
+        if !model.redo() {
             fatalError("User should not be allowed to redo")
         }
         //TODO: notify if redo stack is empty - shift to ModelManager?
