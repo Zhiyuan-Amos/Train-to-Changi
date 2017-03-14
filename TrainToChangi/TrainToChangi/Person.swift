@@ -11,7 +11,7 @@ import Foundation
 class Person {
 
     private var holdingValue: Int?
-    // Shouldn't have getter and setter methods; just make the variable public
+    
     func getHoldingValue() -> Int? {
         return holdingValue
     }

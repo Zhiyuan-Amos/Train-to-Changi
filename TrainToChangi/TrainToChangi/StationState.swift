@@ -8,57 +8,28 @@
 
 import Foundation
 
-class StationState {
+struct StationState {
 
-    private let stationName: String
+    var input: Queue<Int>
+    var output: [Int]
+    var memoryValues: [Int?]
 
-    private var inputConveyorBelt: Queue<Int>?
-    private var outputConveyorBelt: [Int]?
+    let person: Person
 
-    private var memoryValues: [Int?]?
-    private var person: Person?
-
-    init?(stationName: String) {
-        self.stationName = stationName
-        let loadSuccess = initFromStorage(stationName)
-        if !loadSuccess {
-            return nil
-        }
+    init(input: Queue<Int>, output: [Int], memoryValues: [Int?]) {
+        self.input = input
+        self.output = output
+        self.memoryValues = memoryValues
+        self.person = Person()
     }
 
     init(station: StationState) {
-        stationName = station.stationName
-        inputConveyorBelt = station.inputConveyorBelt
-        outputConveyorBelt = station.outputConveyorBelt
+        input = station.input
+        output = station.output
         memoryValues = station.memoryValues
 
         person = Person()
-        person?.setHoldingValue(to: station.person?.getHoldingValue())
+        person.setHoldingValue(to: station.person.getHoldingValue())
     }
 
-    func getValueOnPerson() -> Int? {
-        return person?.getHoldingValue()
-    }
-
-    func setValueOnPerson(to newValue: Int?) {
-        person?.setHoldingValue(to: newValue)
-    }
-
-    func dequeueFromInput() -> Int? {
-        return inputConveyorBelt?.dequeue()
-    }
-
-    // Adds to the end
-    func addValueToOutput(value: Int) {
-        outputConveyorBelt?.append(value)
-    }
-
-    // TODO: Currently a stub method, to integrate with storageManager
-    private func initFromStorage(_ stationName: String) -> Bool {
-        inputConveyorBelt = Queue<Int>()
-        outputConveyorBelt = [Int]()
-        memoryValues = [Int?]()
-        person = Person()
-        return true
-    }
 }
