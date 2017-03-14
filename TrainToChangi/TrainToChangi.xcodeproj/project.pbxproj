@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
+		D70813CE1E778ACB0066B53D /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70813CD1E778ACB0066B53D /* Constant.swift */; };
+		D70813D01E778E0D0066B53D /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70813CF1E778E0D0066B53D /* GameState.swift */; };
+		D70813D21E778EB00066B53D /* CommandResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70813D11E778EB00066B53D /* CommandResult.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
 		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
 		D75BC42A1E76C53700ED2A1B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4291E76C53700ED2A1B /* Model.swift */; };
@@ -23,10 +26,12 @@
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
 		D76FA8421E76ADC500CCCFBE /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */; };
-		D7983CE01E76D83000E650ED /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CDF1E76D83000E650ED /* State.swift */; };
+		D7983CE01E76D83000E650ED /* ModelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CDF1E76D83000E650ED /* ModelState.swift */; };
 		D7983CE21E76D9A400E650ED /* LoopCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* LoopCommand.swift */; };
 		D7983CE41E76DA0800E650ED /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE31E76DA0800E650ED /* Stack.swift */; };
 		D7983CE61E76E99C00E650ED /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE51E76E99C00E650ED /* Queue.swift */; };
+		D7983CE81E76ECE500E650ED /* CopyFromCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE71E76ECE500E650ED /* CopyFromCommand.swift */; };
+		D7983CEA1E76ED2200E650ED /* CopyToCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE91E76ED2200E650ED /* CopyToCommand.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,9 @@
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
+		D70813CD1E778ACB0066B53D /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		D70813CF1E778E0D0066B53D /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		D70813D11E778EB00066B53D /* CommandResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandResult.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
 		D75BC4291E76C53700ED2A1B /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -63,10 +71,12 @@
 		D76FA83D1E76ADC500CCCFBE /* TrainToChangiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrainToChangiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainToChangiTests.swift; sourceTree = "<group>"; };
 		D76FA8431E76ADC500CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D7983CDF1E76D83000E650ED /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		D7983CDF1E76D83000E650ED /* ModelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelState.swift; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* LoopCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopCommand.swift; sourceTree = "<group>"; };
 		D7983CE31E76DA0800E650ED /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		D7983CE51E76E99C00E650ED /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		D7983CE71E76ECE500E650ED /* CopyFromCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyFromCommand.swift; sourceTree = "<group>"; };
+		D7983CE91E76ED2200E650ED /* CopyToCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToCommand.swift; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,15 +153,20 @@
 				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
 				D76FA8381E76ADC400CCCFBE /* Info.plist */,
 				D75BC4251E76BA9000ED2A1B /* Command.swift */,
+				D70813D11E778EB00066B53D /* CommandResult.swift */,
 				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
+				D7983CE71E76ECE500E650ED /* CopyFromCommand.swift */,
+				D7983CE91E76ED2200E650ED /* CopyToCommand.swift */,
 				D75BC42D1E76C6D200ED2A1B /* InputCommand.swift */,
 				D75BC4311E76D6CA00ED2A1B /* OutputCommand.swift */,
 				D7983CE11E76D9A400E650ED /* LoopCommand.swift */,
 				D75BC4291E76C53700ED2A1B /* Model.swift */,
 				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
-				D7983CDF1E76D83000E650ED /* State.swift */,
+				D7983CDF1E76D83000E650ED /* ModelState.swift */,
 				D7983CE31E76DA0800E650ED /* Stack.swift */,
 				D7983CE51E76E99C00E650ED /* Queue.swift */,
+				D70813CF1E778E0D0066B53D /* GameState.swift */,
+				D70813CD1E778ACB0066B53D /* Constant.swift */,
 			);
 			path = TrainToChangi;
 			sourceTree = "<group>";
@@ -390,9 +405,14 @@
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* LoopCommand.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
+				D70813CE1E778ACB0066B53D /* Constant.swift in Sources */,
 				D7983CE41E76DA0800E650ED /* Stack.swift in Sources */,
-				D7983CE01E76D83000E650ED /* State.swift in Sources */,
+				D7983CE81E76ECE500E650ED /* CopyFromCommand.swift in Sources */,
+				D70813D01E778E0D0066B53D /* GameState.swift in Sources */,
+				D7983CE01E76D83000E650ED /* ModelState.swift in Sources */,
 				D75BC42A1E76C53700ED2A1B /* Model.swift in Sources */,
+				D7983CEA1E76ED2200E650ED /* CopyToCommand.swift in Sources */,
+				D70813D21E778EB00066B53D /* CommandResult.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutputCommand.swift in Sources */,
 				D75BC42E1E76C6D200ED2A1B /* InputCommand.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,

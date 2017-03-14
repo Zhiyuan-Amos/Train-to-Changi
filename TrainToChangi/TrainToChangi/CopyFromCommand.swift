@@ -1,7 +1,7 @@
 //
 
 import Foundation
-class AddCommand: Command {
+class CopyFromCommand: Command {
     let memoryIndex: Int
 
     init(memoryIndex: Int) {
@@ -13,11 +13,7 @@ class AddCommand: Command {
             return CommandResult(result: .fail, errorMessage: .noMemoryValue)
         }
 
-        guard model.person != nil else {
-            return CommandResult(result: .fail, errorMessage: .noPersonValue)
-        }
-
-        model.person! += value
+        model.person = value
         return CommandResult(result: .success)
     }
 }

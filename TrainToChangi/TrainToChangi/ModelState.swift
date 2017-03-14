@@ -1,18 +1,18 @@
 //
 
-class State {
+class ModelState {
     let inputConveyorBelt: Queue<Int>
     let outputConveyorBelt: [Int]
-    let memoryValues: [Int?]
+    let memory: [Int?]
     let person: Int?
-    let pointerIndex: Int
+    let commandIndex: Int?
 
     init(inputConveyorBelt: Queue<Int>, outputConveyorBelt: [Int], person: Int?,
-         memoryValues: [Int?], pointerIndex: Int) {
+         memory: [Int?], commandIndex: Int?) {
         self.inputConveyorBelt = inputConveyorBelt
         self.outputConveyorBelt = outputConveyorBelt
         self.person = person
-        self.memoryValues = memoryValues
-        self.pointerIndex = pointerIndex
+        self.memory = memory
+        self.commandIndex = commandIndex
     }
 }

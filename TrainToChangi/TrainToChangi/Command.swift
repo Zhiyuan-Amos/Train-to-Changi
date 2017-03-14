@@ -9,7 +9,7 @@ class Command {
         fatalError("subclass has to override method")
     }
 
-    func execute() {
+    func execute() -> CommandResult {
         fatalError("subclass has to override method")
     }
 }

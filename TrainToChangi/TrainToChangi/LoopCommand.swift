@@ -7,7 +7,7 @@ class LoopCommand: Command {
         self.loopTo = loopTo
     }
 
-    override func execute() {
+    override func execute() -> CommandResult {
         // edit pointer value
     }
 }

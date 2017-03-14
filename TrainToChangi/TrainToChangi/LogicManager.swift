@@ -3,54 +3,66 @@
 import Foundation
 class LogicManager {
     var model: Model
-    var undoStack: Stack<State>
-    var redoStack: Stack<Command>
+    var modelState: [ModelState]
+    private var gameStatePointer: Int
 
     init(model: Model) {
         self.model = model
-        self.undoStack = Stack()
-        self.redoStack = Stack()
+        self.modelState = [ModelState]()
+        self.gameStatePointer = 0
+
+        // Stores initial game state
+        let state = ModelState(inputConveyorBelt: model.inputConveyorBelt,
+                               outputConveyorBelt: model.outputConveyorBelt,
+                               person: model.person, memory: model.memory,
+                               commandIndex: nil)
+        modelState.append(state)
     }
 
     func executeCommands(commands: [Command]) {
-        var pointer = 0
-        // while game state not lost and and game not ended
-        let state = State(inputConveyorBelt: model.inputConveyorBelt,
-                          outputConveyorBelt: model.outputConveyorBelt,
-                          person: model.person, memoryValues: model.memory,
-                          pointerIndex: pointer)
-        undoStack.push(state)
-        commands[pointer].execute()
-        pointer += 1
+        var i = 0
+
+        while GameState.running {
+            let commandResult = commands[i].execute()
+            i += 1
+            
+            // Stores current game state
+            let state = ModelState(inputConveyorBelt: model.inputConveyorBelt,
+                                   outputConveyorBelt: model.outputConveyorBelt,
+                                   person: model.person, memory: model.memory,
+                                   commandIndex: i)
+            modelState.append(state)
+            gameStatePointer = modelState.count - 1
+        }
     }
 
     func undo() {
-        guard let state = undoStack.pop() else {
-            return
-        }
+        gameStatePointer -= 1
+        let previousState = modelState[gameStatePointer]
+        revertGameState(previousState)
 
-        revertGameState(state)
-
-        if undoStack.isEmpty {
+        if gameStatePointer == 0 {
             NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "undoStackIsEmpty"), object: nil, userInfo: nil)
+                rawValue: "nothingToUndo"), object: nil, userInfo: nil)
         }
+        NotificationCenter.default.post(name: Notification.Name(
+            rawValue: "nonEmptyRedoStack"), object: nil, userInfo: nil)
     }
 
     func redo() {
-        guard let command = redoStack.pop() else {
-            return
-        }
+        gameStatePointer += 1
+        let nextState = modelState[gameStatePointer]
+        revertGameState(nextState)
 
-        command.execute()
-
-        if redoStack.isEmpty {
+        if gameStatePointer == modelState.count - 1 {
             NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "redoStackIsEmpty"), object: nil, userInfo: nil)
+                rawValue: "nothingToRedo"), object: nil, userInfo: nil)
         }
+        NotificationCenter.default.post(name: Notification.Name(
+            rawValue: "undoStackIsNotEmpty"), object: nil, userInfo: nil)
     }
 
-    private func revertGameState(_ state: State) {
+    private func revertGameState(_ state: ModelState) {
         model.inputConveyorBelt = state.inputConveyorBelt
         model.outputConveyorBelt = state.outputConveyorBelt
         model.person = state.person
