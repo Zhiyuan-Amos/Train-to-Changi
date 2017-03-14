@@ -11,6 +11,14 @@ class CopyFromCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        return model.copyFromMemory(index: memoryIndex)
+        do {
+            try model.getValueFromMemory(location: memoryIndex)
+        } catch ModelError.emptyMemoryLocation {
+            return CommandResult(errorMessage: .emptyMemoryLocation)
+        } catch {
+            fatalError("Should not happen")
+        }
+
+        return CommandResult(errorMessage: nil)
     }
 }

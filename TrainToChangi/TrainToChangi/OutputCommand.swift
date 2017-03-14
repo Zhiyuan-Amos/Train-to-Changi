@@ -5,6 +5,14 @@
 
 class OutputCommand: Command {
     override func execute() -> CommandResult {
-        return model.putValueIntoOutbox()
+        do {
+            try model.putValueIntoOutbox()
+        } catch ModelError.emptyPersonValue {
+            return CommandResult(errorMessage: .emptyPersonValue)
+        } catch {
+            fatalError("Should not happen")
+        }
+
+        return CommandResult(errorMessage: nil)
     }
 }

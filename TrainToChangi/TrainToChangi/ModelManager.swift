@@ -115,8 +115,7 @@ class ModelManager: Model {
         undoStack.push(newStation)
     }
 
-
-    func putValueIntoMemory(location: Int, value: Int) throws {
+    func putValueIntoMemory(location: Int) throws {
         guard let topStation = undoStack.top else {
             throw ModelError.emptyStack
         }
@@ -160,6 +159,15 @@ class ModelManager: Model {
         newStation.person.setHoldingValue(to: newStation.memoryValues[location])
         newStation.memoryValues[location] = nil
         undoStack.push(newStation)
+    }
+
+    // TODO @Desmond
+    func getValueFromMemoryWithoutTransfer(location: Int) -> Int? {
+        guard location >= 0 && location < undoStack.top!.memoryValues.count else {
+            fatalError("Array out of bounds")
+        }
+
+        return undoStack.top?.memoryValues[location]
     }
 
     // TODO - integrate this with StorageManager

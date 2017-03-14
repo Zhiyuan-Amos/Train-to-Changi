@@ -14,10 +14,11 @@ class LogicManager {
     func executeCommands() {
         var commandIndex = 0
 
-        while model.gameState == .running {
-            let commandResult = model.commands[commandIndex].execute()
+        let commands = model.getCurrentCommands()
+        while model.getRunState() == .running {
+            let commandResult = commands[commandIndex].execute()
             if let errorMessage = commandResult.errorMessage {
-                model.updateGameState(.lost)
+                model.updateRunState(to: .lost)
 
                 NotificationCenter.default.post(name: Notification.Name(
                     rawValue: "gameLost"), object: errorMessage, userInfo: nil)
@@ -30,9 +31,12 @@ class LogicManager {
 
     // Reverts the state of the model by one command execution backward.
     func undo() {
-        if !model.undo() {
+        do {
+            try model.undo()
+        } catch {
             fatalError("User should not be allowed to undo")
         }
+
         //TODO: notify if undo stack is empty - shift to ModelManager?
             NotificationCenter.default.post(name: Notification.Name(
                 rawValue: "nothingToUndo"), object: nil, userInfo: nil)
@@ -43,9 +47,12 @@ class LogicManager {
 
     // Reverts the state of the model by one command execution forward.
     func redo() {
-        if !model.redo() {
+        do {
+            try model.redo()
+        } catch {
             fatalError("User should not be allowed to redo")
         }
+
         //TODO: notify if redo stack is empty - shift to ModelManager?
             NotificationCenter.default.post(name: Notification.Name(
                 rawValue: "nothingToRedo"), object: nil, userInfo: nil)

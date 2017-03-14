@@ -11,7 +11,7 @@ import Foundation
 class Person {
 
     private var holdingValue: Int?
-    
+
     func getHoldingValue() -> Int? {
         return holdingValue
     }

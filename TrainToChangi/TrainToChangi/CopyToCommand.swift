@@ -11,6 +11,14 @@ class CopyToCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        return model.copyToMemory(index: memoryIndex)
+        do {
+            try model.putValueIntoMemory(location: memoryIndex)
+        } catch ModelError.emptyPersonValue {
+            return CommandResult(errorMessage: .emptyPersonValue)
+        } catch {
+            fatalError("Should not happen")
+        }
+
+        return CommandResult(errorMessage: nil)
     }
 }

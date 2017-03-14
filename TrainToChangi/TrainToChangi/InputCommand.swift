@@ -5,6 +5,14 @@
 
 class InputCommand: Command {
     override func execute() -> CommandResult {
-        return model.dequeueValueFromInbox()
+        do {
+            try model.dequeueValueFromInbox()
+        } catch ModelError.emptyStack {
+            return CommandResult(errorMessage: .emptyStack)
+        } catch {
+            fatalError("Should not happen")
+        }
+
+        return CommandResult(errorMessage: nil)
     }
 }

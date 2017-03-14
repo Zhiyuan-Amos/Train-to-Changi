@@ -11,6 +11,20 @@ class AddCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        return model.addToPersonValue(from: memoryIndex)
+        guard let personValue = model.getValueOnPerson() else {
+            return CommandResult(errorMessage: .emptyPersonValue)
+        }
+
+        guard let memoryValue = model.getValueFromMemoryWithoutTransfer(location: memoryIndex) else {
+            return CommandResult(errorMessage: .emptyMemoryLocation)
+        }
+
+        do {
+            try model.updateValueOnPerson(to: personValue + memoryValue)
+        } catch {
+            fatalError("Should not happen")
+        }
+
+        return CommandResult(errorMessage: nil)
     }
 }

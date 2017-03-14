@@ -5,13 +5,9 @@
 
 struct CommandResult {
     // Execution is successful if errorMessage == nil. Otherwise, an error has occured.
-    let errorMessage: Error?
+    let errorMessage: ModelError?
 
-    init(errorMessage: Error? = nil) {
+    init(errorMessage: ModelError? = nil) {
         self.errorMessage = errorMessage
-    }
-
-    enum Error {
-        case noPersonValue, noMemoryValue, noInboxValue, wrongOutboxValue
     }
 }
