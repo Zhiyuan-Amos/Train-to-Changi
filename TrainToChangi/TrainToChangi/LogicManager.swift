@@ -3,8 +3,7 @@
 import Foundation
 class LogicManager {
     var model: Model
-    var undoStack: Stack<State>
-    var redoStack: Stack<Command>
+    
 
     init(model: Model) {
         self.model = model
