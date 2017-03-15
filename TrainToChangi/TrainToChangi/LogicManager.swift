@@ -37,13 +37,6 @@ class LogicManager {
         guard model.undo() else {
             fatalError("User should not be allowed to undo")
         }
-
-        //TODO: notify if undo stack is empty - shift to ModelManager?
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nothingToUndo"), object: nil, userInfo: nil)
-
-        NotificationCenter.default.post(name: Notification.Name(
-            rawValue: "nonEmptyRedoStack"), object: nil, userInfo: nil)
     }
 
     // Reverts the state of the model by one command execution forward.
@@ -51,12 +44,5 @@ class LogicManager {
         guard model.redo() else {
             fatalError("User should not be allowed to redo")
         }
-
-        //TODO: notify if redo stack is empty - shift to ModelManager?
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nothingToRedo"), object: nil, userInfo: nil)
-
-        NotificationCenter.default.post(name: Notification.Name(
-            rawValue: "undoStackIsNotEmpty"), object: nil, userInfo: nil)
     }
 }

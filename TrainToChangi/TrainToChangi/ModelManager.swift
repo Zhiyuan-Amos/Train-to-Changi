@@ -33,13 +33,32 @@ class ModelManager: Model {
         guard let oldState = undoStack.pop() else {
             return false
         }
+        if undoStack.isEmpty {
+            NotificationCenter.default.post(name: Notification.Name(
+                rawValue: "nothingToUndo"), object: nil, userInfo: nil)
+        }
+
+        if redoStack.isEmpty {
+            NotificationCenter.default.post(name: Notification.Name(
+                rawValue: "nonEmptyRedoStack"), object: nil, userInfo: nil)
+        }
         redoStack.push(oldState)
+
         return true
     }
 
     func redo() -> Bool {
         guard let newState = redoStack.pop() else {
             return false
+        }
+        if redoStack.isEmpty {
+            NotificationCenter.default.post(name: Notification.Name(
+                rawValue: "nothingToRedo"), object: nil, userInfo: nil)
+        }
+
+        if undoStack.isEmpty {
+            NotificationCenter.default.post(name: Notification.Name(
+                rawValue: "nonEmptyUndoStack"), object: nil, userInfo: nil)
         }
         undoStack.push(newState)
         return true
