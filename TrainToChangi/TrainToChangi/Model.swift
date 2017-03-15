@@ -2,7 +2,8 @@
 // Interface for `LogicManager` to work with `ModelManager`.
 //
 protocol Model: class {
-    func getCurrentCommands() -> [CommandType]
+    var currentCommands: [CommandType] { get }
+    var runState: RunState { get }
 
     // Reverts to the previous state. Returns true if operation is successful.
     func undo() -> Bool
@@ -10,7 +11,6 @@ protocol Model: class {
     // Reverts to the next state. Returns true if operation is successful.
     func redo() -> Bool
 
-    func getRunState() -> RunState
     func updateRunState(to newState: RunState)
 
     // Returns the dequeued value from inbox. If inbox is empty, returns nil.

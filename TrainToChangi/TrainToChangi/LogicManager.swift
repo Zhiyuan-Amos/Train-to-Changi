@@ -14,8 +14,8 @@ class LogicManager {
     func executeCommands() {
         var commandIndex = 0
         //TODO: Clean up this after finishing up JumpCommand
-        let commands = CommandTypeParser().parse(model.getCurrentCommands())
-        while model.getRunState() == .running {
+        let commands = CommandTypeParser().parse(model.currentCommands)
+        while model.runState == .running {
             let command = commands[commandIndex]
             command.setModel(model)
             let commandResult = commands[commandIndex].execute()
