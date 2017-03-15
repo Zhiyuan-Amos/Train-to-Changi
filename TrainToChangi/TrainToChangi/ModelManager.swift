@@ -13,13 +13,13 @@ class ModelManager: Model {
     private var stationName: String
     private var undoStack: Stack<StationState>
     private var redoStack: Stack<StationState>
-    private var currentCommands: [Command]
+    private var currentCommands: [CommandType]
     private var runState: RunState
     private var outputIndex: Int
 
     init(stationName: String) {
         self.stationName = stationName
-        currentCommands = [Command]()
+        currentCommands = [CommandType]()
         undoStack = Stack<StationState>()
         redoStack = Stack<StationState>()
         runState = RunState.stopped
@@ -53,12 +53,12 @@ class ModelManager: Model {
         runState = newState
     }
 
-    func getCurrentCommands() -> [Command] {
+    func getCurrentCommands() -> [CommandType] {
         return currentCommands
     }
 
-    func insertCommand(atIndex: Int, command: Command) {
-        currentCommands.insert(command, at: atIndex)
+    func insertCommand(atIndex: Int, commandType: CommandType) {
+        currentCommands.insert(commandType, at: atIndex)
     }
 
     func removeCommand(fromIndex: Int) {

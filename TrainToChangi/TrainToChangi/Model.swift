@@ -2,7 +2,7 @@
 // Interface for `LogicManager` to work with `ModelManager`.
 //
 protocol Model: class {
-    func getCurrentCommands() -> [Command]
+    func getCurrentCommands() -> [CommandType]
 
     // Reverts to the previous state. Returns true if operation is successful.
     func undo() -> Bool

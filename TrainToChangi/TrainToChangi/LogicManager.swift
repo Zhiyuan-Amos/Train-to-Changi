@@ -14,13 +14,15 @@ class LogicManager {
     func executeCommands() {
         var commandIndex = 0
         //TODO: Clean up this after finishing up JumpCommand
-        let commands = model.getCurrentCommands()
+        let commands = CommandTypeParser().parse(model.getCurrentCommands())
         while model.getRunState() == .running {
+            let command = commands[commandIndex]
+            command.setModel(model)
             let commandResult = commands[commandIndex].execute()
             if !commandResult.isSuccessful {
-                let errorMessage = commandResult.errorMessage!
                 model.updateRunState(to: .lost)
 
+                let errorMessage = commandResult.errorMessage!
                 NotificationCenter.default.post(name: Notification.Name(
                     rawValue: "gameLost"), object: errorMessage, userInfo: nil)
                 break
