@@ -3,33 +3,42 @@
 //
 
 import Foundation
-class LogicManager {
-    unowned private var model: Model
+class LogicManager: Sequencer {
+    unowned private let model: Model
+    var commandIndex: Int
 
     init(model: Model) {
         self.model = model
+        self.commandIndex = 0
     }
 
     // Executes the list of commands in `model.commands`.
     func executeCommands() {
-        var commandIndex = 0
-        //TODO: Clean up this after finishing up JumpCommand
-        let commands = CommandTypeParser().parse(model.currentCommands)
+        let commands = CommandTypeParser(sequencer: self).parse(model.currentCommands)
+
         while model.runState == .running {
             let command = commands[commandIndex]
             command.setModel(model)
-            let commandResult = commands[commandIndex].execute()
-            if !commandResult.isSuccessful {
-                model.updateRunState(to: .lost)
-
-                let errorMessage = commandResult.errorMessage!
-                NotificationCenter.default.post(name: Notification.Name(
-                    rawValue: "gameLost"), object: errorMessage, userInfo: nil)
+            if !execute(command) {
                 break
             }
 
             commandIndex += 1
         }
+    }
+
+    // Executes `command`. If execution succeeds, return true.
+    private func execute(_ command: Command) -> Bool {
+        let commandResult = command.execute()
+        if !commandResult.isSuccessful {
+            model.updateRunState(to: .lost)
+
+            let errorMessage = commandResult.errorMessage!
+            NotificationCenter.default.post(name: Notification.Name(
+                rawValue: "gameLost"), object: errorMessage, userInfo: nil)
+            return false
+        }
+        return true
     }
 
     // Reverts the state of the model by one command execution backward.

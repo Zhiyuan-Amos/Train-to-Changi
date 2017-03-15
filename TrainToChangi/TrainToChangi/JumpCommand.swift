@@ -4,13 +4,15 @@
 
 class JumpCommand: Command {
     let targetIndex: Int
+    let sequencer: Sequencer
 
-    init(targetIndex: Int) {
+    init(targetIndex: Int, sequencer: Sequencer) {
         self.targetIndex = targetIndex
+        self.sequencer = sequencer
     }
 
     override func execute() -> CommandResult {
+        sequencer.commandIndex = targetIndex
         return CommandResult()
-        //TODO: edit pointer value
     }
 }

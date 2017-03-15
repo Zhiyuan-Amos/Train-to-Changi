@@ -12,6 +12,7 @@
 		3B1680511E778A2D002286F6 /* StationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* StationState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
+		D744CA4F1E7904C0004CCABD /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA4E1E7904C0004CCABD /* Sequencer.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
 		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
 		D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC42B1E76C55600ED2A1B /* LogicManager.swift */; };
@@ -57,6 +58,7 @@
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
+		D744CA4E1E7904C0004CCABD /* Sequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
 		D75BC42B1E76C55600ED2A1B /* LogicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicManager.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			children = (
 				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
 				D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */,
+				D744CA4E1E7904C0004CCABD /* Sequencer.swift */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandTypeParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
+				D744CA4F1E7904C0004CCABD /* Sequencer.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				3B1680511E778A2D002286F6 /* StationState.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
