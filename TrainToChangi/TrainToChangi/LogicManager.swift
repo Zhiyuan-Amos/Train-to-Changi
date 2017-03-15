@@ -32,9 +32,7 @@ class LogicManager {
 
     // Reverts the state of the model by one command execution backward.
     func undo() {
-        do {
-            try model.undo()
-        } catch {
+        guard model.undo() else {
             fatalError("User should not be allowed to undo")
         }
 
@@ -48,9 +46,7 @@ class LogicManager {
 
     // Reverts the state of the model by one command execution forward.
     func redo() {
-        do {
-            try model.redo()
-        } catch {
+        guard model.redo() else {
             fatalError("User should not be allowed to redo")
         }
 

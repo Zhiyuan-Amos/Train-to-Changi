@@ -4,8 +4,10 @@
 protocol Model {
     func getCurrentCommands() -> [Command]
 
-    func undo() throws
-    func redo() throws
+    // Reverts to the previous state. Returns true if operation is successful.
+    func undo() -> Bool
+    // Reverts to the next state. Returns true if operation is successful.
+    func redo() -> Bool
 
     func getRunState() -> RunState
     func updateRunState(to newState: RunState)
