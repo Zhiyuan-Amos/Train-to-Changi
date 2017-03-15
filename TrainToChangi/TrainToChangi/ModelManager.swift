@@ -15,30 +15,34 @@ class ModelManager: Model {
     private var redoStack: Stack<StationState>
     private var currentCommands: [Command]
     private var runState: RunState
+    private var outputIndex: Int
 
-    init(stationName: String) throws {
+    init(stationName: String) {
         self.stationName = stationName
         currentCommands = [Command]()
         undoStack = Stack<StationState>()
         redoStack = Stack<StationState>()
         runState = RunState.stopped
+        outputIndex = 0
 
         let initialStationState = getInitialState()
         undoStack.push(initialStationState)
     }
 
-    func undo() throws {
+    func undo() -> Bool {
         guard let oldState = undoStack.pop() else {
-            throw ModelError.emptyStack
+            return false
         }
         redoStack.push(oldState)
+        return true
     }
 
-    func redo() throws {
+    func redo() -> Bool {
         guard let newState = redoStack.pop() else {
-            throw ModelError.emptyStack
+            return false
         }
         undoStack.push(newState)
+        return true
     }
 
     func getRunState() -> RunState {
@@ -49,65 +53,52 @@ class ModelManager: Model {
         runState = newState
     }
 
+
     func getCurrentCommands() -> [Command] {
         return currentCommands
     }
 
-    func insertCommand(atIndex: Int, command: Command) throws {
-        guard atIndex >= 0 && atIndex <= currentCommands.count else {
-            throw ModelError.invalidIndex
-        }
+    func insertCommand(atIndex: Int, command: Command) {
         currentCommands.insert(command, at: atIndex)
     }
 
-    func removeCommand(fromIndex: Int) throws {
-        guard fromIndex >= 0 && fromIndex < currentCommands.count else {
-            throw ModelError.invalidIndex
-        }
-
+    func removeCommand(fromIndex: Int) {
         currentCommands.remove(at: fromIndex)
     }
 
-    func dequeueValueFromInbox() throws {
+    func dequeueValueFromInbox() -> Int? {
         guard let topStation = undoStack.top else {
-            throw ModelError.emptyStack
-        }
-
-        if topStation.person.getHoldingValue() != nil {
-            throw ModelError.personValueNotEmpty
+            return nil
         }
 
         var newStation = StationState(station: topStation)
-        guard let newValue = newStation.input.dequeue() else {
-            throw ModelError.emptyQueue
-        }
-
-        newStation.person.setHoldingValue(to: newValue)
+        let valueToReturn = newStation.input.dequeue()
         undoStack.push(newStation)
+        return valueToReturn
     }
 
-    func putValueIntoOutbox() throws {
+    func putValueIntoOutbox(_ value: Int) -> Bool {
         guard let topStation = undoStack.top else {
-            throw ModelError.emptyStack
-        }
-
-        guard let personValue = topStation.person.getHoldingValue() else {
-            throw ModelError.emptyPersonValue
+            return false
         }
 
         var newStation = StationState(station: topStation)
-        newStation.output.append(personValue)
-        newStation.person.setHoldingValue(to: nil)
-        undoStack.push(newStation)
+        if (newStation.expectedOutput[outputIndex] == value) {
+            newStation.output.append(value);
+            undoStack.push(newStation)
+            outputIndex += 1
+            return true
+        }
+        return false
     }
 
     func getValueOnPerson() -> Int? {
         return undoStack.top?.person.getHoldingValue()
     }
 
-    func updateValueOnPerson(to newValue: Int?) throws {
+    func updateValueOnPerson(to newValue: Int?) {
         guard let topStation = undoStack.top else {
-            throw ModelError.emptyStack
+            return
         }
 
         let newStation = StationState(station: topStation)
@@ -115,92 +106,27 @@ class ModelManager: Model {
         undoStack.push(newStation)
     }
 
-    func putValueIntoMemory(location: Int) throws {
+    func putValueIntoMemory(_ value: Int, at index: Int) {
         guard let topStation = undoStack.top else {
-            throw ModelError.emptyStack
-        }
-
-        guard location >= 0 && location < topStation.memoryValues.count else {
-            throw ModelError.invalidIndex
-        }
-
-        if topStation.memoryValues[location] != nil {
-            throw ModelError.memoryLocationNotEmpty
-        }
-
-        guard let personValue = topStation.person.getHoldingValue() else {
-            throw ModelError.emptyPersonValue
+            return
         }
 
         var newStation = StationState(station: topStation)
-        newStation.memoryValues[location] = personValue
-        newStation.person.setHoldingValue(to: nil)
+        newStation.memoryValues[index] = value
         undoStack.push(newStation)
     }
 
-    func getValueFromMemory(location: Int) throws {
+    func getValueFromMemory(at index: Int) -> Int? {
         guard let topStation = undoStack.top else {
-            throw ModelError.emptyStack
-        }
-
-        if topStation.person.getHoldingValue() != nil {
-            throw ModelError.personValueNotEmpty
-        }
-
-        guard location >= 0 && location < topStation.memoryValues.count else {
-            throw ModelError.invalidIndex
-        }
-
-        if topStation.memoryValues[location] == nil {
-            throw ModelError.emptyMemoryLocation
+            return nil
         }
 
         var newStation = StationState(station: topStation)
-        newStation.person.setHoldingValue(to: newStation.memoryValues[location])
-        newStation.memoryValues[location] = nil
-        undoStack.push(newStation)
-    }
-
-    // TODO @Desmond
-    func getValueFromMemoryWithoutTransfer(location: Int) -> Int? {
-        guard location >= 0, let numElements = undoStack.top?.memoryValues.count,
-            location < numElements else {
-            fatalError("Array out of bounds")
-        }
-
-        return undoStack.top?.memoryValues[location]
+        return newStation.memoryValues[index]
     }
 
     // TODO - integrate this with StorageManager
     private func getInitialState() -> StationState {
-        return StationState(input: Queue<Int>(), output: [Int](), memoryValues: [Int?]())
+        return StationState(input: Queue<Int>(), output: [Int](), expectedOutput: [Int](), memoryValues: [Int?]())
     }
-
-}
-
-/**
- An enum of errors that can be thrown from ModelManager
- */
-enum ModelError: Error {
-    /// Thrown when unable to initialise model from station name
-    case invalidStationName
-
-    /// Thrown when accessing an invalid index
-    case invalidIndex
-
-    /// Thrown when redoing or undoing from an empty stack
-    case emptyStack
-
-    /// Thrown when dequeuing from empty queue
-    case emptyQueue
-
-    /// Thrown when want to put value of person when person has no value
-    case emptyPersonValue
-
-    /// Thrown when want to put value on person when person has a value
-    case personValueNotEmpty
-
-    case emptyMemoryLocation
-    case memoryLocationNotEmpty
-    case wrongOutboxValue
 }

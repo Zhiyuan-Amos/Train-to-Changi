@@ -11,14 +11,16 @@ import Foundation
 struct StationState {
 
     var input: Queue<Int>
+    var expectedOutput: [Int]
     var output: [Int]
     var memoryValues: [Int?]
 
     let person: Person
 
-    init(input: Queue<Int>, output: [Int], memoryValues: [Int?]) {
+    init(input: Queue<Int>, output: [Int], expectedOutput: [Int],memoryValues: [Int?]) {
         self.input = input
         self.output = output
+        self.expectedOutput = expectedOutput
         self.memoryValues = memoryValues
         self.person = Person()
     }
@@ -26,6 +28,7 @@ struct StationState {
     init(station: StationState) {
         input = station.input
         output = station.output
+        expectedOutput = station.expectedOutput
         memoryValues = station.memoryValues
 
         person = Person()
