@@ -1,9 +1,10 @@
 //
 // Interface for `LogicManager` to work with `ModelManager`.
 //
-protocol Model: class {
+protocol Model: class, RunStateProtocol {
     var currentCommands: [CommandType] { get }
-    var runState: RunState { get }
+    var currentOutput: [Int] { get }
+    var expectedOutput: [Int] { get }
 
     // Reverts to the previous state. Returns true if operation is successful.
     func undo() -> Bool
@@ -11,13 +12,11 @@ protocol Model: class {
     // Reverts to the next state. Returns true if operation is successful.
     func redo() -> Bool
 
-    func updateRunState(to newState: RunState)
-
     // Returns the dequeued value from inbox. If inbox is empty, returns nil.
     func dequeueValueFromInbox() -> Int?
 
-    // Puts `value` onto outbox. Returns true if outbox value is the expected value.
-    func putValueIntoOutbox(_ value: Int) -> Bool
+    // Puts `value` onto outbox.
+    func putValueIntoOutbox(_ value: Int)
 
     // Returns the value that the person is holding on to.
     // Returns nil if the person isn't holding onto any value.

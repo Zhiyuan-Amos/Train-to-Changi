@@ -11,9 +11,7 @@ class OutboxCommand: Command {
             return CommandResult(errorMessage: .emptyPersonValue)
         }
 
-        guard model.putValueIntoOutbox(value) else {
-            return CommandResult(errorMessage: .wrongOutboxValue)
-        }
+        model.putValueIntoOutbox(value)
 
         return CommandResult()
     }

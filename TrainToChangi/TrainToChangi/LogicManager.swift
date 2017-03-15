@@ -5,10 +5,12 @@
 import Foundation
 class LogicManager: Sequencer {
     unowned private let model: Model
+    private let updater: RunStateUpdater
     var commandIndex: Int
 
     init(model: Model) {
         self.model = model
+        self.updater = RunStateUpdater(runStateProtocol: model)
         self.commandIndex = 0
     }
 
@@ -19,26 +21,25 @@ class LogicManager: Sequencer {
         while model.runState == .running {
             let command = commands[commandIndex]
             command.setModel(model)
-            if !execute(command) {
-                break
-            }
+            let commandResult = command.execute()
 
+            // TODO: Model needs to have a commandIndex also.
+            // TODO: Step counter
             commandIndex += 1
-        }
-    }
 
-    // Executes `command`. If execution succeeds, return true.
-    private func execute(_ command: Command) -> Bool {
-        let commandResult = command.execute()
-        if !commandResult.isSuccessful {
-            model.updateRunState(to: .lost)
-
-            let errorMessage = commandResult.errorMessage!
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "gameLost"), object: errorMessage, userInfo: nil)
-            return false
+            if hasMetWinCondition() {
+                updater.update(to: .won, notificationIdentifer: "gameWon", error: nil)
+            } else if !commandResult.isSuccessful {
+                updater.update(to: .lost, notificationIdentifer: "gameLost",
+                               error: commandResult.errorMessage!)
+            } else if !isOutputValid() {
+                updater.update(to: .lost, notificationIdentifer: "gameLost",
+                               error: .wrongOutboxValue)
+            } else if isIndexOutOfBounds(count: commands.count) {
+                updater.update(to: .lost, notificationIdentifer: "gameLost",
+                               error: .incompleteOutboxValues)
+            }
         }
-        return true
     }
 
     // Reverts the state of the model by one command execution backward.
@@ -54,4 +55,30 @@ class LogicManager: Sequencer {
             fatalError("User should not be allowed to redo")
         }
     }
+
+    private func isIndexOutOfBounds(count: Int) -> Bool {
+        guard commandIndex >= 0 else {
+            fatalError("commandIndex should never be smaller than 0")
+        }
+        return commandIndex >= count
+    }
+
+    // Returns true if the current output equals the expected output.
+    private func hasMetWinCondition() -> Bool {
+        return model.currentOutput == model.expectedOutput
+    }
+
+    // Returns true if all the values currently in current output is
+    // equal to the expected output. Return value of `true` does not equate to
+    // win condition met, as maybe not all of values required have been put into
+    // the `model`.
+    private func isOutputValid() -> Bool {
+        for (index, value) in model.currentOutput.enumerated() {
+            if value != model.expectedOutput[index] {
+                return false
+            }
+        }
+        return true
+    }
+
 }

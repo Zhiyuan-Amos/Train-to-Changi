@@ -17,6 +17,13 @@ class ModelManager: Model {
     private(set) var runState: RunState
     private var outputIndex: Int
 
+    var currentOutput: [Int] {
+        return undoStack.top!.output
+    }
+    var expectedOutput: [Int] {
+        return undoStack.top!.expectedOutput
+    }
+
     init(stationName: String) {
         self.stationName = stationName
         currentCommands = [CommandType]()
@@ -87,19 +94,15 @@ class ModelManager: Model {
         return valueToReturn
     }
 
-    func putValueIntoOutbox(_ value: Int) -> Bool {
+    func putValueIntoOutbox(_ value: Int) {
         guard let topStation = undoStack.top else {
-            return false
+            return
         }
 
         var newStation = StationState(station: topStation)
-        if newStation.expectedOutput[outputIndex] == value {
-            newStation.output.append(value)
-            undoStack.push(newStation)
-            outputIndex += 1
-            return true
-        }
-        return false
+        newStation.output.append(value)
+        undoStack.push(newStation)
+        outputIndex += 1
     }
 
     func getValueOnPerson() -> Int? {
