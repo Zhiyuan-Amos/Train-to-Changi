@@ -1,5 +1,5 @@
 //
-// Helper struct for LogicManager.
+// Parses [CommandType] into [Command].
 //
 
 struct CommandTypeParser {
@@ -9,7 +9,6 @@ struct CommandTypeParser {
         self.sequencer = sequencer
     }
 
-    // Parses [CommandType] into [Command].
     func parse(_ commandTypes: [CommandType]) -> [Command] {
         var commands = [Command]()
 

@@ -1,8 +1,8 @@
 //
 // Manages the logic required to update the model when commands are executed.
+// It also contains methods pertaining to the game logic.
 //
 
-import Foundation
 class LogicManager: Sequencer {
     unowned private let model: Model
     private let updater: RunStateUpdater
@@ -14,7 +14,7 @@ class LogicManager: Sequencer {
         self.commandIndex = 0
     }
 
-    // Executes the list of commands in `model.commands`.
+    // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
         let commands = CommandTypeParser(sequencer: self).parse(model.currentCommands)
 
