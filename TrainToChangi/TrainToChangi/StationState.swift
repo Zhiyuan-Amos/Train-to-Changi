@@ -17,7 +17,7 @@ struct StationState {
 
     let person: Person
 
-    init(input: Queue<Int>, output: [Int], expectedOutput: [Int],memoryValues: [Int?]) {
+    init(input: Queue<Int>, output: [Int], expectedOutput: [Int], memoryValues: [Int?]) {
         self.input = input
         self.output = output
         self.expectedOutput = expectedOutput

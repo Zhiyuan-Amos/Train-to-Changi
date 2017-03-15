@@ -53,7 +53,6 @@ class ModelManager: Model {
         runState = newState
     }
 
-
     func getCurrentCommands() -> [Command] {
         return currentCommands
     }
@@ -83,8 +82,8 @@ class ModelManager: Model {
         }
 
         var newStation = StationState(station: topStation)
-        if (newStation.expectedOutput[outputIndex] == value) {
-            newStation.output.append(value);
+        if newStation.expectedOutput[outputIndex] == value {
+            newStation.output.append(value)
             undoStack.push(newStation)
             outputIndex += 1
             return true

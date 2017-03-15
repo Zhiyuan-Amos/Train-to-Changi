@@ -8,7 +8,7 @@ class OutboxCommand: Command {
         guard let value = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
         }
-        
+
         guard model.putValueIntoOutbox(value) else {
             return CommandResult(errorMessage: .wrongOutboxValue)
         }

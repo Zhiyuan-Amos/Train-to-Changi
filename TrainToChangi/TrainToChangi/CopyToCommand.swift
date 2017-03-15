@@ -14,7 +14,7 @@ class CopyToCommand: Command {
         guard let value = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
         }
-        
+
         model.putValueIntoMemory(value, at: memoryIndex)
 
         return CommandResult()

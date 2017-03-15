@@ -6,9 +6,9 @@
 class InboxCommand: Command {
     override func execute() -> CommandResult {
         guard let value = model.dequeueValueFromInbox() else {
-            return CommandResult(errorMessage: .emptyStack)
+            return CommandResult(errorMessage: .emptyInbox)
         }
-        
+
         model.updateValueOnPerson(to: value)
 
         return CommandResult()
