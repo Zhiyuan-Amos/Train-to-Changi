@@ -1,4 +1,4 @@
 enum CommandType {
-    case inbox, outbox, copyFrom(index: Int), copyTo(index: Int), add(index: Int),
-    jump(index: Int)
+    case inbox, outbox, copyFrom(memoryIndex: Int), copyTo(memoryIndex: Int),
+    add(memoryIndex: Int), jump(targetIndex: Int)
 }

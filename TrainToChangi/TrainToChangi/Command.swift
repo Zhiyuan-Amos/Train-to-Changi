@@ -13,7 +13,7 @@ class Command {
     func execute() -> CommandResult {
         fatalError("subclass has to override method")
     }
-    
+
     func setModel(_ model: Model) {
         self.model = model
     }
