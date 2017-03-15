@@ -4,7 +4,7 @@
 //
 
 class Command {
-    var model: Model
+    unowned private(set) var model: Model
 
     init() {
         fatalError("subclass has to override method")
@@ -12,5 +12,9 @@ class Command {
 
     func execute() -> CommandResult {
         fatalError("subclass has to override method")
+    }
+    
+    func setModel(_ model: Model) {
+        self.model = model
     }
 }

@@ -5,8 +5,8 @@
 class JumpCommand: Command {
     let targetIndex: Int
 
-    init(loopTo: Int) {
-        self.targetIndex = loopTo
+    init(targetIndex: Int) {
+        self.targetIndex = targetIndex
     }
 
     override func execute() -> CommandResult {

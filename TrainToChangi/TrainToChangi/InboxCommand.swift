@@ -4,6 +4,8 @@
 //
 
 class InboxCommand: Command {
+    override init() {}
+
     override func execute() -> CommandResult {
         guard let value = model.dequeueValueFromInbox() else {
             return CommandResult(errorMessage: .emptyInbox)

@@ -4,7 +4,7 @@
 
 import Foundation
 class LogicManager {
-    private var model: Model
+    unowned private var model: Model
 
     init(model: Model) {
         self.model = model

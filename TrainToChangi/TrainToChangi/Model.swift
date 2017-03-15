@@ -1,7 +1,7 @@
 //
 // Interface for `LogicManager` to work with `ModelManager`.
 //
-protocol Model {
+protocol Model: class {
     func getCurrentCommands() -> [Command]
 
     // Reverts to the previous state. Returns true if operation is successful.

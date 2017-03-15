@@ -4,6 +4,8 @@
 //
 
 class OutboxCommand: Command {
+    override init() {}
+
     override func execute() -> CommandResult {
         guard let value = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
