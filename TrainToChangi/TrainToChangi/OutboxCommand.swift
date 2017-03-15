@@ -3,14 +3,14 @@
 // holding, onto the output conveyor belt.
 //
 
-class OutputCommand: Command {
+class OutboxCommand: Command {
     override func execute() -> CommandResult {
-        do {
-            try model.putValueIntoOutbox()
-        } catch ModelError.emptyPersonValue {
+        guard let value = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
-        } catch {
-            fatalError("Should not happen")
+        }
+        
+        guard model.putValueIntoOutbox(value) else {
+            return CommandResult(errorMessage: .wrongOutboxValue)
         }
 
         return CommandResult()

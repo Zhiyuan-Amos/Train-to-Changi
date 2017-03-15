@@ -10,14 +10,20 @@ protocol Model {
     func getRunState() -> RunState
     func updateRunState(to newState: RunState)
 
-    // Returns the dequeued value from inbox
-    func dequeueValueFromInbox() throws
-    func putValueIntoOutbox() throws
+    // Returns the dequeued value from inbox. If inbox is empty, returns nil.
+    func dequeueValueFromInbox() -> Int?
+    // Puts `value` onto outbox. Returns true if outbox value is the expected value.
+    func putValueIntoOutbox(_ value: Int) -> Bool
 
+    // Returns the value that the person is holding on to.
+    // Returns nil if the person isn't holding onto any value.
     func getValueOnPerson() -> Int?
-    func updateValueOnPerson(to newValue: Int?) throws
-    func getValueFromMemoryWithoutTransfer(location: Int) -> Int?
+    // Updates the value of the person to `newValue`.
+    func updateValueOnPerson(to newValue: Int?)
 
-    func putValueIntoMemory(location: Int) throws
-    func getValueFromMemory(location: Int) throws
+    // Returns the value that is stored in the memory located at `index`
+    // If the memory location is empty, returns nil.
+    func getValueFromMemory(at index: Int) -> Int?
+    // Put `value` into memory located at `index`.
+    func putValueIntoMemory(_ value: Int, at index: Int)
 }

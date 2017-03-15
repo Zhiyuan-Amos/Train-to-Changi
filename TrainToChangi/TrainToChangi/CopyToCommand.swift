@@ -11,13 +11,11 @@ class CopyToCommand: Command {
     }
 
     override func execute() -> CommandResult {
-        do {
-            try model.putValueIntoMemory(location: memoryIndex)
-        } catch ModelError.emptyPersonValue {
+        guard let value = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
-        } catch {
-            fatalError("Should not happen")
         }
+        
+        model.putValueIntoMemory(value, at: memoryIndex)
 
         return CommandResult()
     }

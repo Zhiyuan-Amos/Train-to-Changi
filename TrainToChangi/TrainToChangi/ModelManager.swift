@@ -202,5 +202,5 @@ enum ModelError: Error {
 
     case emptyMemoryLocation
     case memoryLocationNotEmpty
-
+    case wrongOutboxValue
 }

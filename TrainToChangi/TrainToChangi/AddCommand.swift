@@ -15,15 +15,11 @@ class AddCommand: Command {
             return CommandResult(errorMessage: .emptyPersonValue)
         }
 
-        guard let memoryValue = model.getValueFromMemoryWithoutTransfer(location: memoryIndex) else {
+        guard let memoryValue = model.getValueFromMemory(at: memoryIndex) else {
             return CommandResult(errorMessage: .emptyMemoryLocation)
         }
 
-        do {
-            try model.updateValueOnPerson(to: personValue + memoryValue)
-        } catch {
-            fatalError("Should not happen")
-        }
+        model.updateValueOnPerson(to: personValue + memoryValue)
 
         return CommandResult()
     }

@@ -3,15 +3,13 @@
 // input conveyor belt.
 //
 
-class InputCommand: Command {
+class InboxCommand: Command {
     override func execute() -> CommandResult {
-        do {
-            try model.dequeueValueFromInbox()
-        } catch ModelError.emptyStack {
+        guard let value = model.dequeueValueFromInbox() else {
             return CommandResult(errorMessage: .emptyStack)
-        } catch {
-            fatalError("Should not happen")
         }
+        
+        model.updateValueOnPerson(to: value)
 
         return CommandResult()
     }
