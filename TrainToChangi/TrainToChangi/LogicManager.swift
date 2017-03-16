@@ -22,8 +22,11 @@ class LogicManager {
             command.setModel(model)
             let commandResult = command.execute()
 
-            // TODO: Step counter
             model.commandIndex! += 1
+
+            if !(command is PlaceholderCommand) {
+                model.numSteps += 1
+            }
 
             if hasMetWinCondition() {
                 updater.update(to: .won, notificationIdentifer: "gameWon", error: nil)

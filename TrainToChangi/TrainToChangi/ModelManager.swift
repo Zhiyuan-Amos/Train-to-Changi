@@ -29,6 +29,17 @@ class ModelManager: Model {
         }
     }
 
+    private var _numSteps: Int
+    var numSteps: Int {
+        get {
+            return _numSteps
+        }
+
+        set {
+            _numSteps = newValue
+        }
+    }
+
     var currentOutput: [Int] {
         return undoStack.top!.output
     }
@@ -43,6 +54,7 @@ class ModelManager: Model {
         redoStack = Stack<StationState>()
         runState = RunState.stopped
         outputIndex = 0
+        _numSteps = 0
 
         let initialStationState = getInitialState()
         undoStack.push(initialStationState)
