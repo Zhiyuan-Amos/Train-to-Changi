@@ -4,14 +4,14 @@
 
 import Foundation
 struct RunStateUpdater {
-    let runStateProtocol: RunStateProtocol
+    unowned let runStateDelegate: RunStateDelegate
 
-    init(runStateProtocol: RunStateProtocol) {
-        self.runStateProtocol = runStateProtocol
+    init(runStateDelegate: RunStateDelegate) {
+        self.runStateDelegate = runStateDelegate
     }
 
     func update(to runState: RunState, notificationIdentifer: String, error: ExecutionError?) {
-        runStateProtocol.updateRunState(to: runState)
+        runStateDelegate.runState = runState
         NotificationCenter.default.post(name: Notification.Name(
             rawValue: notificationIdentifer), object: error, userInfo: nil)
     }

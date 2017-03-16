@@ -9,7 +9,7 @@ class LogicManager {
 
     init(model: Model) {
         self.model = model
-        self.updater = RunStateUpdater(runStateProtocol: model)
+        self.updater = RunStateUpdater(runStateDelegate: model)
     }
 
     // Executes the list of commands in `model.currentCommands`.

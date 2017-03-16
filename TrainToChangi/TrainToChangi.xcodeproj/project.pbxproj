@@ -15,7 +15,7 @@
 		D744CA4F1E7904C0004CCABD /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA4E1E7904C0004CCABD /* Sequencer.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
-		D744CA591E797425004CCABD /* RunStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA581E797425004CCABD /* RunStateProtocol.swift */; };
+		D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA581E797425004CCABD /* RunStateDelegate.swift */; };
 		D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
 		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
@@ -65,7 +65,7 @@
 		D744CA4E1E7904C0004CCABD /* Sequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
-		D744CA581E797425004CCABD /* RunStateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateProtocol.swift; sourceTree = "<group>"; };
+		D744CA581E797425004CCABD /* RunStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateDelegate.swift; sourceTree = "<group>"; };
 		D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderCommand.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 				3B1680481E7786B9002286F6 /* Person.swift */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
-				D744CA581E797425004CCABD /* RunStateProtocol.swift */,
+				D744CA581E797425004CCABD /* RunStateDelegate.swift */,
 				D744CA4E1E7904C0004CCABD /* Sequencer.swift */,
 			);
 			name = Model;
@@ -484,7 +484,7 @@
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
-				D744CA591E797425004CCABD /* RunStateProtocol.swift in Sources */,
+				D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandTypeParser.swift in Sources */,

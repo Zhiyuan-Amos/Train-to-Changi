@@ -14,8 +14,17 @@ class ModelManager: Model {
     private var undoStack: Stack<StationState>
     private var redoStack: Stack<StationState>
     private(set) var currentCommands: [CommandType]
-    private(set) var runState: RunState
     private var outputIndex: Int
+
+    private var _runState: RunState
+    var runState: RunState {
+        get {
+            return _runState
+        }
+        set {
+            _runState = newValue
+        }
+    }
 
     // _commandIndex is nil initially i.e there's no arrow pointing at the commands
     private var _commandIndex: Int?
@@ -52,7 +61,7 @@ class ModelManager: Model {
         currentCommands = [CommandType]()
         undoStack = Stack<StationState>()
         redoStack = Stack<StationState>()
-        runState = RunState.stopped
+        _runState = RunState.stopped
         outputIndex = 0
         _numSteps = 0
 
@@ -93,10 +102,6 @@ class ModelManager: Model {
         }
         undoStack.push(newState)
         return true
-    }
-
-    func updateRunState(to newState: RunState) {
-        runState = newState
     }
 
     func insertCommand(atIndex: Int, commandType: CommandType) {
