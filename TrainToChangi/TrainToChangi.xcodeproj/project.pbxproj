@@ -155,6 +155,7 @@
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 				D744CA581E797425004CCABD /* RunStateProtocol.swift */,
+				D744CA4E1E7904C0004CCABD /* Sequencer.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -164,7 +165,6 @@
 			children = (
 				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
 				D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */,
-				D744CA4E1E7904C0004CCABD /* Sequencer.swift */,
 				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
 			);
 			name = Logic;

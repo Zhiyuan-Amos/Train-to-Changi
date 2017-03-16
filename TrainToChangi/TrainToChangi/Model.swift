@@ -1,7 +1,7 @@
 //
 // Interface for `LogicManager` to work with `ModelManager`.
 //
-protocol Model: class, RunStateProtocol {
+protocol Model: class, RunStateProtocol, Sequencer {
     var currentCommands: [CommandType] { get }
     var currentOutput: [Int] { get }
     var expectedOutput: [Int] { get }

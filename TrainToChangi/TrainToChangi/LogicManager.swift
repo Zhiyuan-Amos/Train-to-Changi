@@ -3,29 +3,27 @@
 // It also contains methods pertaining to the game logic.
 //
 
-class LogicManager: Sequencer {
+class LogicManager {
     unowned private let model: Model
     private let updater: RunStateUpdater
-    var commandIndex: Int
 
     init(model: Model) {
         self.model = model
         self.updater = RunStateUpdater(runStateProtocol: model)
-        self.commandIndex = 0
     }
 
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
-        let commands = CommandTypeParser(sequencer: self).parse(model.currentCommands)
+        model.commandIndex = 0
+        let commands = CommandTypeParser(sequencer: model).parse(model.currentCommands)
 
         while model.runState == .running {
-            let command = commands[commandIndex]
+            let command = commands[model.commandIndex!]
             command.setModel(model)
             let commandResult = command.execute()
 
-            // TODO: Model needs to have a commandIndex also.
             // TODO: Step counter
-            commandIndex += 1
+            model.commandIndex! += 1
 
             if hasMetWinCondition() {
                 updater.update(to: .won, notificationIdentifer: "gameWon", error: nil)
@@ -57,10 +55,10 @@ class LogicManager: Sequencer {
     }
 
     private func isIndexOutOfBounds(count: Int) -> Bool {
-        guard commandIndex >= 0 else {
+        guard model.commandIndex! >= 0 else {
             fatalError("commandIndex should never be smaller than 0")
         }
-        return commandIndex >= count
+        return model.commandIndex! >= count
     }
 
     // Returns true if the current output equals the expected output.
@@ -80,5 +78,4 @@ class LogicManager: Sequencer {
         }
         return true
     }
-
 }

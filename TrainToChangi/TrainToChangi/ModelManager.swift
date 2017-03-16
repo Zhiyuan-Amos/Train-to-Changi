@@ -17,6 +17,18 @@ class ModelManager: Model {
     private(set) var runState: RunState
     private var outputIndex: Int
 
+    // _commandIndex is nil initially i.e there's no arrow pointing at the commands
+    private var _commandIndex: Int?
+    var commandIndex: Int? {
+        get {
+            return _commandIndex
+        }
+
+        set {
+            _commandIndex = newValue
+        }
+    }
+
     var currentOutput: [Int] {
         return undoStack.top!.output
     }
