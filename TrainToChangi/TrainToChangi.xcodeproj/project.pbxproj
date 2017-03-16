@@ -17,6 +17,9 @@
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA581E797425004CCABD /* RunStateDelegate.swift */; };
 		D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */; };
+		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
+		D744CA671E7A387F004CCABD /* OutputGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA651E7A387F004CCABD /* OutputGenerator.swift */; };
+		D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA681E7A38D7004CCABD /* StorageManager.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
 		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
 		D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC42B1E76C55600ED2A1B /* LogicManager.swift */; };
@@ -67,6 +70,9 @@
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA581E797425004CCABD /* RunStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateDelegate.swift; sourceTree = "<group>"; };
 		D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderCommand.swift; sourceTree = "<group>"; };
+		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
+		D744CA651E7A387F004CCABD /* OutputGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputGenerator.swift; sourceTree = "<group>"; };
+		D744CA681E7A38D7004CCABD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
 		D75BC42B1E76C55600ED2A1B /* LogicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicManager.swift; sourceTree = "<group>"; };
@@ -153,9 +159,12 @@
 				3B1680501E778A2D002286F6 /* StationState.swift */,
 				3B1680481E7786B9002286F6 /* Person.swift */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
+				D744CA641E7A387F004CCABD /* Level.swift */,
+				D744CA651E7A387F004CCABD /* OutputGenerator.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 				D744CA581E797425004CCABD /* RunStateDelegate.swift */,
 				D744CA4E1E7904C0004CCABD /* Sequencer.swift */,
+				D744CA681E7A38D7004CCABD /* StorageManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -469,6 +478,7 @@
 			files = (
 				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
+				D744CA671E7A387F004CCABD /* OutputGenerator.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
 				D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */,
@@ -489,9 +499,11 @@
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandTypeParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
+				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				D744CA4F1E7904C0004CCABD /* Sequencer.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				3B1680511E778A2D002286F6 /* StationState.swift in Sources */,
+				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 			);
