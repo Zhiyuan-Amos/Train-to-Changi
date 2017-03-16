@@ -7,7 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B1680491E7786B9002286F6 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680481E7786B9002286F6 /* Person.swift */; };
+		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
+		3B1680511E778A2D002286F6 /* StationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* StationState.swift */; };
+		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
+		D744CA4F1E7904C0004CCABD /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA4E1E7904C0004CCABD /* Sequencer.swift */; };
+		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
+		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
+		D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA581E797425004CCABD /* RunStateDelegate.swift */; };
+		D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */; };
+		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
+		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
+		D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC42B1E76C55600ED2A1B /* LogicManager.swift */; };
+		D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */; };
+		D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4311E76D6CA00ED2A1B /* OutboxCommand.swift */; };
 		D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */; };
 		D76FA8291E76ADC400CCCFBE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8281E76ADC400CCCFBE /* GameScene.sks */; };
 		D76FA82B1E76ADC400CCCFBE /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = D76FA82A1E76ADC400CCCFBE /* Actions.sks */; };
@@ -17,6 +31,16 @@
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
 		D76FA8421E76ADC500CCCFBE /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */; };
+		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
+		D7983CE61E76E99C00E650ED /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE51E76E99C00E650ED /* Queue.swift */; };
+		D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D01E7796B800DE5774 /* CommandResult.swift */; };
+		D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D21E7796BD00DE5774 /* Constants.swift */; };
+		D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D41E7796C300DE5774 /* CopyFromCommand.swift */; };
+		D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D51E7796C300DE5774 /* CopyToCommand.swift */; };
+		D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DC1E77A01D00DE5774 /* Stack.swift */; };
+		D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267E01E77ABEB00DE5774 /* Model.swift */; };
+		D7CEF1301E78E58200564FF5 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF12F1E78E58200564FF5 /* CommandType.swift */; };
+		D7CEF1321E78EBBB00564FF5 /* CommandTypeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,9 +55,23 @@
 
 /* Begin PBXFileReference section */
 		38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.release.xcconfig"; sourceTree = "<group>"; };
+		3B1680481E7786B9002286F6 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		3B1680501E778A2D002286F6 /* StationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationState.swift; sourceTree = "<group>"; };
+		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
+		D744CA4E1E7904C0004CCABD /* Sequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
+		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
+		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
+		D744CA581E797425004CCABD /* RunStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateDelegate.swift; sourceTree = "<group>"; };
+		D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderCommand.swift; sourceTree = "<group>"; };
+		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
+		D75BC42B1E76C55600ED2A1B /* LogicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicManager.swift; sourceTree = "<group>"; };
+		D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InboxCommand.swift; sourceTree = "<group>"; };
+		D75BC4311E76D6CA00ED2A1B /* OutboxCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutboxCommand.swift; sourceTree = "<group>"; };
 		D76FA8231E76ADC400CCCFBE /* TrainToChangi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrainToChangi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D76FA8281E76ADC400CCCFBE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -47,6 +85,16 @@
 		D76FA83D1E76ADC500CCCFBE /* TrainToChangiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrainToChangiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainToChangiTests.swift; sourceTree = "<group>"; };
 		D76FA8431E76ADC500CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7983CE11E76D9A400E650ED /* JumpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpCommand.swift; sourceTree = "<group>"; };
+		D7983CE51E76E99C00E650ED /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		D7A267D01E7796B800DE5774 /* CommandResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandResult.swift; sourceTree = "<group>"; };
+		D7A267D21E7796BD00DE5774 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D7A267D41E7796C300DE5774 /* CopyFromCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyFromCommand.swift; sourceTree = "<group>"; };
+		D7A267D51E7796C300DE5774 /* CopyToCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToCommand.swift; sourceTree = "<group>"; };
+		D7A267DC1E77A01D00DE5774 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		D7A267E01E77ABEB00DE5774 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		D7CEF12F1E78E58200564FF5 /* CommandType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
+		D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandTypeParser.swift; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +118,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3B1680421E778484002286F6 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+				D7A267D21E7796BD00DE5774 /* Constants.swift */,
+				D7983CE51E76E99C00E650ED /* Queue.swift */,
+				D7A267DC1E77A01D00DE5774 /* Stack.swift */,
+			);
+			name = Commons;
+			sourceTree = "<group>";
+		};
+		3B1680431E77848E002286F6 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				D75BC4251E76BA9000ED2A1B /* Command.swift */,
+				D744CA541E79715C004CCABD /* ExecutionError.swift */,
+				D7CEF12F1E78E58200564FF5 /* CommandType.swift */,
+				D7A267D01E7796B800DE5774 /* CommandResult.swift */,
+				D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */,
+				D75BC4311E76D6CA00ED2A1B /* OutboxCommand.swift */,
+				D7A267D41E7796C300DE5774 /* CopyFromCommand.swift */,
+				D7A267D51E7796C300DE5774 /* CopyToCommand.swift */,
+				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
+				D7983CE11E76D9A400E650ED /* JumpCommand.swift */,
+				D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */,
+			);
+			name = Commands;
+			sourceTree = "<group>";
+		};
+		3B1680451E7784B3002286F6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3B1680521E77D6F7002286F6 /* RunState.swift */,
+				3B1680501E778A2D002286F6 /* StationState.swift */,
+				3B1680481E7786B9002286F6 /* Person.swift */,
+				3B16804A1E778773002286F6 /* ModelManager.swift */,
+				D7A267E01E77ABEB00DE5774 /* Model.swift */,
+				D744CA581E797425004CCABD /* RunStateDelegate.swift */,
+				D744CA4E1E7904C0004CCABD /* Sequencer.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3B16804C1E778779002286F6 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
+				D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */,
+				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
+			);
+			name = Logic;
+			sourceTree = "<group>";
+		};
+		3B16804D1E778785002286F6 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				D76FA8281E76ADC400CCCFBE /* GameScene.sks */,
+				D76FA82A1E76ADC400CCCFBE /* Actions.sks */,
+				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
+				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
+				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
+				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		4AF3A78D82E761EB3D5635BA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,14 +226,13 @@
 		D76FA8251E76ADC400CCCFBE /* TrainToChangi */ = {
 			isa = PBXGroup;
 			children = (
+				3B16804D1E778785002286F6 /* UI */,
+				3B16804C1E778779002286F6 /* Logic */,
+				3B1680451E7784B3002286F6 /* Model */,
+				3B1680431E77848E002286F6 /* Commands */,
+				3B1680421E778484002286F6 /* Commons */,
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
-				D76FA8281E76ADC400CCCFBE /* GameScene.sks */,
-				D76FA82A1E76ADC400CCCFBE /* Actions.sks */,
-				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
-				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
-				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
 				D76FA8331E76ADC400CCCFBE /* Assets.xcassets */,
-				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
 				D76FA8381E76ADC400CCCFBE /* Info.plist */,
 			);
 			path = TrainToChangi;
@@ -355,9 +467,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
+				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
+				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
+				D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
+				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
+				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
+				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
+				3B1680491E7786B9002286F6 /* Person.swift in Sources */,
+				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
+				D7CEF1301E78E58200564FF5 /* CommandType.swift in Sources */,
+				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
+				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,
+				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
+				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
+				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
+				D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
+				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
+				D7CEF1321E78EBBB00564FF5 /* CommandTypeParser.swift in Sources */,
+				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
+				D744CA4F1E7904C0004CCABD /* Sequencer.swift in Sources */,
+				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
+				3B1680511E778A2D002286F6 /* StationState.swift in Sources */,
+				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
+				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
