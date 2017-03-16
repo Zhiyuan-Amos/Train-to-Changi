@@ -19,16 +19,29 @@ struct CommandTypeParser {
             case .outbox:
                 commands.append(OutboxCommand())
             case .copyFrom(let index):
+                let index = returnIndexIfExists(index)
                 commands.append(CopyFromCommand(memoryIndex: index))
             case .copyTo(let index):
+                let index = returnIndexIfExists(index)
                 commands.append(CopyToCommand(memoryIndex: index))
             case .add(let index):
+                let index = returnIndexIfExists(index)
                 commands.append(AddCommand(memoryIndex: index))
             case .jump(let index):
+                let index = returnIndexIfExists(index)
                 commands.append(JumpCommand(targetIndex: index, sequencer: sequencer))
             }
         }
 
         return commands
+    }
+
+    // Helper function for returning `index` if it exists.
+    private func returnIndexIfExists(_ index: Int?) -> Int {
+        guard let index = index else {
+            fatalError("User should not be allowed to set index to nil")
+        }
+
+        return index
     }
 }
