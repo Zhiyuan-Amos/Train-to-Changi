@@ -11,5 +11,13 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    override func viewDidLoad() {
+        let scene = GameScene(size: view.bounds.size)
+        guard let skView = view as? SKView else {
+            assertionFailure("View should be a SpriteKit View!")
+            return
+        }
+        scene.scaleMode = .resizeFill
+        skView.presentScene(scene)
+    }
 }
