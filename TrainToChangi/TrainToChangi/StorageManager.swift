@@ -7,22 +7,12 @@
 //
 
 class StorageManager {
-    // Stub level, `stationName` is the unique identifier for each level.
     func loadLevel(stationName: String) -> Level {
-        return Level(stationName: "test", initialState: StationState(
-            inputValues: [1, 2, 3], output: [], memoryValues: [nil, nil]),
-                     commandTypes: [.inbox, .outbox, .add(memoryIndex: nil)],
-                     levelDescriptor: "sum all the values and output the sum",
-                     algorithm: stubAlgo)
-    }
-
-    // stubAlgo, refactor into `preloadedLevels` or something.
-    func stubAlgo(values: [Int]) -> [Int] {
-        var sum = 0
-        for value in values {
-            sum += value
+        for level in PreloadedLevels.allLevels {
+            if level.stationName == stationName {
+                return level
+            }
         }
-
-        return [sum]
+        fatalError("Level unable to be found")
     }
 }

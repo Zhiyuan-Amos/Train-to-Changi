@@ -12,6 +12,7 @@
 		3B1680511E778A2D002286F6 /* StationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* StationState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
+		D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */; };
 		D744CA4F1E7904C0004CCABD /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA4E1E7904C0004CCABD /* Sequencer.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
@@ -65,6 +66,7 @@
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
+		D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreloadedLevels.swift; sourceTree = "<group>"; };
 		D744CA4E1E7904C0004CCABD /* Sequencer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				D744CA581E797425004CCABD /* RunStateDelegate.swift */,
 				D744CA4E1E7904C0004CCABD /* Sequencer.swift */,
 				D744CA681E7A38D7004CCABD /* StorageManager.swift */,
+				D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 			files = (
 				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
+				D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */,
 				D744CA671E7A387F004CCABD /* OutputGenerator.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
