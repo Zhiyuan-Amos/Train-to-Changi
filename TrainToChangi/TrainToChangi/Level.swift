@@ -19,12 +19,7 @@ class Level {
         self.initialState = initialState
         self.commandTypes = commandTypes
         self.levelDescriptor = levelDescriptor
-
-        var queue = initialState.input
-        var inputArray = [Int]()
-        while !queue.isEmpty {
-            inputArray.append(queue.dequeue()!)
-        }
-        self.expectedOutput = OutputGenerator().generateOutput(input: inputArray, algorithm)
+        self.expectedOutput = OutputGenerator().generateOutput(
+            input: initialState.input.toArray, algorithm)
     }
 }

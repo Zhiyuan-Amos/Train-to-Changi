@@ -14,12 +14,8 @@ struct StationState {
 
     let person: Person
 
-    init(inputValues: [Int], output: [Int], memoryValues: [Int?]) {
-        var queue = Queue<Int>()
-        for value in inputValues {
-            queue.enqueue(value)
-        }
-        self.input = queue
+    init(input: [Int], output: [Int], memoryValues: [Int?]) {
+        self.input = Queue<Int>(array: input)
         self.output = output
         self.memoryValues = memoryValues
         self.person = Person()

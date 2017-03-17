@@ -11,7 +11,7 @@ struct PreloadedLevels {
                                 algorithm: levelOneAlgo)
 
     static let levelOneStationName = "Introduction"
-    static let levelOneInitialState = StationState(inputValues: [1, 2, 3],
+    static let levelOneInitialState = StationState(input: [1, 2, 3],
                                                    output: [], memoryValues: [nil, nil])
     static let levelOneCommandTypes: [CommandType] = [.inbox, .outbox]
     static let levelOneLevelDescriptor = "Drag commands into this area to build a program.\n\n" +
