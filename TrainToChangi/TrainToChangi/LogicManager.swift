@@ -15,12 +15,11 @@ class LogicManager {
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
         model.commandIndex = 0
-        let commands = CommandTypeParser(sequencer: model).parse(model.currentCommands)
+        let commands = CommandTypeParser().parse(model.currentCommands)
 
         while model.runState == .running {
             let command = commands[model.commandIndex!]
-            command.setModel(model)
-            let commandResult = command.execute()
+            let commandResult = command.execute(on: model)
 
             model.commandIndex! += 1
 

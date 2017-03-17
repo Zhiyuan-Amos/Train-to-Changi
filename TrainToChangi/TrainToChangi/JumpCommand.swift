@@ -3,16 +3,14 @@
 //
 
 class JumpCommand: Command {
-    let targetIndex: Int
-    let sequencer: Sequencer
+    private let targetIndex: Int
 
-    init(targetIndex: Int, sequencer: Sequencer) {
+    init(targetIndex: Int) {
         self.targetIndex = targetIndex
-        self.sequencer = sequencer
     }
 
-    override func execute() -> CommandResult {
-        sequencer.commandIndex = targetIndex
+    func execute(on model: Model) -> CommandResult {
+        model.commandIndex = targetIndex
         return CommandResult()
     }
 }

@@ -4,13 +4,13 @@
 //
 
 class CopyFromCommand: Command {
-    let memoryIndex: Int
+    private let memoryIndex: Int
 
     init(memoryIndex: Int) {
         self.memoryIndex = memoryIndex
     }
 
-    override func execute() -> CommandResult {
+    func execute(on model: Model) -> CommandResult {
         guard let value = model.getValueFromMemory(at: memoryIndex) else {
             return CommandResult(errorMessage: .emptyMemoryLocation)
         }
