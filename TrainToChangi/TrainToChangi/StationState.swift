@@ -6,21 +6,17 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-import Foundation
-
 struct StationState {
 
     var input: Queue<Int>
-    var expectedOutput: [Int]
     var output: [Int]
     var memoryValues: [Int?]
 
     let person: Person
 
-    init(input: Queue<Int>, output: [Int], expectedOutput: [Int], memoryValues: [Int?]) {
-        self.input = input
+    init(input: [Int], output: [Int], memoryValues: [Int?]) {
+        self.input = Queue<Int>(array: input)
         self.output = output
-        self.expectedOutput = expectedOutput
         self.memoryValues = memoryValues
         self.person = Person()
     }
@@ -28,7 +24,6 @@ struct StationState {
     init(station: StationState) {
         input = station.input
         output = station.output
-        expectedOutput = station.expectedOutput
         memoryValues = station.memoryValues
 
         person = Person()

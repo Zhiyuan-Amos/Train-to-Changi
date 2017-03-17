@@ -10,11 +10,11 @@ import Foundation
 
 class ModelManager: Model {
 
-    private var stationName: String
     private var undoStack: Stack<StationState>
     private var redoStack: Stack<StationState>
     private(set) var currentCommands: [CommandType]
     private var outputIndex: Int
+    private var level: Level
 
     private var _runState: RunState
     var runState: RunState {
@@ -53,19 +53,19 @@ class ModelManager: Model {
         return undoStack.top!.output
     }
     var expectedOutput: [Int] {
-        return undoStack.top!.expectedOutput
+        return level.expectedOutput
     }
 
     init(stationName: String) {
-        self.stationName = stationName
         currentCommands = [CommandType]()
         undoStack = Stack<StationState>()
         redoStack = Stack<StationState>()
         _runState = RunState.stopped
         outputIndex = 0
         _numSteps = 0
+        level = StorageManager().loadLevel(stationName: "test")
 
-        let initialStationState = getInitialState()
+        let initialStationState = level.initialState
         undoStack.push(initialStationState)
     }
 
@@ -165,10 +165,5 @@ class ModelManager: Model {
 
         var newStation = StationState(station: topStation)
         return newStation.memoryValues[index]
-    }
-
-    // TODO - integrate this with StorageManager
-    private func getInitialState() -> StationState {
-        return StationState(input: Queue<Int>(), output: [Int](), expectedOutput: [Int](), memoryValues: [Int?]())
     }
 }

@@ -5,6 +5,12 @@
 struct Queue<T> {
     private var array = [T]()
 
+    init() {}
+
+    init(array: [T]) {
+        self.array = array
+    }
+
     var count: Int {
         return array.count
     }
@@ -27,5 +33,9 @@ struct Queue<T> {
 
     var front: T? {
         return array.first
+    }
+
+    var toArray: [T] {
+        return array
     }
 }
