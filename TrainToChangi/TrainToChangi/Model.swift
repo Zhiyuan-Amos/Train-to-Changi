@@ -27,6 +27,9 @@ protocol Model: class {
     // The expected outputs for the user to clear the level.
     var expectedOutputs: [Int] { get }
 
+    // The current level loaded in Model.
+    var currentLevel: Level { get }
+
     // MARK - API for GameViewController.
 
     // Appends the command to userEnteredCommands.
@@ -37,6 +40,9 @@ protocol Model: class {
 
     // Removes the command at specified Index from userEnteredCommands.
     func removeCommand(fromIndex: Int) -> CommandEnum
+
+    // Removes all commands from userEnteredCommands.
+    func clearAllCommands()
 
     // MARK - API for Logic. Notifies Scene upon execution.
 

@@ -43,6 +43,10 @@ class ModelManager: Model {
         return level.expectedOutputs
     }
 
+    var currentLevel: Level {
+        return level
+    }
+
     // MARK - API for GameViewController.
 
     func addCommand(commandEnum: CommandEnum) {
@@ -56,6 +60,10 @@ class ModelManager: Model {
     // Removes the command at specified Index from userEnteredCommands.
     func removeCommand(fromIndex index: Int) -> CommandEnum {
         return levelState.currentCommands.remove(at: index)
+    }
+
+    func clearAllCommands() {
+        levelState.currentCommands.removeAll()
     }
 
     // MARK - API for Logic. Notifies Scene upon execution.

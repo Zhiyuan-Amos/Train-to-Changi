@@ -4,7 +4,7 @@
 //
 
 //TODO: Refactor into GameLogic.
-class LogicManager {
+class LogicManager: Logic {
     unowned private let model: Model
     private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
