@@ -3,12 +3,7 @@
 //
 
 struct CommandTypeParser {
-    unowned let sequencer: Sequencer
-
-    init(sequencer: Sequencer) {
-        self.sequencer = sequencer
-    }
-
+    // Parses `commandTypes` from [ExecutableCommandType] to [Command].
     func parse(_ commandTypes: [CommandType]) -> [Command] {
         var commands = [Command]()
 
@@ -29,7 +24,9 @@ struct CommandTypeParser {
                 commands.append(AddCommand(memoryIndex: index))
             case .jump(let index):
                 let index = returnIndex(index)
-                commands.append(JumpCommand(targetIndex: index, sequencer: sequencer))
+                commands.append(JumpCommand(targetIndex: index))
+            case .placeHolder:
+                commands.append(PlaceholderCommand())
             }
         }
 

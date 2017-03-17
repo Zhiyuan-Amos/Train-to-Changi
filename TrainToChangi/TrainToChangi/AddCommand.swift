@@ -4,13 +4,13 @@
 //
 
 class AddCommand: Command {
-    let memoryIndex: Int
+    private let memoryIndex: Int
 
     init(memoryIndex: Int) {
         self.memoryIndex = memoryIndex
     }
 
-    override func execute() -> CommandResult {
+    func execute(on model: Model) -> CommandResult {
         guard let personValue = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
         }

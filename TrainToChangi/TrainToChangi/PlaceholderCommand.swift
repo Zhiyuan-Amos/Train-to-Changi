@@ -3,10 +3,9 @@
 // such as JumpCommand to signify the index to jump to.
 //
 
+//TODO: Change name
 class PlaceholderCommand: Command {
-    override init() {}
-
-    override func execute() -> CommandResult {
+    func execute(on model: Model) -> CommandResult {
         return CommandResult()
     }
 }

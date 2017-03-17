@@ -1,10 +1,7 @@
 //
 // Interface for `LogicManager` to work with `ModelManager`.
 //
-protocol Model: class, RunStateDelegate, Sequencer {
-    var currentCommands: [CommandType] { get }
-    var currentOutput: [Int] { get }
-    var expectedOutput: [Int] { get }
+protocol Model: class, RunStateDelegate {
     var numSteps: Int { get set }
 
     // Reverts to the previous state. Returns true if operation is successful.
