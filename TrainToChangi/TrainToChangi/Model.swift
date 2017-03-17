@@ -70,5 +70,17 @@ protocol Model: class {
     func getValueFromMemory(at index: Int) -> Int?
 
     // Put `value` into memory located at `index`.
+<<<<<<< HEAD
     func putValueIntoMemory(_ value: Int?, at index: Int)
+=======
+    func putValueIntoMemory(_ value: Int, at index: Int)
+
+    func addCommand(commandType: CommandType)
+
+    func insertCommand(atIndex: Int, commandType: CommandType)
+
+    func removeCommand(fromIndex: Int) -> CommandType
+
+    func clearAllCommands()
+>>>>>>> Hacked UI out
 }

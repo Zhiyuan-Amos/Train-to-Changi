@@ -9,6 +9,24 @@
 import UIKit
 import SpriteKit
 
+// What should be in the scene, what should be in ViewController?
+// ViewController:
+// -Buttons (Play, stop, back..)
+// -EditorView (The place to drop the commands)
+// -CommandsView (The place to get available commands from)
+// Scene:
+// -The rest? How to pass the level to scene? E.g. number of memory locations
+// Subclass GameScene and pass in level in presentGameScene()?
+
+// Full drag and drop is not implemented yet.
+// Click on commands to add them to editor.
+// Able to move these commands in editor around normally.
+// Deletion of commands not supported, use reset button to clear.
+
+// Scrolling interferes with pan gesture when reordering.
+// There is a workaround but it will both pan & scroll at the same time.
+// Maybe put another view on top of the editor then set the pan
+// gesture to be on this view? Then leave the right side for scrolling.
 class GameViewController: UIViewController {
 
     // VC is currently first responder, to be changed when we add other views.
@@ -32,9 +50,16 @@ class GameViewController: UIViewController {
     @IBOutlet private var commandsEditor: UICollectionView!
 
     required init?(coder aDecoder: NSCoder) {
+<<<<<<< HEAD
         model = ModelManager()
         logic = LogicManager(model: model)
         level = model.currentLevel
+=======
+        model = ModelManager(stationName: "Introduction")
+        logic = LogicManager(model: model)
+        // Previous view should have passed me the level. Simulate this.
+        level = PreloadedLevels.levelOne
+>>>>>>> Hacked UI out
         super.init(coder: aDecoder)
     }
 
@@ -44,11 +69,37 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
         setUpLevelDescription()
         loadAvailableCommands()
         connectDataSourceAndDelegate()
         addPanGestureRecognizerToCommandsEditor()
         presentGameScene()
+=======
+        levelDescription.text = level.levelDescriptor
+        loadAvailableCommands()
+        commandsEditor.dataSource = self
+        commandsEditor.delegate = self
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
+        commandsEditor.addGestureRecognizer(panGesture)
+    }
+
+    func handlePan(gesture: UIPanGestureRecognizer) {
+        switch(gesture.state) {
+
+        case UIGestureRecognizerState.began:
+            guard let selectedIndexPath = commandsEditor.indexPathForItem(at: gesture.location(in: commandsEditor)) else {
+                break
+            }
+            commandsEditor.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case UIGestureRecognizerState.changed:
+            commandsEditor.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case UIGestureRecognizerState.ended:
+            commandsEditor.endInteractiveMovement()
+        default:
+            commandsEditor.cancelInteractiveMovement()
+        }
+>>>>>>> Hacked UI out
     }
 
     // Stop the game. Change runstate to .stop in model
@@ -57,7 +108,10 @@ class GameViewController: UIViewController {
 
     // Start the game. Change runstate to .start in model
     @IBAction func playButtonPressed(_ sender: UIButton) {
+<<<<<<< HEAD
         model.runState = .running
+=======
+>>>>>>> Hacked UI out
         logic.executeCommands()
     }
 
@@ -66,6 +120,7 @@ class GameViewController: UIViewController {
         commandsEditor.reloadData()
     }
 
+<<<<<<< HEAD
     private func setUpLevelDescription() {
         levelDescription.text = level.levelDescriptor
     }
@@ -76,6 +131,15 @@ class GameViewController: UIViewController {
         var commandOffset: CGFloat = 0
 
         for command in level.availableCommands {
+=======
+    func loadAvailableCommands() {
+        // Previous view should have passed me the level. Simulate this.
+        let level = PreloadedLevels.levelOne
+        let initialCommandPosition = availableCommandsView.frame.origin
+        var commandOffset: CGFloat = 0
+
+        for command in level.commandTypes {
+>>>>>>> Hacked UI out
             let currentCommandPositionX = initialCommandPosition.x
             let currentCommandPositionY = initialCommandPosition.y + commandOffset
             let currentCommandPosition = CGPoint(x: currentCommandPositionX,
@@ -86,6 +150,7 @@ class GameViewController: UIViewController {
                                              size: currentCommandSize)
 
             let currentCommandButton = UIButton(frame: currentCommandFrame)
+<<<<<<< HEAD
             let currentCommandLabel = getLabel(for: command)
             currentCommandButton.setTitle(currentCommandLabel.text, for: .normal)
             currentCommandButton.setTitleColor(UIColor.gray, for: .highlighted)
@@ -122,12 +187,62 @@ class GameViewController: UIViewController {
             commandsEditor.endInteractiveMovement()
         default:
             commandsEditor.cancelInteractiveMovement()
+=======
+            let currentCommandImage = getImage(for: command)
+            currentCommandButton.setImage(currentCommandImage, for: .normal)
+            currentCommandButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+            // Int for commandtype enum plz
+            switch command {
+            case .inbox:
+                currentCommandButton.tag = 1
+            case .outbox:
+                currentCommandButton.tag = 2
+            default: fatalError("should not reach here")
+            }
+            view.addSubview(currentCommandButton)
+            commandOffset += 40
+        }
+        // For commands that require targetIndex, enter MemoryIndexSelectMode after dropping
+        // MemorySelectMode: Tap on memory cell. Tapping anywhere else cancels this mode
+    }
+
+    func buttonPressed(sender: UIButton) {
+        // Add int to commandtype enum to eliminate this.
+        if sender.tag == 1 {
+            model.addCommand(commandType: .inbox)
+        } else if sender.tag == 2 {
+            model.addCommand(commandType: .outbox)
+        } else {
+            fatalError("Should never happen.")
+        }
+        commandsEditor.reloadData()
+    }
+
+    fileprivate func getImage(for commandType: CommandType) -> UIImage {
+        // TODO: Refactor
+        switch commandType {
+        case .inbox:
+            guard let image = UIImage(named: "input-temp") else {
+                fatalError("input-temp picture missing")
+            }
+            return image
+        case .outbox:
+            guard let image = UIImage(named: "output-temp") else {
+                fatalError("output-temp picture missing")
+            }
+            return image
+        default: fatalError("should not reach here")
+>>>>>>> Hacked UI out
         }
     }
 
     /// Use GameScene to move/animate the game character and ..
     // TODO: Integrate with gamescene
+<<<<<<< HEAD
     private func presentGameScene() {
+=======
+    func presentGameScene() {
+>>>>>>> Hacked UI out
         let scene = GameScene(size: view.bounds.size)
         guard let skView = view as? SKView else {
             assertionFailure("View should be a SpriteKit View!")
@@ -135,6 +250,7 @@ class GameViewController: UIViewController {
         }
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
+<<<<<<< HEAD
         scene.initLevelState(level.initialState)
     }
 
@@ -152,6 +268,12 @@ class GameViewController: UIViewController {
 }
 
 // TODO: Refactor magic numbers after the layout is getting finalized
+=======
+    }
+}
+
+// TODO: refactor magic
+>>>>>>> Hacked UI out
 extension GameViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -159,6 +281,7 @@ extension GameViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+<<<<<<< HEAD
         return model.userEnteredCommands.count
     }
 
@@ -166,10 +289,19 @@ extension GameViewController: UICollectionViewDataSource {
                         to destinationIndexPath: IndexPath) {
         let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.row)
         model.insertCommand(commandEnum: movedCommand, atIndex: destinationIndexPath.row)
+=======
+        return model.currentCommands.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.row)
+        model.insertCommand(atIndex: destinationIndexPath.row, commandType: movedCommand)
+>>>>>>> Hacked UI out
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+<<<<<<< HEAD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
             "CommandCell", for: indexPath as IndexPath) as? CommandCell else {
             fatalError("Cell not assigned the proper view subclass!")
@@ -178,6 +310,15 @@ extension GameViewController: UICollectionViewDataSource {
         let command = model.userEnteredCommands[indexPath.row]
         let label = getLabel(for: command)
         cell.setLabel(label)
+=======
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommandCell", for: indexPath as IndexPath) as? CommandCell else {
+            fatalError("Cell not assigned the proper view subclass!")
+        }
+        // assign image to cell based on the command type.
+        let command = model.currentCommands[indexPath.row]
+        let image = getImage(for: command)
+        cell.setImage(image)
+>>>>>>> Hacked UI out
         return cell
     }
 
@@ -199,6 +340,11 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
+<<<<<<< HEAD
         return CGSize(width: width * 0.6, height: 30.0)
+=======
+        //hardcode
+        return CGSize(width: width*0.6, height: 30.0)
+>>>>>>> Hacked UI out
     }
 }

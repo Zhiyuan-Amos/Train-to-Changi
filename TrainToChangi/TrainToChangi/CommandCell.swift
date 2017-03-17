@@ -9,16 +9,13 @@
 import UIKit
 
 class CommandCell: UICollectionViewCell {
-    private var label: CommandLabel?
+    private var imageView: UIImageView?
 
-    override func prepareForReuse() {
-        label?.text = nil
-    }
-
-    func setLabel(_ label: CommandLabel) {
+    //TODO: pass in frame
+    func setImage(_ image: UIImage) {
         let frame =  CGRect(x: 0, y: 0, width: 100, height: 30)
-        label.frame = frame
-        self.label = label
-        contentView.addSubview(label)
+        imageView = UIImageView(frame: frame)
+        imageView?.image = image
+        contentView.addSubview(imageView!)
     }
 }
