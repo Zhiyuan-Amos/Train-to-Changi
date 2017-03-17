@@ -2,11 +2,7 @@
 // Interface for `LogicManager` to work with `ModelManager`.
 //
 protocol Model: class, RunStateDelegate {
-    var currentCommands: [CommandType] { get }
-    var currentOutput: [Int] { get }
-    var expectedOutput: [Int] { get }
     var numSteps: Int { get set }
-    var commandIndex: Int? { get set }
 
     // Reverts to the previous state. Returns true if operation is successful.
     func undo() -> Bool

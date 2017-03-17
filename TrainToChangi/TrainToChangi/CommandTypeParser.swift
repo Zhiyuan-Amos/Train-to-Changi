@@ -3,6 +3,7 @@
 //
 
 struct CommandTypeParser {
+    // Parses `commandTypes` from [ExecutableCommandType] to [Command].
     func parse(_ commandTypes: [CommandType]) -> [Command] {
         var commands = [Command]()
 
@@ -24,6 +25,8 @@ struct CommandTypeParser {
             case .jump(let index):
                 let index = returnIndex(index)
                 commands.append(JumpCommand(targetIndex: index))
+            case .placeHolder:
+                commands.append(PlaceholderCommand())
             }
         }
 
