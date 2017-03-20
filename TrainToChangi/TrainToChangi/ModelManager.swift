@@ -69,41 +69,6 @@ class ModelManager: Model {
         undoStack.push(initialStationState)
     }
 
-    func undo() -> Bool {
-        guard let oldState = undoStack.pop() else {
-            return false
-        }
-        if undoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nothingToUndo"), object: nil, userInfo: nil)
-        }
-
-        if redoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nonEmptyRedoStack"), object: nil, userInfo: nil)
-        }
-        redoStack.push(oldState)
-
-        return true
-    }
-
-    func redo() -> Bool {
-        guard let newState = redoStack.pop() else {
-            return false
-        }
-        if redoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nothingToRedo"), object: nil, userInfo: nil)
-        }
-
-        if undoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nonEmptyUndoStack"), object: nil, userInfo: nil)
-        }
-        undoStack.push(newState)
-        return true
-    }
-
     func insertCommand(atIndex: Int, commandEnum: CommandEnum) {
         currentCommands.insert(commandEnum, at: atIndex)
     }
@@ -121,6 +86,12 @@ class ModelManager: Model {
         let valueToReturn = newStation.input.dequeue()
         undoStack.push(newStation)
         return valueToReturn
+    }
+
+    func enqueueValueIntoInboxHead(_ value: Int) {
+    }
+
+    func takeValueOutOfOutbox() {
     }
 
     func putValueIntoOutbox(_ value: Int) {
@@ -148,7 +119,7 @@ class ModelManager: Model {
         undoStack.push(newStation)
     }
 
-    func putValueIntoMemory(_ value: Int, at index: Int) {
+    func putValueIntoMemory(_ value: Int?, at index: Int) {
         guard let topStation = undoStack.top else {
             return
         }

@@ -3,14 +3,27 @@
 //
 
 class JumpCommand: Command {
+    private let model: Model
     private let targetIndex: Int
+    private var prevIndex: Int?
 
-    init(targetIndex: Int) {
+    init(model: Model, targetIndex: Int) {
+        self.model = model
         self.targetIndex = targetIndex
     }
 
-    func execute(on model: Model) -> CommandResult {
+    //TODO: Issue with jump command target index if put with more jump commands.
+    func execute() -> CommandResult {
+        prevIndex = model.commandIndex
         model.commandIndex = targetIndex
         return CommandResult()
+    }
+
+    func undo() {
+        guard let index = prevIndex else {
+            fatalError("JumpCommand must have an index for it to be executed")
+        }
+
+        model.commandIndex = index
     }
 }

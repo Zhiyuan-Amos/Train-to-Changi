@@ -4,5 +4,6 @@
 //
 
 protocol Command {
-    func execute(on model: Model) -> CommandResult
+    func execute() -> CommandResult
+    func undo()
 }
