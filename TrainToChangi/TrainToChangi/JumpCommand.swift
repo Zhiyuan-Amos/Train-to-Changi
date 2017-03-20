@@ -4,7 +4,8 @@
 
 class JumpCommand: Command {
     private let model: Model
-    private let targetIndex: Int
+    let targetIndex: Int
+    var placeHolder: PlaceholderCommand?
     private var prevIndex: Int?
 
     init(model: Model, targetIndex: Int) {
@@ -12,7 +13,6 @@ class JumpCommand: Command {
         self.targetIndex = targetIndex
     }
 
-    //TODO: Issue with jump command target index if put with more jump commands.
     func execute() -> CommandResult {
         prevIndex = model.commandIndex
         model.commandIndex = targetIndex

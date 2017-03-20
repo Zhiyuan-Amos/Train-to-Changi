@@ -3,8 +3,9 @@
 // such as JumpCommand to signify the index to jump to.
 //
 
-//TODO: Change name and link with JumpCommand
 class PlaceholderCommand: Command {
+    var jumpCommand: JumpCommand?
+
     func execute() -> CommandResult {
         return CommandResult()
     }
