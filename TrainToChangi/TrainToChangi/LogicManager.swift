@@ -18,9 +18,13 @@ class LogicManager {
 
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
+        guard model.currentCommands.count > 0 else {
+            fatalError("UI should not have allowed the user to press play when there are no commands")
+        }
+
         model.commandIndex = 0
         let commands = CommandEnumParser().parse(model: model)
-        // TODO: If 0 commands?
+
         while model.runState == .running {
             let command = commands[model.commandIndex!]
             let commandResult = command.execute()
