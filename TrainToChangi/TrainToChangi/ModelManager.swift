@@ -12,7 +12,7 @@ class ModelManager: Model {
 
     private var undoStack: Stack<StationState>
     private var redoStack: Stack<StationState>
-    private(set) var currentCommands: [CommandType]
+    private(set) var currentCommands: [CommandEnum]
     private var outputIndex: Int
     private var level: Level
 
@@ -57,7 +57,7 @@ class ModelManager: Model {
     }
 
     init(stationName: String) {
-        currentCommands = [CommandType]()
+        currentCommands = [CommandEnum]()
         undoStack = Stack<StationState>()
         redoStack = Stack<StationState>()
         _runState = RunState.stopped
@@ -104,8 +104,8 @@ class ModelManager: Model {
         return true
     }
 
-    func insertCommand(atIndex: Int, commandType: CommandType) {
-        currentCommands.insert(commandType, at: atIndex)
+    func insertCommand(atIndex: Int, commandEnum: CommandEnum) {
+        currentCommands.insert(commandEnum, at: atIndex)
     }
 
     func removeCommand(fromIndex: Int) {

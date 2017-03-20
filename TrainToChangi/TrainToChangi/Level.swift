@@ -10,16 +10,16 @@ class Level {
     let stationName: String
     let initialState: StationState
     let expectedOutput: [Int]
-    let commandTypes: [CommandType]
+    let commandEnum: [CommandEnum]
     let levelDescriptor: String
 
-    init(stationName: String, initialState: StationState, commandTypes: [CommandType],
+    init(stationName: String, initialState: StationState, commandEnum: [CommandEnum],
          levelDescriptor: String, algorithm: @escaping ([Int]) -> [Int]) {
         self.stationName = stationName
         self.initialState = initialState
-        self.commandTypes = commandTypes
+        self.commandEnum = commandEnum
         self.levelDescriptor = levelDescriptor
-        self.expectedOutput = OutputGenerator().generateOutput(
+        self.expectedOutput = InputConverter().generateOutput(
             input: initialState.input.toArray, algorithm)
     }
 }

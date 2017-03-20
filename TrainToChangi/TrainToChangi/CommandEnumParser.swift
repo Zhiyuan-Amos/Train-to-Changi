@@ -1,30 +1,31 @@
 //
-// Parses [CommandType] into [Command].
+// Parses [CommandEnum] into [Command].
 //
 
-struct CommandTypeParser {
-    // Parses `commandTypes` from [ExecutableCommandType] to [Command].
-    func parse(_ commandTypes: [CommandType]) -> [Command] {
+struct CommandEnumParser {
+    // Parses [CommandEnum] to [Command].
+    func parse(model: Model) -> [Command] {
         var commands = [Command]()
+        let commandEnums = model.currentCommands
 
-        for commandType in commandTypes {
-            switch commandType {
+        for commandEnum in commandEnums {
+            switch commandEnum {
             case .inbox:
-                commands.append(InboxCommand())
+                commands.append(InboxCommand(model: model))
             case .outbox:
-                commands.append(OutboxCommand())
+                commands.append(OutboxCommand(model: model))
             case .copyFrom(let index):
                 let index = returnIndex(index)
-                commands.append(CopyFromCommand(memoryIndex: index))
+                commands.append(CopyFromCommand(model: model, memoryIndex: index))
             case .copyTo(let index):
                 let index = returnIndex(index)
-                commands.append(CopyToCommand(memoryIndex: index))
+                commands.append(CopyToCommand(model: model, memoryIndex: index))
             case .add(let index):
                 let index = returnIndex(index)
-                commands.append(AddCommand(memoryIndex: index))
+                commands.append(AddCommand(model: model, memoryIndex: index))
             case .jump(let index):
                 let index = returnIndex(index)
-                commands.append(JumpCommand(targetIndex: index))
+                commands.append(JumpCommand(model: model, targetIndex: index))
             case .placeHolder:
                 commands.append(PlaceholderCommand())
             }

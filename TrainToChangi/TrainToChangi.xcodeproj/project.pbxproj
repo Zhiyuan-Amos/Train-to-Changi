@@ -13,13 +13,13 @@
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
 		D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */; };
-		D70CFCC31E7C279C00D28B86 /* CommandType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandType.swift */; };
+		D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA581E797425004CCABD /* RunStateDelegate.swift */; };
 		D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
-		D744CA671E7A387F004CCABD /* OutputGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA651E7A387F004CCABD /* OutputGenerator.swift */; };
+		D744CA671E7A387F004CCABD /* InputConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA651E7A387F004CCABD /* InputConverter.swift */; };
 		D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA681E7A38D7004CCABD /* StorageManager.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
 		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
@@ -43,7 +43,7 @@
 		D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D51E7796C300DE5774 /* CopyToCommand.swift */; };
 		D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DC1E77A01D00DE5774 /* Stack.swift */; };
 		D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267E01E77ABEB00DE5774 /* Model.swift */; };
-		D7CEF1321E78EBBB00564FF5 /* CommandTypeParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */; };
+		D7CEF1321E78EBBB00564FF5 /* CommandEnumParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,13 +66,13 @@
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
 		D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreloadedLevels.swift; sourceTree = "<group>"; };
-		D70CFCC21E7C279C00D28B86 /* CommandType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandType.swift; sourceTree = "<group>"; };
+		D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnum.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA581E797425004CCABD /* RunStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateDelegate.swift; sourceTree = "<group>"; };
 		D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderCommand.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
-		D744CA651E7A387F004CCABD /* OutputGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputGenerator.swift; sourceTree = "<group>"; };
+		D744CA651E7A387F004CCABD /* InputConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputConverter.swift; sourceTree = "<group>"; };
 		D744CA681E7A38D7004CCABD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 		D7A267D51E7796C300DE5774 /* CopyToCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToCommand.swift; sourceTree = "<group>"; };
 		D7A267DC1E77A01D00DE5774 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		D7A267E01E77ABEB00DE5774 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandTypeParser.swift; sourceTree = "<group>"; };
+		D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnumParser.swift; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -159,12 +159,12 @@
 				3B1680481E7786B9002286F6 /* Person.swift */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
 				D744CA641E7A387F004CCABD /* Level.swift */,
-				D744CA651E7A387F004CCABD /* OutputGenerator.swift */,
+				D744CA651E7A387F004CCABD /* InputConverter.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 				D744CA581E797425004CCABD /* RunStateDelegate.swift */,
 				D744CA681E7A38D7004CCABD /* StorageManager.swift */,
 				D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */,
-				D70CFCC21E7C279C00D28B86 /* CommandType.swift */,
+				D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -173,7 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
-				D7CEF1311E78EBBB00564FF5 /* CommandTypeParser.swift */,
+				D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */,
 				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
 			);
 			name = Logic;
@@ -479,8 +479,8 @@
 				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */,
-				D70CFCC31E7C279C00D28B86 /* CommandType.swift in Sources */,
-				D744CA671E7A387F004CCABD /* OutputGenerator.swift in Sources */,
+				D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */,
+				D744CA671E7A387F004CCABD /* InputConverter.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
 				D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */,
@@ -498,7 +498,7 @@
 				D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
-				D7CEF1321E78EBBB00564FF5 /* CommandTypeParser.swift in Sources */,
+				D7CEF1321E78EBBB00564FF5 /* CommandEnumParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
