@@ -6,14 +6,14 @@ struct PreloadedLevels {
 
     static let levelOne = Level(stationName: levelOneStationName,
                                 initialState: levelOneInitialState,
-                                commandTypes: levelOneCommandTypes,
+                                commandEnum: levelOneCommandEnums,
                                 levelDescriptor: levelOneLevelDescriptor,
                                 algorithm: levelOneAlgo)
 
     static let levelOneStationName = "Introduction"
     static let levelOneInitialState = StationState(input: [1, 2, 3],
                                                    output: [], memoryValues: [nil, nil])
-    static let levelOneCommandTypes: [CommandType] = [.inbox, .outbox]
+    static let levelOneCommandEnums: [CommandEnum] = [.inbox, .outbox]
     static let levelOneLevelDescriptor = "Drag commands into this area to build a program.\n\n" +
         "Your program should tell your worker to grab each thing from the INBOX, " +
         "and drop it into the OUTBOX."

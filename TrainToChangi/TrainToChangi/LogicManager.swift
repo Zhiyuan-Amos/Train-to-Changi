@@ -15,8 +15,7 @@ class LogicManager {
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
         model.commandIndex = 0
-        let commands = CommandTypeParser().parse(model.currentCommands)
-
+        let commands = CommandEnumParser().parse(model: model)
         while model.runState == .running {
             let command = commands[model.commandIndex!]
             let commandResult = command.execute(on: model)
