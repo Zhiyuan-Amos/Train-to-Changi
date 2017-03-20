@@ -22,6 +22,8 @@ class ModelManager: Model {
             return _runState
         }
         set {
+            NotificationCenter.default.post(name: Notification.Name(
+                rawValue: "runStateUpdated"), object: runState, userInfo: nil)
             _runState = newValue
         }
     }
