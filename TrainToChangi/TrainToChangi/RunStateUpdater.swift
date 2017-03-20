@@ -26,7 +26,8 @@ struct RunStateUpdater {
 
     // Returns true if the current output equals the expected output.
     private func hasMetWinCondition() -> Bool {
-        return runStateDelegate.currentOutput == runStateDelegate.expectedOutput
+        return runStateDelegate.currentInput.isEmpty
+            && runStateDelegate.currentOutput == runStateDelegate.expectedOutput
     }
 
     // Returns true if all the values currently in current output is

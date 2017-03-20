@@ -51,6 +51,9 @@ class ModelManager: Model {
         }
     }
 
+    var currentInput: [Int] {
+        return undoStack.top!.input.toArray
+    }
     var currentOutput: [Int] {
         return undoStack.top!.output
     }

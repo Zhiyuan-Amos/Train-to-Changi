@@ -7,6 +7,7 @@
 protocol RunStateDelegate: class {
     var runState: RunState { get set }
     var currentCommands: [CommandEnum] { get }
+    var currentInput: [Int] { get }
     var currentOutput: [Int] { get }
     var expectedOutput: [Int] { get }
     var commandIndex: Int? { get set }
