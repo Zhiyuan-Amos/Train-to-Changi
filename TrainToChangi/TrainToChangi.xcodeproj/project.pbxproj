@@ -66,7 +66,6 @@
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-
 		A71209661E8175D10039B257 /* LevelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelHelper.swift; sourceTree = "<group>"; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
@@ -185,7 +184,6 @@
 				A712096B1E8189060039B257 /* CommandLabel.swift */,
 				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
 				A7082EC11E7C2AEB00619AFA /* CommandCell.swift */,
-				A7082EC21E7C2AEB00619AFA /* DraggableImageView.swift */,
 				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
 				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
 				BE4697B0B9F0AFDD73CEDDDC /* CommandLabel.swift */,
@@ -520,7 +518,6 @@
 				D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
-				A7082EC41E7C2AEB00619AFA /* DraggableImageView.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
