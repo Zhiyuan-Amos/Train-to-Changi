@@ -4,9 +4,9 @@
 
 import Foundation
 struct RunStateUpdater {
-    unowned let runStateDelegate: RunStateDelegate
+    unowned let runStateDelegate: Model
 
-    init(runStateDelegate: RunStateDelegate) {
+    init(runStateDelegate: Model) {
         self.runStateDelegate = runStateDelegate
     }
 
@@ -26,8 +26,8 @@ struct RunStateUpdater {
 
     // Returns true if the current output equals the expected output.
     private func hasMetWinCondition() -> Bool {
-        return runStateDelegate.currentInput.isEmpty
-            && runStateDelegate.currentOutput == runStateDelegate.expectedOutput
+        return runStateDelegate.currentInputs.isEmpty
+            && runStateDelegate.currentOutputs == runStateDelegate.expectedOutputs
     }
 
     // Returns true if all the values currently in current output is
@@ -35,8 +35,8 @@ struct RunStateUpdater {
     // win condition met, as maybe not all of values required have been put into
     // the `model`.
     private func isOutputValid() -> Bool {
-        for (index, value) in runStateDelegate.currentOutput.enumerated() {
-            if value != runStateDelegate.expectedOutput[index] {
+        for (index, value) in runStateDelegate.currentOutputs.enumerated() {
+            if value != runStateDelegate.expectedOutputs[index] {
                 return false
             }
         }
@@ -44,9 +44,9 @@ struct RunStateUpdater {
     }
 
     private func isIndexOutOfBounds() -> Bool {
-        guard runStateDelegate.commandIndex! >= 0 else {
+        guard runStateDelegate.programCounter! >= 0 else {
             fatalError("commandIndex should never be smaller than 0")
         }
-        return runStateDelegate.commandIndex! >= runStateDelegate.currentCommands.count
+        return runStateDelegate.programCounter! >= runStateDelegate.userEnteredCommands.count
     }
 }

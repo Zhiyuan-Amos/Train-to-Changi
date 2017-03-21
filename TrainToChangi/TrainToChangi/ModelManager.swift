@@ -8,121 +8,89 @@
 
 import Foundation
 
-class ModelManager {
+class ModelManager: Model {
 
-    internal var level: Level
+    var level: Level
+    var levelState: LevelState
+    var runState: RunState
+    var numSteps: Int
+    var programCounter: Int? {
+        didSet {
+            // Notify UI to move arrow in future.
+        }
+    }
 
-    internal var gameStateManager: GameStateManager
-    internal var runState: RunState
-
-    internal var currentCommands: [CommandEnum]
-
-    // _commandIndex is nil initially i.e there's no arrow pointing at the commands
-    internal var commandIndex: Int?
-    internal var numSteps: Int
-
-    init(stationName: String) {
-        level = StorageManager().loadLevel(stationName: "test")
-
-        gameStateManager = GameStateManager(initialState: StationState(input: level.input))
-        runState = RunState.stopped
-
-        currentCommands = [CommandEnum]()
+    init() {
+        level = PreloadedLevels.levelOne
+        levelState = level.initialState
+        runState = .stopped
         numSteps = 0
     }
 
-}
-
-extension ModelManager: RunStateDelegate {
-    func getRunState() -> RunState {
-        return runState
+    var userEnteredCommands: [CommandEnum] {
+        return levelState.currentCommands
     }
 
-    func setRunState(to newRunState: RunState) {
-        runState = newRunState
-    }
-}
-
-extension ModelManager: Model {
-
-    func getCurrentCommands() -> [CommandEnum] {
-        return getCurrentCommands()
+    var currentInputs: [Int] {
+        return levelState.inputs
     }
 
-    func getCurrentInput() -> [Int] {
-        return gameStateManager.getCurrentState().input
+    var currentOutputs: [Int] {
+        return levelState.outputs
     }
 
-    func getCurrentOutput() -> [Int] {
-        return gameStateManager.getCurrentState().output
+    var expectedOutputs: [Int] {
+        return level.expectedOutputs
     }
 
-    func getExpectedOutput() -> [Int] {
-        return level.expectedOutput
+    // MARK - API for GameViewController.
+
+    func addCommand(commandEnum: CommandEnum) {
+        levelState.currentCommands.append(commandEnum)
     }
 
-    func getCommandIndex() -> Int? {
-        return commandIndex
+    func insertCommand(commandEnum: CommandEnum, atIndex index: Int) {
+        levelState.currentCommands.insert(commandEnum, at: index)
     }
 
-    func setCommandIndex(to newIndex: Int?) {
-        commandIndex = newIndex
+    // Removes the command at specified Index from userEnteredCommands.
+    func removeCommand(fromIndex index: Int) -> CommandEnum {
+        return levelState.currentCommands.remove(at: index)
     }
 
-    func getNumSteps() -> Int {
-        return numSteps
-    }
-
-    func insertCommand(atIndex: Int, commandEnum: CommandEnum) {
-        currentCommands.insert(commandEnum, at: atIndex)
-    }
-
-    func removeCommand(fromIndex: Int) {
-        currentCommands.remove(at: fromIndex)
-    }
+    // MARK - API for Logic. Notifies Scene upon execution.
 
     func dequeueValueFromInbox() -> Int? {
-        var newStationState = StationState(station: gameStateManager.getCurrentState())
-        let valueToReturn = newStationState.input.removeFirst()
-        gameStateManager.update(newStationState: newStationState)
-        return valueToReturn
+        let dequeuedValue = levelState.inputs.removeFirst()
+        return dequeuedValue
     }
 
-    func insertValueIntoInbox(_ value: Int, at index: Int) {
-        var newStationState = StationState(station: gameStateManager.getCurrentState())
-        newStationState.input.insert(value, at: 0)
-        gameStateManager.update(newStationState: newStationState)
+    func insertValueIntoInbox(_ value: Int) {
+        levelState.inputs.insert(value, at: 0)
     }
 
     func putValueIntoOutbox(_ value: Int) {
-        var newStationState = StationState(station: gameStateManager.getCurrentState())
-        newStationState.output.append(value)
+        levelState.outputs.append(value)
     }
 
     func takeValueOutOfOutbox() {
-        var newStationState = StationState(station: gameStateManager.getCurrentState())
-        newStationState.output.removeLast()
-        gameStateManager.update(newStationState: newStationState)
+        levelState.outputs.removeLast()
     }
 
     func getValueOnPerson() -> Int? {
-        return gameStateManager.getCurrentState().personValue
+        return levelState.personValue
     }
 
     func updateValueOnPerson(to newValue: Int?) {
-        var newStationState = StationState(station: gameStateManager.getCurrentState())
-        newStationState.personValue = newValue
-        gameStateManager.update(newStationState: newStationState)
+        levelState.personValue = newValue
     }
 
     func putValueIntoMemory(_ value: Int?, at index: Int) {
-        var newStationState = StationState(station: gameStateManager.getCurrentState())
-        newStationState.memoryValues[index] = value
-        gameStateManager.update(newStationState: newStationState)
+        levelState.memoryValues[index] = value
     }
 
     func getValueFromMemory(at index: Int) -> Int? {
-        return gameStateManager.getCurrentState().memoryValues[index]
+        return levelState.memoryValues[index]
     }
 
 }

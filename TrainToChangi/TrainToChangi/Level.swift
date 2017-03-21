@@ -7,21 +7,20 @@
 //
 
 struct Level {
+    // Missing a way to indicate how many memory locations there are.
     let levelName: String
-    let completedBefore: Bool
-    let input: [Int]
-    let expectedOutput: [Int]
-    let commandEnum: [CommandEnum]
+    let initialState: LevelState
+    let availableCommands: [CommandEnum]
     let levelDescriptor: String
+    let expectedOutputs: [Int]
 
-    init(levelName: String, commandEnum: [CommandEnum], input: [Int],
-         levelDescriptor: String, expectedOutput: [Int], completedBefore: Bool) {
-
+    init(levelName: String, initialState: LevelState, availableCommands: [CommandEnum],
+         levelDescriptor: String, algorithm: @escaping ([Int]) -> [Int]) {
         self.levelName = levelName
-        self.completedBefore = completedBefore
-        self.commandEnum = commandEnum
-        self.input = input
+        self.initialState = initialState
+        self.availableCommands = availableCommands
         self.levelDescriptor = levelDescriptor
-        self.expectedOutput = expectedOutput
+        self.expectedOutputs = InputConverter().generateOutput(
+                input: initialState.inputs, algorithm)
     }
 }

@@ -31,7 +31,7 @@ enum CommandEnum {
     }
 
     static func convertFromString(commandString: String) -> CommandEnum? {
-        let commandArr = commandString.characters.split{$0 == "_"}.map(String.init)
+        let commandArr = commandString.characters.split { $0 == "_" }.map(String.init)
 
         switch commandArr[0] {
             case "inbox":

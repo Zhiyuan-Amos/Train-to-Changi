@@ -14,8 +14,8 @@ class JumpCommand: Command {
     }
 
     func execute() -> CommandResult {
-        prevIndex = model.commandIndex
-        model.commandIndex = targetIndex
+        prevIndex = model.programCounter
+        model.programCounter = targetIndex
         return CommandResult()
     }
 
@@ -24,6 +24,6 @@ class JumpCommand: Command {
             fatalError("JumpCommand must have an index for it to be executed")
         }
 
-        model.commandIndex = index
+        model.programCounter = index
     }
 }

@@ -18,21 +18,21 @@ class LogicManager {
 
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
-        guard model.currentCommands.count > 0 else {
+        guard model.userEnteredCommands.count > 0 else {
             fatalError("UI should not have allowed the user to press play when there are no commands")
         }
 
-        model.commandIndex = 0
+        model.programCounter = 0
         let commands = CommandEnumParser().parse(model: model)
 
         while model.runState == .running {
-            let command = commands[model.commandIndex!]
+            let command = commands[model.programCounter!]
             let commandResult = command.execute()
 
             executedCommands.append(command)
             executedCommandsTailPointer += 1
 
-            model.commandIndex! += 1
+            model.programCounter! += 1
             updater.updateRunState(commandResult: commandResult)
             if model.runState == .won {
                 updateNumStepsTaken()
@@ -51,7 +51,7 @@ class LogicManager {
         command.undo()
         executedCommandsTailPointer -= 1
 
-        model.commandIndex! -= 1
+        model.programCounter! -= 1
 
         return executedCommandsTailPointer >= 0
     }
@@ -67,7 +67,7 @@ class LogicManager {
         _ = command.execute()
         executedCommandsTailPointer += 1
 
-        model.commandIndex! += 1
+        model.programCounter! += 1
 
         return executedCommandsTailPointer < executedCommands.count - 1
     }

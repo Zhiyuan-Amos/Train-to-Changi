@@ -18,7 +18,7 @@ struct CommandEnumParser {
     // Helper function to convert the `model.currentCommands` of type `CommandEnum` into `[Command]`.
     private func convertCommandEnumToCommand(model: Model) -> [Command] {
         var commands = [Command]()
-        let commandEnums = model.currentCommands
+        let commandEnums = model.userEnteredCommands
 
         for commandEnum in commandEnums {
             switch commandEnum {
@@ -38,7 +38,7 @@ struct CommandEnumParser {
             case .jump(let index):
                 let index = returnIndex(index)
                 commands.append(JumpCommand(model: model, targetIndex: index))
-            case .placeHolder:
+            case .placeholder:
                 commands.append(PlaceholderCommand())
             }
         }

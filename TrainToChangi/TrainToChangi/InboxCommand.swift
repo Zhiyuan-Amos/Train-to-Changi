@@ -27,8 +27,7 @@ class InboxCommand: Command {
         guard let value = model.getValueOnPerson() else {
             fatalError("Person should have a value when executing InboxCommand")
         }
-
-        model.enqueueValueIntoInboxHead(value)
+        model.insertValueIntoInbox(value)
         model.updateValueOnPerson(to: prevValueOnPerson)
     }
 }

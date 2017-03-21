@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
-		3B1680511E778A2D002286F6 /* StationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* StationState.swift */; };
+		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
-		3BD7EF961E811E080029EA57 /* GameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7EF951E811E080029EA57 /* GameStateManager.swift */; };
-		3BD7EF9A1E81244A0029EA57 /* LevelAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7EF991E81244A0029EA57 /* LevelAlgorithms.swift */; };
 		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
@@ -19,7 +17,6 @@
 		D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
-		D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA581E797425004CCABD /* RunStateDelegate.swift */; };
 		D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
 		D744CA671E7A387F004CCABD /* InputConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA651E7A387F004CCABD /* InputConverter.swift */; };
@@ -62,10 +59,8 @@
 /* Begin PBXFileReference section */
 		38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
-		3B1680501E778A2D002286F6 /* StationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationState.swift; sourceTree = "<group>"; };
+		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
-		3BD7EF951E811E080029EA57 /* GameStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStateManager.swift; sourceTree = "<group>"; };
-		3BD7EF991E81244A0029EA57 /* LevelAlgorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelAlgorithms.swift; sourceTree = "<group>"; };
 		3BD7EF9B1E812F790029EA57 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -75,7 +70,6 @@
 		D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnum.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
-		D744CA581E797425004CCABD /* RunStateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateDelegate.swift; sourceTree = "<group>"; };
 		D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderCommand.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		D744CA651E7A387F004CCABD /* InputConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputConverter.swift; sourceTree = "<group>"; };
@@ -165,7 +159,6 @@
 				3BD7EF931E811DCB0029EA57 /* States */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
-				D744CA581E797425004CCABD /* RunStateDelegate.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -205,8 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				3B1680521E77D6F7002286F6 /* RunState.swift */,
-				3B1680501E778A2D002286F6 /* StationState.swift */,
-				3BD7EF951E811E080029EA57 /* GameStateManager.swift */,
+				3B1680501E778A2D002286F6 /* LevelState.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -215,7 +207,6 @@
 			isa = PBXGroup;
 			children = (
 				D744CA641E7A387F004CCABD /* Level.swift */,
-				3BD7EF991E81244A0029EA57 /* LevelAlgorithms.swift */,
 				D744CA651E7A387F004CCABD /* InputConverter.swift */,
 				D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */,
 			);
@@ -513,7 +504,6 @@
 			files = (
 				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
-				3BD7EF9A1E81244A0029EA57 /* LevelAlgorithms.swift in Sources */,
 				D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */,
 				D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */,
 				D744CA671E7A387F004CCABD /* InputConverter.swift in Sources */,
@@ -527,18 +517,16 @@
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,
-				3BD7EF961E811E080029EA57 /* GameStateManager.swift in Sources */,
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
-				D744CA591E797425004CCABD /* RunStateDelegate.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandEnumParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
-				3B1680511E778A2D002286F6 /* StationState.swift in Sources */,
+				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
