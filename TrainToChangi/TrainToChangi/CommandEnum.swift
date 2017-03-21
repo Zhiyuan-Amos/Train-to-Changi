@@ -9,7 +9,7 @@ enum CommandEnum {
     case copyTo(memoryIndex: Int?)
     case add(memoryIndex: Int?)
     case jump(targetIndex: Int?)
-    case placeHolder
+    case placeholder
 
     func toString() -> String {
         switch self {
@@ -25,8 +25,31 @@ enum CommandEnum {
             return "add_\(memoryIndex)"
         case .jump(let targetIndex):
             return "jump_\(targetIndex)"
-        case .placeHolder:
-            return "placeHolder"
+        case .placeholder:
+            return "placeholder"
+        }
+    }
+
+    static func convertFromString(commandString: String) -> CommandEnum? {
+        let commandArr = commandString.characters.split{$0 == "_"}.map(String.init)
+
+        switch commandArr[0] {
+            case "inbox":
+                return CommandEnum.inbox
+            case "outbox":
+                return CommandEnum.outbox
+            case "placeholder":
+                return CommandEnum.placeholder
+            case "copyFrom":
+                return CommandEnum.copyFrom(memoryIndex: Int(commandArr[1]))
+            case "copyTo":
+                return CommandEnum.copyTo(memoryIndex: Int(commandArr[1]))
+            case "add":
+                return CommandEnum.add(memoryIndex: Int(commandArr[1]))
+            case "jump":
+                return CommandEnum.jump(targetIndex: Int(commandArr[1]))
+            default:
+                return nil
         }
     }
 }

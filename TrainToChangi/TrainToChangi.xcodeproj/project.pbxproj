@@ -12,6 +12,8 @@
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		3BD7EF961E811E080029EA57 /* GameStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7EF951E811E080029EA57 /* GameStateManager.swift */; };
 		3BD7EF9A1E81244A0029EA57 /* LevelAlgorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7EF991E81244A0029EA57 /* LevelAlgorithms.swift */; };
+		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
+		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
 		D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */; };
 		D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */; };
@@ -64,6 +66,8 @@
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
 		3BD7EF951E811E080029EA57 /* GameStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStateManager.swift; sourceTree = "<group>"; };
 		3BD7EF991E81244A0029EA57 /* LevelAlgorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelAlgorithms.swift; sourceTree = "<group>"; };
+		3BD7EF9B1E812F790029EA57 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
+		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				D75BC4251E76BA9000ED2A1B /* Command.swift */,
+				D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */,
 				D744CA541E79715C004CCABD /* ExecutionError.swift */,
 				D7A267D01E7796B800DE5774 /* CommandResult.swift */,
 				D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */,
@@ -161,9 +166,6 @@
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 				D744CA581E797425004CCABD /* RunStateDelegate.swift */,
-				D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */,
-				D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */,
-				3BD7EF951E811E080029EA57 /* GameStateManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -204,6 +206,7 @@
 			children = (
 				3B1680521E77D6F7002286F6 /* RunState.swift */,
 				3B1680501E778A2D002286F6 /* StationState.swift */,
+				3BD7EF951E811E080029EA57 /* GameStateManager.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				D744CA641E7A387F004CCABD /* Level.swift */,
 				3BD7EF991E81244A0029EA57 /* LevelAlgorithms.swift */,
 				D744CA651E7A387F004CCABD /* InputConverter.swift */,
+				D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */,
 			);
 			name = Levels;
 			sourceTree = "<group>";
@@ -270,6 +274,8 @@
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
 				D76FA8331E76ADC400CCCFBE /* Assets.xcassets */,
 				D76FA8381E76ADC400CCCFBE /* Info.plist */,
+				3BD7EF9B1E812F790029EA57 /* Levels.plist */,
+				3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */,
 			);
 			path = TrainToChangi;
 			sourceTree = "<group>";
@@ -379,7 +385,9 @@
 				D76FA8291E76ADC400CCCFBE /* GameScene.sks in Resources */,
 				D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */,
 				D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */,
+				3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */,
 				D76FA82B1E76ADC400CCCFBE /* Actions.sks in Resources */,
+				3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

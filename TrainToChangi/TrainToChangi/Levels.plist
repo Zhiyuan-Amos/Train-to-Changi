@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Clementi</key>
+	<dict>
+		<key>completedBefore</key>
+		<false/>
+		<key>commands</key>
+		<array>
+			<string>inbox</string>
+			<string>outbox</string>
+			<string>jump_nil</string>
+			<string>add_nil</string>
+			<string>placeholder</string>
+		</array>
+		<key>input</key>
+		<array>
+			<string>1</string>
+			<string>2</string>
+			<string>3</string>
+		</array>
+		<key>expectedOutput</key>
+		<array>
+			<string>1</string>
+			<string>4</string>
+			<string>9</string>
+		</array>
+		<key>description</key>
+		<string>Square the input hahahaha.</string>
+	</dict>
+</dict>
+</plist>
