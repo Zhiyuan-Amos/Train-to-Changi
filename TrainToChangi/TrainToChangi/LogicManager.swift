@@ -32,7 +32,9 @@ class LogicManager: Logic {
             initVariablesForExecution()
         }
 
+        print(model.runState)
         while model.runState == .running {
+            print("this is not printed")
             executeNextCommand()
         }
     }
@@ -77,6 +79,7 @@ class LogicManager: Logic {
         model.programCounter = 0
         commands = CommandEnumParser().parse(model: model)
         isFirstExecution = false
+        print("this is printed, init success")
     }
 
     private func updateNumStepsTaken() {
