@@ -62,6 +62,7 @@ class ModelManager: Model {
 
     func dequeueValueFromInbox() -> Int? {
         let dequeuedValue = levelState.inputs.removeFirst()
+        postMoveNotification(destination: .inbox)
         return dequeuedValue
     }
 
@@ -71,6 +72,7 @@ class ModelManager: Model {
 
     func putValueIntoOutbox(_ value: Int) {
         levelState.outputs.append(value)
+        postMoveNotification(destination: .outbox)
     }
 
     func takeValueOutOfOutbox() {
@@ -91,6 +93,13 @@ class ModelManager: Model {
 
     func getValueFromMemory(at index: Int) -> Int? {
         return levelState.memoryValues[index]
+    }
+
+    private func postMoveNotification(destination: WalkDestination) {
+        let notification = Notification(name: Constants.NotificationNames.movePersonInScene,
+                                        object: nil,
+                                        userInfo: ["destination": destination])
+        NotificationCenter.default.post(notification)
     }
 
 }

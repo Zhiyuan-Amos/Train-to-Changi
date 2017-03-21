@@ -14,7 +14,7 @@ struct PreloadedLevels {
     static let levelOneInitialState = LevelState(inputs: [1, 2, 3],
                                                  outputs: [],
                                                  memoryValues: [nil, nil],
-                                                 personValue: 0,
+                                                 personValue: nil,
                                                  currentCommands: [])
     static let levelOneCommandEnum: [CommandEnum] = [.inbox, .outbox]
     static let levelOneLevelDescriptor = "Drag commands into this area to build a program.\n\n" +

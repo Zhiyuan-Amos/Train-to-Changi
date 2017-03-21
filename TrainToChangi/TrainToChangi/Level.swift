@@ -7,7 +7,6 @@
 //
 
 struct Level {
-    // Missing a way to indicate how many memory locations there are.
     let levelName: String
     let initialState: LevelState
     let availableCommands: [CommandEnum]
@@ -20,7 +19,7 @@ struct Level {
         self.initialState = initialState
         self.availableCommands = availableCommands
         self.levelDescriptor = levelDescriptor
-        self.expectedOutputs = InputConverter().generateOutput(
+        self.expectedOutputs = LevelHelper().generateOutput(
                 input: initialState.inputs, algorithm)
     }
 }

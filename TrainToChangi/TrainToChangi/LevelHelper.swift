@@ -1,5 +1,5 @@
 //
-//  LevelHelper.swift
+//  OutputGenerator.swift
 //  TrainToChangi
 //
 //  Created by Zhi Yuan on 15/3/17.
@@ -11,5 +11,5 @@ struct LevelHelper {
         return algorithm(input)
     }
 
-    //TODO: randomInputGenerator
+    //TODO: randomInputGenerator @Desmond
 }
