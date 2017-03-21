@@ -7,8 +7,8 @@ import UIKit
 
 class CommandLabel: UILabel {
 
-    func updateText(commandEnum: CommandEnum) {
-        switch commandEnum {
+    func updateText(commandType: CommandType) {
+        switch commandType {
         case .add(let index):
             if index == nil {
                 text = "add"
