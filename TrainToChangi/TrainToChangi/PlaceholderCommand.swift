@@ -1,6 +1,7 @@
 //
-// A placeholder command; upon execution, does nothing. Used by commands
-// such as JumpCommand to signify the index to jump to.
+// A placeholder (also a type of command); upon execution, does nothing. Used by
+// JumpCommand to signify the index to jump to.
+// Representation invariant: `jumpCommand.placeHolder` must be a reference to self.
 //
 
 //TODO: Change name and link with JumpCommand
@@ -23,5 +24,15 @@ class PlaceholderCommand: Command {
         }
 
         model.programCounter = index
+    }
+
+    private func _checkRep() {
+        guard let jumpCommand = jumpCommand else {
+            fatalError("jumpCommand cannot be nil during execution")
+        }
+
+        guard jumpCommand.placeHolder === self else {
+            fatalError("Bijection requirement unmet")
+        }
     }
 }
