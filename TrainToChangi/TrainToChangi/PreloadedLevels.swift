@@ -7,6 +7,7 @@ struct PreloadedLevels {
     static let levelOne = Level(levelName: levelOneStationName,
                                 initialState: levelOneInitialState,
                                 availableCommands: levelOneCommandEnum,
+                                memoryLayout: .twoByOne,
                                 levelDescriptor: levelOneLevelDescriptor,
                                 algorithm: levelOneAlgo)
 

@@ -11,7 +11,7 @@ import GameplayKit
 
 // Stores the location that can be reached by player sprite.
 enum WalkDestination {
-    case inbox, outbox
+    case inbox, outbox, memory(layout: Constants.Memory.Layout, index: Int)
 
     var point: CGPoint {
         switch self {
@@ -19,6 +19,8 @@ enum WalkDestination {
             return Constants.Inbox.goto
         case .outbox:
             return Constants.Outbox.goto
+        case let .memory(layout, index):
+            return layout.locations[index]
         }
     }
 }
@@ -42,20 +44,41 @@ class GameScene: SKScene {
         initPlayer()
         initStationElements()
         initNotification()
+
+        /* testing, to remove when integrating
+        initLevelData(PreloadedLevels.levelOne)
+        move(to: .inbox)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+            self.move(to: .outbox)
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 6) {
+            self.move(to: .inbox)
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9) {
+            self.move(to: .outbox)
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 12) {
+            self.move(to: .inbox)
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 15) {
+            self.move(to: .outbox)
+        }
+        */
     }
 
 }
 
 // MARK: - Init
 extension GameScene {
-    func initLevelState(_ levelState: LevelState) {
-        createInboxNodes(from: levelState.inputs)
-        createMemoryNodes(from: levelState.memoryValues)
+    func initLevelData(_ level: Level) {
+        createInboxNodes(from: level.initialState.inputs)
+        createMemoryNodes(from: level.initialState.memoryValues, layout: level.memoryLayout)
     }
 
     fileprivate func initPlayer() {
         player.size = Constants.Player.size
         player.position = Constants.Player.position
+        player.zPosition = Constants.Player.zPosition
         addChild(player)
     }
 
@@ -78,8 +101,22 @@ extension GameScene {
             name: Constants.NotificationNames.movePersonInScene, object: nil)
     }
 
-    fileprivate func createMemoryNodes(from memoryValues: [Int?]) {
-        // TODO: support memory values
+    fileprivate func createMemoryNodes(from memoryValues: [Int?], layout: Constants.Memory.Layout) {
+        for (index, value) in memoryValues.enumerated() {
+            guard layout.locations.count == memoryValues.count else {
+                assertionFailure("Number of memory values differ from the layout specified. Check level data.")
+                return
+            }
+            let box = SKShapeNode(rectOf: Constants.Box.size)
+            box.name = "memory \(index)"
+            box.position = layout.locations[index]
+            box.fillColor = .gray
+            // TODO: create box for pre-loaded memory values
+            let label = SKLabelNode(text: String(describing: index))
+            label.fontSize = 13
+            box.addChild(label)
+            addChild(box)
+        }
     }
 
     fileprivate func createInboxNodes(from inboxValues: [Int]) {
@@ -101,6 +138,15 @@ extension GameScene {
             return startingX + CGFloat(index) * Constants.Box.size.width
         }
         return CGPoint(x: calculateX(index), y: inbox.position.y)
+    }
+}
+
+// MARK: - Touch
+extension GameScene {
+    func memoryLocation(of point: CGPoint) -> Int {
+        var index = 0
+
+        return index
     }
 }
 
@@ -151,6 +197,8 @@ extension GameScene {
             player.run(wait, completion: {
                 self.putToOutbox()
             })
+        case let .memory(layout, index):
+            break
         }
     }
 
