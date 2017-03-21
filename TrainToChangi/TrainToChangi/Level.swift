@@ -6,20 +6,22 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-class Level {
-    let stationName: String
-    let initialState: StationState
+struct Level {
+    let levelName: String
+    let completedBefore: Bool
+    let input: [Int]
     let expectedOutput: [Int]
     let commandEnum: [CommandEnum]
     let levelDescriptor: String
 
-    init(stationName: String, initialState: StationState, commandEnum: [CommandEnum],
-         levelDescriptor: String, algorithm: @escaping ([Int]) -> [Int]) {
-        self.stationName = stationName
-        self.initialState = initialState
+    init(levelName: String, commandEnum: [CommandEnum], input: [Int],
+         levelDescriptor: String, expectedOutput: [Int], completedBefore: Bool) {
+
+        self.levelName = levelName
+        self.completedBefore = completedBefore
         self.commandEnum = commandEnum
+        self.input = input
         self.levelDescriptor = levelDescriptor
-        self.expectedOutput = InputConverter().generateOutput(
-            input: initialState.input.toArray, algorithm)
+        self.expectedOutput = expectedOutput
     }
 }

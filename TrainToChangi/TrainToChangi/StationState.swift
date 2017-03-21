@@ -8,26 +8,22 @@
 
 struct StationState {
 
-    var input: Queue<Int>
+    var input: [Int]
     var output: [Int]
     var memoryValues: [Int?]
+    var personValue: Int?
 
-    let person: Person
-
-    init(input: [Int], output: [Int], memoryValues: [Int?]) {
-        self.input = Queue<Int>(array: input)
-        self.output = output
-        self.memoryValues = memoryValues
-        self.person = Person()
+    init(input: [Int]) {
+        self.input = input
+        self.output = [Int]()
+        self.memoryValues = [Int?]()
     }
 
     init(station: StationState) {
         input = station.input
         output = station.output
         memoryValues = station.memoryValues
-
-        person = Person()
-        person.setHoldingValue(to: station.person.getHoldingValue())
+        personValue = station.personValue
     }
 
 }

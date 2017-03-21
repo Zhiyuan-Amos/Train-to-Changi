@@ -1,16 +1,36 @@
 //
 // Interface for `LogicManager` to work with `ModelManager`.
 //
-protocol Model: class, RunStateDelegate {
-    var numSteps: Int { get set }
+
+
+protocol Model {
+
+    // Returns the current commands that the user has drag-and-dropped
+    func getCurrentCommands() -> [CommandEnum]
+    
+    func getCurrentInput() -> [Int]
+
+    func getCurrentOutput() -> [Int]
+
+    func getExpectedOutput() -> [Int]
+
+    func getCommandIndex() -> Int?
+    func setCommandIndex(to newIndex: Int?)
+
+    func getNumSteps() -> Int
+
+    func insertCommand(atIndex: Int, commandEnum: CommandEnum)
+    func removeCommand(fromIndex: Int)
 
     // Returns the dequeued value from inbox. If inbox is empty, returns nil.
     func dequeueValueFromInbox() -> Int?
+
     // Enqueues `value` into the top of inbox.
-    func enqueueValueIntoInboxHead(_ value: Int)
+    func insertValueIntoInbox(_ value: Int, at index: Int)
 
     // Puts `value` onto outbox.
     func putValueIntoOutbox(_ value: Int)
+
     // Takes the last most inserted value out of outbox.
     func takeValueOutOfOutbox()
 

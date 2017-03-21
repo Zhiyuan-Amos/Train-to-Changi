@@ -8,70 +8,69 @@
 
 import Foundation
 
-class ModelManager: Model {
+class ModelManager {
 
-    private var undoStack: Stack<StationState>
-    private var redoStack: Stack<StationState>
-    private(set) var currentCommands: [CommandEnum]
-    private var outputIndex: Int
-    private var level: Level
+    internal var level: Level
 
-    private var _runState: RunState
-    var runState: RunState {
-        get {
-            return _runState
-        }
-        set {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "runStateUpdated"), object: runState, userInfo: nil)
-            _runState = newValue
-        }
-    }
+    internal var gameStateManager: GameStateManager
+    internal var runState: RunState
+
+    internal var currentCommands: [CommandEnum]
 
     // _commandIndex is nil initially i.e there's no arrow pointing at the commands
-    private var _commandIndex: Int?
-    var commandIndex: Int? {
-        get {
-            return _commandIndex
-        }
+    internal var commandIndex: Int?
+    internal var numSteps: Int
 
-        set {
-            _commandIndex = newValue
-        }
+    init(stationName: String) {
+        level = StorageManager().loadLevel(stationName: "test")
+
+        gameStateManager = GameStateManager(initialState: StationState(input: level.input))
+        runState = RunState.stopped
+
+        currentCommands = [CommandEnum]()
+        numSteps = 0
     }
 
-    private var _numSteps: Int
-    var numSteps: Int {
-        get {
-            return _numSteps
-        }
+}
 
-        set {
-            _numSteps = newValue
-        }
+extension ModelManager: RunStateDelegate {
+    func getRunState() -> RunState {
+        return runState
     }
 
-    var currentInput: [Int] {
-        return undoStack.top!.input.toArray
+    func setRunState(to newRunState: RunState) {
+        runState = newRunState
     }
-    var currentOutput: [Int] {
-        return undoStack.top!.output
+}
+
+extension ModelManager: Model {
+
+    func getCurrentCommands() -> [CommandEnum] {
+        return getCurrentCommands()
     }
-    var expectedOutput: [Int] {
+
+    func getCurrentInput() -> [Int] {
+        return gameStateManager.getCurrentState().input
+    }
+
+    func getCurrentOutput() -> [Int] {
+        return gameStateManager.getCurrentState().output
+    }
+
+    func getExpectedOutput() -> [Int] {
         return level.expectedOutput
     }
 
-    init(stationName: String) {
-        currentCommands = [CommandEnum]()
-        undoStack = Stack<StationState>()
-        redoStack = Stack<StationState>()
-        _runState = RunState.stopped
-        outputIndex = 0
-        _numSteps = 0
-        level = StorageManager().loadLevel(stationName: "test")
+    func getCommandIndex() -> Int? {
+        return commandIndex
+    }
 
-        let initialStationState = level.initialState
-        undoStack.push(initialStationState)
+    func setCommandIndex(to newIndex: Int?) {
+        commandIndex = newIndex
+    }
+
+    func getNumSteps() -> Int {
+        return numSteps
     }
 
     func insertCommand(atIndex: Int, commandEnum: CommandEnum) {
@@ -83,63 +82,47 @@ class ModelManager: Model {
     }
 
     func dequeueValueFromInbox() -> Int? {
-        guard let topStation = undoStack.top else {
-            return nil
-        }
-
-        var newStation = StationState(station: topStation)
-        let valueToReturn = newStation.input.dequeue()
-        undoStack.push(newStation)
+        var newStationState = StationState(station: gameStateManager.getCurrentState())
+        let valueToReturn = newStationState.input.removeFirst()
+        gameStateManager.update(newStationState: newStationState)
         return valueToReturn
     }
 
-    func enqueueValueIntoInboxHead(_ value: Int) {
-    }
-
-    func takeValueOutOfOutbox() {
+    func insertValueIntoInbox(_ value: Int, at index: Int) {
+        var newStationState = StationState(station: gameStateManager.getCurrentState())
+        newStationState.input.insert(value, at: 0)
+        gameStateManager.update(newStationState: newStationState)
     }
 
     func putValueIntoOutbox(_ value: Int) {
-        guard let topStation = undoStack.top else {
-            return
-        }
+        var newStationState = StationState(station: gameStateManager.getCurrentState())
+        newStationState.output.append(value)
+    }
 
-        var newStation = StationState(station: topStation)
-        newStation.output.append(value)
-        undoStack.push(newStation)
-        outputIndex += 1
+    func takeValueOutOfOutbox() {
+        var newStationState = StationState(station: gameStateManager.getCurrentState())
+        newStationState.output.removeLast()
+        gameStateManager.update(newStationState: newStationState)
     }
 
     func getValueOnPerson() -> Int? {
-        return undoStack.top?.person.getHoldingValue()
+        return gameStateManager.getCurrentState().personValue
     }
 
     func updateValueOnPerson(to newValue: Int?) {
-        guard let topStation = undoStack.top else {
-            return
-        }
-
-        let newStation = StationState(station: topStation)
-        newStation.person.setHoldingValue(to: newValue)
-        undoStack.push(newStation)
+        var newStationState = StationState(station: gameStateManager.getCurrentState())
+        newStationState.personValue = newValue
+        gameStateManager.update(newStationState: newStationState)
     }
 
     func putValueIntoMemory(_ value: Int?, at index: Int) {
-        guard let topStation = undoStack.top else {
-            return
-        }
-
-        var newStation = StationState(station: topStation)
-        newStation.memoryValues[index] = value
-        undoStack.push(newStation)
+        var newStationState = StationState(station: gameStateManager.getCurrentState())
+        newStationState.memoryValues[index] = value
+        gameStateManager.update(newStationState: newStationState)
     }
 
     func getValueFromMemory(at index: Int) -> Int? {
-        guard let topStation = undoStack.top else {
-            return nil
-        }
-
-        var newStation = StationState(station: topStation)
-        return newStation.memoryValues[index]
+        return gameStateManager.getCurrentState().memoryValues[index]
     }
+
 }
