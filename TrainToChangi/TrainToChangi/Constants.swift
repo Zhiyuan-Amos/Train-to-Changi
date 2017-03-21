@@ -16,21 +16,27 @@ struct Constants {
     }
 
     struct Inbox {
-        static let size = CGSize(width: 100, height: 500)
-        static let position = CGPoint(x: size.width / 2, y: size.height / 2)
+        static let size = CGSize(width: 500, height: 100)
+        static let position = CGPoint(x: Dimensions.width - size.width / 2,
+            y: Dimensions.height - size.height / 2)
         static let color = UIColor.black
-        static let goto = CGPoint(x: size.width, y: size.height)
+        static let goto = CGPoint(x: position.x - size.width / 2, y: position.y - size.height / 2)
     }
 
     struct Outbox {
-        static let size = CGSize(width: 100, height: 500)
-        static let position = CGPoint(x: Dimensions.width - size.width / 2,
-                                      y: Dimensions.height - size.height / 2)
+        static let size = CGSize(width: 500, height: 100)
+        static let position = CGPoint(x: size.width / 2, y: size.height / 2)
         static let color = UIColor.black
-        static let goto = CGPoint(x: Dimensions.width - size.width, y: Dimensions.height - size.height)
+        static let goto = CGPoint(x: position.x + size.width / 2, y: position.y + size.height / 2)
+        static let entryPosition = CGPoint(x: position.x + size.width / 2 - Box.size.width / 2, y: position.y)
+    }
+
+    struct Box {
+        static let size = CGSize(width: 100, height: 100)
     }
 
     struct NotificationNames {
         static let movePersonInScene = Notification.Name(rawValue: "movePersonInScene")
+        static let initScene = Notification.Name(rawValue: "initScene")
     }
 }
