@@ -39,7 +39,7 @@ struct CommandEnumParser {
                 let index = returnIndex(index)
                 commands.append(JumpCommand(model: model, targetIndex: index))
             case .placeholder:
-                commands.append(PlaceholderCommand())
+                commands.append(PlaceholderCommand(model: model))
             }
         }
 
@@ -87,7 +87,7 @@ struct CommandEnumParser {
         return true
     }
 
-    // Helper function for returning `index` if it exists.
+    // Helper function for returning `index`.
     private func returnIndex(_ index: Int?) -> Int {
         guard let index = index else {
             fatalError("User should not be allowed to set index to nil")

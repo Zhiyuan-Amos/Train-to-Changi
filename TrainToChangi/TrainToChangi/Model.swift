@@ -44,13 +44,13 @@ protocol Model: class {
     func dequeueValueFromInbox() -> Int?
 
     // Enqueues `value` into the top of inbox.
-    func insertValueIntoInbox(_ value: Int)
+    func prependValueIntoInbox(_ value: Int)
 
     // Puts `value` onto outbox.
-    func putValueIntoOutbox(_ value: Int)
+    func appendValueIntoOutbox(_ value: Int)
 
     // Takes the last most inserted value out of outbox.
-    func takeValueOutOfOutbox()
+    func popValueFromOutbox()
 
     // Returns the value that the person is holding on to.
     // Returns nil if the person isn't holding onto any value.

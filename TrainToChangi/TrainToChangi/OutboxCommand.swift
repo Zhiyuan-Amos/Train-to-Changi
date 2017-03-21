@@ -18,17 +18,17 @@ class OutboxCommand: Command {
 
         prevValueOnPerson = value
 
-        model.putValueIntoOutbox(value)
+        model.appendValueIntoOutbox(value)
 
         return CommandResult()
     }
 
     func undo() {
         guard let value = prevValueOnPerson else {
-            fatalError("Person should have a value before it is able to execute this command")
+            fatalError("Person must have a prior value to undo this command")
         }
 
-        model.takeValueOutOfOutbox()
+        model.popValueFromOutbox()
         model.updateValueOnPerson(to: value)
     }
 }

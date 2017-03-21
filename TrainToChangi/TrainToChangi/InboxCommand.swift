@@ -25,9 +25,9 @@ class InboxCommand: Command {
 
     func undo() {
         guard let value = model.getValueOnPerson() else {
-            fatalError("Person should have a value when executing InboxCommand")
+            fatalError("Person must have a value to undo this command")
         }
-        model.insertValueIntoInbox(value)
+        model.prependValueIntoInbox(value)
         model.updateValueOnPerson(to: prevValueOnPerson)
     }
 }

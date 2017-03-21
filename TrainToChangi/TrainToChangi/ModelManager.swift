@@ -66,16 +66,16 @@ class ModelManager: Model {
         return dequeuedValue
     }
 
-    func insertValueIntoInbox(_ value: Int) {
+    func prependValueIntoInbox(_ value: Int) {
         levelState.inputs.insert(value, at: 0)
     }
 
-    func putValueIntoOutbox(_ value: Int) {
+    func appendValueIntoOutbox(_ value: Int) {
         levelState.outputs.append(value)
         postMoveNotification(destination: .outbox)
     }
 
-    func takeValueOutOfOutbox() {
+    func popValueFromOutbox() {
         levelState.outputs.removeLast()
     }
 
