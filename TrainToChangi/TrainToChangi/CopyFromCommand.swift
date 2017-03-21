@@ -4,13 +4,18 @@
 //
 
 class CopyFromCommand: Command {
+    private let model: Model
     private let memoryIndex: Int
+    private var prevValueOnPerson: Int?
 
-    init(memoryIndex: Int) {
+    init(model: Model, memoryIndex: Int) {
+        self.model = model
         self.memoryIndex = memoryIndex
     }
 
-    func execute(on model: Model) -> CommandResult {
+    func execute() -> CommandResult {
+        prevValueOnPerson = model.getValueOnPerson()
+
         guard let value = model.getValueFromMemory(at: memoryIndex) else {
             return CommandResult(errorMessage: .emptyMemoryLocation)
         }
@@ -18,5 +23,9 @@ class CopyFromCommand: Command {
         model.updateValueOnPerson(to: value)
 
         return CommandResult()
+    }
+
+    func undo() {
+        model.updateValueOnPerson(to: prevValueOnPerson)
     }
 }

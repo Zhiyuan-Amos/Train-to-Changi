@@ -3,51 +3,83 @@
 // It also contains methods pertaining to the game logic.
 //
 
+//TODO: Refactor into GameLogic.
 class LogicManager {
     unowned private let model: Model
     private let updater: RunStateUpdater
+    private var executedCommands: Stack<Command>
+    private var commands: [Command]!
+    private var isFirstExecution: Bool
 
     init(model: Model) {
         self.model = model
         self.updater = RunStateUpdater(runStateDelegate: model)
+        self.executedCommands = Stack()
+        self.isFirstExecution = true
     }
 
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
-        model.commandIndex = 0
-        let commands = CommandTypeParser().parse(model.currentCommands)
+        // Lin Han, are you updating runState in VC?
+        if model.runState == .stopped {
+            isFirstExecution = true
+        }
+        model.runState = .running
+
+        if isFirstExecution {
+            initVariablesForExecution()
+        }
 
         while model.runState == .running {
-            let command = commands[model.commandIndex!]
-            let commandResult = command.execute(on: model)
-
-            command is PlaceholderCommand ?
-                postExecutionModelUpdate(isIncrementStepCount: false) :
-                postExecutionModelUpdate(isIncrementStepCount: true)
-
-            updater.updateRunState(commandResult: commandResult)
+            executeNextCommand()
         }
     }
 
     // Reverts the state of the model by one command execution backward.
-    func undo() {
-        guard model.undo() else {
+    // Returns true if there's still commands to be undone.
+    func undo() -> Bool {
+        guard let command = executedCommands.pop() else {
             fatalError("User should not be allowed to undo")
         }
+
+        command.undo()
+        model.programCounter! -= 1
+
+        return !executedCommands.isEmpty
     }
 
-    // Reverts the state of the model by one command execution forward.
-    func redo() {
-        guard model.redo() else {
-            fatalError("User should not be allowed to redo")
+    // Executes the next command.
+    func executeNextCommand() {
+        if isFirstExecution {
+            initVariablesForExecution()
+        }
+
+        let command = commands[model.programCounter!]
+        let commandResult = command.execute()
+
+        executedCommands.push(command)
+
+        model.programCounter! += 1
+        updater.updateRunState(commandResult: commandResult)
+        if model.runState == .won {
+            updateNumStepsTaken()
         }
     }
 
-    // Helper function
-    private func postExecutionModelUpdate(isIncrementStepCount: Bool) {
-        model.commandIndex! += 1
-        if isIncrementStepCount {
-            model.numSteps += 1
+    // Initialises the necessary variables for command execution to begin.
+    private func initVariablesForExecution() {
+        guard model.commandEnums.count > 0 else {
+            model.runState = .lost(error: .incompleteOutboxValues)
+            return
         }
+
+        model.programCounter = 0
+        commands = CommandEnumParser().parse(model: model)
+        isFirstExecution = false
+    }
+
+    private func updateNumStepsTaken() {
+        let placeHolderCommandsCount = executedCommands.filter { command in command is PlaceholderCommand }.count
+        model.numSteps = executedCommands.count - placeHolderCommandsCount
     }
 }

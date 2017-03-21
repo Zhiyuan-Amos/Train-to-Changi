@@ -6,8 +6,10 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-class OutputGenerator {
+struct LevelHelper {
     func generateOutput(input: [Int], _ algorithm: ([Int]) -> [Int]) -> [Int] {
         return algorithm(input)
     }
+
+    //TODO: randomInputGenerator @Desmond
 }

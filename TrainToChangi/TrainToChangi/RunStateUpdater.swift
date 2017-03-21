@@ -14,30 +14,20 @@ struct RunStateUpdater {
     // the `commandResult` returned from executing the previous command.
     func updateRunState(commandResult: CommandResult) {
         if hasMetWinCondition() {
-            update(to: .won, notificationIdentifer: "gameWon", error: nil)
+            runStateDelegate.runState = .won
         } else if !commandResult.isSuccessful {
-            update(to: .lost, notificationIdentifer: "gameLost",
-                   error: commandResult.errorMessage!)
+            runStateDelegate.runState = .lost(error: commandResult.errorMessage!)
         } else if !isOutputValid() {
-            update(to: .lost, notificationIdentifer: "gameLost",
-                    error: .wrongOutboxValue)
+            runStateDelegate.runState = .lost(error: .wrongOutboxValue)
         } else if isIndexOutOfBounds() {
-            update(to: .lost, notificationIdentifer: "gameLost",
-                    error: .incompleteOutboxValues)
+            runStateDelegate.runState = .lost(error: .incompleteOutboxValues)
         }
-    }
-
-    // Updates the runState to `runState`, and posts a notification of rawValue
-    // `notificationIdentifier`, with the object `error`.
-    private func update(to runState: RunState, notificationIdentifer: String, error: ExecutionError?) {
-        runStateDelegate.runState = runState
-        NotificationCenter.default.post(name: Notification.Name(
-            rawValue: notificationIdentifer), object: error, userInfo: nil)
     }
 
     // Returns true if the current output equals the expected output.
     private func hasMetWinCondition() -> Bool {
-        return runStateDelegate.currentOutput == runStateDelegate.expectedOutput
+        return runStateDelegate.currentInputs.isEmpty
+            && runStateDelegate.currentOutputs == runStateDelegate.expectedOutputs
     }
 
     // Returns true if all the values currently in current output is
@@ -45,8 +35,8 @@ struct RunStateUpdater {
     // win condition met, as maybe not all of values required have been put into
     // the `model`.
     private func isOutputValid() -> Bool {
-        for (index, value) in runStateDelegate.currentOutput.enumerated() {
-            if value != runStateDelegate.expectedOutput[index] {
+        for (index, value) in runStateDelegate.currentOutputs.enumerated() {
+            if value != runStateDelegate.expectedOutputs[index] {
                 return false
             }
         }
@@ -54,9 +44,9 @@ struct RunStateUpdater {
     }
 
     private func isIndexOutOfBounds() -> Bool {
-        guard runStateDelegate.commandIndex! >= 0 else {
+        guard runStateDelegate.programCounter! >= 0 else {
             fatalError("commandIndex should never be smaller than 0")
         }
-        return runStateDelegate.commandIndex! >= runStateDelegate.currentCommands.count
+        return runStateDelegate.programCounter! >= runStateDelegate.commandEnums.count
     }
 }

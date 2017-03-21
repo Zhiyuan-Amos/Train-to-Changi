@@ -4,7 +4,16 @@
 //
 
 class InboxCommand: Command {
-    func execute(on model: Model) -> CommandResult {
+    private let model: Model
+    private var prevValueOnPerson: Int?
+
+    init(model: Model) {
+        self.model = model
+    }
+
+    func execute() -> CommandResult {
+        prevValueOnPerson = model.getValueOnPerson()
+
         guard let value = model.dequeueValueFromInbox() else {
             return CommandResult(errorMessage: .emptyInbox)
         }
@@ -12,5 +21,14 @@ class InboxCommand: Command {
         model.updateValueOnPerson(to: value)
 
         return CommandResult()
+    }
+
+    func undo() {
+        guard let value = model.getValueOnPerson() else {
+            fatalError("Person must have a value to undo this command")
+        }
+
+        model.prependValueIntoInbox(value)
+        model.updateValueOnPerson(to: prevValueOnPerson)
     }
 }

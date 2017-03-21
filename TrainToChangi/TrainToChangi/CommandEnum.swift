@@ -2,7 +2,7 @@
 // Enum of the commands used in the game.
 //
 
-enum CommandType {
+enum CommandEnum {
     case inbox, outbox, copyFrom(memoryIndex: Int?), copyTo(memoryIndex: Int?),
     add(memoryIndex: Int?), jump(targetIndex: Int?), placeHolder
 }

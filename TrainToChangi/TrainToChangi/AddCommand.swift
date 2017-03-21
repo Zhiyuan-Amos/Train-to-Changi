@@ -4,16 +4,21 @@
 //
 
 class AddCommand: Command {
+    private let model: Model
     private let memoryIndex: Int
+    private var prevValueOnPerson: Int?
 
-    init(memoryIndex: Int) {
+    init(model: Model, memoryIndex: Int) {
+        self.model = model
         self.memoryIndex = memoryIndex
     }
 
-    func execute(on model: Model) -> CommandResult {
+    func execute() -> CommandResult {
         guard let personValue = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
         }
+
+        prevValueOnPerson = personValue
 
         guard let memoryValue = model.getValueFromMemory(at: memoryIndex) else {
             return CommandResult(errorMessage: .emptyMemoryLocation)
@@ -22,5 +27,13 @@ class AddCommand: Command {
         model.updateValueOnPerson(to: personValue + memoryValue)
 
         return CommandResult()
+    }
+
+    func undo() {
+        guard let value = prevValueOnPerson else {
+            fatalError("Person must have a prior value to undo this command")
+        }
+
+        model.updateValueOnPerson(to: value)
     }
 }

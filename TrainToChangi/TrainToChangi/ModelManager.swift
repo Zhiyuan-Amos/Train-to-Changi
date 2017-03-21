@@ -12,7 +12,7 @@ class ModelManager: Model {
 
     private var undoStack: Stack<StationState>
     private var redoStack: Stack<StationState>
-    private(set) var currentCommands: [CommandType]
+    private(set) var commandEnums: [CommandEnum]
     private var outputIndex: Int
     private var level: Level
 
@@ -22,19 +22,21 @@ class ModelManager: Model {
             return _runState
         }
         set {
+            NotificationCenter.default.post(name: Notification.Name(
+                rawValue: "runStateUpdated"), object: runState, userInfo: nil)
             _runState = newValue
         }
     }
 
     // _commandIndex is nil initially i.e there's no arrow pointing at the commands
-    private var _commandIndex: Int?
-    var commandIndex: Int? {
+    private var _programCounter: Int?
+    var programCounter: Int? {
         get {
-            return _commandIndex
+            return _programCounter
         }
 
         set {
-            _commandIndex = newValue
+            _programCounter = newValue
         }
     }
 
@@ -49,15 +51,18 @@ class ModelManager: Model {
         }
     }
 
-    var currentOutput: [Int] {
+    var currentInputs: [Int] {
+        return undoStack.top!.input.toArray
+    }
+    var currentOutputs: [Int] {
         return undoStack.top!.output
     }
-    var expectedOutput: [Int] {
+    var expectedOutputs: [Int] {
         return level.expectedOutput
     }
 
     init(stationName: String) {
-        currentCommands = [CommandType]()
+        commandEnums = [CommandEnum]()
         undoStack = Stack<StationState>()
         redoStack = Stack<StationState>()
         _runState = RunState.stopped
@@ -69,47 +74,12 @@ class ModelManager: Model {
         undoStack.push(initialStationState)
     }
 
-    func undo() -> Bool {
-        guard let oldState = undoStack.pop() else {
-            return false
-        }
-        if undoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nothingToUndo"), object: nil, userInfo: nil)
-        }
-
-        if redoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nonEmptyRedoStack"), object: nil, userInfo: nil)
-        }
-        redoStack.push(oldState)
-
-        return true
-    }
-
-    func redo() -> Bool {
-        guard let newState = redoStack.pop() else {
-            return false
-        }
-        if redoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nothingToRedo"), object: nil, userInfo: nil)
-        }
-
-        if undoStack.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "nonEmptyUndoStack"), object: nil, userInfo: nil)
-        }
-        undoStack.push(newState)
-        return true
-    }
-
-    func insertCommand(atIndex: Int, commandType: CommandType) {
-        currentCommands.insert(commandType, at: atIndex)
+    func insertCommand(atIndex: Int, commandEnum: CommandEnum) {
+        commandEnums.insert(commandEnum, at: atIndex)
     }
 
     func removeCommand(fromIndex: Int) {
-        currentCommands.remove(at: fromIndex)
+        commandEnums.remove(at: fromIndex)
     }
 
     func dequeueValueFromInbox() -> Int? {
@@ -123,7 +93,13 @@ class ModelManager: Model {
         return valueToReturn
     }
 
-    func putValueIntoOutbox(_ value: Int) {
+    func prependValueIntoInbox(_ value: Int) {
+    }
+
+    func popValueFromOutbox() {
+    }
+
+    func appendValueIntoOutbox(_ value: Int) {
         guard let topStation = undoStack.top else {
             return
         }
@@ -148,7 +124,7 @@ class ModelManager: Model {
         undoStack.push(newStation)
     }
 
-    func putValueIntoMemory(_ value: Int, at index: Int) {
+    func putValueIntoMemory(_ value: Int?, at index: Int) {
         guard let topStation = undoStack.top else {
             return
         }
