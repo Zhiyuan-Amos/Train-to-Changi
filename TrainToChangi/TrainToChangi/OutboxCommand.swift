@@ -4,13 +4,31 @@
 //
 
 class OutboxCommand: Command {
-    func execute(on model: Model) -> CommandResult {
+    private let model: Model
+    private var prevValueOnPerson: Int?
+
+    init(model: Model) {
+        self.model = model
+    }
+
+    func execute() -> CommandResult {
         guard let value = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
         }
 
-        model.putValueIntoOutbox(value)
+        prevValueOnPerson = value
+
+        model.appendValueIntoOutbox(value)
 
         return CommandResult()
+    }
+
+    func undo() {
+        guard let value = prevValueOnPerson else {
+            fatalError("Person must have a prior value to undo this command")
+        }
+
+        model.popValueFromOutbox()
+        model.updateValueOnPerson(to: value)
     }
 }
