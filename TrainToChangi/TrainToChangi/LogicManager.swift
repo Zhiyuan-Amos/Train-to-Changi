@@ -3,73 +3,79 @@
 // It also contains methods pertaining to the game logic.
 //
 
+//TODO: Refactor into GameLogic.
 class LogicManager {
     unowned private let model: Model
     private let updater: RunStateUpdater
-    private var executedCommands: [Command]
-    private var executedCommandsTailPointer: Int
+    private var executedCommands: Stack<Command>
+    private var commands: [Command]!
+    private var isFirstExecution: Bool
 
     init(model: Model) {
         self.model = model
         self.updater = RunStateUpdater(runStateDelegate: model)
-        self.executedCommands = [Command]()
-        self.executedCommandsTailPointer = executedCommands.count - 1
+        self.executedCommands = Stack()
+        self.isFirstExecution = true
     }
 
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
-        guard model.currentCommands.count > 0 else {
-            fatalError("UI should not have allowed the user to press play when there are no commands")
+        // Lin Han, are you updating runState in VC?
+        if model.runState == .stopped {
+            isFirstExecution = true
+        }
+        model.runState = .running
+
+        if isFirstExecution {
+            initVariablesForExecution()
         }
 
-        model.commandIndex = 0
-        let commands = CommandEnumParser().parse(model: model)
-
         while model.runState == .running {
-            let command = commands[model.commandIndex!]
-            let commandResult = command.execute()
-
-            executedCommands.append(command)
-            executedCommandsTailPointer += 1
-
-            model.commandIndex! += 1
-            updater.updateRunState(commandResult: commandResult)
-            if model.runState == .won {
-                updateNumStepsTaken()
-            }
+            executeNextCommand()
         }
     }
 
     // Reverts the state of the model by one command execution backward.
-    // Returns true if there are still commands to be undone.
+    // Returns true if there's still commands to be undone.
     func undo() -> Bool {
-        guard executedCommandsTailPointer >= 0 else {
-            fatalError("User should not be allowed to redo")
+        guard let command = executedCommands.pop() else {
+            fatalError("User should not be allowed to undo")
         }
 
-        let command = executedCommands[executedCommandsTailPointer]
         command.undo()
-        executedCommandsTailPointer -= 1
+        model.programCounter! -= 1
 
-        model.commandIndex! -= 1
-
-        return executedCommandsTailPointer >= 0
+        return !executedCommands.isEmpty
     }
 
-    // Reverts the state of the model by one command execution forward.
-    // Returns true if there are still commands to be redone.
-    func redo() -> Bool {
-        guard executedCommandsTailPointer < executedCommands.count - 1 else {
-            fatalError("User should not be allowed to redo")
+    // Executes the next command.
+    func executeNextCommand() {
+        if isFirstExecution {
+            initVariablesForExecution()
         }
 
-        let command = executedCommands[executedCommandsTailPointer]
-        _ = command.execute()
-        executedCommandsTailPointer += 1
+        let command = commands[model.programCounter!]
+        let commandResult = command.execute()
 
-        model.commandIndex! += 1
+        executedCommands.push(command)
 
-        return executedCommandsTailPointer < executedCommands.count - 1
+        model.programCounter! += 1
+        updater.updateRunState(commandResult: commandResult)
+        if model.runState == .won {
+            updateNumStepsTaken()
+        }
+    }
+
+    // Initialises the necessary variables for command execution to begin.
+    private func initVariablesForExecution() {
+        guard model.commandEnums.count > 0 else {
+            model.runState = .lost(error: .incompleteOutboxValues)
+            return
+        }
+
+        model.programCounter = 0
+        commands = CommandEnumParser().parse(model: model)
+        isFirstExecution = false
     }
 
     private func updateNumStepsTaken() {
