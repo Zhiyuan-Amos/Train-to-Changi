@@ -3,79 +3,73 @@
 // It also contains methods pertaining to the game logic.
 //
 
-//TODO: Refactor into GameLogic.
 class LogicManager {
     unowned private let model: Model
     private let updater: RunStateUpdater
-    private var executedCommands: Stack<Command>
-    private var commands: [Command]!
-    private var isFirstExecution: Bool
+    private var executedCommands: [Command]
+    private var executedCommandsTailPointer: Int
 
     init(model: Model) {
         self.model = model
         self.updater = RunStateUpdater(runStateDelegate: model)
-        self.executedCommands = Stack()
-        self.isFirstExecution = true
+        self.executedCommands = [Command]()
+        self.executedCommandsTailPointer = executedCommands.count - 1
     }
 
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
-        // Lin Han, are you updating runState in VC?
-        if model.runState == .stopped {
-            isFirstExecution = true
+        guard model.userEnteredCommands.count > 0 else {
+            fatalError("UI should not have allowed the user to press play when there are no commands")
         }
-        model.runState = .running
 
-        if isFirstExecution {
-            initVariablesForExecution()
-        }
+        model.programCounter = 0
+        let commands = CommandEnumParser().parse(model: model)
 
         while model.runState == .running {
-            executeNextCommand()
+            let command = commands[model.programCounter!]
+            let commandResult = command.execute()
+
+            executedCommands.append(command)
+            executedCommandsTailPointer += 1
+
+            model.programCounter! += 1
+            updater.updateRunState(commandResult: commandResult)
+            if model.runState == .won {
+                updateNumStepsTaken()
+            }
         }
     }
 
     // Reverts the state of the model by one command execution backward.
-    // Returns true if there's still commands to be undone.
+    // Returns true if there are still commands to be undone.
     func undo() -> Bool {
-        guard let command = executedCommands.pop() else {
-            fatalError("User should not be allowed to undo")
+        guard executedCommandsTailPointer >= 0 else {
+            fatalError("User should not be allowed to redo")
         }
 
+        let command = executedCommands[executedCommandsTailPointer]
         command.undo()
+        executedCommandsTailPointer -= 1
+
         model.programCounter! -= 1
 
-        return !executedCommands.isEmpty
+        return executedCommandsTailPointer >= 0
     }
 
-    // Executes the next command.
-    func executeNextCommand() {
-        if isFirstExecution {
-            initVariablesForExecution()
+    // Reverts the state of the model by one command execution forward.
+    // Returns true if there are still commands to be redone.
+    func redo() -> Bool {
+        guard executedCommandsTailPointer < executedCommands.count - 1 else {
+            fatalError("User should not be allowed to redo")
         }
 
-        let command = commands[model.programCounter!]
-        let commandResult = command.execute()
-
-        executedCommands.push(command)
+        let command = executedCommands[executedCommandsTailPointer]
+        _ = command.execute()
+        executedCommandsTailPointer += 1
 
         model.programCounter! += 1
-        updater.updateRunState(commandResult: commandResult)
-        if model.runState == .won {
-            updateNumStepsTaken()
-        }
-    }
 
-    // Initialises the necessary variables for command execution to begin.
-    private func initVariablesForExecution() {
-        guard model.commandEnums.count > 0 else {
-            model.runState = .lost(error: .incompleteOutboxValues)
-            return
-        }
-
-        model.programCounter = 0
-        commands = CommandEnumParser().parse(model: model)
-        isFirstExecution = false
+        return executedCommandsTailPointer < executedCommands.count - 1
     }
 
     private func updateNumStepsTaken() {

@@ -1,18 +1,56 @@
 //
-// Interface for `LogicManager` to work with `ModelManager`.
+// Interface for `Model` component of the application.
 //
-protocol Model: class, RunStateDelegate {
+
+protocol Model: class {
+
+    // MARK - Variables accessed by other components.
+
+    // The Program Counter for player's program. Initially nil.
+    var programCounter: Int? { get set }
+
+    // The Game State. I guess we should rename this.
+    var runState: RunState { get set }
+
+    // Number of execution steps taken by user to complete the level.
     var numSteps: Int { get set }
 
-    // Returns the first value from inbox. If inbox is empty, returns nil.
-    func dequeueValueFromInbox() -> Int?
-    // Prepends `value` into inbox.
-    func prependValueIntoInbox(_ value: Int)
+    // The Commands that user has added.
+    var userEnteredCommands: [CommandEnum] { get }
 
-    // Appends `value` onto outbox.
-    func appendValueIntoOutbox(_ value: Int)
-    // Removes the last most inserted value out of outbox.
-    func popValueFromOutbox()
+    // The current inputs left in the inbox area.
+    var currentInputs: [Int] { get }
+
+    // The current outputs placed in the outbox area.
+    var currentOutputs: [Int] { get }
+
+    // The expected outputs for the user to clear the level.
+    var expectedOutputs: [Int] { get }
+
+    // MARK - API for GameViewController.
+
+    // Appends the command to userEnteredCommands.
+    func addCommand(commandEnum: CommandEnum)
+
+    // Inserts the command into userEnteredCommands, at specified Index.
+    func insertCommand(commandEnum: CommandEnum, atIndex: Int)
+
+    // Removes the command at specified Index from userEnteredCommands.
+    func removeCommand(fromIndex: Int) -> CommandEnum
+
+    // MARK - API for Logic. Notifies Scene upon execution.
+
+    // Returns the dequeued value from inbox. If inbox is empty, returns nil.
+    func dequeueValueFromInbox() -> Int?
+
+    // Enqueues `value` into the top of inbox.
+    func insertValueIntoInbox(_ value: Int)
+
+    // Puts `value` onto outbox.
+    func putValueIntoOutbox(_ value: Int)
+
+    // Takes the last most inserted value out of outbox.
+    func takeValueOutOfOutbox()
 
     // Returns the value that the person is holding on to.
     // Returns nil if the person isn't holding onto any value.

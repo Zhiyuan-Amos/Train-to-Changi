@@ -18,7 +18,7 @@ struct CommandEnumParser {
     // Helper function to convert the `model.currentCommands` of type `CommandEnum` into `[Command]`.
     private func convertCommandEnumToCommand(model: Model) -> [Command] {
         var commands = [Command]()
-        let commandEnums = model.commandEnums
+        let commandEnums = model.userEnteredCommands
 
         for commandEnum in commandEnums {
             switch commandEnum {
@@ -38,8 +38,8 @@ struct CommandEnumParser {
             case .jump(let index):
                 let index = returnIndex(index)
                 commands.append(JumpCommand(model: model, targetIndex: index))
-            case .placeHolder:
-                commands.append(PlaceholderCommand(model: model))
+            case .placeholder:
+                commands.append(PlaceholderCommand())
             }
         }
 
@@ -87,7 +87,7 @@ struct CommandEnumParser {
         return true
     }
 
-    // Helper function for returning `index`.
+    // Helper function for returning `index` if it exists.
     private func returnIndex(_ index: Int?) -> Int {
         guard let index = index else {
             fatalError("User should not be allowed to set index to nil")

@@ -10,136 +10,96 @@ import Foundation
 
 class ModelManager: Model {
 
-    private var undoStack: Stack<StationState>
-    private var redoStack: Stack<StationState>
-    private(set) var commandEnums: [CommandEnum]
-    private var outputIndex: Int
-    private var level: Level
-
-    private var _runState: RunState
-    var runState: RunState {
-        get {
-            return _runState
-        }
-        set {
-            NotificationCenter.default.post(name: Notification.Name(
-                rawValue: "runStateUpdated"), object: runState, userInfo: nil)
-            _runState = newValue
-        }
-    }
-
-    // _commandIndex is nil initially i.e there's no arrow pointing at the commands
-    private var _programCounter: Int?
+    var level: Level
+    var levelState: LevelState
+    var runState: RunState
+    var numSteps: Int
     var programCounter: Int? {
-        get {
-            return _programCounter
-        }
-
-        set {
-            _programCounter = newValue
+        didSet {
+            // Notify UI to move arrow in future.
         }
     }
 
-    private var _numSteps: Int
-    var numSteps: Int {
-        get {
-            return _numSteps
-        }
+    init() {
+        level = PreloadedLevels.levelOne
+        levelState = level.initialState
+        runState = .stopped
+        numSteps = 0
+    }
 
-        set {
-            _numSteps = newValue
-        }
+    var userEnteredCommands: [CommandEnum] {
+        return levelState.currentCommands
     }
 
     var currentInputs: [Int] {
-        return undoStack.top!.input.toArray
+        return levelState.inputs
     }
+
     var currentOutputs: [Int] {
-        return undoStack.top!.output
+        return levelState.outputs
     }
+
     var expectedOutputs: [Int] {
-        return level.expectedOutput
+        return level.expectedOutputs
     }
 
-    init(stationName: String) {
-        commandEnums = [CommandEnum]()
-        undoStack = Stack<StationState>()
-        redoStack = Stack<StationState>()
-        _runState = RunState.stopped
-        outputIndex = 0
-        _numSteps = 0
-        level = StorageManager().loadLevel(stationName: "test")
+    // MARK - API for GameViewController.
 
-        let initialStationState = level.initialState
-        undoStack.push(initialStationState)
+    func addCommand(commandEnum: CommandEnum) {
+        levelState.currentCommands.append(commandEnum)
     }
 
-    func insertCommand(atIndex: Int, commandEnum: CommandEnum) {
-        commandEnums.insert(commandEnum, at: atIndex)
+    func insertCommand(commandEnum: CommandEnum, atIndex index: Int) {
+        levelState.currentCommands.insert(commandEnum, at: index)
     }
 
-    func removeCommand(fromIndex: Int) {
-        commandEnums.remove(at: fromIndex)
+    // Removes the command at specified Index from userEnteredCommands.
+    func removeCommand(fromIndex index: Int) -> CommandEnum {
+        return levelState.currentCommands.remove(at: index)
     }
+
+    // MARK - API for Logic. Notifies Scene upon execution.
 
     func dequeueValueFromInbox() -> Int? {
-        guard let topStation = undoStack.top else {
-            return nil
-        }
-
-        var newStation = StationState(station: topStation)
-        let valueToReturn = newStation.input.dequeue()
-        undoStack.push(newStation)
-        return valueToReturn
+        let dequeuedValue = levelState.inputs.removeFirst()
+        postMoveNotification(destination: .inbox)
+        return dequeuedValue
     }
 
-    func prependValueIntoInbox(_ value: Int) {
+    func insertValueIntoInbox(_ value: Int) {
+        levelState.inputs.insert(value, at: 0)
     }
 
-    func popValueFromOutbox() {
+    func putValueIntoOutbox(_ value: Int) {
+        levelState.outputs.append(value)
+        postMoveNotification(destination: .outbox)
     }
 
-    func appendValueIntoOutbox(_ value: Int) {
-        guard let topStation = undoStack.top else {
-            return
-        }
-
-        var newStation = StationState(station: topStation)
-        newStation.output.append(value)
-        undoStack.push(newStation)
-        outputIndex += 1
+    func takeValueOutOfOutbox() {
+        levelState.outputs.removeLast()
     }
 
     func getValueOnPerson() -> Int? {
-        return undoStack.top?.person.getHoldingValue()
+        return levelState.personValue
     }
 
     func updateValueOnPerson(to newValue: Int?) {
-        guard let topStation = undoStack.top else {
-            return
-        }
-
-        let newStation = StationState(station: topStation)
-        newStation.person.setHoldingValue(to: newValue)
-        undoStack.push(newStation)
+        levelState.personValue = newValue
     }
 
     func putValueIntoMemory(_ value: Int?, at index: Int) {
-        guard let topStation = undoStack.top else {
-            return
-        }
-
-        var newStation = StationState(station: topStation)
-        newStation.memoryValues[index] = value
-        undoStack.push(newStation)
+        levelState.memoryValues[index] = value
     }
 
     func getValueFromMemory(at index: Int) -> Int? {
-        guard let topStation = undoStack.top else {
-            return nil
-        }
-
-        var newStation = StationState(station: topStation)
-        return newStation.memoryValues[index]
+        return levelState.memoryValues[index]
     }
+
+    private func postMoveNotification(destination: WalkDestination) {
+        let notification = Notification(name: Constants.NotificationNames.movePersonInScene,
+                                        object: nil,
+                                        userInfo: ["destination": destination])
+        NotificationCenter.default.post(notification)
+    }
+
 }

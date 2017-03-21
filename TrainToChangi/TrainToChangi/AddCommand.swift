@@ -31,7 +31,7 @@ class AddCommand: Command {
 
     func undo() {
         guard let value = prevValueOnPerson else {
-            fatalError("Person must have a prior value to undo this command")
+            fatalError("Person should have a value before it is able to execute this command")
         }
 
         model.updateValueOnPerson(to: value)

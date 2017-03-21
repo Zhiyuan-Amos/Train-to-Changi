@@ -42,36 +42,15 @@ class GameScene: SKScene {
         initPlayer()
         initStationElements()
         initNotification()
-
-        /* testing, to remove when integrating
-        let queue = Queue(array: [1, 2, 3, 4, 5])
-        createInboxNodes(from: queue)
-        move(to: .inbox)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            self.move(to: .outbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 6) {
-            self.move(to: .inbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9) {
-            self.move(to: .outbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 12) {
-            self.move(to: .inbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 15) {
-            self.move(to: .outbox)
-        }
-        */
     }
 
 }
 
 // MARK: - Init
 extension GameScene {
-    func initStationState(_ stationState: StationState) {
-        createInboxNodes(from: stationState.input)
-        createMemoryNodes(from: stationState.memoryValues)
+    func initLevelState(_ levelState: LevelState) {
+        createInboxNodes(from: levelState.inputs)
+        createMemoryNodes(from: levelState.memoryValues)
     }
 
     fileprivate func initPlayer() {
@@ -103,9 +82,9 @@ extension GameScene {
         // TODO: support memory values
     }
 
-    fileprivate func createInboxNodes(from inboxValues: Queue<Int>) {
+    fileprivate func createInboxNodes(from inboxValues: [Int]) {
         inboxNodes = []
-        for (index, value) in inboxValues.toArray.enumerated() {
+        for (index, value) in inboxValues.enumerated() {
             let label = SKLabelNode(text: String(value))
             let shape = SKShapeNode(rectOf: Constants.Box.size)
             shape.position = calculateInboxBoxPosition(index: index)

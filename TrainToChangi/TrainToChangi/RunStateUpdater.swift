@@ -4,9 +4,9 @@
 
 import Foundation
 struct RunStateUpdater {
-    unowned let runStateDelegate: RunStateDelegate
+    unowned let runStateDelegate: Model
 
-    init(runStateDelegate: RunStateDelegate) {
+    init(runStateDelegate: Model) {
         self.runStateDelegate = runStateDelegate
     }
 
@@ -47,6 +47,6 @@ struct RunStateUpdater {
         guard runStateDelegate.programCounter! >= 0 else {
             fatalError("commandIndex should never be smaller than 0")
         }
-        return runStateDelegate.programCounter! >= runStateDelegate.commandEnums.count
+        return runStateDelegate.programCounter! >= runStateDelegate.userEnteredCommands.count
     }
 }
