@@ -36,6 +36,5 @@ class CommandLabel: UILabel {
             }
         case .outbox: text = "outbox"
         case .placeholder: text = ""
-        }
-    }
+
 }

@@ -66,6 +66,7 @@
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+
 		A71209661E8175D10039B257 /* LevelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelHelper.swift; sourceTree = "<group>"; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
@@ -187,6 +188,7 @@
 				A7082EC21E7C2AEB00619AFA /* DraggableImageView.swift */,
 				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
 				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
+				BE4697B0B9F0AFDD73CEDDDC /* CommandLabel.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -540,6 +542,7 @@
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
+				BE469257E437384F8788282F /* CommandLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

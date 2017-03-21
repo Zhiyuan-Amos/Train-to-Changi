@@ -74,7 +74,6 @@ class GameViewController: UIViewController {
 
     // Start the game. Change runstate to .start in model
     @IBAction func playButtonPressed(_ sender: UIButton) {
-
         model.runState = .running
         logic.executeCommands()
     }
@@ -94,6 +93,7 @@ class GameViewController: UIViewController {
         let level = PreloadedLevels.levelOne
 
         let initialCommandPosition = availableCommandsView.frame.origin
+        var commandIndex = 0
         var commandOffset: CGFloat = 0
 
         for command in level.commandTypes {
@@ -169,43 +169,15 @@ class GameViewController: UIViewController {
     }
 
     @objc private func buttonPressed(sender: UIButton) {
-        // Add int to commandtype enum to enable this.
-        // With that, code is shorter and doesn't need to change with new commands:
-//        guard let command = CommandType(rawValue: sender.tag) else {
-//            assertionFailure("Should have a valid tag!")
-//            return
-//        }
-//        model.addCommand(commandType: command)
-        // Since the above doesn't work for indexed commands,
-        // Have a wrapper class to wrap (CommandType, Index?)
-        // Overload constructor to assign nil to commandtype with no index
-        // Keep enums as enums
-
-        if sender.tag == 1 {
-            model.addCommand(commandType: .inbox)
-        } else if sender.tag == 2 {
-            model.addCommand(commandType: .outbox)
-        } else {
-            fatalError("Should never happen.")
-        }
+        let command = level.commandTypes[sender.tag]
+        model.addCommand(commandType: command)
         commandsEditor.reloadData()
     }
 
-    fileprivate func getImage(for commandType: CommandType) -> UIImage {
-        // TODO: Refactor out into CommandImageView.
-        switch commandType {
-        case .inbox:
-            guard let image = UIImage(named: "input-temp") else {
-                fatalError("input-temp picture missing")
-            }
-            return image
-        case .outbox:
-            guard let image = UIImage(named: "output-temp") else {
-                fatalError("output-temp picture missing")
-            }
-            return image
-        default: fatalError("should not reach here")
-        }
+    fileprivate func getLabel(for commandType: CommandType) -> CommandLabel {
+        let commandLabel = CommandLabel()
+        commandLabel.updateText(commandType: commandType)
+        return commandLabel
     }
 
     /// Use GameScene to move/animate the game character and ..
@@ -264,8 +236,8 @@ extension GameViewController: UICollectionViewDataSource {
         }
         // assign image to cell based on the command type.
         let command = model.currentCommands[indexPath.row]
-        let image = getImage(for: command)
-        cell.setImage(image)
+        let label = getLabel(for: command)
+        cell.setLabel(label)
         return cell
     }
 
