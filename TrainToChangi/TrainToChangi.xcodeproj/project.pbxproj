@@ -13,11 +13,12 @@
 		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
-		A71209671E8175D10039B257 /* LevelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209661E8175D10039B257 /* LevelHelper.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A712096D1E8189060039B257 /* CommandLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096B1E8189060039B257 /* CommandLabel.swift */; };
-		D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */; };
+		A7424F831E8299090010F276 /* LevelDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7424F821E8299090010F276 /* LevelDataHelper.swift */; };
+		BE469C28441767D3E1331C95 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE46939ED49D18C3E37B2F21 /* LevelData.swift */; };
+		BE469F20B7C382DF1C17ABE3 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE46951C9245C0394770FFDE /* LevelManager.swift */; };
 		D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
@@ -68,12 +69,13 @@
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A71209661E8175D10039B257 /* LevelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelHelper.swift; sourceTree = "<group>"; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		A712096B1E8189060039B257 /* CommandLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLabel.swift; sourceTree = "<group>"; };
+		A7424F821E8299090010F276 /* LevelDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDataHelper.swift; sourceTree = "<group>"; };
+		BE46939ED49D18C3E37B2F21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
+		BE46951C9245C0394770FFDE /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
-		D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreloadedLevels.swift; sourceTree = "<group>"; };
 		D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnum.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		3B1680421E778484002286F6 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				A7424F821E8299090010F276 /* LevelDataHelper.swift */,
 				D7A267D21E7796BD00DE5774 /* Constants.swift */,
 				D7983CE51E76E99C00E650ED /* Queue.swift */,
 				D7A267DC1E77A01D00DE5774 /* Stack.swift */,
@@ -176,6 +179,7 @@
 				A71209681E81888A0039B257 /* Logic.swift */,
 				D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */,
 				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
+				3B1680431E77848E002286F6 /* Commands */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -216,8 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				D744CA641E7A387F004CCABD /* Level.swift */,
-				A71209661E8175D10039B257 /* LevelHelper.swift */,
-				D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */,
+				BE46951C9245C0394770FFDE /* LevelManager.swift */,
 			);
 			name = Levels;
 			sourceTree = "<group>";
@@ -240,6 +243,14 @@
 				D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A7424F811E82981A0010F276 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				BE46939ED49D18C3E37B2F21 /* LevelData.swift */,
+			);
+			name = Storage;
 			sourceTree = "<group>";
 		};
 		D76FA81A1E76ADC400CCCFBE = {
@@ -269,7 +280,7 @@
 				3B16804D1E778785002286F6 /* UI */,
 				3B16804C1E778779002286F6 /* Logic */,
 				3B1680451E7784B3002286F6 /* Model */,
-				3B1680431E77848E002286F6 /* Commands */,
+				A7424F811E82981A0010F276 /* Storage */,
 				3B1680421E778484002286F6 /* Commons */,
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
 				D76FA8331E76ADC400CCCFBE /* Assets.xcassets */,
@@ -513,8 +524,7 @@
 			files = (
 				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
-				A71209671E8175D10039B257 /* LevelHelper.swift in Sources */,
-				D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */,
+				A7424F831E8299090010F276 /* LevelDataHelper.swift in Sources */,
 				D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
 				A712096D1E8189060039B257 /* CommandLabel.swift in Sources */,
@@ -542,6 +552,8 @@
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
+				BE469C28441767D3E1331C95 /* LevelData.swift in Sources */,
+				BE469F20B7C382DF1C17ABE3 /* LevelManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

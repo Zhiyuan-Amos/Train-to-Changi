@@ -32,7 +32,10 @@ class GameViewController: UIViewController {
     @IBOutlet private var commandsEditor: UICollectionView!
 
     required init?(coder aDecoder: NSCoder) {
-        model = ModelManager()
+        // Segue to this view, gets passed a level index.
+        let levelIndex = 0
+        let levelData = LevelDataHelper.levelData(levelIndex: levelIndex)
+        model = ModelManager(levelData: levelData)
         logic = LogicManager(model: model)
         level = model.currentLevel
         super.init(coder: aDecoder)
@@ -125,8 +128,6 @@ class GameViewController: UIViewController {
         }
     }
 
-    /// Use GameScene to move/animate the game character and ..
-    // TODO: Integrate with gamescene
     private func presentGameScene() {
         let scene = GameScene(size: view.bounds.size)
         guard let skView = view as? SKView else {

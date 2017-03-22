@@ -9,7 +9,7 @@ protocol Model: class {
     // The Program Counter for player's program. Initially nil.
     var programCounter: Int? { get set }
 
-    // The Game State. I guess we should rename this.
+    // The gameplay run state.
     var runState: RunState { get set }
 
     // Number of execution steps taken by user to complete the level.
@@ -43,6 +43,12 @@ protocol Model: class {
 
     // Removes all commands from userEnteredCommands.
     func clearAllCommands()
+
+    // Loads a level into Model and reinitialises state.
+    func loadLevel(levelData: LevelData)
+
+    // Reinitialises Model state back to start of level.
+    func resetStateToLevelStart()
 
     // MARK - API for Logic. Notifies Scene upon execution.
 

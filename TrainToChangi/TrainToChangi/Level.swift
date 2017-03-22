@@ -6,7 +6,7 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-struct Level {
+class Level {
     let levelName: String
     let initialState: LevelState
     let availableCommands: [CommandEnum]
@@ -14,12 +14,11 @@ struct Level {
     let expectedOutputs: [Int]
 
     init(levelName: String, initialState: LevelState, availableCommands: [CommandEnum],
-         levelDescriptor: String, algorithm: @escaping ([Int]) -> [Int]) {
+         levelDescriptor: String, expectedOutputs: [Int]) {
         self.levelName = levelName
         self.initialState = initialState
         self.availableCommands = availableCommands
         self.levelDescriptor = levelDescriptor
-        self.expectedOutputs = LevelHelper().generateOutput(
-                input: initialState.inputs, algorithm)
+        self.expectedOutputs = expectedOutputs
     }
 }

@@ -10,7 +10,6 @@ import Foundation
 
 class ModelManager: Model {
 
-    var level: Level
     var levelState: LevelState
     var runState: RunState
     var numSteps: Int
@@ -19,12 +18,14 @@ class ModelManager: Model {
             // Notify UI to move arrow in future.
         }
     }
+    private var levelManager: LevelManager
 
-    init() {
-        level = PreloadedLevels.levelOne
-        levelState = level.initialState
+    init(levelData: LevelData) {
         runState = .stopped
         numSteps = 0
+        programCounter = nil
+        levelManager = LevelManager(levelData: levelData)
+        levelState = levelManager.level.initialState
     }
 
     var userEnteredCommands: [CommandEnum] {
@@ -40,11 +41,11 @@ class ModelManager: Model {
     }
 
     var expectedOutputs: [Int] {
-        return level.expectedOutputs
+        return levelManager.level.expectedOutputs
     }
 
     var currentLevel: Level {
-        return level
+        return levelManager.level
     }
 
     // MARK - API for GameViewController.
@@ -64,6 +65,15 @@ class ModelManager: Model {
 
     func clearAllCommands() {
         levelState.currentCommands.removeAll()
+    }
+
+    func loadLevel(levelData: LevelData) {
+        levelManager.loadLevel(levelData: levelData)
+        resetState()
+    }
+
+    func resetStateToLevelStart() {
+        resetState()
     }
 
     // MARK - API for Logic. Notifies Scene upon execution.
@@ -101,6 +111,15 @@ class ModelManager: Model {
 
     func getValueFromMemory(at index: Int) -> Int? {
         return levelState.memoryValues[index]
+    }
+
+    // MARK - Private helpers
+
+    private func resetState() {
+        levelState = levelManager.level.initialState
+        runState = .stopped
+        numSteps = 0
+        programCounter = nil
     }
 
     private func postMoveNotification(destination: WalkDestination) {
