@@ -36,9 +36,7 @@ class LevelManager {
         let expectedOutputs = levelData.algorithm(inputs: inputsShownToUser)
 
         let initialState = LevelState(inputs: inputsShownToUser,
-                                      outputs: [],
-                                      memoryValues: levelData.memoryValues,
-                                      personValue: nil)
+                                      memoryValues: levelData.memoryValues)
 
         return Level(levelName: levelName,
                      initialState: initialState,

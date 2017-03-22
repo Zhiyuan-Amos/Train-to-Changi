@@ -13,7 +13,7 @@ class GameViewController: UIViewController {
 
     // VC is currently first responder, to be changed when we add other views.
     fileprivate let model: Model
-    private let logic: Logic
+    private var logic: Logic
     private let level: Level
 
     // TODO: Refactor out
@@ -56,7 +56,9 @@ class GameViewController: UIViewController {
 
     // Stop the game. Change runstate to .stop in model
     @IBAction func stopButtonPressed(_ sender: UIButton) {
-        model.resetStateToLevelStart()
+        model.resetPlayState()
+        // Quick workaround, for Yuan to fix
+        logic.isFirstExecution = true
     }
 
     // Start the game. Change runstate to .start in model

@@ -14,4 +14,5 @@ protocol Logic {
 
     func executeNextCommand()
 
+    var isFirstExecution: Bool { get set }
 }

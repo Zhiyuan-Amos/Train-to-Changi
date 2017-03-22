@@ -11,21 +11,38 @@ import Foundation
 class ModelManager: Model {
 
     var levelState: LevelState
-    var runState: RunState
-    var numSteps: Int
-    var programCounter: Int? {
-        didSet {
-            // Notify UI to move arrow in future.
+
+    var runState: RunState {
+        get {
+            return levelState.runState
+        }
+        set(newState) {
+            levelState.runState = newState
         }
     }
+    var numSteps: Int {
+        get {
+            return levelState.numSteps
+        }
+        set(newValue) {
+            levelState.numSteps = newValue
+        }
+    }
+    var programCounter: Int? {
+        get {
+            return levelState.programCounter
+        }
+        set(newValue) {
+            //notify UI
+            levelState.programCounter = newValue
+        }
+    }
+
     private var levelManager: LevelManager
     private(set) var userEnteredCommands: [CommandEnum]
 
     init(levelData: LevelData) {
-        runState = .stopped
-        numSteps = 0
         userEnteredCommands = []
-        programCounter = nil
         levelManager = LevelManager(levelData: levelData)
         levelState = levelManager.level.initialState
     }
@@ -67,11 +84,12 @@ class ModelManager: Model {
 
     func loadLevel(levelData: LevelData) {
         levelManager.loadLevel(levelData: levelData)
-        resetState()
+        userEnteredCommands = []
+        levelState = levelManager.level.initialState
     }
 
-    func resetStateToLevelStart() {
-        resetState()
+    func resetPlayState() {
+        levelState = levelManager.level.initialState
     }
 
     // MARK - API for Logic. Notifies Scene upon execution.
@@ -112,13 +130,6 @@ class ModelManager: Model {
     }
 
     // MARK - Private helpers
-
-    private func resetState() {
-        levelState = levelManager.level.initialState
-        runState = .stopped
-        numSteps = 0
-        programCounter = nil
-    }
 
     private func postMoveNotification(destination: WalkDestination) {
         let notification = Notification(name: Constants.NotificationNames.movePersonInScene,

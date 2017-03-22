@@ -47,8 +47,8 @@ protocol Model: class {
     // Loads a level into Model and reinitialises state.
     func loadLevel(levelData: LevelData)
 
-    // Reinitialises Model state back to start of level.
-    func resetStateToLevelStart()
+    // Reinitialises Model play state.
+    func resetPlayState()
 
     // MARK - API for Logic. Notifies Scene upon execution.
 

@@ -9,7 +9,7 @@ class LogicManager: Logic {
     private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
     private var commands: [Command]!
-    private var isFirstExecution: Bool
+    var isFirstExecution: Bool
 
     init(model: Model) {
         self.model = model
@@ -58,7 +58,7 @@ class LogicManager: Logic {
         if isFirstExecution {
             initVariablesForExecution()
         }
-
+        
         let command = commands[model.programCounter!]
         let commandResult = command.execute()
 
