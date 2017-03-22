@@ -135,6 +135,7 @@ class GameViewController: UIViewController {
         }
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
+        scene.initLevelState(level.initialState)
     }
 
     @objc private func buttonPressed(sender: UIButton) {
