@@ -95,6 +95,12 @@ class GameViewController: UIViewController {
 
     private func setUpLevelDescription() {
         levelDescription.text = level.levelDescriptor
+        let fixedWidth = levelDescription.frame.size.width
+        levelDescription.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        let newSize = levelDescription.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        var newFrame = levelDescription.frame
+        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+        levelDescription.frame = newFrame;
     }
 
 
@@ -146,7 +152,8 @@ class GameViewController: UIViewController {
         switch gesture.state {
 
         case UIGestureRecognizerState.began:
-            guard let selectedIndexPath = commandsEditor.indexPathForItem(at: gesture.location(in: commandsEditor)) else {
+            let indexPath = commandsEditor.indexPathForItem(at: gesture.location(in: commandsEditor))
+            guard let selectedIndexPath = indexPath else {
                 break
             }
             commandsEditor.beginInteractiveMovementForItem(at: selectedIndexPath)
@@ -171,15 +178,6 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
     }
 
-
-    /* Helper func */
-    fileprivate func getLabel(for commandType: CommandType) -> CommandLabel {
-        let commandLabel = CommandLabel()
-        commandLabel.updateText(commandType: commandType)
-        return commandLabel
-    }
-
-
     /// Use GameScene to move/animate the game character and ..
     // TODO: Integrate with gamescene
     func presentGameScene() {
@@ -193,13 +191,7 @@ class GameViewController: UIViewController {
         scene.initLevelState(level.initialState)
     }
 
-    @objc private func buttonPressed(sender: UIButton) {
-        let command = level.availableCommands[sender.tag]
-        model.addCommand(commandEnum: command)
-        commandsEditor.reloadData()
-    }
-
-
+    /* Helper func */
     private func getCommandUIButton(for commandType: CommandType, frame: CGRect) -> UIButton {
         let currentCommandButton = UIButton(frame: frame)
         switch commandType {
@@ -257,15 +249,16 @@ extension GameViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommandCell",
-                                                            for: indexPath as IndexPath) as? CommandCell else {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommandCell",
+                                                      for: indexPath as IndexPath)
+
+        guard let commandCell =  cell as? CommandCell else {
             fatalError("Cell not assigned the proper view subclass!")
         }
 
-        // assign image to cell based on the command type.
         let command = model.currentCommands[indexPath.item]
-        cell.setImageAndIndex(commandType: command)
-        return cell
+        commandCell.setImageAndIndex(commandType: command)
+        return commandCell
     }
 
 }
@@ -275,10 +268,8 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        let edgeInset = UIEdgeInsets(top: 10,
-                                     left: 0,
-                                     bottom: 0,
-                                     right: 10)
+
+        let edgeInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 10)
         return edgeInset
     }
 
