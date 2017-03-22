@@ -13,6 +13,5 @@ protocol Logic {
     func undo() -> Bool
 
     func executeNextCommand()
-
-    var isFirstExecution: Bool { get set }
+    
 }

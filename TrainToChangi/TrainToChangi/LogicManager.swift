@@ -9,7 +9,7 @@ class LogicManager: Logic {
     private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
     private var commands: [Command]!
-    var isFirstExecution: Bool
+    private var isFirstExecution: Bool
 
     init(model: Model) {
         self.model = model
@@ -20,8 +20,6 @@ class LogicManager: Logic {
 
     // Executes the list of commands in `model.currentCommands`.
     func executeCommands() {
-        // Lin Han, are you updating runState in VC?
-        // Yes I guess
         if model.runState == .stopped {
             isFirstExecution = true
         }
@@ -32,9 +30,7 @@ class LogicManager: Logic {
             initVariablesForExecution()
         }
 
-        print(model.runState)
         while model.runState == .running {
-            print("this is not printed")
             executeNextCommand()
         }
     }
@@ -79,7 +75,6 @@ class LogicManager: Logic {
         model.programCounter = 0
         commands = CommandEnumParser().parse(model: model)
         isFirstExecution = false
-        print("this is printed, init success")
     }
 
     private func updateNumStepsTaken() {

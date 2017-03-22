@@ -57,13 +57,10 @@ class GameViewController: UIViewController {
     // Stop the game. Change runstate to .stop in model
     @IBAction func stopButtonPressed(_ sender: UIButton) {
         model.resetPlayState()
-        // Quick workaround, for Yuan to fix
-        logic.isFirstExecution = true
     }
 
     // Start the game. Change runstate to .start in model
     @IBAction func playButtonPressed(_ sender: UIButton) {
-        model.runState = .running
         logic.executeCommands()
     }
 
