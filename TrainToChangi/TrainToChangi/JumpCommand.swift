@@ -5,7 +5,7 @@
 
 class JumpCommand: Command {
     private let model: Model
-    weak var placeHolder: PlaceholderCommand?
+    weak var placeholder: PlaceholderCommand?
     //TODO: Remove indexes?
     let targetIndex: Int
     private(set) var programCounterIndex: Int?
@@ -26,8 +26,6 @@ class JumpCommand: Command {
         return CommandResult()
     }
 
-    
-
     func undo() {
         _checkRep()
 
@@ -40,10 +38,10 @@ class JumpCommand: Command {
     }
 
     private func _checkRep() {
-        guard let placeHolder = placeHolder else {
-            fatalError("placeHolder cannot be nil during execution")
+        guard let placeholder = placeholder else {
+            fatalError("placeholder cannot be nil during execution")
         }
-        guard placeHolder.jumpCommand === self else {
+        guard placeholder.jumpCommand === self else {
             fatalError("Bijection requirement unmet")
         }
     }

@@ -13,5 +13,5 @@ protocol Logic {
     func undo() -> Bool
 
     func executeNextCommand()
-    
+
 }

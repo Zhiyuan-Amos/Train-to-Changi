@@ -15,7 +15,7 @@ struct CommandEnumParser {
         return commands
     }
 
-    // Helper function to convert the `model.currentCommands` of type `CommandEnum` into `[Command]`.
+    // Helper function to convert the `model.userEnteredCommands` of type `CommandEnum` into `[Command]`.
     private func convertCommandEnumToCommand(model: Model) -> [Command] {
         var commands = [Command]()
         let commandEnums = model.userEnteredCommands
@@ -54,7 +54,7 @@ struct CommandEnumParser {
 
         for jumpCommand in jumpCommands! {
             if let placeHolderCommand = commands[jumpCommand.targetIndex] as? PlaceholderCommand {
-                jumpCommand.placeHolder = placeHolderCommand
+                jumpCommand.placeholder = placeHolderCommand
                 placeHolderCommand.jumpCommand = jumpCommand
             }
         }
@@ -66,7 +66,7 @@ struct CommandEnumParser {
         let jumpCommands = commands.filter { command in command is JumpCommand } as? [JumpCommand]
 
         for jumpCommand in jumpCommands! {
-            guard let placeHolderOne = jumpCommand.placeHolder else {
+            guard let placeHolderOne = jumpCommand.placeholder else {
                 return false
             }
 

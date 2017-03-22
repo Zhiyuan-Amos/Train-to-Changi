@@ -111,7 +111,8 @@ class GameViewController: UIViewController {
         switch gesture.state {
 
         case UIGestureRecognizerState.began:
-            guard let selectedIndexPath = commandsEditor.indexPathForItem(at: gesture.location(in: commandsEditor)) else {
+            guard let selectedIndexPath = commandsEditor.indexPathForItem(at:
+                gesture.location(in: commandsEditor)) else {
                 break
             }
             commandsEditor.beginInteractiveMovementForItem(at: selectedIndexPath)
@@ -160,14 +161,16 @@ extension GameViewController: UICollectionViewDataSource {
         return model.userEnteredCommands.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath,
+                        to destinationIndexPath: IndexPath) {
         let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.row)
         model.insertCommand(commandEnum: movedCommand, atIndex: destinationIndexPath.row)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommandCell", for: indexPath as IndexPath) as? CommandCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:
+            "CommandCell", for: indexPath as IndexPath) as? CommandCell else {
             fatalError("Cell not assigned the proper view subclass!")
         }
         // assign image to cell based on the command type.

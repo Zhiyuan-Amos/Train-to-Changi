@@ -31,7 +31,7 @@ class PlaceholderCommand: Command {
             fatalError("jumpCommand cannot be nil during execution")
         }
 
-        guard jumpCommand.placeHolder === self else {
+        guard jumpCommand.placeholder === self else {
             fatalError("Bijection requirement unmet")
         }
     }
