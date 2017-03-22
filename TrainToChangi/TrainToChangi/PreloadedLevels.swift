@@ -21,12 +21,7 @@ struct PreloadedLevels {
         "Your program should tell your worker to grab each thing from the INBOX, " +
         "and drop it into the OUTBOX."
     static func levelOneAlgo(values: [Int]) -> [Int] {
-        var sum = 0
-        for value in values {
-            sum += value
-        }
-
-        return [sum]
+        return values
     }
 
 }
