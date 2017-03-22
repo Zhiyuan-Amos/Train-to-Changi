@@ -9,16 +9,47 @@
 import UIKit
 
 class CommandCell: UICollectionViewCell {
-    private var label: CommandLabel?
 
-    override func prepareForReuse() {
-        label?.text = nil
+    @IBOutlet weak var commandImage: UIImageView!
+    @IBOutlet weak var commandIndexButton: UIButton!
+
+    func setImageAndIndex(commandType: CommandType) {
+        switch commandType {
+        case .add(let index):
+            commandImage.image = UIImage(named: "add.png")
+            commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
+            commandIndexButton.setBackgroundImage(UIImage(named: "mathIndex"),
+                                                  for: UIControlState.normal)
+            commandIndexButton.isHidden = false
+        case .copyFrom(let index):
+            commandImage.image = UIImage(named: "copyfrom.png")
+            commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
+            commandIndexButton.setBackgroundImage(UIImage(named: "copyIndex"),
+                                                  for: UIControlState.normal)
+            commandIndexButton.isHidden = false
+        case .copyTo(let index):
+            commandImage.image = UIImage(named: "copyto.png")
+            commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
+            commandIndexButton.setBackgroundImage(UIImage(named: "copyIndex"),
+                                                  for: UIControlState.normal)
+            commandIndexButton.isHidden = false
+        case .inbox:
+            commandImage.image = UIImage(named: "inbox.png")
+            commandIndexButton.isHidden = true
+
+        case .jump(_):
+            commandImage.image = UIImage(named: "jump.png")
+            commandIndexButton.isHidden = true
+
+        case .outbox:
+            commandImage.image = UIImage(named: "outbox.png")
+            commandIndexButton.isHidden = true
+
+        case .placeHolder:
+            commandImage.image = UIImage(named: "jumptarget.png")
+            commandIndexButton.isHidden = true
+        }
+
     }
 
-    func setLabel(_ label: CommandLabel) {
-        let frame =  CGRect(x: 0, y: 0, width: 100, height: 30)
-        label.frame = frame
-        self.label = label
-        contentView.addSubview(label)
-    }
 }

@@ -11,13 +11,11 @@ struct PreloadedLevels {
                                 algorithm: levelOneAlgo)
 
     static let levelOneStationName = "Introduction"
-
     static let levelOneInitialState = LevelState(inputs: [1, 2, 3],
-                                                 outputs: [],
-                                                 memoryValues: [nil, nil],
-                                                 personValue: nil,
-                                                 currentCommands: [])
-    static let levelOneCommandEnum: [CommandEnum] = [.inbox, .outbox]
+    static let levelOneCommandTypes: [CommandEnum] = [.outbox, .jump(targetIndex: nil), .inbox,
+                                                      .add(memoryIndex: nil), .copyTo(memoryIndex: nil),
+                                                      .copyFrom(memoryIndex: nil)]
+
     static let levelOneLevelDescriptor = "Drag commands into this area to build a program.\n\n" +
         "Your program should tell your worker to grab each thing from the INBOX, " +
         "and drop it into the OUTBOX."

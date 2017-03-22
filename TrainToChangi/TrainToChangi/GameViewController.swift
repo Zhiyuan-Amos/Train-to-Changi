@@ -51,6 +51,7 @@ class GameViewController: UIViewController {
         addPanGestureRecognizerToCommandsEditor()
     }
 
+
     func handlePan(gesture: UIPanGestureRecognizer) {
         switch(gesture.state) {
 
@@ -68,6 +69,8 @@ class GameViewController: UIViewController {
         }
     }
 
+
+    /* Control Panel Logic */
     // Stop the game. Change runstate to .stop in model
     @IBAction func stopButtonPressed(_ sender: UIButton) {
     }
@@ -80,7 +83,14 @@ class GameViewController: UIViewController {
 
     @IBAction func resetButtonPressed(_ sender: UIButton) {
         model.clearAllCommands()
+        print(model.currentCommands.count)
         commandsEditor.reloadData()
+    }
+
+    /* Setup */
+    private func connectDataSourceAndDelegate() {
+        commandsEditor.dataSource = self
+        commandsEditor.delegate = self
     }
 
     private func setUpLevelDescription() {
@@ -94,35 +104,28 @@ class GameViewController: UIViewController {
 
         let initialCommandPosition = availableCommandsView.frame.origin
         var commandIndex = 0
-        var commandOffset: CGFloat = 0
+        var commandButtonOffsetY: CGFloat = Constants.commandButtonInitialOffsetY
 
         for command in level.commandTypes {
             let currentCommandPositionX = initialCommandPosition.x
-            let currentCommandPositionY = initialCommandPosition.y + commandOffset
+            let currentCommandPositionY = initialCommandPosition.y + commandButtonOffsetY
+
             let currentCommandPosition = CGPoint(x: currentCommandPositionX,
                                                  y: currentCommandPositionY)
-            let currentCommandSize = CGSize(width: 100, height: 30)
-
+            let currentCommandSize = CGSize(width: Constants.commandButtonWidth,
+                                            height: Constants.commandButtonHeight)
             let currentCommandFrame = CGRect(origin: currentCommandPosition,
                                              size: currentCommandSize)
 
-            let currentCommandButton = UIButton(frame: currentCommandFrame)
-            let currentCommandLabel = getLabel(for: command)
-            currentCommandButton.setTitle(currentCommandLabel.text, for: .normal)
-            currentCommandButton.setTitleColor(UIColor.gray, for: .highlighted)
-            currentCommandButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+            let currentCommandButton = getCommandUIButton(for: command, frame: currentCommandFrame)
             currentCommandButton.tag = commandIndex
-            view.addSubview(currentCommandButton)
             commandIndex += 1
-            commandOffset += 40
+            commandButtonOffsetY += Constants.commandButtonOffsetY
+            view.addSubview(currentCommandButton)
         }
     }
 
-    private func connectDataSourceAndDelegate() {
-        commandsEditor.dataSource = self
-        commandsEditor.delegate = self
-    }
-
+    /* Gestures */
     private func addPanGestureRecognizerToCommandsEditor() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         commandsEditor.addGestureRecognizer(panGesture)
@@ -168,17 +171,14 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
     }
 
-    @objc private func buttonPressed(sender: UIButton) {
-        let command = level.commandTypes[sender.tag]
-        model.addCommand(commandType: command)
-        commandsEditor.reloadData()
-    }
 
+    /* Helper func */
     fileprivate func getLabel(for commandType: CommandType) -> CommandLabel {
         let commandLabel = CommandLabel()
         commandLabel.updateText(commandType: commandType)
         return commandLabel
     }
+
 
     /// Use GameScene to move/animate the game character and ..
     // TODO: Integrate with gamescene
@@ -199,10 +199,34 @@ class GameViewController: UIViewController {
         commandsEditor.reloadData()
     }
 
-    fileprivate func getLabel(for commandEnum: CommandEnum) -> CommandLabel {
-        let commandLabel = CommandLabel()
-        commandLabel.updateText(commandEnum: commandEnum)
-        return commandLabel
+
+    private func getCommandUIButton(for commandType: CommandType, frame: CGRect) -> UIButton {
+        let currentCommandButton = UIButton(frame: frame)
+        switch commandType {
+        case .add(_):
+            currentCommandButton.setImage(UIImage(named: "add.png"), for: UIControlState.normal)
+        case .copyFrom(_):
+            currentCommandButton.setImage(UIImage(named: "copyfrom.png"), for: UIControlState.normal)
+        case .copyTo(_):
+            currentCommandButton.setImage(UIImage(named: "copyto.png"), for: UIControlState.normal)
+        case .inbox:
+            currentCommandButton.setImage(UIImage(named: "inbox.png"), for: UIControlState.normal)
+        case .jump(_):
+            currentCommandButton.setImage(UIImage(named: "jump.png"), for: UIControlState.normal)
+        case .outbox:
+            currentCommandButton.setImage(UIImage(named: "outbox.png"), for: UIControlState.normal)
+        case .placeHolder:
+            currentCommandButton.setImage(UIImage(named: "jumptarget.png"), for: UIControlState.normal)
+        }
+
+        currentCommandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
+        return currentCommandButton
+    }
+
+    @objc private func commandButtonPressed(sender: UIButton) {
+        let command = level.commandTypes[sender.tag]
+        model.addCommand(commandType: command)
+        commandsEditor.reloadData()
     }
 }
 
@@ -224,20 +248,23 @@ extension GameViewController: UICollectionViewDataSource {
         model.insertCommand(commandEnum: movedCommand, atIndex: destinationIndexPath.row)
     }
 
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.row)
-        model.insertCommand(atIndex: destinationIndexPath.row, commandType: movedCommand)
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath,
+                        to destinationIndexPath: IndexPath) {
+        let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.item)
+        model.insertCommand(atIndex: destinationIndexPath.item, commandType: movedCommand)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommandCell", for: indexPath as IndexPath) as? CommandCell else {
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommandCell",
+                                                            for: indexPath as IndexPath) as? CommandCell else {
             fatalError("Cell not assigned the proper view subclass!")
         }
+
         // assign image to cell based on the command type.
-        let command = model.currentCommands[indexPath.row]
-        let label = getLabel(for: command)
-        cell.setLabel(label)
+        let command = model.currentCommands[indexPath.item]
+        cell.setImageAndIndex(commandType: command)
         return cell
     }
 
@@ -248,17 +275,23 @@ extension GameViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        let edgeInset = UIEdgeInsets(top: 5,
-                                     left: 10,
-                                     bottom: 5,
-                                     right: 50)
+        let edgeInset = UIEdgeInsets(top: 10,
+                                     left: 0,
+                                     bottom: 0,
+                                     right: 10)
         return edgeInset
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width
-        return CGSize(width: width * 0.6, height: 30.0)
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
 }
