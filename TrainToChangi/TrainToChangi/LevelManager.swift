@@ -38,8 +38,7 @@ class LevelManager {
         let initialState = LevelState(inputs: inputsShownToUser,
                                       outputs: [],
                                       memoryValues: levelData.memoryValues,
-                                      personValue: nil,
-                                      currentCommands: [])
+                                      personValue: nil)
 
         return Level(levelName: levelName,
                      initialState: initialState,

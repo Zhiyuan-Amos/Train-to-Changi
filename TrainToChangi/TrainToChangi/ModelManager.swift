@@ -19,17 +19,15 @@ class ModelManager: Model {
         }
     }
     private var levelManager: LevelManager
+    private(set) var userEnteredCommands: [CommandEnum]
 
     init(levelData: LevelData) {
         runState = .stopped
         numSteps = 0
+        userEnteredCommands = []
         programCounter = nil
         levelManager = LevelManager(levelData: levelData)
         levelState = levelManager.level.initialState
-    }
-
-    var userEnteredCommands: [CommandEnum] {
-        return levelState.currentCommands
     }
 
     var currentInputs: [Int] {
@@ -51,20 +49,20 @@ class ModelManager: Model {
     // MARK - API for GameViewController.
 
     func addCommand(commandEnum: CommandEnum) {
-        levelState.currentCommands.append(commandEnum)
+        userEnteredCommands.append(commandEnum)
     }
 
     func insertCommand(commandEnum: CommandEnum, atIndex index: Int) {
-        levelState.currentCommands.insert(commandEnum, at: index)
+        userEnteredCommands.insert(commandEnum, at: index)
     }
 
     // Removes the command at specified Index from userEnteredCommands.
     func removeCommand(fromIndex index: Int) -> CommandEnum {
-        return levelState.currentCommands.remove(at: index)
+        return userEnteredCommands.remove(at: index)
     }
 
     func clearAllCommands() {
-        levelState.currentCommands.removeAll()
+        userEnteredCommands.removeAll()
     }
 
     func loadLevel(levelData: LevelData) {

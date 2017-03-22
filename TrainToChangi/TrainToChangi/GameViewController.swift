@@ -56,6 +56,7 @@ class GameViewController: UIViewController {
 
     // Stop the game. Change runstate to .stop in model
     @IBAction func stopButtonPressed(_ sender: UIButton) {
+        model.resetStateToLevelStart()
     }
 
     // Start the game. Change runstate to .start in model
