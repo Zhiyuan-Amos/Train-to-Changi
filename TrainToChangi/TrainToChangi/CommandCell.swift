@@ -13,7 +13,7 @@ class CommandCell: UICollectionViewCell {
     @IBOutlet weak var commandImage: UIImageView!
     @IBOutlet weak var commandIndexButton: UIButton!
 
-    func setImageAndIndex(commandType: CommandType) {
+    func setImageAndIndex(commandType: CommandEnum) {
         switch commandType {
         case .add(let index):
             commandImage.image = UIImage(named: "add.png")
@@ -45,7 +45,7 @@ class CommandCell: UICollectionViewCell {
             commandImage.image = UIImage(named: "outbox.png")
             commandIndexButton.isHidden = true
 
-        case .placeHolder:
+        case .placeholder:
             commandImage.image = UIImage(named: "jumptarget.png")
             commandIndexButton.isHidden = true
         }

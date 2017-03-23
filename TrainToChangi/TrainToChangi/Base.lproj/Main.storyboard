@@ -25,22 +25,22 @@
                                 <rect key="frame" x="787" y="68" width="237" height="596"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kRz-y9-ncN">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" alwaysBounceVertical="YES" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kRz-y9-ncN">
                                         <rect key="frame" x="0.0" y="146" width="237" height="450"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="1" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="OQV-sc-fCO">
-                                            <size key="itemSize" width="220" height="40"/>
+                                            <size key="itemSize" width="161" height="40"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CommandCell" id="LtA-1V-iqt" customClass="CommandCell" customModule="TrainToChangi" customModuleProvider="target">
-                                                <rect key="frame" x="9" y="0.0" width="220" height="40"/>
+                                                <rect key="frame" x="38" y="0.0" width="161" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="220" height="40"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="161" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4AH-NB-MRI">
@@ -70,7 +70,7 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dy1-XF-9cF">
                                 <rect key="frame" x="835" y="672" width="39" height="30"/>
@@ -104,14 +104,30 @@
                                             <action selector="stopButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="5Ae-lM-yPU"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agn-4v-A72">
+                                        <rect key="frame" x="111" y="8" width="70" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="stepback"/>
+                                        <connections>
+                                            <action selector="stepBackButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="6Sk-m9-UkS"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7J-KX-aRt">
-                                        <rect key="frame" x="119" y="8" width="70" height="68"/>
+                                        <rect key="frame" x="198" y="8" width="70" height="68"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="playbutton">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="playButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="STc-9R-SJm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODL-16-rW8">
+                                        <rect key="frame" x="284" y="8" width="70" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="stepforward"/>
+                                        <connections>
+                                            <action selector="stepForwardButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="lXC-ZC-j7p"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -123,6 +139,7 @@
                     <connections>
                         <outlet property="availableCommandsView" destination="d08-m5-x39" id="leo-zs-6lj"/>
                         <outlet property="commandsEditor" destination="kRz-y9-ncN" id="3QT-19-fMx"/>
+                        <outlet property="editor" destination="mqT-gm-T0j" id="7gg-7j-LgP"/>
                         <outlet property="levelDescription" destination="jft-9R-iCA" id="N92-Sy-XpG"/>
                     </connections>
                 </viewController>
@@ -133,6 +150,8 @@
     </scenes>
     <resources>
         <image name="playbutton" width="188" height="187"/>
+        <image name="stepback" width="188" height="186"/>
+        <image name="stepforward" width="188" height="187"/>
         <image name="stopbutton" width="188" height="187"/>
         <image name="train_vert" width="353" height="952"/>
     </resources>

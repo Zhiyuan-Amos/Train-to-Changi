@@ -39,4 +39,13 @@ struct Constants {
         static let movePersonInScene = Notification.Name(rawValue: "movePersonInScene")
         static let initScene = Notification.Name(rawValue: "initScene")
     }
+
+    struct UI {
+        static let commandButtonInitialOffsetY: CGFloat = 40
+        static let commandButtonOffsetY: CGFloat = 40
+        static let commandButtonWidth: CGFloat = 40
+        static let commandButtonHeight: CGFloat = 20
+        
+        static let commandCellIdentifier = "CommandCell"
+    }
 }

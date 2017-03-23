@@ -14,28 +14,19 @@ class GameViewController: UIViewController {
     // VC is currently first responder, to be changed when we add other views.
     fileprivate let model: Model
     private let logic: Logic
-    private let level: Level
 
-    // TODO: Refactor out
-    let commandCellIdentifier = "CommandCell"
-
-    // TODO: change to another Collectionview then
-    // implement drag & drop
     // The area which shows availableCommandsForUser
     @IBOutlet private var availableCommandsView: UIView!
 
-    // The level description.
-    // To create programatically so size varies.
-    @IBOutlet private var levelDescription: UITextView!
-
-    // The area which user programs by dropping commands.
+    @IBOutlet weak var editor: UIView!
     @IBOutlet private var commandsEditor: UICollectionView!
 
+    // The level description.
+    @IBOutlet private var levelDescription: UITextView!
+
     required init?(coder aDecoder: NSCoder) {
-        model = ModelManager(stationName: "Introduction")
+        model = ModelManager() //model init default loads PreloadedLevels.levelOne
         logic = LogicManager(model: model)
-        // Previous view should have passed me the level. Simulate this.
-        level = PreloadedLevels.levelOne
         super.init(coder: aDecoder)
     }
 
@@ -47,102 +38,89 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         setUpLevelDescription()
         loadAvailableCommands()
+        adjustCommandsEditor()
         connectDataSourceAndDelegate()
         addPanGestureRecognizerToCommandsEditor()
+        presentGameScene()
     }
-
-
-    func handlePan(gesture: UIPanGestureRecognizer) {
-        switch(gesture.state) {
-
-        case UIGestureRecognizerState.began:
-            guard let selectedIndexPath = commandsEditor.indexPathForItem(at: gesture.location(in: commandsEditor)) else {
-                break
-            }
-            commandsEditor.beginInteractiveMovementForItem(at: selectedIndexPath)
-        case UIGestureRecognizerState.changed:
-            commandsEditor.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-        case UIGestureRecognizerState.ended:
-            commandsEditor.endInteractiveMovement()
-        default:
-            commandsEditor.cancelInteractiveMovement()
-        }
-    }
-
 
     /* Control Panel Logic */
-    // Stop the game. Change runstate to .stop in model
     @IBAction func stopButtonPressed(_ sender: UIButton) {
+        model.runState = .stopped
     }
 
-    // Start the game. Change runstate to .start in model
     @IBAction func playButtonPressed(_ sender: UIButton) {
         model.runState = .running
         logic.executeCommands()
     }
 
+    @IBAction func stepBackButtonPressed(_ sender: Any) {
+        logic.executeNextCommand()
+    }
+    
+    @IBAction func stepForwardButtonPressed(_ sender: Any) {
+        logic.undo()
+    }
+
     @IBAction func resetButtonPressed(_ sender: UIButton) {
         model.clearAllCommands()
-        print(model.currentCommands.count)
         commandsEditor.reloadData()
     }
 
+
     /* Setup */
+    private func adjustCommandsEditor() {
+        commandsEditor.frame = CGRect(x: commandsEditor.frame.minX,
+                                      y: levelDescription.frame.maxY,
+                                      width: commandsEditor.frame.width - 30,
+                                      height: editor.frame.height - levelDescription.frame.height)
+    }
+
     private func connectDataSourceAndDelegate() {
         commandsEditor.dataSource = self
         commandsEditor.delegate = self
     }
 
     private func setUpLevelDescription() {
-        levelDescription.text = level.levelDescriptor
+        levelDescription.text = model.currentLevel.levelDescriptor
+
         let fixedWidth = levelDescription.frame.size.width
         levelDescription.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+
         let newSize = levelDescription.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+
         var newFrame = levelDescription.frame
         newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+
         levelDescription.frame = newFrame;
     }
 
 
     func loadAvailableCommands() {
-        // Previous view should have passed me the level. Simulate this.
-        let level = PreloadedLevels.levelOne
-
         let initialCommandPosition = availableCommandsView.frame.origin
         var commandIndex = 0
-        var commandButtonOffsetY: CGFloat = Constants.commandButtonInitialOffsetY
+        var commandButtonOffsetY: CGFloat = Constants.UI.commandButtonInitialOffsetY
 
-        for command in level.commandTypes {
+        for command in model.currentLevel.availableCommands {
             let currentCommandPositionX = initialCommandPosition.x
             let currentCommandPositionY = initialCommandPosition.y + commandButtonOffsetY
 
             let currentCommandPosition = CGPoint(x: currentCommandPositionX,
                                                  y: currentCommandPositionY)
-            let currentCommandSize = CGSize(width: Constants.commandButtonWidth,
-                                            height: Constants.commandButtonHeight)
+            let currentCommandSize = CGSize(width: Constants.UI.commandButtonWidth,
+                                            height: Constants.UI.commandButtonHeight)
             let currentCommandFrame = CGRect(origin: currentCommandPosition,
                                              size: currentCommandSize)
 
             let currentCommandButton = getCommandUIButton(for: command, frame: currentCommandFrame)
             currentCommandButton.tag = commandIndex
             commandIndex += 1
-            commandButtonOffsetY += Constants.commandButtonOffsetY
+            commandButtonOffsetY += Constants.UI.commandButtonOffsetY
             view.addSubview(currentCommandButton)
         }
     }
 
     /* Gestures */
-    private func addPanGestureRecognizerToCommandsEditor() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        commandsEditor.addGestureRecognizer(panGesture)
-    }
-
-
-    private func connectDataSourceAndDelegate() {
-        commandsEditor.dataSource = self
-        commandsEditor.delegate = self
-    }
-
     private func addPanGestureRecognizerToCommandsEditor() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         commandsEditor.addGestureRecognizer(panGesture)
@@ -168,18 +146,6 @@ class GameViewController: UIViewController {
 
     /// Use GameScene to move/animate the game character and ..
     // TODO: Integrate with gamescene
-    private func presentGameScene() {
-        let scene = GameScene(size: view.bounds.size)
-        guard let skView = view as? SKView else {
-            assertionFailure("View should be a SpriteKit View!")
-            return
-        }
-        scene.scaleMode = .resizeFill
-        skView.presentScene(scene)
-    }
-
-    /// Use GameScene to move/animate the game character and ..
-    // TODO: Integrate with gamescene
     func presentGameScene() {
         let scene = GameScene(size: view.bounds.size)
         guard let skView = view as? SKView else {
@@ -188,11 +154,11 @@ class GameViewController: UIViewController {
         }
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
-        scene.initLevelState(level.initialState)
+        scene.initLevelState(model.currentLevel.initialState)
     }
 
     /* Helper func */
-    private func getCommandUIButton(for commandType: CommandType, frame: CGRect) -> UIButton {
+    private func getCommandUIButton(for commandType: CommandEnum, frame: CGRect) -> UIButton {
         let currentCommandButton = UIButton(frame: frame)
         switch commandType {
         case .add(_):
@@ -207,7 +173,7 @@ class GameViewController: UIViewController {
             currentCommandButton.setImage(UIImage(named: "jump.png"), for: UIControlState.normal)
         case .outbox:
             currentCommandButton.setImage(UIImage(named: "outbox.png"), for: UIControlState.normal)
-        case .placeHolder:
+        case .placeholder:
             currentCommandButton.setImage(UIImage(named: "jumptarget.png"), for: UIControlState.normal)
         }
 
@@ -216,12 +182,11 @@ class GameViewController: UIViewController {
     }
 
     @objc private func commandButtonPressed(sender: UIButton) {
-        let command = level.commandTypes[sender.tag]
-        model.addCommand(commandType: command)
+        let command = model.currentLevel.availableCommands[sender.tag]
+        model.addCommand(commandEnum: command)
         commandsEditor.reloadData()
     }
 }
-
 
 // TODO: Refactor magic numbers after the layout is getting finalized
 extension GameViewController: UICollectionViewDataSource {
@@ -236,27 +201,21 @@ extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath,
                         to destinationIndexPath: IndexPath) {
-        let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.row)
-        model.insertCommand(commandEnum: movedCommand, atIndex: destinationIndexPath.row)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath,
-                        to destinationIndexPath: IndexPath) {
         let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.item)
-        model.insertCommand(atIndex: destinationIndexPath.item, commandType: movedCommand)
+        model.insertCommand(commandEnum: movedCommand, atIndex: destinationIndexPath.item)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CommandCell",
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.UI.commandCellIdentifier,
                                                       for: indexPath as IndexPath)
 
         guard let commandCell =  cell as? CommandCell else {
             fatalError("Cell not assigned the proper view subclass!")
         }
 
-        let command = model.currentCommands[indexPath.item]
+        let command = model.userEnteredCommands[indexPath.item]
         commandCell.setImageAndIndex(commandType: command)
         return commandCell
     }
