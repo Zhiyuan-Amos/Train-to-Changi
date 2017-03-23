@@ -10,11 +10,11 @@ import Foundation
 
 struct LevelDataHelper {
     static let newLine = "\n"
-    static let inboxCommand = CommandEnum.inbox
-    static let outboxCommand = CommandEnum.outbox
-    static let jumpCommand = CommandEnum.jump(targetIndex: nil)
-    static let addCommand = CommandEnum.add(memoryIndex: nil)
-    static let copyToCommand = CommandEnum.copyTo(memoryIndex: nil)
+    static let inboxCommand = CommandData.inbox
+    static let outboxCommand = CommandData.outbox
+    static let jumpCommand = CommandData.jump(targetIndex: nil)
+    static let addCommand = CommandData.add(memoryIndex: nil)
+    static let copyToCommand = CommandData.copyTo(memoryIndex: nil)
 
     static func levelData(levelIndex: Int) -> LevelData {
         return preloadedLevelsData[levelIndex]

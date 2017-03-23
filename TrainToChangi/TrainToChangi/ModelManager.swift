@@ -39,7 +39,7 @@ class ModelManager: Model {
     }
 
     private var levelManager: LevelManager
-    private(set) var userEnteredCommands: [CommandEnum]
+    private(set) var userEnteredCommands: [CommandData]
 
     init(levelData: LevelData) {
         userEnteredCommands = []
@@ -65,16 +65,16 @@ class ModelManager: Model {
 
     // MARK - API for GameViewController.
 
-    func addCommand(commandEnum: CommandEnum) {
+    func addCommand(commandEnum: CommandData) {
         userEnteredCommands.append(commandEnum)
     }
 
-    func insertCommand(commandEnum: CommandEnum, atIndex index: Int) {
+    func insertCommand(commandEnum: CommandData, atIndex index: Int) {
         userEnteredCommands.insert(commandEnum, at: index)
     }
 
     // Removes the command at specified Index from userEnteredCommands.
-    func removeCommand(fromIndex index: Int) -> CommandEnum {
+    func removeCommand(fromIndex index: Int) -> CommandData {
         return userEnteredCommands.remove(at: index)
     }
 

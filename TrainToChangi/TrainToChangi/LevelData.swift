@@ -14,7 +14,7 @@ protocol LevelData {
 
     var levelDescription: String { get }
 
-    var availableCommands: [CommandEnum] { get }
+    var availableCommands: [CommandData] { get }
 
     var memoryValues: [Int?] { get }
 
@@ -36,7 +36,7 @@ struct LevelOneData: LevelData {
                            + LevelDataHelper.newLine
                            + "Drag and drop commands to move all boxes to Outbox."
 
-    let availableCommands: [CommandEnum] = [LevelDataHelper.inboxCommand,
+    let availableCommands: [CommandData] = [LevelDataHelper.inboxCommand,
                                             LevelDataHelper.outboxCommand]
 
     let memoryValues: [Int?] = []
@@ -69,7 +69,7 @@ struct LevelTwoData: LevelData {
                            + "Can you power up the MRT, "
                            + "using only one inbox and outbox command?."
 
-    let availableCommands: [CommandEnum] = [LevelDataHelper.inboxCommand,
+    let availableCommands: [CommandData] = [LevelDataHelper.inboxCommand,
                                             LevelDataHelper.outboxCommand,
                                             LevelDataHelper.jumpCommand]
 
@@ -105,7 +105,7 @@ struct LevelThreeData: LevelData {
                            + "and the COPYTO, ADD functionality. "
                            + "Sum up each pair of boxes, before moving them to outbox."
 
-    let availableCommands: [CommandEnum] = [LevelDataHelper.inboxCommand,
+    let availableCommands: [CommandData] = [LevelDataHelper.inboxCommand,
                                             LevelDataHelper.outboxCommand,
                                             LevelDataHelper.jumpCommand,
                                             LevelDataHelper.addCommand,

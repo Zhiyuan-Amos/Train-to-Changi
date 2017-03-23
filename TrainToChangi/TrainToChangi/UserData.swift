@@ -12,7 +12,7 @@ class UserData {
     // Not done in a cumulative way in case we implement branching paths
     var completedLevelIndexes: [Int] = []
 
-    var levelIndexToAddedCommands: [Int: [CommandEnum]] = [:]
+    var levelIndexToAddedCommands: [Int: [CommandData]] = [:]
 
     // Called after level is won
     func completeLevel(levelIndex: Int) {
@@ -23,7 +23,7 @@ class UserData {
     }
 
     // Called by app delegate after app quits, or when user press back/win level.
-    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandEnum]) {
+    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandData]) {
         levelIndexToAddedCommands[levelIndex] = userAddedCommands
     }
 }

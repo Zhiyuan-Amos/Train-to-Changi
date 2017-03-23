@@ -16,7 +16,7 @@ protocol Model: class {
     var numSteps: Int { get set }
 
     // The Commands that user has added.
-    var userEnteredCommands: [CommandEnum] { get }
+    var userEnteredCommands: [CommandData] { get }
 
     // The current inputs left in the inbox area.
     var currentInputs: [Int] { get }
@@ -33,13 +33,13 @@ protocol Model: class {
     // MARK - API for GameViewController.
 
     // Appends the command to userEnteredCommands.
-    func addCommand(commandEnum: CommandEnum)
+    func addCommand(commandEnum: CommandData)
 
     // Inserts the command into userEnteredCommands, at specified Index.
-    func insertCommand(commandEnum: CommandEnum, atIndex: Int)
+    func insertCommand(commandEnum: CommandData, atIndex: Int)
 
     // Removes the command at specified Index from userEnteredCommands.
-    func removeCommand(fromIndex: Int) -> CommandEnum
+    func removeCommand(fromIndex: Int) -> CommandData
 
     // Removes all commands from userEnteredCommands.
     func clearAllCommands()

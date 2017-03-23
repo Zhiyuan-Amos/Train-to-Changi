@@ -9,11 +9,11 @@
 class Level {
     let levelName: String
     let initialState: LevelState
-    let availableCommands: [CommandEnum]
+    let availableCommands: [CommandData]
     let levelDescriptor: String
     let expectedOutputs: [Int]
 
-    init(levelName: String, initialState: LevelState, availableCommands: [CommandEnum],
+    init(levelName: String, initialState: LevelState, availableCommands: [CommandData],
          levelDescriptor: String, expectedOutputs: [Int]) {
         self.levelName = levelName
         self.initialState = initialState

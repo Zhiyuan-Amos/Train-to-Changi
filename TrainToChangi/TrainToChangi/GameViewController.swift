@@ -145,7 +145,7 @@ class GameViewController: UIViewController {
         commandsEditor.reloadData()
     }
 
-    fileprivate func getLabel(for commandEnum: CommandEnum) -> CommandLabel {
+    fileprivate func getLabel(for commandEnum: CommandData) -> CommandLabel {
         let commandLabel = CommandLabel()
         commandLabel.updateText(commandEnum: commandEnum)
         return commandLabel

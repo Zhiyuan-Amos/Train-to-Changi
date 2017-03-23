@@ -11,13 +11,6 @@ enum CommandData {
     case jump(targetIndex: Int?)
     case placeholder
 
-    var isJumpCommand: Bool {
-        switch self {
-        case .jump(_): return true
-        default: return false
-        }
-    }
-
     func toString() -> String {
         switch self {
         case .inbox:
@@ -34,6 +27,13 @@ enum CommandData {
             return "jump_\(targetIndex)"
         case .placeholder:
             return "placeholder"
+        }
+    }
+
+    var isJumpCommand: Bool {
+        switch self {
+        case .jump(_): return true
+        default: return false
         }
     }
 
