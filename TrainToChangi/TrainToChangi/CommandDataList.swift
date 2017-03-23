@@ -22,74 +22,6 @@ class IterativeListNode: CommandDataListNode {
     }
 }
 
-// Abstraction that allows code to treat this grouped pair
-// as one single `CommandDataListNode`, thereby enabling this special case
-// without any modification to existing code.
-// Reference to this wrapper is not kept thereafter.
-class JumpAndTargetWrapper: CommandDataListNode {
-    let jumpListNode: JumpListNode
-    let jumpTargetNode: JumpTargetListNode
-
-    init(commandData: CommandData) {
-        let jumpListNode = JumpListNode(commandData: commandData)
-        self.jumpListNode = jumpListNode
-        self.jumpTargetNode = jumpListNode.jumpTarget
-        // Link these nodes together to follow normal sequential execution.
-        jumpTargetNode.next = jumpListNode
-        jumpListNode.previous = jumpTargetNode
-    }
-
-    // Meant to be initialised only by `JumpAndTargetWrapper`.
-    class JumpListNode: CommandDataListNode {
-        let commandData: CommandData
-        // Use ! to silence xcode
-        var jumpTarget: JumpTargetListNode!
-        var next: CommandDataListNode?
-        var previous: CommandDataListNode?
-
-        init(commandData: CommandData) {
-            self.commandData = commandData
-            self.jumpTarget = JumpTargetListNode(jumpParent: self)
-        }
-    }
-
-    class JumpTargetListNode: CommandDataListNode {
-        let commandData: CommandData
-        unowned var jumpParent: JumpListNode
-        var next: CommandDataListNode?
-        var previous: CommandDataListNode?
-
-        init(jumpParent: JumpListNode) {
-            self.commandData = .placeholder
-            self.jumpParent = jumpParent
-        }
-    }
-}
-
-// Extension to provide custom functionality for `JumpAndTargetWrapper`.
-extension CommandDataListNode where Self: JumpAndTargetWrapper {
-    var commandData: CommandData {
-        return self.jumpListNode.commandData
-    }
-    var next: CommandDataListNode? {
-        get {
-            return self.jumpListNode.next
-        }
-        set(newNext) {
-            self.jumpListNode.next = newNext
-        }
-    }
-    var previous: CommandDataListNode? {
-        get {
-            return self.jumpTargetNode.previous
-        }
-        set(newPrev) {
-            self.jumpTargetNode.previous = newPrev
-        }
-    }
-}
-
-// Meant to be initialised only by `JumpAndTargetWrapper`.
 class JumpListNode: CommandDataListNode {
     let commandData: CommandData
     // Use ! to silence xcode
@@ -100,6 +32,7 @@ class JumpListNode: CommandDataListNode {
     init(commandData: CommandData) {
         self.commandData = commandData
         self.jumpTarget = JumpTargetListNode(jumpParent: self)
+        self.previous = jumpTarget
     }
 }
 
@@ -112,6 +45,7 @@ class JumpTargetListNode: CommandDataListNode {
     init(jumpParent: JumpListNode) {
         self.commandData = .placeholder
         self.jumpParent = jumpParent
+        self.next = jumpParent
     }
 }
 
@@ -165,12 +99,19 @@ class CommandDataLinkedList: CommandDataList {
 
     func append(commandData: CommandData) {
         let newNode = initNode(commandData: commandData)
+        if let jumpNode = newNode as? JumpListNode {
+            append(jumpNode.jumpTarget)
+            return
+        }
         append(newNode)
     }
 
     func insert(commandData: CommandData, atIndex index: Int) {
         let newNode = initNode(commandData: commandData)
         insert(newNode, atIndex: index)
+        if let jumpNode = newNode as? JumpListNode {
+            insert(jumpNode.jumpTarget, atIndex: index)
+        }
     }
 
     func move(sourceIndex: Int, destIndex: Int) {
@@ -195,6 +136,11 @@ class CommandDataLinkedList: CommandDataList {
     func remove(atIndex index: Int) -> CommandData {
         guard let node = self.node(atIndex: index) else {
             preconditionFailure("Index is not valid.")
+        }
+        if let node = node as? JumpListNode {
+            _ = remove(node: node.jumpTarget)
+        } else if let node = node as? JumpTargetListNode {
+            _ = remove(node: node.jumpParent)
         }
 
         return remove(node: node)
@@ -245,7 +191,7 @@ class CommandDataLinkedList: CommandDataList {
 
     private func initNode(commandData: CommandData) -> CommandDataListNode {
         return commandData.isJumpCommand
-            ? JumpAndTargetWrapper(commandData: commandData)
+            ? JumpListNode(commandData: commandData)
             : IterativeListNode(commandData: commandData)
     }
 
@@ -314,13 +260,6 @@ class CommandDataLinkedList: CommandDataList {
 
         node.previous = nil
         node.next = nil
-
-        // Handle jump cases, delete its corresponding pair.
-        if let node = node as? JumpListNode {
-            _ = remove(node: node.jumpTarget)
-        } else if let node = node as? JumpTargetListNode {
-            _ = remove(node: node.jumpParent)
-        }
 
         return node.commandData
     }

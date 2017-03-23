@@ -13,7 +13,7 @@ enum CommandData {
 
     var isJumpCommand: Bool {
         switch self {
-        case .jump(_): return true
+        case .jump: return true
         default: return false
         }
     }
