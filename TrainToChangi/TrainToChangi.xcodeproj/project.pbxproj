@@ -17,6 +17,7 @@
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A712096D1E8189060039B257 /* CommandLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096B1E8189060039B257 /* CommandLabel.swift */; };
 		A7424F831E8299090010F276 /* LevelDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7424F821E8299090010F276 /* LevelDataHelper.swift */; };
+		A7424F851E82ADA90010F276 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7424F841E82ADA90010F276 /* UserData.swift */; };
 		BE469C28441767D3E1331C95 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE46939ED49D18C3E37B2F21 /* LevelData.swift */; };
 		BE469F20B7C382DF1C17ABE3 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE46951C9245C0394770FFDE /* LevelManager.swift */; };
 		D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */; };
@@ -73,6 +74,7 @@
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		A712096B1E8189060039B257 /* CommandLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLabel.swift; sourceTree = "<group>"; };
 		A7424F821E8299090010F276 /* LevelDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDataHelper.swift; sourceTree = "<group>"; };
+		A7424F841E82ADA90010F276 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		BE46939ED49D18C3E37B2F21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
 		BE46951C9245C0394770FFDE /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
@@ -203,6 +205,8 @@
 			isa = PBXGroup;
 			children = (
 				D744CA681E7A38D7004CCABD /* StorageManager.swift */,
+				A7424F841E82ADA90010F276 /* UserData.swift */,
+				BE46939ED49D18C3E37B2F21 /* LevelData.swift */,
 			);
 			name = Storage;
 			sourceTree = "<group>";
@@ -245,14 +249,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A7424F811E82981A0010F276 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				BE46939ED49D18C3E37B2F21 /* LevelData.swift */,
-			);
-			name = Storage;
-			sourceTree = "<group>";
-		};
 		D76FA81A1E76ADC400CCCFBE = {
 			isa = PBXGroup;
 			children = (
@@ -280,7 +276,6 @@
 				3B16804D1E778785002286F6 /* UI */,
 				3B16804C1E778779002286F6 /* Logic */,
 				3B1680451E7784B3002286F6 /* Model */,
-				A7424F811E82981A0010F276 /* Storage */,
 				3B1680421E778484002286F6 /* Commons */,
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
 				D76FA8331E76ADC400CCCFBE /* Assets.xcassets */,
@@ -549,6 +544,7 @@
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
+				A7424F851E82ADA90010F276 /* UserData.swift in Sources */,
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
