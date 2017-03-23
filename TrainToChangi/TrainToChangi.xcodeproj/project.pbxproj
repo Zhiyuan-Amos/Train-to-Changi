@@ -22,7 +22,7 @@
 		A77370811E83ECA0008C00EE /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77370801E83ECA0008C00EE /* CommandDataList.swift */; };
 		BE469C28441767D3E1331C95 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE46939ED49D18C3E37B2F21 /* LevelData.swift */; };
 		BE469F20B7C382DF1C17ABE3 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE46951C9245C0394770FFDE /* LevelManager.swift */; };
-		D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */; };
+		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */; };
@@ -84,7 +84,7 @@
 		BE46939ED49D18C3E37B2F21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
 		BE46951C9245C0394770FFDE /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
-		D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnum.swift; sourceTree = "<group>"; };
+		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderCommand.swift; sourceTree = "<group>"; };
@@ -151,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				D75BC4251E76BA9000ED2A1B /* Command.swift */,
-				D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */,
+				D70CFCC21E7C279C00D28B86 /* CommandData.swift */,
 				D744CA541E79715C004CCABD /* ExecutionError.swift */,
 				D7A267D01E7796B800DE5774 /* CommandResult.swift */,
 				D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */,
@@ -493,7 +493,7 @@
 				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				A7424F831E8299090010F276 /* LevelDataHelper.swift in Sources */,
-				D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */,
+				D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
 				A712096D1E8189060039B257 /* CommandLabel.swift in Sources */,
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,

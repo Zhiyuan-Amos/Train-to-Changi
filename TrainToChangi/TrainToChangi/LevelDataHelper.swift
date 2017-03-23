@@ -12,7 +12,7 @@ struct LevelDataHelper {
     static let newLine = "\n"
     static let inboxCommand = CommandData.inbox
     static let outboxCommand = CommandData.outbox
-    static let jumpCommand = CommandData.jump(targetIndex: nil)
+    static let jumpCommand = CommandData.jump
     static let addCommand = CommandData.add(memoryIndex: nil)
     static let copyToCommand = CommandData.copyTo(memoryIndex: nil)
 

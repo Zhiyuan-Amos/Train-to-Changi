@@ -7,12 +7,13 @@ class JumpCommand: Command {
     private let model: Model
     weak var placeholder: PlaceholderCommand?
     //TODO: Remove indexes?
+    // Yes, please :)
     let targetIndex: Int
     private(set) var programCounterIndex: Int?
 
-    init(model: Model, targetIndex: Int) {
+    init(model: Model) {
         self.model = model
-        self.targetIndex = targetIndex
+        self.targetIndex = -123456789
     }
 
     func execute() -> CommandResult {
