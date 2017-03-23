@@ -16,40 +16,39 @@ class CommandCell: UICollectionViewCell {
     func setImageAndIndex(commandType: CommandEnum) {
         switch commandType {
         case .add(let index):
-            commandImage.image = UIImage(named: "add.png")
-            commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
-            commandIndexButton.setBackgroundImage(UIImage(named: "mathIndex"),
-                                                  for: UIControlState.normal)
-            commandIndexButton.isHidden = false
+            setCommandImageAndIndex(imageName: "add.png", index: index,
+                                    indexImageName: "mathIndex.png", hidden: false)
         case .copyFrom(let index):
-            commandImage.image = UIImage(named: "copyfrom.png")
-            commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
-            commandIndexButton.setBackgroundImage(UIImage(named: "copyIndex"),
-                                                  for: UIControlState.normal)
-            commandIndexButton.isHidden = false
+            setCommandImageAndIndex(imageName: "copyfrom.png", index: index,
+                                    indexImageName: "copyIndex.png", hidden: false)
         case .copyTo(let index):
-            commandImage.image = UIImage(named: "copyto.png")
-            commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
-            commandIndexButton.setBackgroundImage(UIImage(named: "copyIndex"),
-                                                  for: UIControlState.normal)
-            commandIndexButton.isHidden = false
+            setCommandImageAndIndex(imageName: "copyto.png", index: index,
+                                    indexImageName: "copyIndex.png", hidden: false)
         case .inbox:
-            commandImage.image = UIImage(named: "inbox.png")
-            commandIndexButton.isHidden = true
-
+            setCommandImageAndIndex(imageName: "inbox.png", index: nil,
+                                    indexImageName: nil, hidden: true)
         case .jump(_):
-            commandImage.image = UIImage(named: "jump.png")
-            commandIndexButton.isHidden = true
-
+            setCommandImageAndIndex(imageName: "jump.pmg", index: nil,
+                                    indexImageName: nil, hidden: true)
         case .outbox:
-            commandImage.image = UIImage(named: "outbox.png")
-            commandIndexButton.isHidden = true
-
+            setCommandImageAndIndex(imageName: "outbox.png", index: nil,
+                                    indexImageName: nil, hidden: true)
         case .placeholder:
-            commandImage.image = UIImage(named: "jumptarget.png")
-            commandIndexButton.isHidden = true
+            setCommandImageAndIndex(imageName: "jumptarget.png", index: nil,
+                                    indexImageName: nil, hidden: true)
         }
 
+    }
+
+    private func setCommandImageAndIndex(imageName: String, index: Int?,
+                                         indexImageName: String?, hidden: Bool) {
+        commandImage.image = UIImage(named: imageName)
+        commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
+        if let indexImageName = indexImageName {
+            commandIndexButton.setBackgroundImage(UIImage(named: indexImageName),
+                                                  for: UIControlState.normal)
+        }
+        commandIndexButton.isHidden = hidden
     }
 
 }

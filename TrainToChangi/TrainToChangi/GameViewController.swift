@@ -38,10 +38,10 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         setUpLevelDescription()
         loadAvailableCommands()
-        adjustCommandsEditor()
+        adjustCommandsEditorPosition()
         connectDataSourceAndDelegate()
         addPanGestureRecognizerToCommandsEditor()
-        presentGameScene()
+        //presentGameScene()
     }
 
     /* Control Panel Logic */
@@ -55,11 +55,11 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func stepBackButtonPressed(_ sender: Any) {
-        logic.executeNextCommand()
-    }
-    
-    @IBAction func stepForwardButtonPressed(_ sender: Any) {
         logic.undo()
+    }
+
+    @IBAction func stepForwardButtonPressed(_ sender: Any) {
+        logic.executeNextCommand()
     }
 
     @IBAction func resetButtonPressed(_ sender: UIButton) {
@@ -67,13 +67,12 @@ class GameViewController: UIViewController {
         commandsEditor.reloadData()
     }
 
-
     /* Setup */
-    private func adjustCommandsEditor() {
+    private func adjustCommandsEditorPosition() {
         commandsEditor.frame = CGRect(x: commandsEditor.frame.minX,
-                                      y: levelDescription.frame.maxY,
-                                      width: commandsEditor.frame.width - 30,
-                                      height: editor.frame.height - levelDescription.frame.height)
+                                      y: levelDescription.frame.maxY + 5,
+                                      width: commandsEditor.frame.width - 5,
+                                      height: editor.frame.height - levelDescription.frame.height - 80)
     }
 
     private func connectDataSourceAndDelegate() {
@@ -85,16 +84,12 @@ class GameViewController: UIViewController {
         levelDescription.text = model.currentLevel.levelDescriptor
 
         let fixedWidth = levelDescription.frame.size.width
-        levelDescription.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-
-        let newSize = levelDescription.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-
+        let newSize = levelDescription.sizeThatFits(CGSize(width: fixedWidth,
+                                                           height: CGFloat.greatestFiniteMagnitude))
         var newFrame = levelDescription.frame
         newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-
-        levelDescription.frame = newFrame;
+        levelDescription.frame = newFrame
     }
-
 
     func loadAvailableCommands() {
         let initialCommandPosition = availableCommandsView.frame.origin
@@ -122,11 +117,12 @@ class GameViewController: UIViewController {
 
     /* Gestures */
     private func addPanGestureRecognizerToCommandsEditor() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
-        commandsEditor.addGestureRecognizer(panGesture)
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        longPressGesture.minimumPressDuration = 0.3
+        commandsEditor.addGestureRecognizer(longPressGesture)
     }
 
-    @objc private func handlePan(gesture: UIPanGestureRecognizer) {
+    @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
 
         case UIGestureRecognizerState.began:
@@ -188,7 +184,6 @@ class GameViewController: UIViewController {
     }
 }
 
-// TODO: Refactor magic numbers after the layout is getting finalized
 extension GameViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
