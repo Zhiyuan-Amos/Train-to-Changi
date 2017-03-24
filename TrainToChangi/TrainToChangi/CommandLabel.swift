@@ -7,35 +7,22 @@ import UIKit
 
 class CommandLabel: UILabel {
 
-    func updateText(commandEnum: CommandData) {
-        switch commandEnum {
+    func updateText(commandType: CommandData) {
+        switch commandType {
         case .add(let index):
-            if index == nil {
-                text = "add"
-            } else {
-                text = "add \(index)"
-            }
+            text = index == nil ? "add" : "add \(index)"
         case .copyFrom(let index):
-            if index == nil {
-                text = "copyFrom"
-            } else {
-                text = "copyFrom \(index)"
-            }
+            text = index == nil ? "copyFrom" : "copyFrom \(index)"
         case .copyTo(let index):
-            if index == nil {
-                text = "copyTo"
-            } else {
-                text = "copyTo \(index)"
-            }
-        case .inbox: text = "inbox"
+            text = index == nil ? "copyTo" : "copyTo \(index)"
+        case .inbox:
+            text = "inbox"
         case .jump(let index):
-            if index == nil {
-                text = "jump"
-            } else {
-                text = "jump \(index)"
-            }
-        case .outbox: text = "outbox"
-        case .placeholder: text = ""
+            text = index == nil ? "jump" : "jump \(index)"
+        case .outbox:
+            text = "outbox"
+        case .placeholder:
+            text = ""
         }
     }
 }

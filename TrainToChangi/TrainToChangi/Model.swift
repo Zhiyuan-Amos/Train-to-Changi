@@ -77,4 +77,5 @@ protocol Model: class {
 
     // Put `value` into memory located at `index`.
     func putValueIntoMemory(_ value: Int?, at index: Int)
+
 }

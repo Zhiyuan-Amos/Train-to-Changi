@@ -24,16 +24,16 @@ enum CommandData {
             return "inbox"
         case .outbox:
             return "outbox"
-        case .copyFrom(let memoryIndex):
-            return "copyFrom_\(memoryIndex)"
-        case .copyTo(let memoryIndex):
-            return "copyTo_\(memoryIndex)"
-        case .add(let memoryIndex):
-            return "add_\(memoryIndex)"
-        case .jump(let targetIndex):
-            return "jump_\(targetIndex)"
+        case .copyFrom(_):
+            return "copyFrom"
+        case .copyTo(_):
+            return "copyTo"
+        case .add(_):
+            return "add"
+        case .jump(_):
+            return "jump"
         case .placeholder:
-            return "placeholder"
+            return "jumptarget"
         }
     }
 
