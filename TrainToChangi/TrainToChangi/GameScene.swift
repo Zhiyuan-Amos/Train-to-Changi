@@ -40,6 +40,8 @@ class GameScene: SKScene {
     fileprivate var holdingNode = SKShapeNode()
 
     fileprivate let moveDuration = TimeInterval(2)
+
+    fileprivate var backgroundTileMap: SKTileMapNode!
 }
 
 // MARK: - Init
@@ -56,7 +58,31 @@ extension GameScene {
     }
 
     private func initBackground() {
-        backgroundColor = SKColor.white // TODO: asset update
+        let rows = Constants.Background.rows
+        let columns = Constants.Background.columns
+        let size = Constants.Background.size
+
+        guard let tileSet = SKTileSet(named: Constants.Background.tileSet) else {
+            fatalError("Ground Tiles Tile Set not found")
+        }
+
+        backgroundTileMap = SKTileMapNode(tileSet: tileSet,
+                                          columns: columns,
+                                          rows: rows,
+                                          tileSize: size)
+
+        addChild(backgroundTileMap)
+
+        let tileGroups = tileSet.tileGroups
+        guard let bgTile = tileGroups.first(where: {$0.name == Constants.Background.tileGroup}) else {
+            fatalError("No Grey Tiles definition found")
+        }
+
+        for row in 1...rows {
+            for column in 1...columns {
+                backgroundTileMap.setTileGroup(bgTile, forColumn: column, row: row)
+            }
+        }
     }
 
     private func initPlayer() {

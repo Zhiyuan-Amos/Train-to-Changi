@@ -33,6 +33,14 @@ struct Constants {
         static let goto = CGPoint(x: position.x + size.width / 2, y: position.y + size.height / 2)
         static let entryPosition = CGPoint(x: position.x + size.width / 2 - Box.size.width / 2, y: position.y)
     }
+    
+    struct Background {
+        static let rows = 24
+        static let columns = 32
+        static let size = CGSize(width: 64, height: 64)
+        static let tileSet = "Ground Tiles"
+        static let tileGroup = "Grey Tiles"
+    }
 
     struct Memory {
         static let labelFontSize = CGFloat(13)
