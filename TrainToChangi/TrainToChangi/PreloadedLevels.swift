@@ -19,7 +19,7 @@ struct PreloadedLevels {
     static let levelOneCommandEnum: [CommandEnum] = [.inbox, .outbox]
     static let levelOneLevelDescriptor = "Drag commands into this area to build a program.\n\n" +
         "Your program should tell your worker to grab each thing from the INBOX, " +
-        "and drop it into the OUTBOX."
+    "and drop it into the OUTBOX."
     static func levelOneAlgo(values: [Int]) -> [Int] {
         return values
     }

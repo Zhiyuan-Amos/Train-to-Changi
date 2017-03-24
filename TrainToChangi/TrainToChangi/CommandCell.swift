@@ -9,16 +9,35 @@
 import UIKit
 
 class CommandCell: UICollectionViewCell {
-    private var label: CommandLabel?
 
-    override func prepareForReuse() {
-        label?.text = nil
+    @IBOutlet weak var commandImage: UIImageView!
+    @IBOutlet weak var commandIndexButton: UIButton!
+
+    func setImageAndIndex(commandType: CommandEnum) {
+        let imagePath = commandType.toString() + ".png"
+        switch commandType {
+        case .add(let index):
+            setCommandImageAndIndex(imageName: imagePath, index: index,
+                                    indexImageName: "mathindex.png", hidden: false)
+        case .copyFrom(let index), .copyTo(let index):
+            setCommandImageAndIndex(imageName: imagePath, index: index,
+                                    indexImageName: "copyindex.png", hidden: false)
+        case .inbox, .outbox, .jump(_), .placeholder:
+            setCommandImageAndIndex(imageName: imagePath, index: nil,
+                                    indexImageName: nil, hidden: true)
+        }
+
     }
 
-    func setLabel(_ label: CommandLabel) {
-        let frame =  CGRect(x: 0, y: 0, width: 100, height: 30)
-        label.frame = frame
-        self.label = label
-        contentView.addSubview(label)
+    private func setCommandImageAndIndex(imageName: String, index: Int?,
+                                         indexImageName: String?, hidden: Bool) {
+        commandImage.image = UIImage(named: imageName)
+        commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
+        if let indexImageName = indexImageName {
+            commandIndexButton.setBackgroundImage(UIImage(named: indexImageName),
+                                                  for: UIControlState.normal)
+        }
+        commandIndexButton.isHidden = hidden
     }
+
 }
