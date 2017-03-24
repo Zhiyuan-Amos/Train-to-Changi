@@ -36,10 +36,18 @@ protocol Model: class {
     func addCommand(commandEnum: CommandData)
 
     // Inserts the command into userEnteredCommands, at specified Index.
+    // If the command is .jump, adds a corresponding .jumpTarget.
     func insertCommand(commandEnum: CommandData, atIndex: Int)
 
     // Removes the command at specified Index from userEnteredCommands.
+    // If the command is .jump or .jumpTarget, removes the corresponding
+    // command in the pair.
     func removeCommand(fromIndex: Int) -> CommandData
+
+    // Moves the command at `fromIndex` to `toIndex`.
+    // When reordering, use this instead of removing and inserting since
+    // they have special behavior for .jump
+    func moveCommand(fromIndex: Int, toIndex: Int)
 
     // Removes all commands from userEnteredCommands.
     func clearAllCommands()

@@ -84,6 +84,10 @@ class ModelManager: Model {
         return _userEnteredCommands.remove(atIndex: index)
     }
 
+    func moveCommand(fromIndex: Int, toIndex: Int) {
+        return _userEnteredCommands.move(sourceIndex: fromIndex, destIndex: toIndex)
+    }
+
     func clearAllCommands() {
         _userEnteredCommands.removeAll()
     }

@@ -182,8 +182,7 @@ extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath,
                         to destinationIndexPath: IndexPath) {
-        let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.item)
-        model.insertCommand(commandEnum: movedCommand, atIndex: destinationIndexPath.item)
+        model.moveCommand(fromIndex: sourceIndexPath.item, toIndex: destinationIndexPath.item)
     }
 
     func collectionView(_ collectionView: UICollectionView,
