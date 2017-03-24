@@ -6,13 +6,15 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-protocol CommandDataListNode: class {
+// MARK - List Node
+
+fileprivate protocol CommandDataListNode: class {
     var commandData: CommandData { get }
     var next: CommandDataListNode? { get set }
     var previous: CommandDataListNode? { get set }
 }
 
-class IterativeListNode: CommandDataListNode {
+fileprivate class IterativeListNode: CommandDataListNode {
     let commandData: CommandData
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
@@ -22,10 +24,9 @@ class IterativeListNode: CommandDataListNode {
     }
 }
 
-class JumpListNode: CommandDataListNode {
+fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
-    // Use ! to silence xcode
-    var jumpTarget: JumpTargetListNode!
+    var jumpTarget: JumpTargetListNode! // Use ! to silence xcode
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
 
@@ -36,7 +37,7 @@ class JumpListNode: CommandDataListNode {
     }
 }
 
-class JumpTargetListNode: CommandDataListNode {
+fileprivate class JumpTargetListNode: CommandDataListNode {
     let commandData: CommandData
     unowned var jumpParent: JumpListNode
     var next: CommandDataListNode?
@@ -49,6 +50,8 @@ class JumpTargetListNode: CommandDataListNode {
     }
 }
 
+// MARK - List
+
 protocol CommandDataList {
 
     // Appends `commandData` to the end of the list.
@@ -57,11 +60,11 @@ protocol CommandDataList {
     // Inserts `commandData` into the list at `index`.
     func insert(commandData: CommandData, atIndex: Int)
 
-    // Moves `commandData` from `sourceIndex` to `destIndex`.
-    func move(sourceIndex: Int, destIndex: Int)
-
     // Removes `commandData` at `index` from the list.
     func remove(atIndex: Int) -> CommandData
+
+    // Moves `commandData` from `sourceIndex` to `destIndex`.
+    func move(sourceIndex: Int, destIndex: Int)
 
     // Empties the list.
     func removeAll()
@@ -69,11 +72,13 @@ protocol CommandDataList {
     // Returns the `CommandDataList` as an array.
     func toArray() -> [CommandData]
 
+    // TODO: Iterator with next(), previous(), setToJump()
+
 }
 
 class CommandDataLinkedList: CommandDataList {
 
-    typealias Node = CommandDataListNode
+    fileprivate typealias Node = CommandDataListNode
 
     private var head: Node?
 
@@ -85,10 +90,6 @@ class CommandDataLinkedList: CommandDataList {
         return head == nil
     }
 
-    var first: Node? {
-        return head
-    }
-
     subscript(index: Int) -> CommandData {
         let node = self.node(atIndex: index)
         guard let commandData = node?.commandData else {
@@ -98,6 +99,7 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func append(commandData: CommandData) {
+        assert(commandData != .placeholder)
         let newNode = initNode(commandData: commandData)
         if let jumpNode = newNode as? JumpListNode {
             append(jumpNode.jumpTarget)
@@ -107,6 +109,7 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func insert(commandData: CommandData, atIndex index: Int) {
+        assert(commandData != .placeholder)
         let newNode = initNode(commandData: commandData)
         insert(newNode, atIndex: index)
         if let jumpNode = newNode as? JumpListNode {
@@ -117,20 +120,24 @@ class CommandDataLinkedList: CommandDataList {
     func move(sourceIndex: Int, destIndex: Int) {
         // TODO: make sure index valid..
 
-        let (prev1, next1) = nodesBeforeAndAfter(index: sourceIndex)
-
         let node = self.node(atIndex: sourceIndex)
-        let prev2 = self.node(atIndex: destIndex)
-        let next2 = prev2?.next
+        move(node!, toIndex: destIndex)
 
-        prev1?.next = next1
-        next1?.previous = prev1
-
-        prev2?.next = node
-        node?.previous = prev2
-
-        node?.next = next2
-        next2?.previous = node
+//        let (prev1, next1) = nodesBeforeAndAfter(index: sourceIndex)
+//
+//        let node = self.node(atIndex: sourceIndex)
+//
+//        prev1?.next = next1
+//        next1?.previous = prev1
+//
+//        let prev2 = self.node(atIndex: destIndex)
+//        let next2 = prev2?.next
+//
+//        prev2?.next = node
+//        node?.previous = prev2
+//
+//        node?.next = next2
+//        next2?.previous = node
     }
 
     func remove(atIndex index: Int) -> CommandData {
@@ -138,12 +145,12 @@ class CommandDataLinkedList: CommandDataList {
             preconditionFailure("Index is not valid.")
         }
         if let node = node as? JumpListNode {
-            _ = remove(node: node.jumpTarget)
+            _ = remove(node.jumpTarget)
         } else if let node = node as? JumpTargetListNode {
-            _ = remove(node: node.jumpParent)
+            _ = remove(node.jumpParent)
         }
 
-        return remove(node: node)
+        return remove(node)
     }
 
     func removeAll() {
@@ -166,6 +173,10 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     // MARK - Private helpers
+
+    private var first: Node? {
+        return head
+    }
 
     private var last: Node? {
         guard var node = head else {
@@ -247,7 +258,7 @@ class CommandDataLinkedList: CommandDataList {
         }
     }
 
-    private func remove(node: Node) -> CommandData {
+    private func remove(_ node: Node) -> CommandData {
         let prev = node.previous
         let next = node.next
 
@@ -264,8 +275,13 @@ class CommandDataLinkedList: CommandDataList {
         return node.commandData
     }
 
+    private func move(_ node: Node, toIndex: Int) {
+        _ = remove(node)
+        insert(node, atIndex: toIndex)
+    }
+
     private func removeLast() -> CommandData {
         assert(!isEmpty)
-        return remove(node: last!)
+        return remove(last!)
     }
 }
