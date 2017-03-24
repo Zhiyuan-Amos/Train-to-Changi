@@ -81,4 +81,16 @@ struct Constants {
 
         static let commandCellIdentifier = "CommandCell"
     }
+
+    struct Animation {
+        static let moveToConveyorBeltDuration = 2.0
+
+        static let moveConveyorBeltVector = CGVector(dx: -Box.size.width - Inbox.imagePadding, dy: 0)
+        static let moveConveyorBeltDuration = 0.7
+
+        static let afterInboxStepVector = CGVector(dx: 0, dy: -60)
+        static let afterInboxStepDuration = 0.5
+
+        static let holdingToOutboxDuration = 1.0
+    }
 }

@@ -39,8 +39,6 @@ class GameScene: SKScene {
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
 
-    fileprivate let moveDuration = TimeInterval(2)
-
     fileprivate var backgroundTileMap: SKTileMapNode!
 }
 
@@ -183,13 +181,11 @@ extension GameScene {
     // notification must contains `userInfo` with "destination" defined
     @objc fileprivate func catchNotification(notification: Notification) {
         guard let userInfo = notification.userInfo else {
-            print("[GameScene:catchNotification] No userInfo found in notification")
-            return
+            fatalError("[GameScene:catchNotification] Notification has no userInfo")
         }
 
         guard let destination = userInfo["destination"] as? WalkDestination else {
-            print("[GameScene:catchNotification] Unable to find destination in userInfo")
-            return
+            fatalError("[GameScene:catchNotification] userInfo should contain destination")
         }
 
         move(to: destination)
@@ -201,33 +197,51 @@ extension GameScene {
 
     // Move the player to a WalkDestination
     fileprivate func move(to destination: WalkDestination) {
-        let moveAction = SKAction.move(to: destination.point, duration: moveDuration)
         switch destination {
         case .inbox:
-            player.run(moveAction, completion: {
-                self.grabFromInbox()
-                let stepAside = SKAction.moveBy(x: 0, y: -60, duration: 0.5)
-                self.player.run(stepAside, completion: {
-                    _ = self.inboxNodes.map { node in
-                        node.run(SKAction.moveBy(x: -Constants.Box.size.width -
-                            Constants.Inbox.imagePadding, y: 0, duration: 1))
-                    }
-                })
-            })
+            animateGoToInbox()
         case .outbox:
-            player.run(moveAction, completion: {
-                _ = self.outboxNodes.map { node in
-                    node.run(SKAction.moveBy(x: -Constants.Box.size.width -
-                        Constants.Inbox.imagePadding, y: 0, duration: 1))
-                }
-            })
-            let wait = SKAction.wait(forDuration: moveDuration)
-            player.run(wait, completion: {
-                self.putToOutbox()
-            })
+            animateGoToOutbox()
         case .memory(_, _):
             break
         }
+    }
+
+    private func animateGoToInbox() {
+        // 1. walk to inbox
+        let moveAction = SKAction.move(to: WalkDestination.inbox.point,
+                                       duration: Constants.Animation.moveToConveyorBeltDuration)
+        player.run(moveAction, completion: {
+            self.grabFromInbox()
+            // 2. step aside after getting box
+            let stepAside = SKAction.move(by: Constants.Animation.afterInboxStepVector,
+                                          duration: Constants.Animation.afterInboxStepDuration)
+            // 3. meantime inbox items move left
+            self.player.run(stepAside, completion: {
+                _ = self.inboxNodes.map { node in self.moveConveyorBelt(node) }
+            })
+        })
+    }
+
+    private func animateGoToOutbox() {
+        // 1. walk to outbox
+        let moveAction = SKAction.move(to: WalkDestination.outbox.point,
+                                       duration: Constants.Animation.moveToConveyorBeltDuration)
+        player.run(moveAction, completion: {
+            // 2. then, outbox items move left
+            _ = self.outboxNodes.map { node in self.moveConveyorBelt(node) }
+        })
+        let wait = SKAction.wait(forDuration: Constants.Animation.moveToConveyorBeltDuration)
+        player.run(wait, completion: {
+            // 3. wait for outbox movements finish, put on outbox
+            self.putToOutbox()
+        })
+    }
+
+    private func moveConveyorBelt(_ node: SKSpriteNode) {
+        node.run(
+            SKAction.move(by: Constants.Animation.moveConveyorBeltVector,
+                          duration: Constants.Animation.moveConveyorBeltDuration))
     }
 
     private func grabFromInbox() {
@@ -242,7 +256,8 @@ extension GameScene {
     private func putToOutbox() {
         outboxNodes.append(holdingNode)
         holdingNode.move(toParent: scene!)
-        holdingNode.run(SKAction.move(to: Constants.Outbox.entryPosition, duration: 1))
+        holdingNode.run(SKAction.move(to: Constants.Outbox.entryPosition,
+                                      duration: Constants.Animation.holdingToOutboxDuration))
     }
 
 }
