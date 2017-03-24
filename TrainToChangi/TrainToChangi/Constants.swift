@@ -45,7 +45,7 @@ struct Constants {
         static let commandButtonOffsetY: CGFloat = 40
         static let commandButtonWidth: CGFloat = 40
         static let commandButtonHeight: CGFloat = 20
-        
+
         static let commandCellIdentifier = "CommandCell"
     }
 }

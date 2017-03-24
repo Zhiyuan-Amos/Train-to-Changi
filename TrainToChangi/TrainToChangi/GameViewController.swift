@@ -55,7 +55,7 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func stepBackButtonPressed(_ sender: Any) {
-        logic.undo()
+        _ = logic.undo()
     }
 
     @IBAction func stepForwardButtonPressed(_ sender: Any) {
@@ -156,23 +156,9 @@ class GameViewController: UIViewController {
     /* Helper func */
     private func getCommandUIButton(for commandType: CommandEnum, frame: CGRect) -> UIButton {
         let currentCommandButton = UIButton(frame: frame)
-        switch commandType {
-        case .add(_):
-            currentCommandButton.setImage(UIImage(named: "add.png"), for: UIControlState.normal)
-        case .copyFrom(_):
-            currentCommandButton.setImage(UIImage(named: "copyfrom.png"), for: UIControlState.normal)
-        case .copyTo(_):
-            currentCommandButton.setImage(UIImage(named: "copyto.png"), for: UIControlState.normal)
-        case .inbox:
-            currentCommandButton.setImage(UIImage(named: "inbox.png"), for: UIControlState.normal)
-        case .jump(_):
-            currentCommandButton.setImage(UIImage(named: "jump.png"), for: UIControlState.normal)
-        case .outbox:
-            currentCommandButton.setImage(UIImage(named: "outbox.png"), for: UIControlState.normal)
-        case .placeholder:
-            currentCommandButton.setImage(UIImage(named: "jumptarget.png"), for: UIControlState.normal)
-        }
+        let imagePath = commandType.toString() + ".png"
 
+        currentCommandButton.setImage(UIImage(named: imagePath), for: UIControlState.normal)
         currentCommandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
         return currentCommandButton
     }

@@ -14,27 +14,16 @@ class CommandCell: UICollectionViewCell {
     @IBOutlet weak var commandIndexButton: UIButton!
 
     func setImageAndIndex(commandType: CommandEnum) {
+        let imagePath = commandType.toString() + ".png"
         switch commandType {
         case .add(let index):
-            setCommandImageAndIndex(imageName: "add.png", index: index,
-                                    indexImageName: "mathIndex.png", hidden: false)
-        case .copyFrom(let index):
-            setCommandImageAndIndex(imageName: "copyfrom.png", index: index,
-                                    indexImageName: "copyIndex.png", hidden: false)
-        case .copyTo(let index):
-            setCommandImageAndIndex(imageName: "copyto.png", index: index,
-                                    indexImageName: "copyIndex.png", hidden: false)
-        case .inbox:
-            setCommandImageAndIndex(imageName: "inbox.png", index: nil,
-                                    indexImageName: nil, hidden: true)
-        case .jump(_):
-            setCommandImageAndIndex(imageName: "jump.pmg", index: nil,
-                                    indexImageName: nil, hidden: true)
-        case .outbox:
-            setCommandImageAndIndex(imageName: "outbox.png", index: nil,
-                                    indexImageName: nil, hidden: true)
-        case .placeholder:
-            setCommandImageAndIndex(imageName: "jumptarget.png", index: nil,
+            setCommandImageAndIndex(imageName: imagePath, index: index,
+                                    indexImageName: "mathindex.png", hidden: false)
+        case .copyFrom(let index), .copyTo(let index):
+            setCommandImageAndIndex(imageName: imagePath, index: index,
+                                    indexImageName: "copyindex.png", hidden: false)
+        case .inbox, .outbox, .jump(_), .placeholder:
+            setCommandImageAndIndex(imageName: imagePath, index: nil,
                                     indexImageName: nil, hidden: true)
         }
 

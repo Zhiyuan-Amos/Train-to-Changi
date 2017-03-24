@@ -35,7 +35,6 @@ class ModelManager: Model {
         return levelState.inputs
     }
 
-
     var currentOutputs: [Int] {
         return levelState.outputs
     }

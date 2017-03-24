@@ -23,5 +23,5 @@ struct PreloadedLevels {
     static func levelOneAlgo(values: [Int]) -> [Int] {
         return values
     }
-    
+
 }
