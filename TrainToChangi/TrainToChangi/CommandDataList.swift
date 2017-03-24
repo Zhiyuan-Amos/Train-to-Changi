@@ -73,7 +73,7 @@ protocol CommandDataList {
     func toArray() -> [CommandData]
 
     // TODO: Iterator with next(), previous(), setToJump()
-
+    // TODO: ADT _checkrep, make sure both sides are connected, jump and target connected.
 }
 
 class CommandDataLinkedList: CommandDataList {

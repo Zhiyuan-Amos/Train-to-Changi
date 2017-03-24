@@ -19,6 +19,8 @@ class CommandDataListTests: XCTestCase {
     }
 
     // MARK - Append, Iterative Command
+    // List length [{0,1}, {>1}]
+    // Command Type [Iterative, Jump]
 
     func testAppend_emptyListAndIterativeCommand() {
         list.append(commandData: .inbox)
@@ -39,7 +41,8 @@ class CommandDataListTests: XCTestCase {
         list.append(commandData: .outbox)
 
         list.append(commandData: .outbox)
-        XCTAssertEqual(list.toArray(), [CD.inbox, CD.inbox, CD.outbox, CD.outbox, CD.outbox], "Not appended correctly.")
+        XCTAssertEqual(list.toArray(), [CD.inbox, CD.inbox, CD.outbox,
+                                        CD.outbox, CD.outbox], "Not appended correctly.")
     }
 
     // MARK - Append, Jump Command
@@ -63,10 +66,14 @@ class CommandDataListTests: XCTestCase {
         list.append(commandData: .outbox)
 
         list.append(commandData: .jump)
-        XCTAssertEqual(list.toArray(), [CD.inbox, CD.inbox, CD.outbox, CD.outbox, CD.placeholder, CD.jump], "Not appended correctly.")
+        XCTAssertEqual(list.toArray(), [CD.inbox, CD.inbox, CD.outbox,
+                                        CD.outbox, CD.placeholder, CD.jump], "Not appended correctly.")
     }
 
     // MARK - Insert, Iterative Command
+    // List length [{0,1}, {>1}]
+    // Insert location [negative, start, middle, end, afterEnd]
+    // Command Type [Iterative, Jump]
 
     func testInsert_emptyListNegativeIndex_notInserted() {
 
@@ -101,14 +108,30 @@ class CommandDataListTests: XCTestCase {
 
     }
 
-    func testInsert_oneItemIndexTen_insertedAtIndexOne() {
+    func testInsert_oneItemListIndexTen_insertedAtIndexOne() {
 
     }
 
-    //cont from here.
-    func testInsert_manyItemsList() {
+    func testInsert_manyItemsListIndexZero() {
 
     }
+
+    func testInsert_manyItemsListIndexCountMinusOne() {
+
+    }
+
+    func testInsert_manyItemsListIndexEnd() {
+
+    }
+
+    func testInsert_manyItemsListIndexEndPlusOne() {
+
+    }
+
+    func testInsert_manyItemsListIndexGreaterThanEnd() {
+
+    }
+
 
     // Mark - Insert, Jump Command
 
@@ -158,7 +181,7 @@ class CommandDataListTests: XCTestCase {
         list.append(commandData: .inbox)
         list.append(commandData: .outbox)
         list.append(commandData: .inbox)
-        // placeholder here
+        // jumpTarget here
         list.append(commandData: .jump)
         list.append(commandData: .inbox)
 
@@ -178,7 +201,7 @@ class CommandDataListTests: XCTestCase {
         list.append(commandData: .inbox) // insert here, index 3
         list.append(commandData: .outbox)
         list.append(commandData: .inbox)
-        // placeholder here
+        // jumpTarget here
         list.append(commandData: .jump)
         list.append(commandData: .inbox)
 
@@ -198,7 +221,7 @@ class CommandDataListTests: XCTestCase {
         list.append(commandData: .inbox)
         list.append(commandData: .outbox)
         list.append(commandData: .inbox)
-        // placeholder here
+        // jumpTarget here
         list.append(commandData: .jump)
         list.append(commandData: .inbox) // insert here, index 8
 
@@ -214,4 +237,165 @@ class CommandDataListTests: XCTestCase {
     func testInsert_manyItemsListIndexEndPlusOneAndJumpCommand_insertedAtIndexEnd() {
 
     }
+
+    // MARK -  Remove, Iterative Command
+    // List length [{0,1}, {>1}]
+    // Remove location [negative, start, middle, end, afterEnd]
+    // Command Type [Iterative, Jump, JumpTarget]
+    // Integration test: Remove after moving.
+
+    func testRemove_iterativeCommand() {
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox) // Remove index 1
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        // jumpTarget here
+        list.append(commandData: .jump)
+        list.append(commandData: .inbox)
+
+        let removed = list.remove(atIndex: 1)
+
+        XCTAssertEqual(list.toArray(),
+                       [CD.outbox,
+                        CD.outbox, CD.inbox,
+                        CD.outbox, CD.inbox, CD.placeholder,
+                        CD.jump, CD.inbox],
+                       "Not removed correctly.")
+        XCTAssertEqual(removed, CD.inbox, "Removed item is not correct.")
+    }
+
+    // MARK - Remove, Jump Command
+
+    func testRemove_jumpCommand() {
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        // jumpTarget here
+        list.append(commandData: .jump) // remove index 7
+        list.append(commandData: .inbox)
+
+        let removed = list.remove(atIndex: 7)
+
+        XCTAssertEqual(list.toArray(),
+                       [CD.outbox, CD.inbox,
+                        CD.outbox, CD.inbox,
+                        CD.outbox, CD.inbox, CD.inbox],
+                       "Not removed correctly.")
+        XCTAssertEqual(removed, CD.jump, "Removed item is not correct.")
+    }
+
+    func testRemove_jumpCommandAfterJumpMoved() {
+
+    }
+
+
+    func testRemove_jumpCommandAfterTargetMoved() {
+
+    }
+
+    // MARK - Remove, JumpTarget Command
+
+    func testRemove_jumpTargetCommand() {
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        // jumpTarget here               // remove index 6
+        list.append(commandData: .jump)
+        list.append(commandData: .inbox)
+
+        let removed = list.remove(atIndex: 6)
+
+        XCTAssertEqual(list.toArray(),
+                       [CD.outbox, CD.inbox,
+                        CD.outbox, CD.inbox,
+                        CD.outbox, CD.inbox, CD.inbox],
+                       "Not removed correctly.")
+        XCTAssertEqual(removed, CD.placeholder, "Removed item is not correct.")
+
+        // move and retest
+    }
+
+    // MARK - Move, Iterative Command
+    // List length [{0,1}, {>1}]
+    // Move from [negative, start, middle, end, afterEnd]
+    // Move to [negative, start, middle, end, afterEnd, special case: same location]
+    // Command Type [Iterative, Jump, JumpTarget]
+
+    func testMove_iterativeCommandMoveDown() {
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox) // move index 1
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        list.append(commandData: .outbox) // to index 4
+        list.append(commandData: .inbox)
+        // jumpTarget here
+        list.append(commandData: .jump)
+        list.append(commandData: .inbox)
+
+        list.move(sourceIndex: 1, destIndex: 4)
+
+        XCTAssertEqual(list.toArray(),
+                       [CD.outbox, CD.outbox,
+                        CD.inbox, CD.outbox, CD.inbox,
+                        CD.inbox, CD.placeholder, CD.jump, CD.inbox],
+                       "Not removed correctly.")
+
+        // move same location, move to lower index..
+    }
+
+    func testMove_iterativeCommandMoveUp() {
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox) // to index 1
+        list.append(commandData: .outbox)
+        list.append(commandData: .inbox)
+        list.append(commandData: .outbox) // move index 4
+        list.append(commandData: .inbox)
+        // jumpTarget here
+        list.append(commandData: .jump)
+        list.append(commandData: .inbox)
+
+        list.move(sourceIndex: 4, destIndex: 1)
+
+        XCTAssertEqual(list.toArray(),
+                       [CD.outbox, CD.outbox, CD.inbox, CD.outbox,
+                        CD.inbox, CD.inbox,
+                        CD.placeholder, CD.jump, CD.inbox],
+                       "Not removed correctly.")
+
+        // move same location, move to lower index..
+    }
+
+
+    // MARK - Move, Jump Command
+
+    func testMove_jumpCommand() {
+
+    }
+
+    // MARK - Move, JumpTarget Command
+
+    func testMove_jumpTargetCommand() {
+
+    }
+
+    // MARK - removeAll
+    // List length [{0,1}, {>1}]
+    // List contains mixture of Command Types [Iterative, Jump, JumpTarget]
+
+    func testRemoveAll_emptyList() {
+
+    }
+
+    // MARK - toArray
+    // List length [{0,1}, {>1}]
+    // List contains mixture of Command Types [Iterative, Jump, JumpTarget]
+
 }
