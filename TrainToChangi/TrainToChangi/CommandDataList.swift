@@ -303,10 +303,15 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
     }
 
     func jump() {
-        guard let currentNode = current as? JumpListNode else {
+        // After calling next(), pointer has been moved to the next node
+        // that has not been returned yet.
+        // So when jump() is called, we need to go back to previous node
+        // to jump on that node.
+        // Destination will always land on a .placeholder
+        guard let previousNode = current?.previous as? JumpListNode else {
             preconditionFailure("Cannot jump on a non-jump command")
         }
-        current = currentNode.jumpTarget
+        current = previousNode.jumpTarget
     }
 
     func reset() {
