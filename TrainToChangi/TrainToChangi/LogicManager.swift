@@ -2,7 +2,7 @@
 // Manages the logic required to update the model when commands are executed.
 // It also contains methods pertaining to the game logic.
 //
-
+import Foundation
 //TODO: Refactor into GameLogic.
 class LogicManager: Logic {
     unowned private let model: Model
@@ -10,18 +10,33 @@ class LogicManager: Logic {
     private let parser: CommandDataParser
     private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
+    private var isExecutionAllowed: Bool
 
     init(model: Model) {
         self.model = model
         self.parser = CommandDataParser(model: model)
         self.updater = RunStateUpdater(model: model)
         self.executedCommands = Stack() //TODO: Change to array
+        self.isExecutionAllowed = false
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(catchNotification(notification:)),
+            name: Constants.NotificationNames.animationEnded, object: nil)
+    }
+
+    @objc fileprivate func catchNotification(notification: Notification) {
+        isExecutionAllowed = true
     }
 
     // Executes the list of commands that user has selected.
     func executeCommands() {
-        while model.runState == .running {
-            executeNextCommand()
+        DispatchQueue.global(qos: .background).async {
+            while self.model.runState == .running {
+                guard self.isExecutionAllowed else {
+                    continue
+                }
+                self.executeNextCommand()
+            }
         }
     }
 
@@ -39,6 +54,7 @@ class LogicManager: Logic {
 
     // Executes the next command.
     func executeNextCommand() {
+        isExecutionAllowed = false
         if iterator == nil {
             iterator = model.makeCommandDataListIterator()
         }

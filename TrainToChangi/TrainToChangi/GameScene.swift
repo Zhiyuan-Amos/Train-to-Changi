@@ -189,6 +189,10 @@ extension GameScene {
         }
 
         move(to: destination)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                         object: nil, userInfo: nil))
+        })
     }
 }
 
