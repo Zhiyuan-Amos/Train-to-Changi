@@ -136,7 +136,7 @@ class GameViewController: UIViewController {
                                              size: currentCommandSize)
             print(currentCommandSize)
 
-            let currentCommandButton = getCommandUIButton(for: command, frame: currentCommandFrame)
+            let currentCommandButton = generateCommandUIButton(for: command, frame: currentCommandFrame)
             currentCommandButton.tag = commandIndex
             commandIndex += 1
             commandButtonOffsetY += Constants.UI.commandButtonOffsetY
@@ -182,7 +182,7 @@ class GameViewController: UIViewController {
     }
 
     /* Helper func */
-    private func getCommandUIButton(for commandType: CommandData, frame: CGRect) -> UIButton {
+    private func generateCommandUIButton(for commandType: CommandEnum, frame: CGRect) -> UIButton {
         let currentCommandButton = UIButton(frame: frame)
         let imagePath = commandType.toString() + ".png"
 
@@ -193,6 +193,7 @@ class GameViewController: UIViewController {
 
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
+        
         model.addCommand(commandEnum: command)
         commandsEditor.reloadData()
     }
