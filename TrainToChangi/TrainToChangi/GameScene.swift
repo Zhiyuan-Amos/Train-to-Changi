@@ -11,7 +11,7 @@ import GameplayKit
 
 // Stores the location that can be reached by player sprite.
 enum WalkDestination {
-    case inbox, outbox, memory(layout: Constants.Memory.Layout, index: Int)
+    case inbox, outbox, memory(layout: Memory.Layout, index: Int)
 
     var point: CGPoint {
         switch self {
@@ -26,82 +26,70 @@ enum WalkDestination {
 }
 
 class GameScene: SKScene {
-    let player = SKSpriteNode(imageNamed: "player")
-    // TODO: asset update
+    // when `isAnimating` == true, command must wait for animation to finish before executing next command
+    fileprivate(set) var isAnimating = false
+
+    fileprivate let player = SKSpriteNode(imageNamed: "player")
 
     fileprivate let inbox = SKSpriteNode()
     fileprivate let outbox = SKSpriteNode()
-
-    fileprivate let moveDuration = TimeInterval(2)
 
     fileprivate var inboxNodes = [SKShapeNode]()
     fileprivate var memoryNodes = [SKShapeNode]()
     fileprivate var outboxNodes = [SKShapeNode]()
     fileprivate var holdingNode = SKShapeNode()
 
-    override func didMove(to view: SKView) {
-        backgroundColor = SKColor.white // TODO: asset update
-        initPlayer()
-        initStationElements()
-        initNotification()
-
-        /* testing, to remove when integrating
-        initLevelData(PreloadedLevels.levelOne)
-        move(to: .inbox)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            self.move(to: .outbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 6) {
-            self.move(to: .inbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 9) {
-            self.move(to: .outbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 12) {
-            self.move(to: .inbox)
-        }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 15) {
-            self.move(to: .outbox)
-        }
-        */
-    }
-
+    fileprivate let moveDuration = TimeInterval(2)
 }
 
 // MARK: - Init
 extension GameScene {
-    func initLevelData(_ level: Level) {
-        createInboxNodes(from: level.initialState.inputs)
-        createMemoryNodes(from: level.initialState.memoryValues, layout: level.memoryLayout)
+
+    // Called by so that Scene knows data of current Level
+    func initLevelState(_ level: Level) {
+        initBackground()
+        initPlayer()
+        initInbox(values: level.initialState.inputs)
+        initOutbox()
+        initNotification()
+        initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
     }
 
-    fileprivate func initPlayer() {
+    private func initBackground() {
+        backgroundColor = SKColor.white // TODO: asset update
+    }
+
+    private func initPlayer() {
         player.size = Constants.Player.size
         player.position = Constants.Player.position
         player.zPosition = Constants.Player.zPosition
         addChild(player)
     }
 
-    fileprivate func initStationElements() {
+    private func initInbox(values: [Int]) {
         inbox.size = Constants.Inbox.size
         inbox.color = Constants.Inbox.color
         inbox.position = Constants.Inbox.position
+        addChild(inbox)
+        initInboxNodes(from: values)
+    }
+
+    private func initOutbox() {
 
         outbox.size = Constants.Outbox.size
         outbox.color = Constants.Outbox.color
         outbox.position = Constants.Outbox.position
 
-        addChild(inbox)
         addChild(outbox)
     }
 
-    fileprivate func initNotification() {
+    private func initNotification() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(catchNotification(notification:)),
             name: Constants.NotificationNames.movePersonInScene, object: nil)
     }
 
-    fileprivate func createMemoryNodes(from memoryValues: [Int?], layout: Constants.Memory.Layout) {
+    private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
         for (index, value) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 assertionFailure("Number of memory values differ from the layout specified. Check level data.")
@@ -110,16 +98,16 @@ extension GameScene {
             let box = SKShapeNode(rectOf: Constants.Box.size)
             box.name = "memory \(index)"
             box.position = layout.locations[index]
-            box.fillColor = .gray
+            box.fillColor = Constants.Memory.fillColor
             // TODO: create box for pre-loaded memory values
             let label = SKLabelNode(text: String(describing: index))
-            label.fontSize = 13
+            label.fontSize = Constants.Memory.labelFontSize
             box.addChild(label)
             addChild(box)
         }
     }
 
-    fileprivate func createInboxNodes(from inboxValues: [Int]) {
+    private func initInboxNodes(from inboxValues: [Int]) {
         inboxNodes = []
         for (index, value) in inboxValues.enumerated() {
             let label = SKLabelNode(text: String(value))
@@ -132,7 +120,7 @@ extension GameScene {
         }
     }
 
-    fileprivate func calculateInboxBoxPosition(index: Int) -> CGPoint {
+    private func calculateInboxBoxPosition(index: Int) -> CGPoint {
         let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Box.size.width / 2
         let calculateX = { (index: Int) -> CGFloat in
             return startingX + CGFloat(index) * Constants.Box.size.width
@@ -155,7 +143,7 @@ extension GameScene {
 
     // Receive notification to control the game scene. Responds accordingly.
     // notification must contains `userInfo` with "destination" defined
-    func catchNotification(notification: Notification) {
+    @objc fileprivate func catchNotification(notification: Notification) {
         guard let userInfo = notification.userInfo else {
             print("[GameScene:catchNotification] No userInfo found in notification")
             return
@@ -202,7 +190,7 @@ extension GameScene {
         }
     }
 
-    fileprivate func grabFromInbox() {
+    private func grabFromInbox() {
         guard !self.inboxNodes.isEmpty else {
             return
         }
@@ -211,7 +199,7 @@ extension GameScene {
         holdingNode.move(toParent: player)
     }
 
-    fileprivate func putToOutbox() {
+    private func putToOutbox() {
         outboxNodes.append(holdingNode)
         holdingNode.move(toParent: scene!)
         holdingNode.run(SKAction.move(to: Constants.Outbox.entryPosition, duration: 1))

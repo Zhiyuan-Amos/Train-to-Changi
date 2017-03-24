@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC750125724E9BA28BA9EB /* Memory.swift */; };
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
@@ -45,6 +46,7 @@
 		D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DC1E77A01D00DE5774 /* Stack.swift */; };
 		D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267E01E77ABEB00DE5774 /* Model.swift */; };
 		D7CEF1321E78EBBB00564FF5 /* CommandEnumParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */; };
+		D7E0E74A1E84B78500237705 /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7E0E7491E84B78500237705 /* Tiles.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22DC750125724E9BA28BA9EB /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
@@ -103,6 +106,7 @@
 		D7A267DC1E77A01D00DE5774 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		D7A267E01E77ABEB00DE5774 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnumParser.swift; sourceTree = "<group>"; };
+		D7E0E7491E84B78500237705 /* Tiles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tiles.sks; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,14 +183,14 @@
 		3B16804D1E778785002286F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				D7E0E7491E84B78500237705 /* Tiles.sks */,
 				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
 				A712096A1E8189060039B257 /* CommandCell.swift */,
 				A712096B1E8189060039B257 /* CommandLabel.swift */,
 				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
-				A7082EC11E7C2AEB00619AFA /* CommandCell.swift */,
 				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
 				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
-				BE4697B0B9F0AFDD73CEDDDC /* CommandLabel.swift */,
+				22DC750125724E9BA28BA9EB /* Memory.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -378,12 +382,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D76FA8321E76ADC400CCCFBE /* Main.storyboard in Resources */,
+				D7E0E74A1E84B78500237705 /* Tiles.sks in Resources */,
 				D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */,
 				D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */,
 				3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */,
-				D76FA82B1E76ADC400CCCFBE /* Actions.sks in Resources */,
 				3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,7 +527,6 @@
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,
-				A7082EC31E7C2AEB00619AFA /* CommandCell.swift in Sources */,
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
@@ -539,7 +541,7 @@
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
-				BE469257E437384F8788282F /* CommandLabel.swift in Sources */,
+				22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
