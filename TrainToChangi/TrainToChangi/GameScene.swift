@@ -34,10 +34,10 @@ class GameScene: SKScene {
     fileprivate let inbox = SKSpriteNode()
     fileprivate let outbox = SKSpriteNode()
 
-    fileprivate var inboxNodes = [SKShapeNode]()
-    fileprivate var memoryNodes = [SKShapeNode]()
-    fileprivate var outboxNodes = [SKShapeNode]()
-    fileprivate var holdingNode = SKShapeNode()
+    fileprivate var inboxNodes = [SKSpriteNode]()
+    fileprivate var memoryNodes = [SKSpriteNode]()
+    fileprivate var outboxNodes = [SKSpriteNode]()
+    fileprivate var holdingNode = SKSpriteNode()
 
     fileprivate let moveDuration = TimeInterval(2)
 
@@ -116,17 +116,20 @@ extension GameScene {
     }
 
     private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
-        for (index, value) in memoryValues.enumerated() {
+        for (index, _) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 assertionFailure("Number of memory values differ from the layout specified. Check level data.")
                 return
             }
-            let box = SKShapeNode(rectOf: Constants.Box.size)
-            box.name = "memory \(index)"
+            let box = SKSpriteNode(imageNamed: "memory")
+            box.size = Constants.Memory.size
             box.position = layout.locations[index]
-            box.fillColor = Constants.Memory.fillColor
+            box.name = "memory \(index)"
+
             // TODO: create box for pre-loaded memory values
             let label = SKLabelNode(text: String(describing: index))
+            label.position = CGPoint(x: label.position.x + Constants.Memory.labelOffsetX,
+                                     y: label.position.y + Constants.Memory.labelOffsetY)
             label.fontSize = Constants.Memory.labelFontSize
             box.addChild(label)
             addChild(box)
@@ -136,29 +139,38 @@ extension GameScene {
     private func initInboxNodes(from inboxValues: [Int]) {
         inboxNodes = []
         for (index, value) in inboxValues.enumerated() {
+            //TODO: Wondering if we can place the values init somewhere else.
             let label = SKLabelNode(text: String(value))
-            let shape = SKShapeNode(rectOf: Constants.Box.size)
-            shape.position = calculateInboxBoxPosition(index: index)
-            shape.fillColor = .blue
-            shape.addChild(label)
-            inboxNodes.append(shape)
-            self.addChild(shape)
+            label.position.y += Constants.Box.labelOffsetY
+            label.fontName = Constants.Box.fontName
+            label.fontSize = Constants.Box.fontSize
+            label.fontColor = Constants.Box.fontColor
+
+            let box = SKSpriteNode(imageNamed: Constants.Box.imageName)
+            box.size = Constants.Box.size
+            box.position = calculateInboxBoxPosition(index: index)
+            box.zRotation = Constants.Box.rotationAngle
+
+            box.addChild(label)
+            inboxNodes.append(box)
+            self.addChild(box)
         }
     }
 
     private func calculateInboxBoxPosition(index: Int) -> CGPoint {
         let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Box.size.width / 2
-        let calculateX = { (index: Int) -> CGFloat in
-            return startingX + CGFloat(index) * Constants.Box.size.width
-        }
-        return CGPoint(x: calculateX(index), y: inbox.position.y)
+            + Constants.Inbox.imagePadding
+
+        let offsetX = CGFloat(index) * (Constants.Box.size.width + Constants.Inbox.imagePadding)
+
+        return CGPoint(x: startingX + offsetX, y: inbox.position.y)
     }
 }
 
 // MARK: - Touch
 extension GameScene {
     func memoryLocation(of point: CGPoint) -> Int {
-        var index = 0
+        let index = 0
 
         return index
     }
@@ -194,24 +206,26 @@ extension GameScene {
         case .inbox:
             player.run(moveAction, completion: {
                 self.grabFromInbox()
-                let stepAside = SKAction.moveBy(x: 0, y: -100, duration: 0.5)
+                let stepAside = SKAction.moveBy(x: 0, y: -60, duration: 0.5)
                 self.player.run(stepAside, completion: {
                     _ = self.inboxNodes.map { node in
-                        node.run(SKAction.moveBy(x: -100, y: 0, duration: 1))
+                        node.run(SKAction.moveBy(x: -Constants.Box.size.width -
+                            Constants.Inbox.imagePadding, y: 0, duration: 1))
                     }
                 })
             })
         case .outbox:
             player.run(moveAction, completion: {
                 _ = self.outboxNodes.map { node in
-                    node.run(SKAction.moveBy(x: -100, y: 0, duration: 1))
+                    node.run(SKAction.moveBy(x: -Constants.Box.size.width -
+                        Constants.Inbox.imagePadding, y: 0, duration: 1))
                 }
             })
             let wait = SKAction.wait(forDuration: moveDuration)
             player.run(wait, completion: {
                 self.putToOutbox()
             })
-        case let .memory(layout, index):
+        case .memory(_, _):
             break
         }
     }

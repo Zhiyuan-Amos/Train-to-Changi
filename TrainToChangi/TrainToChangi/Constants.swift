@@ -19,21 +19,26 @@ struct Constants {
     }
 
     struct Inbox {
-        static let size = CGSize(width: 500, height: 100)
-        static let position = CGPoint(x: ViewDimensions.width - size.width / 2,
+        static let size = CGSize(width: 420, height: 60)
+        static let position = CGPoint(x: 575,
                                       y: ViewDimensions.height - size.height / 2)
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x - size.width / 2, y: position.y - size.height / 2)
+        static let imagePadding: CGFloat = 10
     }
 
     struct Outbox {
-        static let size = CGSize(width: 500, height: 100)
-        static let position = CGPoint(x: size.width / 2, y: size.height / 2)
+        static let size = CGSize(width: 420, height: 60)
+        //TODO: We can hardcode this values, but if possible, take reference from some other
+        // positions so that we can support on iPhone too. If WaiKay never specify,
+        // then heck care.
+        static let position = CGPoint(x: 400, y: 140)
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x + size.width / 2, y: position.y + size.height / 2)
-        static let entryPosition = CGPoint(x: position.x + size.width / 2 - Box.size.width / 2, y: position.y)
+        static let entryPosition = CGPoint(x: position.x + size.width / 2 - Box.size.width / 2 - 10, y: position.y)
+        static let imagePadding: CGFloat = 10
     }
-    
+
     struct Background {
         static let rows = 24
         static let columns = 32
@@ -44,11 +49,23 @@ struct Constants {
 
     struct Memory {
         static let labelFontSize = CGFloat(13)
-        static let fillColor = UIColor.gray
+        static let labelOffsetX: CGFloat = 15
+        static let labelOffsetY: CGFloat = -20
+        static let fontColor = UIColor.darkGray
+        static let size = CGSize(width: 60, height: 60)
     }
 
     struct Box {
-        static let size = CGSize(width: 100, height: 100)
+        static let imageName = "box"
+        static let labelOffsetY: CGFloat = -5
+        static let fontName = "HelveticaNeue-Bold"
+        static let fontSize: CGFloat = 18
+        static let fontColor = UIColor.darkGray
+        static let size = CGSize(width: 40, height: 40)
+        // Rotate a random value from 0 degrees to 5 degrees
+        static var rotationAngle: CGFloat {
+            return CGFloat((M_PI_4 / 9) * drand48())
+        }
     }
 
     struct NotificationNames {

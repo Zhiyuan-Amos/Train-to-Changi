@@ -17,7 +17,7 @@ struct Memory {
             // sX, sY are the x and y of the screen's center.
             let centerX = Constants.ViewDimensions.centerX, centerY = Constants.ViewDimensions.centerY
             // bW, bH are the width and height of Box
-            let boxWidth = Constants.Box.size.width, boxHeight = Constants.Box.size.height
+            let boxWidth = Constants.Memory.size.width, boxHeight = Constants.Memory.size.height
 
             switch self {
 

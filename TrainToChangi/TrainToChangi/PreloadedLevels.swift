@@ -12,7 +12,7 @@ struct PreloadedLevels {
                                 algorithm: levelOneAlgo)
 
     static let levelOneStationName = "Introduction"
-    static let levelOneInitialState = LevelState(inputs: [1, 2, 3],
+    static let levelOneInitialState = LevelState(inputs: [1, 2, 3, 4, 5, 6, 7, 8],
                                                  outputs: [],
                                                  memoryValues: [nil, nil],
                                                  personValue: nil,
