@@ -280,10 +280,14 @@ extension CommandDataLinkedList {
 class CommandDataListIterator: Sequence, IteratorProtocol {
     private var commandDataList: CommandDataList
     private var current: CommandDataListNode?
+    // Requires storing of history because the iteration can
+    // involve jumps.
+    private var history: Stack<CommandDataListNode?>
 
     init(_ commandDataList: CommandDataList) {
         self.commandDataList = commandDataList
         self.current = (commandDataList as? CommandDataLinkedList)?.first
+        self.history = Stack()
     }
 
     func makeIterator() -> CommandDataListIterator {
@@ -294,12 +298,13 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
         guard let currentValue = current?.commandData else {
             return nil
         }
+        history.push(current)
         current = current?.next
         return currentValue
     }
 
     func previous() {
-        current = current?.previous
+        current = history.pop()!
     }
 
     func jump() {
@@ -308,13 +313,14 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
         // So when jump() is called, we need to go back to previous node
         // to jump on that node.
         // Destination will always land on a .placeholder
-        guard let previousNode = current?.previous as? JumpListNode else {
+        guard let previousNode = history.top as? JumpListNode else {
             preconditionFailure("Cannot jump on a non-jump command")
         }
         current = previousNode.jumpTarget
     }
 
     func reset() {
-        self.current = (commandDataList as? CommandDataLinkedList)?.first
+        current = (commandDataList as? CommandDataLinkedList)?.first
+        history = Stack()
     }
 }
