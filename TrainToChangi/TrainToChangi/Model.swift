@@ -44,13 +44,13 @@ protocol Model: class {
     // Removes all commands from userEnteredCommands.
     func clearAllCommands()
 
-    // Loads a level into Model and reinitialises state.
-    func loadLevel(levelData: LevelData)
-
     // Reinitialises Model play state.
     func resetPlayState()
 
-    // MARK - API for Logic. Notifies Scene upon execution.
+    // MARK - API for Logic.
+
+    // Makes an iterator for `Logic` that returns `CommandData` in order.
+    func makeCommandDataListIterator() -> CommandDataListIterator
 
     // Returns the dequeued value from inbox. If inbox is empty, returns nil.
     func dequeueValueFromInbox() -> Int?

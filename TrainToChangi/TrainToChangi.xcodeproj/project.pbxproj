@@ -168,9 +168,11 @@
 		3B1680451E7784B3002286F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3BD7EF981E8124310029EA57 /* Levels */,
-				3BD7EF931E811DCB0029EA57 /* States */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
+				D744CA641E7A387F004CCABD /* Level.swift */,
+				BE46951C9245C0394770FFDE /* LevelManager.swift */,
+				3B1680521E77D6F7002286F6 /* RunState.swift */,
+				3B1680501E778A2D002286F6 /* LevelState.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 				A77370801E83ECA0008C00EE /* CommandDataList.swift */,
 			);
@@ -212,24 +214,6 @@
 				BE46939ED49D18C3E37B2F21 /* LevelData.swift */,
 			);
 			name = Storage;
-			sourceTree = "<group>";
-		};
-		3BD7EF931E811DCB0029EA57 /* States */ = {
-			isa = PBXGroup;
-			children = (
-				3B1680521E77D6F7002286F6 /* RunState.swift */,
-				3B1680501E778A2D002286F6 /* LevelState.swift */,
-			);
-			name = States;
-			sourceTree = "<group>";
-		};
-		3BD7EF981E8124310029EA57 /* Levels */ = {
-			isa = PBXGroup;
-			children = (
-				D744CA641E7A387F004CCABD /* Level.swift */,
-				BE46951C9245C0394770FFDE /* LevelManager.swift */,
-			);
-			name = Levels;
 			sourceTree = "<group>";
 		};
 		4AF3A78D82E761EB3D5635BA /* Pods */ = {
@@ -720,6 +704,7 @@
 				A71A4B471E8400AC00DF6459 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D76FA81E1E76ADC400CCCFBE /* Build configuration list for PBXProject "TrainToChangi" */ = {
 			isa = XCConfigurationList;

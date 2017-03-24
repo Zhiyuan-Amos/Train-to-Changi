@@ -28,6 +28,8 @@ class ModelManager: Model {
             levelState.numSteps = newValue
         }
     }
+
+    // TO remove after integration with Logic!!
     var programCounter: Int? {
         get {
             return levelState.programCounter
@@ -39,10 +41,10 @@ class ModelManager: Model {
     }
 
     private var levelManager: LevelManager
-    private(set) var userEnteredCommands: [CommandData]
+    private var _userEnteredCommands: CommandDataList
 
     init(levelData: LevelData) {
-        userEnteredCommands = []
+        _userEnteredCommands = CommandDataLinkedList()
         levelManager = LevelManager(levelData: levelData)
         levelState = levelManager.level.initialState
     }
@@ -63,36 +65,38 @@ class ModelManager: Model {
         return levelManager.level
     }
 
+    var userEnteredCommands: [CommandData] {
+        return _userEnteredCommands.toArray()
+    }
+
     // MARK - API for GameViewController.
 
     func addCommand(commandEnum: CommandData) {
-        userEnteredCommands.append(commandEnum)
+        _userEnteredCommands.append(commandData: commandEnum)
     }
 
     func insertCommand(commandEnum: CommandData, atIndex index: Int) {
-        userEnteredCommands.insert(commandEnum, at: index)
+        _userEnteredCommands.insert(commandData: commandEnum, atIndex: index)
     }
 
     // Removes the command at specified Index from userEnteredCommands.
     func removeCommand(fromIndex index: Int) -> CommandData {
-        return userEnteredCommands.remove(at: index)
+        return _userEnteredCommands.remove(atIndex: index)
     }
 
     func clearAllCommands() {
-        userEnteredCommands.removeAll()
-    }
-
-    func loadLevel(levelData: LevelData) {
-        levelManager.loadLevel(levelData: levelData)
-        userEnteredCommands = []
-        levelState = levelManager.level.initialState
+        _userEnteredCommands.removeAll()
     }
 
     func resetPlayState() {
         levelState = levelManager.level.initialState
     }
 
-    // MARK - API for Logic. Notifies Scene upon execution.
+    // MARK - API for Logic.
+
+    func makeCommandDataListIterator() -> CommandDataListIterator {
+        return _userEnteredCommands.makeIterator()
+    }
 
     func dequeueValueFromInbox() -> Int? {
         let dequeuedValue = levelState.inputs.removeFirst()

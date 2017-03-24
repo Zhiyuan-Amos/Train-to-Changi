@@ -72,7 +72,8 @@ protocol CommandDataList {
     // Returns the `CommandDataList` as an array.
     func toArray() -> [CommandData]
 
-    // TODO: Iterator with next(), previous(), setToJump()
+    // Returns an iterator for the CommandDataList.
+    func makeIterator() -> CommandDataListIterator
     // TODO: ADT _checkrep, make sure both sides are connected, jump and target connected.
 }
 
@@ -122,22 +123,6 @@ class CommandDataLinkedList: CommandDataList {
 
         let node = self.node(atIndex: sourceIndex)
         move(node!, toIndex: destIndex)
-
-//        let (prev1, next1) = nodesBeforeAndAfter(index: sourceIndex)
-//
-//        let node = self.node(atIndex: sourceIndex)
-//
-//        prev1?.next = next1
-//        next1?.previous = prev1
-//
-//        let prev2 = self.node(atIndex: destIndex)
-//        let next2 = prev2?.next
-//
-//        prev2?.next = node
-//        node?.previous = prev2
-//
-//        node?.next = next2
-//        next2?.previous = node
     }
 
     func remove(atIndex index: Int) -> CommandData {
@@ -174,7 +159,7 @@ class CommandDataLinkedList: CommandDataList {
 
     // MARK - Private helpers
 
-    private var first: Node? {
+    fileprivate var first: Node? {
         return head
     }
 
@@ -283,5 +268,48 @@ class CommandDataLinkedList: CommandDataList {
     private func removeLast() -> CommandData {
         assert(!isEmpty)
         return remove(last!)
+    }
+}
+
+extension CommandDataLinkedList {
+    func makeIterator() -> CommandDataListIterator {
+        return CommandDataListIterator(self)
+    }
+}
+
+class CommandDataListIterator: Sequence, IteratorProtocol {
+    private var commandDataList: CommandDataList
+    private var current: CommandDataListNode?
+
+    init(_ commandDataList: CommandDataList) {
+        self.commandDataList = commandDataList
+        self.current = (commandDataList as? CommandDataLinkedList)?.first
+    }
+
+    func makeIterator() -> CommandDataListIterator {
+        return self
+    }
+
+    func next() -> CommandData? {
+        guard let currentValue = current?.commandData else {
+            return nil
+        }
+        current = current?.next
+        return currentValue
+    }
+
+    func previous() {
+        current = current?.previous
+    }
+
+    func jump() {
+        guard let currentNode = current as? JumpListNode else {
+            preconditionFailure("Cannot jump on a non-jump command")
+        }
+        current = currentNode.jumpTarget
+    }
+
+    func reset() {
+        self.current = (commandDataList as? CommandDataLinkedList)?.first
     }
 }
