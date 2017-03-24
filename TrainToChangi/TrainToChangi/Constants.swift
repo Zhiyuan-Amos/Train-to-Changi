@@ -43,8 +43,8 @@ struct Constants {
     struct UI {
         static let commandButtonInitialOffsetY: CGFloat = 40
         static let commandButtonOffsetY: CGFloat = 40
-        static let commandButtonWidth: CGFloat = 40
-        static let commandButtonHeight: CGFloat = 20
+        static let commandButtonWidth: CGFloat = 100
+        static let commandButtonHeight: CGFloat = 50
 
         static let commandCellIdentifier = "CommandCell"
     }
