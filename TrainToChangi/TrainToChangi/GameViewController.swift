@@ -106,6 +106,7 @@ class GameViewController: UIViewController {
                                             height: Constants.UI.commandButtonHeight)
             let currentCommandFrame = CGRect(origin: currentCommandPosition,
                                              size: currentCommandSize)
+            print(currentCommandSize)
 
             let currentCommandButton = getCommandUIButton(for: command, frame: currentCommandFrame)
             currentCommandButton.tag = commandIndex

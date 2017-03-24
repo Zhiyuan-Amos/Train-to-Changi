@@ -31,6 +31,7 @@ class CommandCell: UICollectionViewCell {
 
     private func setCommandImageAndIndex(imageName: String, index: Int?,
                                          indexImageName: String?, hidden: Bool) {
+        commandImage.frame.size.height = Constants.UI.commandButtonHeight
         commandImage.image = UIImage(named: imageName)
         commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
         if let indexImageName = indexImageName {
