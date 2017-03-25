@@ -9,9 +9,26 @@
 import Foundation
 
 class StorageManager {
-//
-//    private var fileName = "Levels.plist"
-//    private var savedLevelFileName = "SavedLevel.plist"
+
+    var currentSaveSlot = UserData()
+    private var userDataFileName = "User1.plist"
+
+    func storeUserData() {
+        // save currentSaveSlot user data into file
+    }
+
+    func loadUserData() {
+        // load from file into currentSaveSlot
+    }
+
+    func completeLevel(levelIndex: Int) {
+        currentSaveSlot.completeLevel(levelIndex: levelIndex)
+    }
+
+//    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandEnum]) {
+//        currentSaveSlot.updateAddedCommands(levelIndex: levelIndex,
+//                                            userAddedCommands: userAddedCommands)
+//    }
 //
 //    /// Loads the levels list from the plist
 //    func readLevelListFromDocument() -> [String: NSMutableDictionary] {

@@ -1,12 +1,12 @@
 //
-// Updates the run state of the game and notifies the view.
+// Updates the run state of the game.
 //
 
-struct RunStateUpdater {
+class RunStateUpdater {
     unowned let model: Model
 
-    init(runStateDelegate: Model) {
-        self.model = runStateDelegate
+    init(model: Model) {
+        self.model = model
     }
 
     // Updates the run state depending on `model`'s values and
@@ -18,8 +18,6 @@ struct RunStateUpdater {
             model.runState = .lost(error: commandResult.errorMessage!)
         } else if !isOutputValid() {
             model.runState = .lost(error: .wrongOutboxValue)
-        } else if isIndexOutOfBounds() {
-            model.runState = .lost(error: .incompleteOutboxValues)
         }
     }
 
@@ -40,12 +38,5 @@ struct RunStateUpdater {
             }
         }
         return true
-    }
-
-    private func isIndexOutOfBounds() -> Bool {
-        guard model.programCounter! >= 0 else {
-            fatalError("commandIndex should never be smaller than 0")
-        }
-        return model.programCounter! >= model.userEnteredCommands.count
     }
 }

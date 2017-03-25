@@ -25,7 +25,7 @@ class GameViewController: UIViewController {
     @IBOutlet private var levelDescription: UITextView!
 
     required init?(coder aDecoder: NSCoder) {
-        model = ModelManager() //model init default loads PreloadedLevels.levelOne
+        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
         logic = LogicManager(model: model)
         super.init(coder: aDecoder)
     }
@@ -141,8 +141,7 @@ class GameViewController: UIViewController {
         }
     }
 
-    /// Use GameScene to move/animate the game character and ..
-    // TODO: Integrate with gamescene
+    /// Use GameScene to move/animate the game objects
     func presentGameScene() {
         let scene = GameScene(size: view.bounds.size)
         guard let skView = view as? SKView else {
@@ -155,7 +154,7 @@ class GameViewController: UIViewController {
     }
 
     /* Helper func */
-    private func getCommandUIButton(for commandType: CommandEnum, frame: CGRect) -> UIButton {
+    private func getCommandUIButton(for commandType: CommandData, frame: CGRect) -> UIButton {
         let currentCommandButton = UIButton(frame: frame)
         let imagePath = commandType.toString() + ".png"
 
@@ -183,8 +182,7 @@ extension GameViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath,
                         to destinationIndexPath: IndexPath) {
-        let movedCommand = model.removeCommand(fromIndex: sourceIndexPath.item)
-        model.insertCommand(commandEnum: movedCommand, atIndex: destinationIndexPath.item)
+        model.moveCommand(fromIndex: sourceIndexPath.item, toIndex: destinationIndexPath.item)
     }
 
     func collectionView(_ collectionView: UICollectionView,

@@ -4,46 +4,16 @@
 //
 
 class JumpCommand: Command {
-    private let model: Model
-    weak var placeholder: PlaceholderCommand?
-    //TODO: Remove indexes?
-    let targetIndex: Int
-    private(set) var programCounterIndex: Int?
+    private let iterator: CommandDataListIterator
 
-    init(model: Model, targetIndex: Int) {
-        self.model = model
-        self.targetIndex = targetIndex
+    init(iterator: CommandDataListIterator) {
+        self.iterator = iterator
     }
 
     func execute() -> CommandResult {
-        _checkRep()
-
-        programCounterIndex = model.programCounter
-
-        model.programCounter = targetIndex
-
-        _checkRep()
+        iterator.jump()
         return CommandResult()
     }
 
-    func undo() {
-        _checkRep()
-
-        guard model.programCounter != nil else {
-            fatalError("Program Counter should not be nil when game is running")
-        }
-
-        model.programCounter! -= 1
-        _checkRep()
-    }
-
-    private func _checkRep() {
-        guard let placeholder = placeholder else {
-            fatalError("placeholder cannot be nil during execution")
-        }
-        guard placeholder.jumpCommand === self else {
-            fatalError("Bijection requirement unmet")
-        }
-    }
-
+    func undo() {}
 }

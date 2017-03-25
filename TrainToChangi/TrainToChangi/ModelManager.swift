@@ -10,25 +10,32 @@ import Foundation
 
 class ModelManager: Model {
 
-    var level: Level
     var levelState: LevelState
-    var runState: RunState
-    var numSteps: Int
-    var programCounter: Int? {
-        didSet {
-            // Notify UI to move arrow in future.
+
+    var runState: RunState {
+        get {
+            return levelState.runState
+        }
+        set(newState) {
+            levelState.runState = newState
+        }
+    }
+    var numSteps: Int {
+        get {
+            return levelState.numSteps
+        }
+        set(newValue) {
+            levelState.numSteps = newValue
         }
     }
 
-    init() {
-        level = PreloadedLevels.levelOne
-        levelState = level.initialState
-        runState = .stopped
-        numSteps = 0
-    }
+    private var levelManager: LevelManager
+    private var _userEnteredCommands: CommandDataList
 
-    var userEnteredCommands: [CommandEnum] {
-        return levelState.currentCommands
+    init(levelData: LevelData) {
+        _userEnteredCommands = CommandDataLinkedList()
+        levelManager = LevelManager(levelData: levelData)
+        levelState = levelManager.level.initialState
     }
 
     var currentInputs: [Int] {
@@ -40,33 +47,49 @@ class ModelManager: Model {
     }
 
     var expectedOutputs: [Int] {
-        return level.expectedOutputs
+        return levelManager.level.expectedOutputs
     }
 
     var currentLevel: Level {
-        return level
+        return levelManager.level
+    }
+
+    var userEnteredCommands: [CommandData] {
+        return _userEnteredCommands.toArray()
     }
 
     // MARK - API for GameViewController.
 
-    func addCommand(commandEnum: CommandEnum) {
-        levelState.currentCommands.append(commandEnum)
+    func addCommand(commandEnum: CommandData) {
+        _userEnteredCommands.append(commandData: commandEnum)
     }
 
-    func insertCommand(commandEnum: CommandEnum, atIndex index: Int) {
-        levelState.currentCommands.insert(commandEnum, at: index)
+    func insertCommand(commandEnum: CommandData, atIndex index: Int) {
+        _userEnteredCommands.insert(commandData: commandEnum, atIndex: index)
     }
 
     // Removes the command at specified Index from userEnteredCommands.
-    func removeCommand(fromIndex index: Int) -> CommandEnum {
-        return levelState.currentCommands.remove(at: index)
+    func removeCommand(fromIndex index: Int) -> CommandData {
+        return _userEnteredCommands.remove(atIndex: index)
+    }
+
+    func moveCommand(fromIndex: Int, toIndex: Int) {
+        return _userEnteredCommands.move(sourceIndex: fromIndex, destIndex: toIndex)
     }
 
     func clearAllCommands() {
-        levelState.currentCommands.removeAll()
+        _userEnteredCommands.removeAll()
     }
 
-    // MARK - API for Logic. Notifies Scene upon execution.
+    func resetPlayState() {
+        levelState = levelManager.level.initialState
+    }
+
+    // MARK - API for Logic.
+
+    func makeCommandDataListIterator() -> CommandDataListIterator {
+        return _userEnteredCommands.makeIterator()
+    }
 
     func dequeueValueFromInbox() -> Int? {
         let dequeuedValue = levelState.inputs.removeFirst()
@@ -102,6 +125,8 @@ class ModelManager: Model {
     func getValueFromMemory(at index: Int) -> Int? {
         return levelState.memoryValues[index]
     }
+
+    // MARK - Private helpers
 
     private func postMoveNotification(destination: WalkDestination) {
         let notification = Notification(name: Constants.NotificationNames.movePersonInScene,

@@ -14,15 +14,18 @@
 		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
-		A71209671E8175D10039B257 /* LevelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209661E8175D10039B257 /* LevelHelper.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A712096D1E8189060039B257 /* CommandLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096B1E8189060039B257 /* CommandLabel.swift */; };
-		D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */; };
-		D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */; };
+		A7A10CE81E865A190040DA21 /* LevelDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE71E865A190040DA21 /* LevelDataHelper.swift */; };
+		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
+		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
+		A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEB1E865AD10040DA21 /* LevelManager.swift */; };
+		A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEC1E865AD10040DA21 /* UserData.swift */; };
+		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
-		D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */; };
+		D744CA5B1E797F70004CCABD /* JumpTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* JumpTarget.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
 		D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA681E7A38D7004CCABD /* StorageManager.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
@@ -45,7 +48,7 @@
 		D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D51E7796C300DE5774 /* CopyToCommand.swift */; };
 		D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DC1E77A01D00DE5774 /* Stack.swift */; };
 		D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267E01E77ABEB00DE5774 /* Model.swift */; };
-		D7CEF1321E78EBBB00564FF5 /* CommandEnumParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */; };
+		D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */; };
 		D7E0E74A1E84B78500237705 /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7E0E7491E84B78500237705 /* Tiles.sks */; };
 /* End PBXBuildFile section */
 
@@ -69,16 +72,19 @@
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A71209661E8175D10039B257 /* LevelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelHelper.swift; sourceTree = "<group>"; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		A712096B1E8189060039B257 /* CommandLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLabel.swift; sourceTree = "<group>"; };
+		A7A10CE71E865A190040DA21 /* LevelDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDataHelper.swift; sourceTree = "<group>"; };
+		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
+		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
+		A7A10CEB1E865AD10040DA21 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
+		A7A10CEC1E865AD10040DA21 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
-		D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreloadedLevels.swift; sourceTree = "<group>"; };
-		D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnum.swift; sourceTree = "<group>"; };
+		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
-		D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderCommand.swift; sourceTree = "<group>"; };
+		D744CA5A1E797F70004CCABD /* JumpTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpTarget.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		D744CA681E7A38D7004CCABD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
@@ -105,7 +111,7 @@
 		D7A267D51E7796C300DE5774 /* CopyToCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToCommand.swift; sourceTree = "<group>"; };
 		D7A267DC1E77A01D00DE5774 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		D7A267E01E77ABEB00DE5774 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEnumParser.swift; sourceTree = "<group>"; };
+		D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataParser.swift; sourceTree = "<group>"; };
 		D7E0E7491E84B78500237705 /* Tiles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tiles.sks; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -144,7 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				D75BC4251E76BA9000ED2A1B /* Command.swift */,
-				D70CFCC21E7C279C00D28B86 /* CommandEnum.swift */,
+				D70CFCC21E7C279C00D28B86 /* CommandData.swift */,
 				D744CA541E79715C004CCABD /* ExecutionError.swift */,
 				D7A267D01E7796B800DE5774 /* CommandResult.swift */,
 				D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */,
@@ -153,7 +159,7 @@
 				D7A267D51E7796C300DE5774 /* CopyToCommand.swift */,
 				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
 				D7983CE11E76D9A400E650ED /* JumpCommand.swift */,
-				D744CA5A1E797F70004CCABD /* PlaceholderCommand.swift */,
+				D744CA5A1E797F70004CCABD /* JumpTarget.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -161,8 +167,11 @@
 		3B1680451E7784B3002286F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3BD7EF981E8124310029EA57 /* Levels */,
-				3BD7EF931E811DCB0029EA57 /* States */,
+				D744CA641E7A387F004CCABD /* Level.swift */,
+				A7A10CEB1E865AD10040DA21 /* LevelManager.swift */,
+				A7A10CE91E865AD10040DA21 /* CommandDataList.swift */,
+				3B1680521E77D6F7002286F6 /* RunState.swift */,
+				3B1680501E778A2D002286F6 /* LevelState.swift */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 			);
@@ -174,7 +183,7 @@
 			children = (
 				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
 				A71209681E81888A0039B257 /* Logic.swift */,
-				D7CEF1311E78EBBB00564FF5 /* CommandEnumParser.swift */,
+				D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */,
 				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
 			);
 			name = Logic;
@@ -198,28 +207,12 @@
 		3BD7EF911E811DB50029EA57 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				A7A10CEA1E865AD10040DA21 /* LevelData.swift */,
+				A7A10CE71E865A190040DA21 /* LevelDataHelper.swift */,
 				D744CA681E7A38D7004CCABD /* StorageManager.swift */,
+				A7A10CEC1E865AD10040DA21 /* UserData.swift */,
 			);
 			name = Storage;
-			sourceTree = "<group>";
-		};
-		3BD7EF931E811DCB0029EA57 /* States */ = {
-			isa = PBXGroup;
-			children = (
-				3B1680521E77D6F7002286F6 /* RunState.swift */,
-				3B1680501E778A2D002286F6 /* LevelState.swift */,
-			);
-			name = States;
-			sourceTree = "<group>";
-		};
-		3BD7EF981E8124310029EA57 /* Levels */ = {
-			isa = PBXGroup;
-			children = (
-				D744CA641E7A387F004CCABD /* Level.swift */,
-				A71209661E8175D10039B257 /* LevelHelper.swift */,
-				D7049C971E7C015E0077EAB1 /* PreloadedLevels.swift */,
-			);
-			name = Levels;
 			sourceTree = "<group>";
 		};
 		4AF3A78D82E761EB3D5635BA /* Pods */ = {
@@ -510,33 +503,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D744CA5B1E797F70004CCABD /* PlaceholderCommand.swift in Sources */,
+				D744CA5B1E797F70004CCABD /* JumpTarget.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
-				A71209671E8175D10039B257 /* LevelHelper.swift in Sources */,
-				D7049C981E7C015E0077EAB1 /* PreloadedLevels.swift in Sources */,
-				D70CFCC31E7C279C00D28B86 /* CommandEnum.swift in Sources */,
+				D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
 				A712096D1E8189060039B257 /* CommandLabel.swift in Sources */,
+				A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */,
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
+				A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */,
 				D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
+				A7A10CE81E865A190040DA21 /* LevelDataHelper.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
+				A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
-				D7CEF1321E78EBBB00564FF5 /* CommandEnumParser.swift in Sources */,
+				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
+				A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */,
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,

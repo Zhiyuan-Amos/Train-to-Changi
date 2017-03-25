@@ -7,7 +7,7 @@ import UIKit
 
 class CommandLabel: UILabel {
 
-    func updateText(commandType: CommandEnum) {
+    func updateText(commandType: CommandData) {
         switch commandType {
         case .add(let index):
             text = index == nil ? "add" : "add \(index)"
@@ -18,10 +18,10 @@ class CommandLabel: UILabel {
         case .inbox:
             text = "inbox"
         case .jump(let index):
-            text = index == nil ? "jump" : "jump \(index)"
+            text = "jump \(index)"
         case .outbox:
             text = "outbox"
-        case .placeholder:
+        case .jumpTarget:
             text = ""
         }
     }

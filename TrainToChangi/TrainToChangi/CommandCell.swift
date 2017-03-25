@@ -13,7 +13,7 @@ class CommandCell: UICollectionViewCell {
     @IBOutlet weak var commandImage: UIImageView!
     @IBOutlet weak var commandIndexButton: UIButton!
 
-    func setImageAndIndex(commandType: CommandEnum) {
+    func setImageAndIndex(commandType: CommandData) {
         let imagePath = commandType.toString() + ".png"
         switch commandType {
         case .add(let index):
@@ -22,7 +22,7 @@ class CommandCell: UICollectionViewCell {
         case .copyFrom(let index), .copyTo(let index):
             setCommandImageAndIndex(imageName: imagePath, index: index,
                                     indexImageName: "copyindex.png", hidden: false)
-        case .inbox, .outbox, .jump(_), .placeholder:
+        case .inbox, .outbox, .jump(_), .jumpTarget:
             setCommandImageAndIndex(imageName: imagePath, index: nil,
                                     indexImageName: nil, hidden: true)
         }

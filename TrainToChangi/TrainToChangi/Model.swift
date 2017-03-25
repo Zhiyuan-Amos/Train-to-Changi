@@ -6,17 +6,14 @@ protocol Model: class {
 
     // MARK - Variables accessed by other components.
 
-    // The Program Counter for player's program. Initially nil.
-    var programCounter: Int? { get set }
-
-    // The Game State. I guess we should rename this.
+    // The gameplay run state.
     var runState: RunState { get set }
 
     // Number of execution steps taken by user to complete the level.
     var numSteps: Int { get set }
 
     // The Commands that user has added.
-    var userEnteredCommands: [CommandEnum] { get }
+    var userEnteredCommands: [CommandData] { get }
 
     // The current inputs left in the inbox area.
     var currentInputs: [Int] { get }
@@ -33,18 +30,32 @@ protocol Model: class {
     // MARK - API for GameViewController.
 
     // Appends the command to userEnteredCommands.
-    func addCommand(commandEnum: CommandEnum)
+    func addCommand(commandEnum: CommandData)
 
     // Inserts the command into userEnteredCommands, at specified Index.
-    func insertCommand(commandEnum: CommandEnum, atIndex: Int)
+    // If the command is .jump, adds a corresponding .jumpTarget.
+    func insertCommand(commandEnum: CommandData, atIndex: Int)
 
     // Removes the command at specified Index from userEnteredCommands.
-    func removeCommand(fromIndex: Int) -> CommandEnum
+    // If the command is .jump or .jumpTarget, removes the corresponding
+    // command in the pair.
+    func removeCommand(fromIndex: Int) -> CommandData
+
+    // Moves the command at `fromIndex` to `toIndex`.
+    // When reordering, use this instead of removing and inserting since
+    // they have special behavior for .jump
+    func moveCommand(fromIndex: Int, toIndex: Int)
 
     // Removes all commands from userEnteredCommands.
     func clearAllCommands()
 
-    // MARK - API for Logic. Notifies Scene upon execution.
+    // Reinitialises Model play state.
+    func resetPlayState()
+
+    // MARK - API for Logic.
+
+    // Makes an iterator for `Logic` that returns `CommandData` in order.
+    func makeCommandDataListIterator() -> CommandDataListIterator
 
     // Returns the dequeued value from inbox. If inbox is empty, returns nil.
     func dequeueValueFromInbox() -> Int?

@@ -6,7 +6,7 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-protocol Logic {
+protocol Logic: class {
 
     func executeCommands()
 
