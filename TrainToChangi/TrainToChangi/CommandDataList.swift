@@ -44,7 +44,7 @@ fileprivate class JumpTargetListNode: CommandDataListNode {
     var previous: CommandDataListNode?
 
     init(jumpParent: JumpListNode) {
-        self.commandData = .jumpTargetPlaceholder
+        self.commandData = .jumpTarget
         self.jumpParent = jumpParent
         self.next = jumpParent
     }
@@ -102,7 +102,7 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func append(commandData: CommandData) {
-        assert(commandData != .jumpTargetPlaceholder)
+        assert(commandData != .jumpTarget)
         let newNode = initNode(commandData: commandData)
         if let jumpNode = newNode as? JumpListNode {
             append(jumpNode.jumpTarget)
@@ -112,7 +112,7 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func insert(commandData: CommandData, atIndex index: Int) {
-        assert(commandData != .jumpTargetPlaceholder)
+        assert(commandData != .jumpTarget)
         let newNode = initNode(commandData: commandData)
         insert(newNode, atIndex: index)
         if let jumpNode = newNode as? JumpListNode {

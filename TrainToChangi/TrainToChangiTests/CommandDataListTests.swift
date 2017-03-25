@@ -132,7 +132,6 @@ class CommandDataListTests: XCTestCase {
 
     }
 
-
     // Mark - Insert, Jump Command
 
     func testInsert_emptyListNegativeIndexAndJumpCommand_notInserted() {
@@ -293,7 +292,6 @@ class CommandDataListTests: XCTestCase {
 
     }
 
-
     func testRemove_jumpCommandAfterTargetMoved() {
 
     }
@@ -373,7 +371,6 @@ class CommandDataListTests: XCTestCase {
         // move same location, move to lower index..
     }
 
-
     // MARK - Move, Jump Command
 
     func testMove_jumpCommand() {
@@ -397,5 +394,4 @@ class CommandDataListTests: XCTestCase {
     // MARK - toArray
     // List length [{0,1}, {>1}]
     // List contains mixture of Command Types [Iterative, Jump, JumpTarget]
-
 }

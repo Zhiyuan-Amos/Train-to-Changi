@@ -50,6 +50,7 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
+        model.runState = .running
         logic.executeCommands()
     }
 
@@ -140,8 +141,7 @@ class GameViewController: UIViewController {
         }
     }
 
-    /// Use GameScene to move/animate the game character and ..
-    // TODO: Integrate with gamescene
+    /// Use GameScene to move/animate the game objects
     func presentGameScene() {
         let scene = GameScene(size: view.bounds.size)
         guard let skView = view as? SKView else {

@@ -6,9 +6,6 @@ protocol Model: class {
 
     // MARK - Variables accessed by other components.
 
-    // The Program Counter for player's program. Initially nil.
-    var programCounter: Int? { get set }
-
     // The gameplay run state.
     var runState: RunState { get set }
 

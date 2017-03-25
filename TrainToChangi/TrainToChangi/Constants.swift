@@ -29,9 +29,6 @@ struct Constants {
 
     struct Outbox {
         static let size = CGSize(width: 420, height: 60)
-        //TODO: We can hardcode this values, but if possible, take reference from some other
-        // positions so that we can support on iPhone too. If WaiKay never specify,
-        // then heck care.
         static let position = CGPoint(x: 400, y: 140)
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x + size.width / 2, y: position.y + size.height / 2)

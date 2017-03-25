@@ -18,10 +18,10 @@ class CommandLabel: UILabel {
         case .inbox:
             text = "inbox"
         case .jump(let index):
-            text = index == nil ? "jump" : "jump \(index)"
+            text = "jump \(index)"
         case .outbox:
             text = "outbox"
-        case .jumpTargetPlaceholder:
+        case .jumpTarget:
             text = ""
         }
     }

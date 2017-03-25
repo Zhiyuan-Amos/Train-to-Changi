@@ -29,17 +29,6 @@ class ModelManager: Model {
         }
     }
 
-    // TO remove after integration with Logic!!
-    var programCounter: Int? {
-        get {
-            return levelState.programCounter
-        }
-        set(newValue) {
-            //notify UI
-            levelState.programCounter = newValue
-        }
-    }
-
     private var levelManager: LevelManager
     private var _userEnteredCommands: CommandDataList
 

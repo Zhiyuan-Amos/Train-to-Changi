@@ -6,30 +6,20 @@
 //TODO: Refactor into GameLogic.
 class LogicManager: Logic {
     unowned private let model: Model
+    private var iterator: CommandDataListIterator!
+    private let parser: CommandDataParser
     private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
-    private var commands: [Command]!
-    private var isFirstExecution: Bool
 
     init(model: Model) {
         self.model = model
-        self.updater = RunStateUpdater(runStateDelegate: model)
-        self.executedCommands = Stack()
-        self.isFirstExecution = true
+        self.parser = CommandDataParser(model: model)
+        self.updater = RunStateUpdater(model: model)
+        self.executedCommands = Stack() //TODO: Change to array
     }
 
-    // Executes the list of commands in `model.currentCommands`.
+    // Executes the list of commands that user has selected.
     func executeCommands() {
-        if model.runState == .stopped {
-            isFirstExecution = true
-        }
-
-        model.runState = .running
-
-        if isFirstExecution {
-            initVariablesForExecution()
-        }
-
         while model.runState == .running {
             executeNextCommand()
         }
@@ -43,42 +33,34 @@ class LogicManager: Logic {
         }
 
         command.undo()
-
-        model.programCounter! -= 1
-
+        iterator.previous() // TODO: Think of how to update visuals
         return !executedCommands.isEmpty
     }
 
     // Executes the next command.
     func executeNextCommand() {
-        if isFirstExecution {
-            initVariablesForExecution()
+        if iterator == nil {
+            iterator = model.makeCommandDataListIterator()
         }
-        
-        let command = commands[model.programCounter!]
+
+        guard let commandData = iterator.next() else {
+            model.runState = .lost(error: .incompleteOutboxValues)
+            return
+        }
+
+        let command = parser.parse(commandData: commandData)
         let commandResult = command.execute()
 
         executedCommands.push(command)
-        model.programCounter! += 1
+
         updater.updateRunState(commandResult: commandResult)
         if model.runState == .won {
             updateNumStepsTaken()
         }
     }
 
-    // Initialises the necessary variables for command execution to begin.
-    private func initVariablesForExecution() {
-        guard model.userEnteredCommands.count > 0 else {
-            model.runState = .lost(error: .incompleteOutboxValues)
-            return
-        }
-        model.programCounter = 0
-        commands = CommandEnumParser().parse(model: model)
-        isFirstExecution = false
-    }
-
     private func updateNumStepsTaken() {
-        let placeHolderCommandsCount = executedCommands.filter { command in command is PlaceholderCommand }.count
-        model.numSteps = executedCommands.count - placeHolderCommandsCount
+        let jumpTargetCount = executedCommands.filter { command in command is JumpTarget }.count
+        model.numSteps = executedCommands.count - jumpTargetCount
     }
 }
