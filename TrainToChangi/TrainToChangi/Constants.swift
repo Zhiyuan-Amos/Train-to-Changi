@@ -94,7 +94,7 @@ struct Constants {
         static let commandButtonWidthShort: CGFloat = 60
         static let commandButtonWidthMid: CGFloat = 80
         static let commandButtonWidthLong: CGFloat = 100
-
+        static let commandIndexWidth: CGFloat = 20
 
 
 

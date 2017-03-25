@@ -18,27 +18,35 @@ class CommandCell: UICollectionViewCell {
         switch commandType {
         case .add(let index):
             setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    indexImageName: "mathindex.png", hidden: false)
+                                    indexImageName: "mathindex.png", width: Constants.UI.commandButtonWidthShort)
         case .copyFrom(let index), .copyTo(let index):
             setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    indexImageName: "copyindex.png", hidden: false)
+                                    indexImageName: "copyindex.png", width: Constants.UI.commandButtonWidthLong)
         case .inbox, .outbox, .jump(_), .jumpTarget:
             setCommandImageAndIndex(imageName: imagePath, index: nil,
-                                    indexImageName: nil, hidden: true)
+                                    indexImageName: nil, width: Constants.UI.commandButtonWidthMid)
         }
 
     }
 
     private func setCommandImageAndIndex(imageName: String, index: Int?,
-                                         indexImageName: String?, hidden: Bool) {
+                                         indexImageName: String?, width: CGFloat) {
+
         commandImage.frame.size.height = Constants.UI.commandButtonHeight
+        commandImage.frame.size.width = width
         commandImage.image = UIImage(named: imageName)
+
         commandIndexButton.setTitle("\(index)", for: UIControlState.normal)
         if let indexImageName = indexImageName {
             commandIndexButton.setBackgroundImage(UIImage(named: indexImageName),
                                                   for: UIControlState.normal)
+            commandIndexButton.frame.origin = CGPoint(x: commandImage.frame.maxX,
+                                                y: commandImage.frame.minY + 5)
+            commandIndexButton.isHidden = false
+        } else {
+            commandIndexButton.isHidden = true
         }
-        commandIndexButton.isHidden = hidden
+
     }
 
 }
