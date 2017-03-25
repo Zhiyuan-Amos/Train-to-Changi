@@ -41,7 +41,7 @@ class GameViewController: UIViewController {
         adjustCommandsEditorPosition()
         connectDataSourceAndDelegate()
         addPanGestureRecognizerToCommandsEditor()
-        //presentGameScene()
+        presentGameScene()
     }
 
     /* Control Panel Logic */
@@ -150,7 +150,7 @@ class GameViewController: UIViewController {
         }
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
-        scene.initLevelState(model.currentLevel.initialState)
+        scene.initLevelState(model.currentLevel)
     }
 
     /* Helper func */

@@ -33,6 +33,8 @@ class LevelManager {
         return Level(levelName: levelName,
                      initialState: initialState,
                      availableCommands: availableCommands,
+                     // TODO: store memoryLayout type for each level
+                     memoryLayout: .twoByOne,
                      levelDescriptor: levelDescriptor,
                      expectedOutputs: expectedOutputs)
     }
