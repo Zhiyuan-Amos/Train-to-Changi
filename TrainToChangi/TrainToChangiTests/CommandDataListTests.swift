@@ -49,14 +49,14 @@ class CommandDataListTests: XCTestCase {
 
     func testAppend_emptyListAndJumpCommand_jumpAndTargetAppended() {
         list.append(commandData: .jump)
-        XCTAssertEqual(list.toArray(), [CD.jumpTargetPlaceholder, CD.jump], "Not appended correctly.")
+        XCTAssertEqual(list.toArray(), [CD.jumpTarget, CD.jump], "Not appended correctly.")
     }
 
     func testAppend_oneItemListAndJumpCommand() {
         list.append(commandData: .inbox)
 
         list.append(commandData: .jump)
-        XCTAssertEqual(list.toArray(), [CD.inbox, CD.jumpTargetPlaceholder, CD.jump], "Not appended correctly.")
+        XCTAssertEqual(list.toArray(), [CD.inbox, CD.jumpTarget, CD.jump], "Not appended correctly.")
     }
 
     func testAppend_manyItemsListAndJumpCommand() {
@@ -67,7 +67,7 @@ class CommandDataListTests: XCTestCase {
 
         list.append(commandData: .jump)
         XCTAssertEqual(list.toArray(), [CD.inbox, CD.inbox, CD.outbox,
-                                        CD.outbox, CD.jumpTargetPlaceholder, CD.jump], "Not appended correctly.")
+                                        CD.outbox, CD.jumpTarget, CD.jump], "Not appended correctly.")
     }
 
     // MARK - Insert, Iterative Command
@@ -158,7 +158,7 @@ class CommandDataListTests: XCTestCase {
         list.append(commandData: .inbox)
 
         list.insert(commandData: .jump, atIndex: 0)
-        XCTAssertEqual(list.toArray(), [CD.jumpTargetPlaceholder, CD.jump, CD.inbox], "Not inserted correctly.")
+        XCTAssertEqual(list.toArray(), [CD.jumpTarget, CD.jump, CD.inbox], "Not inserted correctly.")
     }
 
     func testInsert_oneItemListIndexOneAndJumpCommand_insertedAtIndexOne() {
@@ -186,9 +186,9 @@ class CommandDataListTests: XCTestCase {
 
         list.insert(commandData: .jump, atIndex: 0)
         XCTAssertEqual(list.toArray(),
-                       [CD.jumpTargetPlaceholder, CD.jump, CD.outbox,
+                       [CD.jumpTarget, CD.jump, CD.outbox,
                         CD.inbox, CD.outbox, CD.inbox,
-                        CD.outbox, CD.inbox, CD.jumpTargetPlaceholder,
+                        CD.outbox, CD.inbox, CD.jumpTarget,
                         CD.jump, CD.inbox],
                        "Not inserted correctly.")
     }
@@ -207,8 +207,8 @@ class CommandDataListTests: XCTestCase {
         list.insert(commandData: .jump, atIndex: 3)
         XCTAssertEqual(list.toArray(),
                        [CD.outbox, CD.inbox, CD.outbox,
-                        CD.jumpTargetPlaceholder, CD.jump, CD.inbox,
-                        CD.outbox, CD.inbox, CD.jumpTargetPlaceholder,
+                        CD.jumpTarget, CD.jump, CD.inbox,
+                        CD.outbox, CD.inbox, CD.jumpTarget,
                         CD.jump, CD.inbox],
                        "Not inserted correctly.")
     }
@@ -228,8 +228,8 @@ class CommandDataListTests: XCTestCase {
         XCTAssertEqual(list.toArray(),
                        [CD.outbox,
                         CD.inbox, CD.outbox, CD.inbox,
-                        CD.outbox, CD.inbox, CD.jumpTargetPlaceholder,
-                        CD.jump, CD.jumpTargetPlaceholder, CD.jump, CD.inbox],
+                        CD.outbox, CD.inbox, CD.jumpTarget,
+                        CD.jump, CD.jumpTarget, CD.jump, CD.inbox],
                        "Not inserted correctly.")
     }
 
@@ -259,7 +259,7 @@ class CommandDataListTests: XCTestCase {
         XCTAssertEqual(list.toArray(),
                        [CD.outbox,
                         CD.outbox, CD.inbox,
-                        CD.outbox, CD.inbox, CD.jumpTargetPlaceholder,
+                        CD.outbox, CD.inbox, CD.jumpTarget,
                         CD.jump, CD.inbox],
                        "Not removed correctly.")
         XCTAssertEqual(removed, CD.inbox, "Removed item is not correct.")
@@ -316,7 +316,7 @@ class CommandDataListTests: XCTestCase {
                         CD.outbox, CD.inbox,
                         CD.outbox, CD.inbox, CD.inbox],
                        "Not removed correctly.")
-        XCTAssertEqual(removed, CD.jumpTargetPlaceholder, "Removed item is not correct.")
+        XCTAssertEqual(removed, CD.jumpTarget, "Removed item is not correct.")
 
         // move and retest
     }
@@ -343,7 +343,7 @@ class CommandDataListTests: XCTestCase {
         XCTAssertEqual(list.toArray(),
                        [CD.outbox, CD.outbox,
                         CD.inbox, CD.outbox, CD.inbox,
-                        CD.inbox, CD.jumpTargetPlaceholder, CD.jump, CD.inbox],
+                        CD.inbox, CD.jumpTarget, CD.jump, CD.inbox],
                        "Not removed correctly.")
 
         // move same location, move to lower index..
@@ -365,7 +365,7 @@ class CommandDataListTests: XCTestCase {
         XCTAssertEqual(list.toArray(),
                        [CD.outbox, CD.outbox, CD.inbox, CD.outbox,
                         CD.inbox, CD.inbox,
-                        CD.jumpTargetPlaceholder, CD.jump, CD.inbox],
+                        CD.jumpTarget, CD.jump, CD.inbox],
                        "Not removed correctly.")
 
         // move same location, move to lower index..

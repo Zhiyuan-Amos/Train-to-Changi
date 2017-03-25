@@ -13,7 +13,6 @@
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
-		8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A712096D1E8189060039B257 /* CommandLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096B1E8189060039B257 /* CommandLabel.swift */; };
@@ -22,6 +21,8 @@
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
 		A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEB1E865AD10040DA21 /* LevelManager.swift */; };
 		A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEC1E865AD10040DA21 /* UserData.swift */; };
+		A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */; };
+		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
@@ -39,7 +40,6 @@
 		D76FA8321E76ADC400CCCFBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8301E76ADC400CCCFBE /* Main.storyboard */; };
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
-		D76FA8421E76ADC500CCCFBE /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */; };
 		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
 		D7983CE61E76E99C00E650ED /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE51E76E99C00E650ED /* Queue.swift */; };
 		D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D01E7796B800DE5774 /* CommandResult.swift */; };
@@ -53,7 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D76FA83E1E76ADC500CCCFBE /* PBXContainerItemProxy */ = {
+		A7A10D081E86A6C20040DA21 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D76FA81B1E76ADC400CCCFBE /* Project object */;
 			proxyType = 1;
@@ -80,6 +80,10 @@
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
 		A7A10CEB1E865AD10040DA21 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
 		A7A10CEC1E865AD10040DA21 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		A7A10D031E86A6C20040DA21 /* TrainToChangiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrainToChangiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainToChangiTests.swift; sourceTree = "<group>"; };
+		A7A10D071E86A6C20040DA21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
 		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
@@ -100,9 +104,6 @@
 		D76FA8331E76ADC400CCCFBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D76FA8361E76ADC400CCCFBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D76FA8381E76ADC400CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D76FA83D1E76ADC500CCCFBE /* TrainToChangiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrainToChangiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainToChangiTests.swift; sourceTree = "<group>"; };
-		D76FA8431E76ADC500CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* JumpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpCommand.swift; sourceTree = "<group>"; };
 		D7983CE51E76E99C00E650ED /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		D7A267D01E7796B800DE5774 /* CommandResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandResult.swift; sourceTree = "<group>"; };
@@ -118,18 +119,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D76FA8201E76ADC400CCCFBE /* Frameworks */ = {
+		A7A10D001E86A6C20040DA21 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D76FA83A1E76ADC500CCCFBE /* Frameworks */ = {
+		D76FA8201E76ADC400CCCFBE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8990CDAB80D2E38356A30CCC /* Pods_TrainToChangiTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,11 +235,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A7A10D041E86A6C20040DA21 /* TrainToChangiTests */ = {
+			isa = PBXGroup;
+			children = (
+				A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */,
+				A7A10D0F1E86A7260040DA21 /* ModelTests */,
+				A7A10D071E86A6C20040DA21 /* Info.plist */,
+			);
+			path = TrainToChangiTests;
+			sourceTree = "<group>";
+		};
+		A7A10D0F1E86A7260040DA21 /* ModelTests */ = {
+			isa = PBXGroup;
+			children = (
+				A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */,
+			);
+			name = ModelTests;
+			sourceTree = "<group>";
+		};
 		D76FA81A1E76ADC400CCCFBE = {
 			isa = PBXGroup;
 			children = (
 				D76FA8251E76ADC400CCCFBE /* TrainToChangi */,
-				D76FA8401E76ADC500CCCFBE /* TrainToChangiTests */,
+				A7A10D041E86A6C20040DA21 /* TrainToChangiTests */,
 				D76FA8241E76ADC400CCCFBE /* Products */,
 				4AF3A78D82E761EB3D5635BA /* Pods */,
 				9B63AE3251D6DD16A6115493 /* Frameworks */,
@@ -250,7 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				D76FA8231E76ADC400CCCFBE /* TrainToChangi.app */,
-				D76FA83D1E76ADC500CCCFBE /* TrainToChangiTests.xctest */,
+				A7A10D031E86A6C20040DA21 /* TrainToChangiTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,18 +291,27 @@
 			path = TrainToChangi;
 			sourceTree = "<group>";
 		};
-		D76FA8401E76ADC500CCCFBE /* TrainToChangiTests */ = {
-			isa = PBXGroup;
-			children = (
-				D76FA8411E76ADC500CCCFBE /* TrainToChangiTests.swift */,
-				D76FA8431E76ADC500CCCFBE /* Info.plist */,
-			);
-			path = TrainToChangiTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A7A10D021E86A6C20040DA21 /* TrainToChangiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7A10D0A1E86A6C20040DA21 /* Build configuration list for PBXNativeTarget "TrainToChangiTests" */;
+			buildPhases = (
+				A7A10CFF1E86A6C20040DA21 /* Sources */,
+				A7A10D001E86A6C20040DA21 /* Frameworks */,
+				A7A10D011E86A6C20040DA21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A7A10D091E86A6C20040DA21 /* PBXTargetDependency */,
+			);
+			name = TrainToChangiTests;
+			productName = TrainToChangiTests;
+			productReference = A7A10D031E86A6C20040DA21 /* TrainToChangiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D76FA8221E76ADC400CCCFBE /* TrainToChangi */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D76FA8461E76ADC500CCCFBE /* Build configuration list for PBXNativeTarget "TrainToChangi" */;
@@ -306,27 +333,6 @@
 			productReference = D76FA8231E76ADC400CCCFBE /* TrainToChangi.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D76FA83C1E76ADC500CCCFBE /* TrainToChangiTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D76FA8491E76ADC500CCCFBE /* Build configuration list for PBXNativeTarget "TrainToChangiTests" */;
-			buildPhases = (
-				4B78875013841824BC0B8BD8 /* [CP] Check Pods Manifest.lock */,
-				D76FA8391E76ADC500CCCFBE /* Sources */,
-				D76FA83A1E76ADC500CCCFBE /* Frameworks */,
-				D76FA83B1E76ADC500CCCFBE /* Resources */,
-				C5799059BAE105B13797A7F8 /* [CP] Embed Pods Frameworks */,
-				169CB40FF93EB22951FDC9BE /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D76FA83F1E76ADC500CCCFBE /* PBXTargetDependency */,
-			);
-			name = TrainToChangiTests;
-			productName = TrainToChangiTests;
-			productReference = D76FA83D1E76ADC500CCCFBE /* TrainToChangiTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -337,16 +343,16 @@
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = nus.cs3217.a0139655u;
 				TargetAttributes = {
-					D76FA8221E76ADC400CCCFBE = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = W76H98A34A;
-						ProvisioningStyle = Automatic;
-					};
-					D76FA83C1E76ADC500CCCFBE = {
+					A7A10D021E86A6C20040DA21 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = W76H98A34A;
 						ProvisioningStyle = Automatic;
 						TestTargetID = D76FA8221E76ADC400CCCFBE;
+					};
+					D76FA8221E76ADC400CCCFBE = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = W76H98A34A;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -364,12 +370,19 @@
 			projectRoot = "";
 			targets = (
 				D76FA8221E76ADC400CCCFBE /* TrainToChangi */,
-				D76FA83C1E76ADC500CCCFBE /* TrainToChangiTests */,
+				A7A10D021E86A6C20040DA21 /* TrainToChangiTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A7A10D011E86A6C20040DA21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D76FA8211E76ADC400CCCFBE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -380,13 +393,6 @@
 				D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */,
 				3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */,
 				3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D76FA83B1E76ADC500CCCFBE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,36 +412,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		169CB40FF93EB22951FDC9BE /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4B78875013841824BC0B8BD8 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A4D9EF6DB2B34DD297C4FE51 /* [CP] Check Pods Manifest.lock */ = {
@@ -468,21 +444,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C5799059BAE105B13797A7F8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D75BC4241E76AE8100ED2A1B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -499,6 +460,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A7A10CFF1E86A6C20040DA21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */,
+				A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D76FA81F1E76ADC400CCCFBE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -541,21 +511,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D76FA8391E76ADC500CCCFBE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D76FA8421E76ADC500CCCFBE /* TrainToChangiTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D76FA83F1E76ADC500CCCFBE /* PBXTargetDependency */ = {
+		A7A10D091E86A6C20040DA21 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D76FA8221E76ADC400CCCFBE /* TrainToChangi */;
-			targetProxy = D76FA83E1E76ADC500CCCFBE /* PBXContainerItemProxy */;
+			targetProxy = A7A10D081E86A6C20040DA21 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -579,6 +541,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A7A10D0B1E86A6C20040DA21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = W76H98A34A;
+				INFOPLIST_FILE = TrainToChangiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0139498j.TrainToChangiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrainToChangi.app/TrainToChangi";
+			};
+			name = Debug;
+		};
+		A7A10D0C1E86A6C20040DA21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = W76H98A34A;
+				INFOPLIST_FILE = TrainToChangiTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0139498j.TrainToChangiTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrainToChangi.app/TrainToChangi";
+			};
+			name = Release;
+		};
 		D76FA8441E76ADC500CCCFBE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -702,41 +692,17 @@
 			};
 			name = Release;
 		};
-		D76FA84A1E76ADC500CCCFBE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = W76H98A34A;
-				INFOPLIST_FILE = TrainToChangiTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0139655u.TrainToChangiTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrainToChangi.app/TrainToChangi";
-			};
-			name = Debug;
-		};
-		D76FA84B1E76ADC500CCCFBE /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = W76H98A34A;
-				INFOPLIST_FILE = TrainToChangiTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0139655u.TrainToChangiTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TrainToChangi.app/TrainToChangi";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A7A10D0A1E86A6C20040DA21 /* Build configuration list for PBXNativeTarget "TrainToChangiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7A10D0B1E86A6C20040DA21 /* Debug */,
+				A7A10D0C1E86A6C20040DA21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		D76FA81E1E76ADC400CCCFBE /* Build configuration list for PBXProject "TrainToChangi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -751,15 +717,6 @@
 			buildConfigurations = (
 				D76FA8471E76ADC500CCCFBE /* Debug */,
 				D76FA8481E76ADC500CCCFBE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D76FA8491E76ADC500CCCFBE /* Build configuration list for PBXNativeTarget "TrainToChangiTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D76FA84A1E76ADC500CCCFBE /* Debug */,
-				D76FA84B1E76ADC500CCCFBE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

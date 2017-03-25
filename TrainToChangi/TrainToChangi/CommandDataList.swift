@@ -26,7 +26,7 @@ fileprivate class IterativeListNode: CommandDataListNode {
 
 fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
-    weak var jumpTarget: JumpTargetListNode! // Use ! and weak instead of unowned to silence xcode.
+    var jumpTarget: JumpTargetListNode!
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
 
@@ -39,13 +39,11 @@ fileprivate class JumpListNode: CommandDataListNode {
 
 fileprivate class JumpTargetListNode: CommandDataListNode {
     let commandData: CommandData
-    unowned var jumpParent: JumpListNode
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
 
     init(jumpParent: JumpListNode) {
         self.commandData = .jumpTarget
-        self.jumpParent = jumpParent
         self.next = jumpParent
     }
 }
@@ -134,7 +132,7 @@ class CommandDataLinkedList: CommandDataList {
         if let node = node as? JumpListNode {
             _ = remove(node.jumpTarget)
         } else if let node = node as? JumpTargetListNode {
-            _ = remove(node.jumpParent)
+            _ = remove(parentOf(node))
         }
 
         return remove(node)
@@ -270,6 +268,20 @@ class CommandDataLinkedList: CommandDataList {
     private func removeLast() -> CommandData {
         assert(!isEmpty)
         return remove(last!)
+    }
+
+    private func parentOf(_ node: Node) -> Node {
+        guard let jumpTarget = node as? JumpTargetListNode else {
+            preconditionFailure("Node must be a jump target.")
+        }
+        var node = head
+        while node != nil {
+            if let jumpNode = node as? JumpListNode, jumpNode.jumpTarget === jumpTarget {
+                return jumpNode
+            }
+            node = node?.next
+        }
+        fatalError("Jump Target Node must have a parent.")
     }
 }
 
