@@ -54,7 +54,6 @@ class LogicManager: Logic {
 
     // Executes the next command.
     func executeNextCommand() {
-        isExecutionAllowed = false
         if iterator == nil {
             iterator = model.makeCommandDataListIterator()
         }
@@ -62,6 +61,13 @@ class LogicManager: Logic {
         guard let commandData = iterator.next() else {
             model.runState = .lost(error: .incompleteOutboxValues)
             return
+        }
+        //TODO: clean up
+        switch commandData {
+        case .inbox, .outbox:
+            isExecutionAllowed = false
+        default:
+            break
         }
 
         let command = parser.parse(commandData: commandData)
