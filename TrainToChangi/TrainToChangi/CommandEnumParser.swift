@@ -37,7 +37,7 @@ struct CommandEnumParser {
                 commands.append(AddCommand(model: model, memoryIndex: index))
             case .jump:
                 commands.append(JumpCommand(model: model))
-            case .placeholder:
+            case .jumpTargetPlaceholder:
                 commands.append(PlaceholderCommand(model: model))
             }
         }

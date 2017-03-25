@@ -21,7 +21,7 @@ class CommandLabel: UILabel {
             text = index == nil ? "jump" : "jump \(index)"
         case .outbox:
             text = "outbox"
-        case .placeholder:
+        case .jumpTargetPlaceholder:
             text = ""
         }
     }

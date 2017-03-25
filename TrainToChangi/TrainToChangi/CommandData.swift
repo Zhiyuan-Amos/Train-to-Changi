@@ -9,7 +9,7 @@ enum CommandData {
     case copyTo(memoryIndex: Int?)
     case add(memoryIndex: Int?)
     case jump
-    case placeholder
+    case jumpTargetPlaceholder
 
     var isJumpCommand: Bool {
         switch self {
@@ -30,10 +30,10 @@ enum CommandData {
             return "copyTo"
         case .add(_):
             return "add"
-        case .jump(_):
+        case .jump:
             return "jump"
-        case .placeholder:
-            return "jumptarget"
+        case .jumpTargetPlaceholder:
+            return "jumpTargetPlaceholder"
         }
     }
 
@@ -45,8 +45,8 @@ enum CommandData {
                 return CommandData.inbox
             case "outbox":
                 return CommandData.outbox
-            case "placeholder":
-                return CommandData.placeholder
+            case "jumpTargetPlaceholder":
+                return CommandData.jumpTargetPlaceholder
             case "copyFrom":
                 return CommandData.copyFrom(memoryIndex: Int(commandArr[1]))
             case "copyTo":
@@ -78,7 +78,7 @@ func == (lhs: CommandData, rhs: CommandData) -> Bool {
         return indexOne == indexTwo
     case (.jump, .jump):
         return true
-    case (.placeholder, .placeholder):
+    case (.jumpTargetPlaceholder, .jumpTargetPlaceholder):
         return true
     default: return false
     }
