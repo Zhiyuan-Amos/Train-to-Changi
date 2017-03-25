@@ -24,6 +24,7 @@
 		A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */; };
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
+		D71B88551E86AAC1006BC3E9 /* main-track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D71B88541E86AAC1006BC3E9 /* main-track.mp3 */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA5B1E797F70004CCABD /* JumpTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* JumpTarget.swift */; };
@@ -49,6 +50,7 @@
 		D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DC1E77A01D00DE5774 /* Stack.swift */; };
 		D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267E01E77ABEB00DE5774 /* Model.swift */; };
 		D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */; };
+		D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D49CD81E86A7A700135605 /* AudioPlayer.swift */; };
 		D7E0E74A1E84B78500237705 /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7E0E7491E84B78500237705 /* Tiles.sks */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +88,7 @@
 		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
 		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
+		D71B88541E86AAC1006BC3E9 /* main-track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "main-track.mp3"; path = "Audio/main-track.mp3"; sourceTree = SOURCE_ROOT; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA5A1E797F70004CCABD /* JumpTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpTarget.swift; sourceTree = "<group>"; };
@@ -113,6 +116,7 @@
 		D7A267DC1E77A01D00DE5774 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		D7A267E01E77ABEB00DE5774 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataParser.swift; sourceTree = "<group>"; };
+		D7D49CD81E86A7A700135605 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		D7E0E7491E84B78500237705 /* Tiles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tiles.sks; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -139,9 +143,11 @@
 		3B1680421E778484002286F6 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				D71B88541E86AAC1006BC3E9 /* main-track.mp3 */,
 				D7A267D21E7796BD00DE5774 /* Constants.swift */,
 				D7983CE51E76E99C00E650ED /* Queue.swift */,
 				D7A267DC1E77A01D00DE5774 /* Stack.swift */,
+				D7D49CD81E86A7A700135605 /* AudioPlayer.swift */,
 			);
 			name = Commons;
 			sourceTree = "<group>";
@@ -388,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D76FA8321E76ADC400CCCFBE /* Main.storyboard in Resources */,
+				D71B88551E86AAC1006BC3E9 /* main-track.mp3 in Resources */,
 				D7E0E74A1E84B78500237705 /* Tiles.sks in Resources */,
 				D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */,
 				D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */,
@@ -496,6 +503,7 @@
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
+				D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
