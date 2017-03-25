@@ -26,7 +26,7 @@ fileprivate class IterativeListNode: CommandDataListNode {
 
 fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
-    var jumpTarget: JumpTargetListNode! // Use ! to silence xcode
+    weak var jumpTarget: JumpTargetListNode! // Use ! and weak instead of unowned to silence xcode.
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
 
@@ -74,6 +74,7 @@ protocol CommandDataList {
 
     // Returns an iterator for the CommandDataList.
     func makeIterator() -> CommandDataListIterator
+
     // TODO: ADT _checkrep, make sure both sides are connected, jump and target connected.
 }
 

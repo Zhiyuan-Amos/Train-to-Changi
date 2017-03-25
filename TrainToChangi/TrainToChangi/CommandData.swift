@@ -12,10 +12,7 @@ enum CommandData {
     case jumpTargetPlaceholder
 
     var isJumpCommand: Bool {
-        switch self {
-        case .jump: return true
-        default: return false
-        }
+        return self == .jump
     }
 
     func toString() -> String {
