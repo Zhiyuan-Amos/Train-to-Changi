@@ -57,11 +57,14 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectDataSourceAndDelegate()
+
         setUpLevelDescription()
         loadAvailableCommands()
+
         adjustCommandsEditorPosition()
-        connectDataSourceAndDelegate()
-        addPanGestureRecognizerToCommandsEditor()
+        addLongPressGestureRecognizerToCommandsEditor()
+
         presentGameScene()
         AudioPlayer.sharedInstance.playBackgroundMusic()
     }
@@ -130,11 +133,11 @@ class GameViewController: UIViewController {
 
             let currentCommandPosition = CGPoint(x: currentCommandPositionX,
                                                  y: currentCommandPositionY)
-            let currentCommandSize = CGSize(width: Constants.UI.commandButtonWidth,
+
+            let currentCommandSize = CGSize(width: getCommandButtonWidth(command),
                                             height: Constants.UI.commandButtonHeight)
             let currentCommandFrame = CGRect(origin: currentCommandPosition,
                                              size: currentCommandSize)
-            print(currentCommandSize)
 
             let currentCommandButton = generateCommandUIButton(for: command, frame: currentCommandFrame)
             currentCommandButton.tag = commandIndex
@@ -145,7 +148,7 @@ class GameViewController: UIViewController {
     }
 
     /* Gestures */
-    private func addPanGestureRecognizerToCommandsEditor() {
+    private func addLongPressGestureRecognizerToCommandsEditor() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         longPressGesture.minimumPressDuration = 0.3
         commandsEditor.addGestureRecognizer(longPressGesture)
@@ -182,7 +185,7 @@ class GameViewController: UIViewController {
     }
 
     /* Helper func */
-    private func generateCommandUIButton(for commandType: CommandEnum, frame: CGRect) -> UIButton {
+    private func generateCommandUIButton(for commandType: CommandData, frame: CGRect) -> UIButton {
         let currentCommandButton = UIButton(frame: frame)
         let imagePath = commandType.toString() + ".png"
 
@@ -191,9 +194,19 @@ class GameViewController: UIViewController {
         return currentCommandButton
     }
 
+    private func getCommandButtonWidth(_ commandType: CommandData) -> CGFloat {
+        switch commandType {
+        case .add(_):
+            return Constants.UI.commandButtonWidthShort
+        case .inbox, .outbox, .jump, .jumpTarget:
+            return Constants.UI.commandButtonWidthMid
+        case .copyTo(_), .copyFrom(_):
+            return Constants.UI.commandButtonWidthLong
+        }
+    }
+
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
-        
         model.addCommand(commandEnum: command)
         commandsEditor.reloadData()
     }

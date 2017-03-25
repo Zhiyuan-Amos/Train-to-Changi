@@ -87,10 +87,18 @@ struct Constants {
 
     // swiftlint:disable type_name
     struct UI {
-        static let commandButtonInitialOffsetY: CGFloat = 40
+        static let commandButtonInitialOffsetY: CGFloat = 20
         static let commandButtonOffsetY: CGFloat = 40
-        static let commandButtonWidth: CGFloat = 100
         static let commandButtonHeight: CGFloat = 50
+
+        static let commandButtonWidthShort: CGFloat = 60
+        static let commandButtonWidthMid: CGFloat = 80
+        static let commandButtonWidthLong: CGFloat = 100
+
+
+
+
+
 
         static let commandCellIdentifier = "CommandCell"
     }

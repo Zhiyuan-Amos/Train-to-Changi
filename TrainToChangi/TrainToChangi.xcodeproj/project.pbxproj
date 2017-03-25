@@ -22,7 +22,6 @@
 		76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E0F66C1E88F9B40051325C /* StationLevelNode.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
-		A712096D1E8189060039B257 /* CommandLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096B1E8189060039B257 /* CommandLabel.swift */; };
 		A7A10CE81E865A190040DA21 /* LevelDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE71E865A190040DA21 /* LevelDataHelper.swift */; };
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
@@ -91,7 +90,6 @@
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
-		A712096B1E8189060039B257 /* CommandLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLabel.swift; sourceTree = "<group>"; };
 		A7A10CE71E865A190040DA21 /* LevelDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDataHelper.swift; sourceTree = "<group>"; };
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
@@ -219,6 +217,15 @@
 				76745B721E88598D0039A771 /* ViewController */,
 				76745B711E8859890039A771 /* View */,
 				76745B701E88590A0039A771 /* InterfaceBuilder */,
+				D7E0E7491E84B78500237705 /* Tiles.sks */,
+				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
+				A712096A1E8189060039B257 /* CommandCell.swift */,
+				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
+				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
+				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
+				22DC750125724E9BA28BA9EB /* Memory.swift */,
+				22DC76E79326E3E327A4B086 /* MemorySlot.swift */,
+				22DC7A12469B8258C38128E2 /* Payload.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -532,7 +539,6 @@
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
-				A712096D1E8189060039B257 /* CommandLabel.swift in Sources */,
 				A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */,
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
 				A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */,
