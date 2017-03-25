@@ -155,20 +155,31 @@ class GameViewController: UIViewController {
     }
 
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
-        switch gesture.state {
+        let location = gesture.location(in: commandsEditor)
+        if let commandCell = getCellAtGestureLocation(location) {
+            let transformAnim  = CAKeyframeAnimation(keyPath:"transform")
+            transformAnim.values  = [NSValue(caTransform3D: CATransform3DMakeRotation(0.04, 0.0, 0.0, 1.0)),
+                                     NSValue(caTransform3D: CATransform3DMakeRotation(-0.04, 0, 0, 1))]
+            transformAnim.autoreverses = true
+            transformAnim.duration  = 0.2
+            transformAnim.repeatCount = Float.infinity
 
-        case UIGestureRecognizerState.began:
-            let indexPath = commandsEditor.indexPathForItem(at: gesture.location(in: commandsEditor))
-            guard let selectedIndexPath = indexPath else {
-                break
+            switch gesture.state {
+            case UIGestureRecognizerState.began:
+                let indexPath = commandsEditor.indexPathForItem(at: gesture.location(in: commandsEditor))
+                guard let selectedIndexPath = indexPath else {
+                    break
+                }
+                commandsEditor.beginInteractiveMovementForItem(at: selectedIndexPath)
+                commandCell.layer.add(transformAnim, forKey: "transform")
+            case UIGestureRecognizerState.changed:
+                commandsEditor.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+            case UIGestureRecognizerState.ended:
+                commandCell.layer.removeAllAnimations()
+                commandsEditor.endInteractiveMovement()
+            default:
+                commandsEditor.cancelInteractiveMovement()
             }
-            commandsEditor.beginInteractiveMovementForItem(at: selectedIndexPath)
-        case UIGestureRecognizerState.changed:
-            commandsEditor.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-        case UIGestureRecognizerState.ended:
-            commandsEditor.endInteractiveMovement()
-        default:
-            commandsEditor.cancelInteractiveMovement()
         }
     }
 
@@ -196,9 +207,9 @@ class GameViewController: UIViewController {
 
     private func getCommandButtonWidth(_ commandType: CommandData) -> CGFloat {
         switch commandType {
-        case .add(_):
+        case .add(_), .jumpTarget:
             return Constants.UI.commandButtonWidthShort
-        case .inbox, .outbox, .jump, .jumpTarget:
+        case .inbox, .outbox, .jump:
             return Constants.UI.commandButtonWidthMid
         case .copyTo(_), .copyFrom(_):
             return Constants.UI.commandButtonWidthLong
@@ -209,6 +220,16 @@ class GameViewController: UIViewController {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
         commandsEditor.reloadData()
+    }
+
+    private func getCellAtGestureLocation(_ location: CGPoint) -> CommandCell? {
+        let indexPath = commandsEditor.indexPathForItem(at: location)
+        guard let path = indexPath else {
+            return nil
+        }
+
+        let cell = commandsEditor.cellForItem(at: path)
+        return cell as? CommandCell
     }
 }
 

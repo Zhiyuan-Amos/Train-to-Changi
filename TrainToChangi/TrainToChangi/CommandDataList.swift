@@ -28,7 +28,9 @@ fileprivate class IterativeListNode: CommandDataListNode {
 
 fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
+
     var jumpTarget: IterativeListNode! // use ! to silence xcode use of self
+
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
 
