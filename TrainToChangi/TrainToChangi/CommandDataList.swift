@@ -26,7 +26,7 @@ fileprivate class IterativeListNode: CommandDataListNode {
 
 fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
-    var jumpTarget: JumpTargetListNode!
+    var jumpTarget: JumpTargetListNode! // use ! to silence xcode use of self
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
 
@@ -270,6 +270,7 @@ class CommandDataLinkedList: CommandDataList {
         return remove(last!)
     }
 
+    // TODO: Handle in better way
     private func parentOf(_ node: Node) -> Node {
         guard let jumpTarget = node as? JumpTargetListNode else {
             preconditionFailure("Node must be a jump target.")
