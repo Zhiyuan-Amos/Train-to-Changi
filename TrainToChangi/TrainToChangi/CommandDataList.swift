@@ -78,6 +78,7 @@ protocol CommandDataList {
     // TODO: ADT _checkrep, make sure both sides are connected, jump and target connected.
 }
 
+// TODO: Refactor and define boundary conditions properly
 class CommandDataLinkedList: CommandDataList {
 
     fileprivate typealias Node = CommandDataListNode
