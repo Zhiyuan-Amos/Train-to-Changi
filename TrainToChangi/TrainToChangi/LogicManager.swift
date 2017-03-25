@@ -17,7 +17,7 @@ class LogicManager: Logic {
         self.parser = CommandDataParser(model: model)
         self.updater = RunStateUpdater(model: model)
         self.executedCommands = Stack() //TODO: Change to array
-        self.isExecutionAllowed = false
+        self.isExecutionAllowed = true
 
         NotificationCenter.default.addObserver(
             self, selector: #selector(catchNotification(notification:)),
