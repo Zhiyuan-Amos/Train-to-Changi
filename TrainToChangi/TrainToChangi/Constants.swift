@@ -54,6 +54,7 @@ struct Constants {
 
     struct Payload {
         static let imageName = "box"
+        static let labelName = "payload label"
         static let labelOffsetY: CGFloat = -5
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 18

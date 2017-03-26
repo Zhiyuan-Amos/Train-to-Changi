@@ -118,7 +118,6 @@ extension GameScene {
             guard layout.locations.count == memoryValues.count else {
                 fatalError("[GameScene:initMemory] " +
                                "Number of memory values differ from the layout specified. Check level data.")
-                return
             }
 
             addChild(MemorySlot(index: index, layout: layout))
@@ -209,7 +208,6 @@ extension GameScene {
     private func animateGoToMemory(_ layout: Memory.Layout, _ index: Int, _ action: Memory.Action) {
         guard index > 0 && index < memoryNodes.count else {
             fatalError("[GameScene:animateGoToMemory] Trying to access memory out of bound")
-            return
         }
         let moveAction = SKAction.move(to: layout.locations[index],
                                        duration: Constants.Animation.moveToMemoryDuration)
@@ -220,8 +218,8 @@ extension GameScene {
                 self.pickUpMemory(index)
             case .putDown:
                 self.putDownToMemory(index)
-            case let .compute(_):
-                // TODO: compute with memory
+            case let .compute(expected):
+                self.computeWithMemory(index, expected: expected)
                 break
             }
         })
@@ -244,11 +242,6 @@ extension GameScene {
 
     // player should already move to necessary memory location
     private func pickUpMemory(_ index: Int) {
-        guard index > 0 && index < memoryNodes.count else {
-            fatalError("[GameScene:pickUpMemory] Trying to access memory out of bound")
-            return
-        }
-
         let memory = memoryNodes[index]
         let throwHoldingVal = SKAction.fadeOut(withDuration: 0.5)
         let removeFromParent = SKAction.removeFromParent()
@@ -262,7 +255,6 @@ extension GameScene {
     private func putDownToMemory(_ index: Int) {
         guard let copyOfHoldingValue = holdingNode.copy() as? SKSpriteNode else {
             fatalError("[GameScene:putDownToMemory] Can't make a copy of holding value")
-            return
         }
 
         let position = memoryNodes[index].position
@@ -270,6 +262,14 @@ extension GameScene {
         copyOfHoldingValue.move(toParent: scene!)
         let dropHolding = SKAction.move(to: position, duration: 0.5)
         copyOfHoldingValue.run(dropHolding)
+    }
+
+    private func computeWithMemory(_ index: Int, expected: Int) {
+        guard let payloadOnMemory = memoryNodes[index].childNode(withName: Constants.Payload.labelName)
+              as? SKLabelNode else {
+            fatalError("[GameScene:computeWithMemory] Unable to find payload's label")
+        }
+        payloadOnMemory.text = String(expected)
     }
 
     private func moveConveyorBelt(_ node: SKSpriteNode) {

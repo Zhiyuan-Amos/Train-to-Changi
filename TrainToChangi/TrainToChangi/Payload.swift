@@ -21,6 +21,7 @@ class Payload: SKSpriteNode {
 
         // label that shows the value on the payload
         let label = SKLabelNode(text: String(value))
+        label.name = Constants.Payload.labelName
         label.position.y += Constants.Payload.labelOffsetY
         label.fontName = Constants.Payload.fontName
         label.fontSize = Constants.Payload.fontSize
