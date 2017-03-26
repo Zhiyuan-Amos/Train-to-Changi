@@ -26,25 +26,15 @@ fileprivate class IterativeListNode: CommandDataListNode {
 
 fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
-    var jumpTarget: JumpTargetListNode! // use ! to silence xcode use of self
+    var jumpTarget: IterativeListNode! // use ! to silence xcode use of self
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
 
     init(commandData: CommandData) {
         self.commandData = commandData
-        self.jumpTarget = JumpTargetListNode(jumpParent: self)
+        self.jumpTarget = IterativeListNode(commandData: .jumpTarget)
         self.previous = jumpTarget
-    }
-}
-
-fileprivate class JumpTargetListNode: CommandDataListNode {
-    let commandData: CommandData
-    var next: CommandDataListNode?
-    var previous: CommandDataListNode?
-
-    init(jumpParent: JumpListNode) {
-        self.commandData = .jumpTarget
-        self.next = jumpParent
+        self.jumpTarget.next = self
     }
 }
 
@@ -131,12 +121,13 @@ class CommandDataLinkedList: CommandDataList {
         }
         if let node = node as? JumpListNode {
             _ = remove(node.jumpTarget)
-        } else if let node = node as? JumpTargetListNode {
-            _ = remove(parentOf(node))
+        } else if let jumpParent = jumpParentOf(node) as? JumpListNode {
+            _ = remove(jumpParent)
         }
 
         return remove(node)
     }
+
 
     func removeAll() {
         head = nil
@@ -270,20 +261,17 @@ class CommandDataLinkedList: CommandDataList {
         return remove(last!)
     }
 
-    // TODO: Handle in better way
-    private func parentOf(_ node: Node) -> Node {
-        guard let jumpTarget = node as? JumpTargetListNode else {
-            preconditionFailure("Node must be a jump target.")
-        }
-        var node = head
-        while node != nil {
-            if let jumpNode = node as? JumpListNode, jumpNode.jumpTarget === jumpTarget {
+    private func jumpParentOf(_ node: Node) -> Node? {
+        var curr = head
+        while curr != nil {
+            if let jumpNode = curr as? JumpListNode, jumpNode.jumpTarget === node {
                 return jumpNode
             }
-            node = node?.next
+            curr = curr?.next
         }
-        fatalError("Jump Target Node must have a parent.")
+        return nil
     }
+
 }
 
 extension CommandDataLinkedList {
@@ -294,15 +282,17 @@ extension CommandDataLinkedList {
 
 class CommandDataListIterator: Sequence, IteratorProtocol {
     private var commandDataList: CommandDataList
-    private var current: CommandDataListNode?
-    // Requires storing of history because the iteration can
-    // involve jumps.
-    private var history: Stack<CommandDataListNode?>
+    private var current: CommandDataListNode? {
+        willSet(newValue) {
+            print("Changing to \(newValue?.commandData)")
+        }
+    }
+    private var isFirstCall: Bool
 
     init(_ commandDataList: CommandDataList) {
         self.commandDataList = commandDataList
         self.current = (commandDataList as? CommandDataLinkedList)?.first
-        self.history = Stack()
+        self.isFirstCall = true
     }
 
     func makeIterator() -> CommandDataListIterator {
@@ -310,32 +300,29 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
     }
 
     func next() -> CommandData? {
-        guard let currentValue = current?.commandData else {
-            return nil
+        if isFirstCall {
+            isFirstCall = false
+            return current?.commandData
         }
-        history.push(current)
+
         current = current?.next
-        return currentValue
+        return current?.commandData
     }
 
     func previous() {
-        current = history.pop()!
+        // TODO: Remove previous? Let command's undo handle
     }
 
     func jump() {
-        // After calling next(), pointer has been moved to the next node
-        // that has not been returned yet.
-        // So when jump() is called, we need to go back to previous node
-        // to jump on that node.
-        // Destination will always land on a .placeholder
-        guard let previousNode = history.top as? JumpListNode else {
+        guard let current = current as? JumpListNode else {
             preconditionFailure("Cannot jump on a non-jump command")
         }
-        current = previousNode.jumpTarget
+        self.current = current.jumpTarget
     }
 
     func reset() {
         current = (commandDataList as? CommandDataLinkedList)?.first
-        history = Stack()
+        self.isFirstCall = true
     }
+
 }

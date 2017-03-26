@@ -25,6 +25,7 @@ class GameViewController: UIViewController {
     @IBOutlet private var levelDescription: UITextView!
 
     required init?(coder aDecoder: NSCoder) {
+        // Change level by setting levelIndex here.
         model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
         logic = LogicManager(model: model)
         super.init(coder: aDecoder)

@@ -56,6 +56,7 @@ class LogicManager: Logic {
     func executeNextCommand() {
         if iterator == nil {
             iterator = model.makeCommandDataListIterator()
+            parser.iterator = iterator
         }
 
         guard let commandData = iterator.next() else {
