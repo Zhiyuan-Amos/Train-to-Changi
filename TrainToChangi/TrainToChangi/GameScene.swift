@@ -39,6 +39,8 @@ class GameScene: SKScene {
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
 
+    fileprivate var memoryLayout: Memory.Layout?
+
     fileprivate var backgroundTileMap: SKTileMapNode!
 }
 
@@ -114,6 +116,7 @@ extension GameScene {
     }
 
     private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
+        self.memoryLayout = layout
         for (index, _) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 fatalError("[GameScene:initMemory] " +
@@ -144,11 +147,23 @@ extension GameScene {
 }
 
 // MARK: - Touch
-extension GameScene {
-    func memoryLocation(of point: CGPoint) -> Int {
-        let index = 0
+extension GameScene: GameVCTouchDelegate {
 
-        return index
+    // Accepts a CGPoint and returns the index of memory if the touch is inside the memory grid
+    // returns nil if point is outside the grid
+    func memoryIndex(at point: CGPoint) -> Int? {
+        guard let centers = memoryLayout?.locations else {
+            fatalError("[GameScene:memoryIndex] memoryLayout has not been initialized")
+        }
+
+        // there have to be at least one memory locations to detect
+        guard centers.count > 0 else {
+            return nil
+        }
+
+        // calculate distance between `point` and each memory center, return the one with the min distance
+        let distancesToPoint: [CGFloat] = memoryNodes.map{ $0.position.distance(to: point) }
+        return distancesToPoint.index(of: distancesToPoint.min()!)
     }
 }
 

@@ -47,12 +47,3 @@ struct Memory {
         case compute(expected: Int) // calculate using payload on the memory slot
     }
 }
-
-extension CGPoint {
-    // make CGPoint init less verbose
-    // swiftlint:disable variable_name
-    init(_ x: CGFloat, _ y: CGFloat) {
-        self.x = x
-        self.y = y
-    }
-}
