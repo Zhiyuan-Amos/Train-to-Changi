@@ -219,7 +219,32 @@ class GameViewController: UIViewController {
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
-        commandsEditor.reloadData()
+        if command == CommandData.jump {
+            commandsEditor.insertItems(at: [IndexPath(item: model.userEnteredCommands.count - 2, section: 0),
+                                            IndexPath(item: model.userEnteredCommands.count - 1, section: 0)])
+            let jumpTargetIndex = model.userEnteredCommands.count - 2
+            let jumpIndex = model.userEnteredCommands.count - 1
+
+            guard let jumpTargetCell = commandsEditor.cellForItem(at: IndexPath(item: jumpTargetIndex,
+                                                                                section: 0)) else {
+                                                                                    return
+            }
+
+            guard let jumpCell = commandsEditor.cellForItem(at: IndexPath(item: jumpIndex,
+                                                                          section: 0)) else {
+                                                                            return
+            }
+
+            let arrowOrigin = CGPoint(jumpTargetCell.frame.maxX - 30, jumpTargetCell.frame.midY)
+            let arrowSize = CGSize(width: 20, height: jumpCell.frame.midY - jumpTargetCell.frame.midY)
+            let arrowView = UIImageView()
+            arrowView.image = UIImage(named: "arrownavy.png")
+            arrowView.frame = CGRect(origin: arrowOrigin, size: arrowSize)
+
+            commandsEditor.addSubview(arrowView)
+        } else {
+            commandsEditor.insertItems(at: [IndexPath(item: model.userEnteredCommands.count - 1, section: 0)])
+        }
     }
 
     private func getCellAtGestureLocation(_ location: CGPoint) -> CommandCell? {
@@ -259,7 +284,7 @@ extension GameViewController: UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.UI.commandCellIdentifier,
-                                                      for: indexPath as IndexPath)
+                                                      for: indexPath)
 
         guard let commandCell =  cell as? CommandCell else {
             fatalError("Cell not assigned the proper view subclass!")
@@ -273,6 +298,14 @@ extension GameViewController: UICollectionViewDataSource {
 }
 
 extension GameViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return CGSize(width: collectionView.frame.width - 10,
+                      height: Constants.UI.commandButtonHeight - 10)
+    }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
