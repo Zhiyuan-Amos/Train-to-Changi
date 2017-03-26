@@ -5,15 +5,21 @@
 
 class JumpCommand: Command {
     private let iterator: CommandDataListIterator
+    private var jumpFromIndex: Int?
 
     init(iterator: CommandDataListIterator) {
         self.iterator = iterator
     }
 
     func execute() -> CommandResult {
-        iterator.jump()
+        jumpFromIndex = iterator.jump()
         return CommandResult()
     }
 
-    func undo() {}
+    func undo() {
+        guard let jumpFromIndex = jumpFromIndex else {
+            fatalError("Not a conditional jump: Must have jumped from an index")
+        }
+        iterator.moveIterator(to: jumpFromIndex)
+    }
 }
