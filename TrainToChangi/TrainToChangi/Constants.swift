@@ -83,6 +83,7 @@ struct Constants {
 
     struct Animation {
         static let moveToConveyorBeltDuration = 2.0
+        static let moveToMemoryDuration = 1.0
 
         static let moveConveyorBeltVector = CGVector(dx: -Payload.size.width - Inbox.imagePadding, dy: 0)
         static let moveConveyorBeltDuration = 0.7
