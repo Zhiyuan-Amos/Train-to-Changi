@@ -93,6 +93,9 @@ struct Constants {
         static let afterInboxStepDuration = 0.5
 
         static let holdingToOutboxDuration = 1.0
+
+        static let discardHoldingValueDuration = 0.5
+        static let holdingValueToMemoryDuration = 0.5
     }
     
     struct Audio {

@@ -220,7 +220,6 @@ extension GameScene {
                 self.putDownToMemory(index)
             case let .compute(expected):
                 self.computeWithMemory(index, expected: expected)
-                break
             }
         })
     }
