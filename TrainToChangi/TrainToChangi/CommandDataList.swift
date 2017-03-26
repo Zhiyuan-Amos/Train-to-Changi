@@ -299,7 +299,17 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
     private var commandDataLinkedList: CommandDataLinkedList
     private var isFirstCall: Bool
 
-    private var current: CommandDataListNode?
+    private var current: CommandDataListNode? {
+        willSet(newNode) {
+            guard let newNode = newNode else {
+                return
+            }
+            let index = commandDataLinkedList.indexOf(newNode)
+            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
+                                            object: nil,
+                                            userInfo: ["index": index])
+        }
+    }
 
     init(_ commandDataLinkedList: CommandDataLinkedList) {
         self.commandDataLinkedList = commandDataLinkedList
