@@ -43,6 +43,7 @@ class GameViewController: UIViewController {
         connectDataSourceAndDelegate()
         addPanGestureRecognizerToCommandsEditor()
         presentGameScene()
+        AudioPlayer.sharedInstance.playBackgroundMusic()
     }
 
     /* Control Panel Logic */

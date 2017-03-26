@@ -91,4 +91,8 @@ struct Constants {
 
         static let holdingToOutboxDuration = 1.0
     }
+    
+    struct Audio {
+        static let bgMusic = "main-track"
+    }
 }
