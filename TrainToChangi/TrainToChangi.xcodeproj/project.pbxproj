@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7A12469B8258C38128E2 /* Payload.swift */; };
+		22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E79326E3E327A4B086 /* MemorySlot.swift */; };
 		22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC750125724E9BA28BA9EB /* Memory.swift */; };
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
@@ -66,6 +68,8 @@
 
 /* Begin PBXFileReference section */
 		22DC750125724E9BA28BA9EB /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		22DC76E79326E3E327A4B086 /* MemorySlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemorySlot.swift; sourceTree = "<group>"; };
+		22DC7A12469B8258C38128E2 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 		38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
 				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
 				22DC750125724E9BA28BA9EB /* Memory.swift */,
+				22DC76E79326E3E327A4B086 /* MemorySlot.swift */,
+				22DC7A12469B8258C38128E2 /* Payload.swift */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -516,6 +522,8 @@
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 				22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */,
+				22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */,
+				22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -119,47 +119,25 @@ extension GameScene {
                 assertionFailure("Number of memory values differ from the layout specified. Check level data.")
                 return
             }
-            let box = SKSpriteNode(imageNamed: "memory")
-            box.size = Constants.Memory.size
-            box.position = layout.locations[index]
-            box.name = "memory \(index)"
 
-            // TODO: create box for pre-loaded memory values
-            let label = SKLabelNode(text: String(describing: index))
-            label.position = CGPoint(x: label.position.x + Constants.Memory.labelOffsetX,
-                                     y: label.position.y + Constants.Memory.labelOffsetY)
-            label.fontSize = Constants.Memory.labelFontSize
-            box.addChild(label)
-            addChild(box)
+            addChild(MemorySlot(index: index, layout: layout))
         }
     }
 
     private func initInboxNodes(from inboxValues: [Int]) {
         inboxNodes = []
         for (index, value) in inboxValues.enumerated() {
-            //TODO: Wondering if we can place the values init somewhere else.
-            let label = SKLabelNode(text: String(value))
-            label.position.y += Constants.Box.labelOffsetY
-            label.fontName = Constants.Box.fontName
-            label.fontSize = Constants.Box.fontSize
-            label.fontColor = Constants.Box.fontColor
-
-            let box = SKSpriteNode(imageNamed: Constants.Box.imageName)
-            box.size = Constants.Box.size
-            box.position = calculateInboxBoxPosition(index: index)
-            box.zRotation = Constants.Box.rotationAngle
-
-            box.addChild(label)
-            inboxNodes.append(box)
-            self.addChild(box)
+            let payload = Payload(position: calculateInboxBoxPosition(index: index), value: value)
+            inboxNodes.append(payload)
+            self.addChild(payload)
         }
     }
 
     private func calculateInboxBoxPosition(index: Int) -> CGPoint {
-        let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Box.size.width / 2
+        let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Payload.size.width / 2
             + Constants.Inbox.imagePadding
 
-        let offsetX = CGFloat(index) * (Constants.Box.size.width + Constants.Inbox.imagePadding)
+        let offsetX = CGFloat(index) * (Constants.Payload.size.width + Constants.Inbox.imagePadding)
 
         return CGPoint(x: startingX + offsetX, y: inbox.position.y)
     }
