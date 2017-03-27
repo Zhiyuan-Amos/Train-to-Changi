@@ -11,11 +11,13 @@ import UIKit
 class EditorViewController: UIViewController {
 
     var model: Model!
+    private var jumpViewBundles = [JumpViewsBundle]()
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var editorView: UIImageView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!
     @IBOutlet weak var currentCommandsView: UICollectionView!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,8 +68,7 @@ class EditorViewController: UIViewController {
             let buttonPosition = CGPoint(x: currentCommandPositionX,
                                          y: currentCommandPositionY)
 
-
-            let commandButton = CommandButtonHelper.generateCommandUIButton(for: command,
+            let commandButton = UIEntityHelper.generateCommandUIButton(for: command,
                                                                             position: buttonPosition,
                                                                             tag: commandTag)
             commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
@@ -106,20 +107,31 @@ class EditorViewController: UIViewController {
         let location = gesture.location(in: currentCommandsView)
 
         guard let indexPath = currentCommandsView.indexPathForItem(at: location),
-              let commandCell = currentCommandsView.cellForItem(at: indexPath) else {
+              let commandCell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
             return
         }
+
         switch gesture.state {
-        case UIGestureRecognizerState.began:
-            currentCommandsView.beginInteractiveMovementForItem(at: indexPath)
-            commandCell.layer.add(AnimationHelper.wiggleAnimation(), forKey: "transform")
-        case UIGestureRecognizerState.changed:
-            currentCommandsView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-        case UIGestureRecognizerState.ended:
-            commandCell.layer.removeAllAnimations()
-            currentCommandsView.endInteractiveMovement()
-        default:
-            currentCommandsView.cancelInteractiveMovement()
+            case UIGestureRecognizerState.began:
+                currentCommandsView.beginInteractiveMovementForItem(at: indexPath)
+                commandCell.layer.add(AnimationHelper.wiggleAnimation(), forKey: "transform")
+
+            case UIGestureRecognizerState.changed:
+                currentCommandsView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+                for jumpViewBundle in jumpViewBundles {
+                    let newFrame = CGRect(x: jumpViewBundle.jumpTargetCell.frame.midX,
+                                          y: jumpViewBundle.jumpTargetCell.frame.midY,
+                                          width: 50,
+                                          height: jumpViewBundle.jumpCell.frame.midY
+                                            - jumpViewBundle.jumpTargetCell.frame.midY)
+                    jumpViewBundle.arrowView.frame = newFrame
+                }
+            case UIGestureRecognizerState.ended:
+                commandCell.layer.removeAllAnimations()
+                currentCommandsView.endInteractiveMovement()
+
+            default:
+                currentCommandsView.cancelInteractiveMovement()
         }
 
     }
@@ -128,31 +140,27 @@ class EditorViewController: UIViewController {
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
+
+        let penultimateIndexPath = IndexPath(item: model.userEnteredCommands.count - 2, section: 0)
+        let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
+
         if command == CommandData.jump {
-            currentCommandsView.insertItems(at: [IndexPath(item: model.userEnteredCommands.count - 2, section: 0),
-                                            IndexPath(item: model.userEnteredCommands.count - 1, section: 0)])
-            let jumpTargetIndex = model.userEnteredCommands.count - 2
-            let jumpIndex = model.userEnteredCommands.count - 1
+            currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
 
-            guard let jumpTargetCell = currentCommandsView.cellForItem(at: IndexPath(item: jumpTargetIndex,
-                                                                                section: 0)) else {
-                                                                                    return
+            guard let jumpTargetCell = currentCommandsView.cellForItem(at: penultimateIndexPath) as? CommandCell,
+                  let jumpCell = currentCommandsView.cellForItem(at: lastIndexPath) as? CommandCell else {
+                    return
             }
-
-            guard let jumpCell = currentCommandsView.cellForItem(at: IndexPath(item: jumpIndex,
-                                                                          section: 0)) else {
-                                                                            return
-            }
-
-            let arrowOrigin = CGPoint(jumpTargetCell.frame.maxX - 30, jumpTargetCell.frame.midY)
-            let arrowSize = CGSize(width: 20, height: jumpCell.frame.midY - jumpTargetCell.frame.midY)
-            let arrowView = UIImageView()
-            arrowView.image = UIImage(named: "arrownavy.png")
-            arrowView.frame = CGRect(origin: arrowOrigin, size: arrowSize)
-
+            let arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: jumpTargetCell.frame,
+                                                             jumpFrame: jumpCell.frame)
             currentCommandsView.addSubview(arrowView)
+
+            let newJumpViewsBundle = JumpViewsBundle(jumpCell: jumpCell,
+                                                     jumpTargetCell: jumpTargetCell,
+                                                     arrowView: arrowView)
+            jumpViewBundles.append(newJumpViewsBundle)
         } else {
-            currentCommandsView.insertItems(at: [IndexPath(item: model.userEnteredCommands.count - 1, section: 0)])
+            currentCommandsView.insertItems(at: [lastIndexPath])
         }
     }
 
@@ -165,6 +173,12 @@ class EditorViewController: UIViewController {
         let cell = currentCommandsView.cellForItem(at: path)
         return cell as? CommandCell
     }
+}
+
+struct JumpViewsBundle {
+    var jumpCell: CommandCell
+    var jumpTargetCell: CommandCell
+    var arrowView: UIImageView
 }
 
 extension EditorViewController: UICollectionViewDataSource {

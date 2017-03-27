@@ -17,7 +17,7 @@
 		3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D984F1E88FCD70026872B /* EditorViewController.swift */; };
 		3B6D98521E88FE970026872B /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98511E88FE970026872B /* ControlPanelViewController.swift */; };
 		3B6D98541E8904500026872B /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98531E8904500026872B /* AnimationHelper.swift */; };
-		3B6D98571E8907C10026872B /* CommandButtonsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98561E8907C10026872B /* CommandButtonsHelper.swift */; };
+		3B6D98591E89129C0026872B /* UIEntityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98581E89129C0026872B /* UIEntityHelper.swift */; };
 		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		76745B6D1E8855870039A771 /* MapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76745B6C1E8855870039A771 /* MapScene.sks */; };
@@ -87,7 +87,7 @@
 		3B6D984F1E88FCD70026872B /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		3B6D98511E88FE970026872B /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		3B6D98531E8904500026872B /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
-		3B6D98561E8907C10026872B /* CommandButtonsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandButtonsHelper.swift; sourceTree = "<group>"; };
+		3B6D98581E89129C0026872B /* UIEntityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEntityHelper.swift; sourceTree = "<group>"; };
 		3BD7EF9B1E812F790029EA57 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -252,8 +252,8 @@
 		3B6D98551E8904DF0026872B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				3B6D98581E89129C0026872B /* UIEntityHelper.swift */,
 				3B6D98531E8904500026872B /* AnimationHelper.swift */,
-				3B6D98561E8907C10026872B /* CommandButtonsHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -575,6 +575,7 @@
 				D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
+				3B6D98591E89129C0026872B /* UIEntityHelper.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,

@@ -16,15 +16,15 @@ class CommandCell: UICollectionViewCell {
     func setImageAndIndex(commandType: CommandData) {
         let imagePath = commandType.toString() + ".png"
         switch commandType {
-        case .add(let index):
-            setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    indexImageName: "mathindex.png", width: Constants.UI.commandButtonWidthShort)
-        case .copyFrom(let index), .copyTo(let index):
-            setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    indexImageName: "copyindex.png", width: Constants.UI.commandButtonWidthLong)
-        case .inbox, .outbox, .jump(_), .jumpTarget:
-            setCommandImageAndIndex(imageName: imagePath, index: nil,
-                                    indexImageName: nil, width: Constants.UI.commandButtonWidthMid)
+            case .add(let index):
+                setCommandImageAndIndex(imageName: imagePath, index: index,
+                                        indexImageName: "mathindex.png", width: Constants.UI.commandButtonWidthShort)
+            case .copyFrom(let index), .copyTo(let index):
+                setCommandImageAndIndex(imageName: imagePath, index: index,
+                                        indexImageName: "copyindex.png", width: Constants.UI.commandButtonWidthLong)
+            case .inbox, .outbox, .jump(_), .jumpTarget:
+                setCommandImageAndIndex(imageName: imagePath, index: nil,
+                                        indexImageName: nil, width: Constants.UI.commandButtonWidthMid)
         }
 
     }
@@ -41,8 +41,7 @@ class CommandCell: UICollectionViewCell {
             commandIndexButton.setBackgroundImage(UIImage(named: indexImageName),
                                                   for: UIControlState.normal)
             commandIndexButton.frame.origin = CGPoint(x: commandImage.frame.maxX,
-                                                y: commandImage.frame.minY + 5)
-            commandIndexButton.isHidden = false
+                                                      y: commandImage.frame.minY + 5)
         } else {
             commandIndexButton.isHidden = true
         }
