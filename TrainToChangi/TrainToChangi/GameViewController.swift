@@ -33,6 +33,22 @@ class GameViewController: UIViewController {
         model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
         logic = LogicManager(model: model)
         super.init(coder: aDecoder)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationBegan(notification:)),
+            name: Constants.NotificationNames.animationBegan, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationEnded(notification:)),
+            name: Constants.NotificationNames.animationEnded, object: nil)
+    }
+
+    @objc fileprivate func animationBegan(notification: Notification) {
+        model.runState = .running(isAnimating: true)
+    }
+
+    @objc fileprivate func animationEnded(notification: Notification) {
+        model.runState = .running(isAnimating: false)
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -56,7 +72,7 @@ class GameViewController: UIViewController {
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
-        model.runState = .running
+        model.runState = .running(isAnimating: false)
         logic.executeCommands()
     }
 

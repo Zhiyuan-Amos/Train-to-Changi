@@ -10,31 +10,22 @@ class LogicManager: Logic {
     private let parser: CommandDataParser
     private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
-    private var isExecutionAllowed: Bool
 
     init(model: Model) {
         self.model = model
         self.parser = CommandDataParser(model: model)
         self.updater = RunStateUpdater(model: model)
         self.executedCommands = Stack()
-        self.isExecutionAllowed = true
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(catchNotification(notification:)),
-            name: Constants.NotificationNames.animationEnded, object: nil)
-    }
-
-    @objc fileprivate func catchNotification(notification: Notification) {
-        isExecutionAllowed = true
     }
 
     // Executes the list of commands that user has selected.
     func executeCommands() {
         DispatchQueue.global(qos: .background).async {
-            while self.model.runState == .running {
-                guard self.isExecutionAllowed else {
+            while case .running = self.model.runState {
+                guard self.model.runState == .running(isAnimating: false) else {
                     continue
                 }
+
                 self.executeNextCommand()
             }
         }
@@ -63,13 +54,6 @@ class LogicManager: Logic {
         guard let commandData = iterator.next() else {
             model.runState = .lost(error: .incompleteOutboxValues)
             return
-        }
-        //TODO: clean up
-        switch commandData {
-        case .inbox, .outbox, .copyFrom(_), .copyTo(_), .add(_):
-            isExecutionAllowed = false
-        default:
-            break
         }
 
         guard let command = parser.parse(commandData: commandData) else {

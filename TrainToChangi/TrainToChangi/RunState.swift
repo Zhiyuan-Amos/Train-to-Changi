@@ -1,5 +1,5 @@
 enum RunState {
-    case running
+    case running(isAnimating: Bool)
     case lost(error: ExecutionError)
     case won
     case paused
@@ -13,8 +13,8 @@ func == (lhs: RunState, rhs: RunState) -> Bool {
     switch (lhs, rhs) {
     case (let .lost(errorOne), let .lost(errorTwo)):
         return errorOne == errorTwo
-    case (.running, .running):
-        return true
+    case (let .running(isAnimatingOne), let .running(isAnimatingTwo)):
+        return isAnimatingOne == isAnimatingTwo
     case (.won, .won):
         return true
     case (.paused, .paused):
