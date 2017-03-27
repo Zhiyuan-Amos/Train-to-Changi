@@ -3,26 +3,30 @@
 // It also contains methods pertaining to the game logic.
 //
 import Foundation
-//TODO: Refactor into GameLogic.
-class LogicManager: Logic {
+class LogicManager: Logic, GameLogicDelegate {
     unowned private let model: Model
+    private let gameLogic: GameLogic
     private var iterator: CommandDataListIterator!
-    private let parser: CommandDataParser
-    private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
+
+    var numCommandsExecuted: Int {
+        return executedCommands.count
+    }
 
     init(model: Model) {
         self.model = model
-        self.parser = CommandDataParser(model: model)
-        self.updater = RunStateUpdater(model: model)
         self.executedCommands = Stack()
+        self.gameLogic = GameLogic(model: model)
+        gameLogic.gameLogicDelegate = self
     }
 
     // Executes the list of commands that user has selected.
+    // As this method will busy-wait, it is run in background thread. 
     func executeCommands() {
         DispatchQueue.global(qos: .background).async {
             while case .running = self.model.runState {
                 guard self.model.runState == .running(isAnimating: false) else {
+                    usleep(100000)
                     continue
                 }
 
@@ -38,7 +42,7 @@ class LogicManager: Logic {
             fatalError("User should not be allowed to undo")
         }
 
-        command.undo()
+        gameLogic.undo(command)
         iterator.previous()
 
         return !executedCommands.isEmpty
@@ -48,28 +52,13 @@ class LogicManager: Logic {
     func executeNextCommand() {
         if iterator == nil {
             iterator = model.makeCommandDataListIterator()
-            parser.iterator = iterator
+            gameLogic.parser = CommandDataParser(model: model, iterator: iterator)
         }
 
-        guard let commandData = iterator.next() else {
-            model.runState = .lost(error: .incompleteOutboxValues)
+        guard let executedCommand = gameLogic.execute(commandData: iterator.next()) else {
             return
         }
 
-        guard let command = parser.parse(commandData: commandData) else {
-            return
-        }
-
-        let commandResult = command.execute()
-        executedCommands.push(command)
-
-        updater.updateRunState(commandResult: commandResult)
-        if model.runState == .won {
-            updateNumStepsTaken()
-        }
-    }
-
-    private func updateNumStepsTaken() {
-        model.numSteps = executedCommands.count
+        executedCommands.push(executedCommand)
     }
 }

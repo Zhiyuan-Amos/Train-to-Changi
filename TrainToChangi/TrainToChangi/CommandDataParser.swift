@@ -4,10 +4,11 @@
 
 class CommandDataParser {
     private let model: Model
-    var iterator: CommandDataListIterator?
+    private let iterator: CommandDataListIterator
 
-    init(model: Model) {
+    init(model: Model, iterator: CommandDataListIterator) {
         self.model = model
+        self.iterator = iterator
     }
 
     // Parses CommandData to Command.
@@ -27,7 +28,7 @@ class CommandDataParser {
             let index = returnIndex(index)
             return AddCommand(model: model, memoryIndex: index)
         case .jump:
-            return JumpCommand(iterator: iterator!)
+            return JumpCommand(iterator: iterator)
         case .jumpTarget:
             return nil
         }
