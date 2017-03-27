@@ -42,6 +42,7 @@ class CommandCell: UICollectionViewCell {
                                                   for: UIControlState.normal)
             commandIndexButton.frame.origin = CGPoint(x: commandImage.frame.maxX,
                                                       y: commandImage.frame.minY + 5)
+            commandIndexButton.isHidden = false
         } else {
             commandIndexButton.isHidden = true
         }

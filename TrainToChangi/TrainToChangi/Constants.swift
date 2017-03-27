@@ -96,11 +96,9 @@ struct Constants {
         static let commandButtonWidthLong: CGFloat = 100
         static let commandIndexWidth: CGFloat = 20
 
-
-
-
-
         static let commandCellIdentifier = "CommandCell"
+
+        static let arrowWidth: CGFloat = 30
     }
 
     struct Animation {

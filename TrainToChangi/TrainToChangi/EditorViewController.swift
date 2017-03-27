@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class EditorViewController: UIViewController {
 
@@ -17,7 +18,6 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var editorView: UIImageView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!
     @IBOutlet weak var currentCommandsView: UICollectionView!
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +110,7 @@ class EditorViewController: UIViewController {
               let commandCell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
             return
         }
-
+        print(gesture.state.rawValue)
         switch gesture.state {
             case UIGestureRecognizerState.began:
                 currentCommandsView.beginInteractiveMovementForItem(at: indexPath)
@@ -118,22 +118,19 @@ class EditorViewController: UIViewController {
 
             case UIGestureRecognizerState.changed:
                 currentCommandsView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-                for jumpViewBundle in jumpViewBundles {
-                    let newFrame = CGRect(x: jumpViewBundle.jumpTargetCell.frame.midX,
-                                          y: jumpViewBundle.jumpTargetCell.frame.midY,
-                                          width: 50,
-                                          height: jumpViewBundle.jumpCell.frame.midY
-                                            - jumpViewBundle.jumpTargetCell.frame.midY)
-                    jumpViewBundle.arrowView.frame = newFrame
+                updateArrowViews()
+                if isCellDraggedOutOfBounds(commandCell) {
+                    commandCell.layer.removeAllAnimations()
+                    currentCommandsView.endInteractiveMovement()
+                    currentCommandsView.reloadData()
                 }
             case UIGestureRecognizerState.ended:
                 commandCell.layer.removeAllAnimations()
                 currentCommandsView.endInteractiveMovement()
-
             default:
+                currentCommandsView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
                 currentCommandsView.cancelInteractiveMovement()
         }
-
     }
 
     /* Helper func */
@@ -161,6 +158,29 @@ class EditorViewController: UIViewController {
             jumpViewBundles.append(newJumpViewsBundle)
         } else {
             currentCommandsView.insertItems(at: [lastIndexPath])
+        }
+    }
+
+    private func isCellDraggedOutOfBounds(_ commandCell: CommandCell) -> Bool {
+        let maxHeight = max(currentCommandsView.frame.height, currentCommandsView.contentSize.height) - 15
+
+        return commandCell.frame.midX < 20 || commandCell.frame.midX > currentCommandsView.frame.width - 20
+            || commandCell.frame.midY < 15 || commandCell.frame.midY > maxHeight
+    }
+
+    private func updateArrowViews() {
+        for jumpViewBundle in jumpViewBundles {
+            if jumpViewBundle.jumpCell.frame.midY < jumpViewBundle.jumpTargetCell.frame.midY {
+                jumpViewBundle.arrowView.image = UIImage(named: "arrownavyinvert.png")
+            } else {
+                jumpViewBundle.arrowView.image = UIImage(named: "arrownavy.png")
+            }
+            let newFrame = CGRect(x: jumpViewBundle.jumpTargetCell.frame.midX,
+                                  y: jumpViewBundle.jumpTargetCell.frame.midY,
+                                  width: Constants.UI.arrowWidth,
+                                  height: jumpViewBundle.jumpCell.frame.midY
+                                    - jumpViewBundle.jumpTargetCell.frame.midY)
+            jumpViewBundle.arrowView.frame = newFrame
         }
     }
 
