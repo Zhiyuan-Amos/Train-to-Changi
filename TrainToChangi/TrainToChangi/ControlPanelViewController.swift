@@ -49,7 +49,10 @@ class ControlPanelViewController: UIViewController {
         }
     }
 
+    //TODO: GameScene need to support
     @IBAction func stopButtonPressed(_ sender: UIButton) {
+        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
+        logic = LogicManager(model: model)
         model.runState = .paused
     }
 
