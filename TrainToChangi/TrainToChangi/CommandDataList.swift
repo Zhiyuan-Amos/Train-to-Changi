@@ -130,7 +130,6 @@ class CommandDataLinkedList: CommandDataList {
         return remove(node)
     }
 
-
     func removeAll() {
         head = nil
     }
@@ -311,6 +310,10 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
         }
     }
 
+    var index: Int? {
+        return current == nil ? nil : commandDataLinkedList.indexOf(current!)
+    }
+
     init(_ commandDataLinkedList: CommandDataLinkedList) {
         self.commandDataLinkedList = commandDataLinkedList
         self.current = commandDataLinkedList.first
@@ -335,13 +338,12 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
         current = current?.previous
     }
 
-    func jump() -> Int {
+    func jump() {
         guard let current = current as? JumpListNode else {
             preconditionFailure("Cannot jump on a non-jump command")
         }
-        let index = commandDataLinkedList.indexOf(current)
+
         self.current = current.jumpTarget
-        return index
     }
 
     func moveIterator(to index: Int) {

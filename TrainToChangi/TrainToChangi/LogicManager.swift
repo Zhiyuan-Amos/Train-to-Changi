@@ -16,7 +16,7 @@ class LogicManager: Logic {
         self.model = model
         self.parser = CommandDataParser(model: model)
         self.updater = RunStateUpdater(model: model)
-        self.executedCommands = Stack() //TODO: Change to array
+        self.executedCommands = Stack()
         self.isExecutionAllowed = true
 
         NotificationCenter.default.addObserver(
@@ -48,7 +48,8 @@ class LogicManager: Logic {
         }
 
         command.undo()
-        iterator.previous() // TODO: Think of how to update visuals
+        iterator.previous()
+
         return !executedCommands.isEmpty
     }
 
@@ -65,15 +66,17 @@ class LogicManager: Logic {
         }
         //TODO: clean up
         switch commandData {
-        case .inbox, .outbox:
+        case .inbox, .outbox, .copyFrom(_), .copyTo(_), .add(_):
             isExecutionAllowed = false
         default:
             break
         }
 
-        let command = parser.parse(commandData: commandData)
-        let commandResult = command.execute()
+        guard let command = parser.parse(commandData: commandData) else {
+            return
+        }
 
+        let commandResult = command.execute()
         executedCommands.push(command)
 
         updater.updateRunState(commandResult: commandResult)
@@ -83,7 +86,6 @@ class LogicManager: Logic {
     }
 
     private func updateNumStepsTaken() {
-        let jumpTargetCount = executedCommands.filter { command in command is JumpTarget }.count
-        model.numSteps = executedCommands.count - jumpTargetCount
+        model.numSteps = executedCommands.count
     }
 }
