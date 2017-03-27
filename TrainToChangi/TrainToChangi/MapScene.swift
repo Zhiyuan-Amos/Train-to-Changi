@@ -9,27 +9,36 @@
 import SpriteKit
 import GameplayKit
 
+protocol MapSceneDelegate: class {
+    func didTouchStation(name: String?)
+}
+
 // Scene that presents the railway map, which represents the levels and progress of player.
 // Interface is mostly drawn using the MapScene.sks file. The map can be much bigger than
 // the camera, just pan and navigate around the map.
 
 // Note that in the MapScene.sks file, the custom class must be set to "MapScene".
+// All station nodes must be named ***Station, e.g. ChangiStation
 class MapScene: SKScene {
-    var cam: SKCameraNode!
+    private var cam: SKCameraNode!
+
+    // can't use "delegate" as name as Swift forbids overriding inherited properties
+    weak var agent: MapSceneDelegate?
 
     override func didMove(to view: SKView) {
-        //Inside of didMoveToView
-
-        cam = SKCameraNode() //initialize and assign an instance of SKCameraNode to the cam variable.
-        //cam.setScale(1) //the scale sets the zoom level of the camera on the given position
-
-        self.camera = cam //set the scene's camera to reference cam
-        self.addChild(cam) //make the cam a childElement of the scene itself.
-
-        //position the camera on the gamescene.
+        // add camera so that can pan
+        cam = SKCameraNode()
+        self.camera = cam
+        self.addChild(cam)
         cam.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+
+        // replace empty placeholder SKNode with MapStation nodes
+        enumerateChildNodes(withName: "^\\w+Station$", using: { node, _ in
+            self.replace(node, with: MapStation(node, delegate: self))
+        })
     }
 
+    // pan to move the camera
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -40,5 +49,18 @@ class MapScene: SKScene {
 
         camera?.position.x -= location.x - previousLocation.x
         camera?.position.y -= location.y - previousLocation.y
+    }
+
+    // replace empty SKNode with MapStation
+    private func replace(_ one: SKNode, with another: MapStation) {
+        one.removeFromParent()
+        addChild(another)
+    }
+}
+
+extension MapScene: MapStationDelegate {
+    func didTouchStation(name: String?) {
+        guard let name = name else { return }
+        agent?.didTouchStation(name: name)
     }
 }

@@ -16,8 +16,8 @@ protocol GameVCTouchDelegate: class {
 class GameViewController: UIViewController {
 
     // VC is currently first responder, to be changed when we add other views.
-    fileprivate let model: Model
-    private let logic: Logic
+    fileprivate var model: Model
+    fileprivate var logic: Logic
 
     // The area which shows availableCommandsForUser
     @IBOutlet private var availableCommandsView: UIView!
@@ -173,6 +173,13 @@ class GameViewController: UIViewController {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
         commandsEditor.reloadData()
+    }
+}
+
+extension GameViewController: MapViewControllerDelegate {
+    func initLevel(name: String?) {
+        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
+        logic = LogicManager(model: model)
     }
 }
 

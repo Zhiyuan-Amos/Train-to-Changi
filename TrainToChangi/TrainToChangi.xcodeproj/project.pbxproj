@@ -19,6 +19,7 @@
 		76745B6D1E8855870039A771 /* MapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76745B6C1E8855870039A771 /* MapScene.sks */; };
 		76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76745B6E1E8857EC0039A771 /* MapScene.swift */; };
 		76745B741E885A030039A771 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76745B731E885A030039A771 /* MapViewController.swift */; };
+		76E0F66D1E88F9B40051325C /* MapStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E0F66C1E88F9B40051325C /* MapStation.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A712096D1E8189060039B257 /* CommandLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096B1E8189060039B257 /* CommandLabel.swift */; };
@@ -84,6 +85,7 @@
 		76745B6C1E8855870039A771 /* MapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapScene.sks; sourceTree = "<group>"; };
 		76745B6E1E8857EC0039A771 /* MapScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapScene.swift; sourceTree = "<group>"; };
 		76745B731E885A030039A771 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		76E0F66C1E88F9B40051325C /* MapStation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapStation.swift; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				22DC750125724E9BA28BA9EB /* Memory.swift */,
 				22DC76E79326E3E327A4B086 /* MemorySlot.swift */,
 				22DC7A12469B8258C38128E2 /* Payload.swift */,
+				76E0F66C1E88F9B40051325C /* MapStation.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
+				76E0F66D1E88F9B40051325C /* MapStation.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,

@@ -66,11 +66,20 @@ struct Constants {
         }
     }
 
+    struct Map {
+        static let stationImage = "station"
+        static let stationSize = CGSize(width: 200, height: 200)
+    }
+
     struct NotificationNames {
         static let moveProgramCounter = Notification.Name(rawValue: "moveProgramCounter")
         static let movePersonInScene = Notification.Name(rawValue: "movePersonInScene")
         static let initScene = Notification.Name(rawValue: "initScene")
         static let animationEnded = Notification.Name(rawValue: "animationEnded")
+    }
+
+    struct SegueIds {
+        static let startLevel = "startLevel"
     }
 
     // swiftlint:disable type_name
