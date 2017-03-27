@@ -14,6 +14,8 @@ class UIEntityHelper {
         let arrowOrigin = CGPoint(jumpTargetFrame.midX, jumpTargetFrame.midY)
         let arrowSize = CGSize(width: Constants.UI.arrowWidth,
                                height: jumpFrame.midY - jumpTargetFrame.midY)
+        print(arrowOrigin)
+        print(arrowSize)
         let arrowView = UIImageView()
         arrowView.image = UIImage(named: "arrownavy.png")
         arrowView.frame = CGRect(origin: arrowOrigin, size: arrowSize)

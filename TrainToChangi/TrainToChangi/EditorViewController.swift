@@ -110,7 +110,7 @@ class EditorViewController: UIViewController {
               let commandCell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
             return
         }
-        print(gesture.state.rawValue)
+
         switch gesture.state {
             case UIGestureRecognizerState.began:
                 currentCommandsView.beginInteractiveMovementForItem(at: indexPath)
@@ -122,7 +122,6 @@ class EditorViewController: UIViewController {
                 if isCellDraggedOutOfBounds(commandCell) {
                     commandCell.layer.removeAllAnimations()
                     currentCommandsView.endInteractiveMovement()
-                    currentCommandsView.reloadData()
                 }
             case UIGestureRecognizerState.ended:
                 commandCell.layer.removeAllAnimations()
@@ -143,22 +142,28 @@ class EditorViewController: UIViewController {
 
         if command == CommandData.jump {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
+            currentCommandsView.scrollToItem(at: lastIndexPath, at: UICollectionViewScrollPosition.top,
+                                             animated: true)
 
             guard let jumpTargetCell = currentCommandsView.cellForItem(at: penultimateIndexPath) as? CommandCell,
-                  let jumpCell = currentCommandsView.cellForItem(at: lastIndexPath) as? CommandCell else {
+                let jumpCell = currentCommandsView.cellForItem(at: lastIndexPath) as? CommandCell else {
                     return
             }
             let arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: jumpTargetCell.frame,
                                                              jumpFrame: jumpCell.frame)
-            currentCommandsView.addSubview(arrowView)
-
+            self.currentCommandsView.addSubview(arrowView)
             let newJumpViewsBundle = JumpViewsBundle(jumpCell: jumpCell,
                                                      jumpTargetCell: jumpTargetCell,
                                                      arrowView: arrowView)
-            jumpViewBundles.append(newJumpViewsBundle)
+            self.jumpViewBundles.append(newJumpViewsBundle)
+
+
         } else {
             currentCommandsView.insertItems(at: [lastIndexPath])
+            currentCommandsView.scrollToItem(at: lastIndexPath, at: UICollectionViewScrollPosition.top,
+                                             animated: true)
         }
+
     }
 
     private func isCellDraggedOutOfBounds(_ commandCell: CommandCell) -> Bool {
