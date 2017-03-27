@@ -73,6 +73,12 @@ class GameViewController: UIViewController {
         commandsEditor.reloadData()
     }
 
+    @IBAction func exitButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: {
+            AudioPlayer.sharedInstance.stopBackgroundMusic()
+        })
+    }
+
     /* Setup */
     private func adjustCommandsEditorPosition() {
         commandsEditor.frame = CGRect(x: commandsEditor.frame.minX,

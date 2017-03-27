@@ -24,4 +24,8 @@ class AudioPlayer {
             return
         }
     }
+
+    func stopBackgroundMusic() {
+        backgroundMusicPlayer.stop()
+    }
 }
