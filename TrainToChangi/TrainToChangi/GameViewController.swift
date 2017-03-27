@@ -34,18 +34,28 @@ class GameViewController: UIViewController {
             name: Constants.NotificationNames.animationEnded, object: nil)
     }
 
+    // Updates `model.runState` to `.running(isAnimating: true) if the
+    // current `model.runState` is `.running(isAnimating: false)`.
+    // This is to prevent scenarios such as user pressing `stepForwardButton`,
+    // in which `model.runState` is set to `.paused`, but set to `.running` when
+    // animation started, which then triggers `animationEnded(notification:)`, 
+    // thus setting the runState incorrectly.
+    // -SeeAlso: animationEnded(notification:)
     @objc fileprivate func animationBegan(notification: Notification) {
-        model.runState = .running(isAnimating: true)
+        if model.runState == .running(isAnimating: false) {
+            model.runState = .running(isAnimating: true)
+        }
     }
 
+    // Updates `model.runState` to `.running(isAnimating: false) if the
+    // current `model.runState` is `.running(isAnimating: true)`.
+    // This is to prevent scenarios such as user pressing `stepForwardButton`,
+    // in which `model.runState` is set to `.paused`, but after the animation
+    // has ended and this method is called, it sets the runState incorrectly to `.running`.
     @objc fileprivate func animationEnded(notification: Notification) {
-        model.runState = .running(isAnimating: false)
-    }
-
-    @IBAction func exitButtonPressed(_ sender: Any) {
-        dismiss(animated: true, completion: {
-            AudioPlayer.sharedInstance.stopBackgroundMusic()
-        })
+        if model.runState == .running(isAnimating: true) {
+            model.runState = .running(isAnimating: false)
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -67,6 +77,12 @@ class GameViewController: UIViewController {
             embeddedVC.model = self.model
             embeddedVC.logic = self.logic
         }
+    }
+
+    @IBAction func exitButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: {
+            AudioPlayer.sharedInstance.stopBackgroundMusic()
+        })
     }
 
     /// Use GameScene to move/animate the game objects

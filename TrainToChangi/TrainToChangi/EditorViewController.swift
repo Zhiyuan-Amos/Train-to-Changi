@@ -18,6 +18,7 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var editorView: UIImageView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!
     @IBOutlet weak var currentCommandsView: UICollectionView!
+    @IBOutlet weak var resetButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,31 @@ class EditorViewController: UIViewController {
 
         adjustCurrentCommandsCollectionView()
         addGestureRecognisers()
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(runStateUpdated(notification:)),
+            name: Constants.NotificationNames.runStateUpdated, object: nil)
+    }
+
+    @objc fileprivate func runStateUpdated(notification: Notification) {
+        switch model.runState {
+        case .running:
+            resetButton.isEnabled = false
+            currentCommandsView.isUserInteractionEnabled = false
+            availableCommandsView.isUserInteractionEnabled = false
+        case .paused:
+            resetButton.isEnabled = true
+            currentCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isUserInteractionEnabled = true
+        case .lost:
+            resetButton.isEnabled = true
+            currentCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isUserInteractionEnabled = true
+        case .won:
+            resetButton.isEnabled = false
+            currentCommandsView.isUserInteractionEnabled = false
+            availableCommandsView.isUserInteractionEnabled = false
+        }
     }
 
     @IBAction func resetButtonPressed(_ sender: Any) {
@@ -81,7 +107,8 @@ class EditorViewController: UIViewController {
                                                                        position: buttonPosition,
                                                                        tag: commandTag)
             commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
-            view.addSubview(commandButton)
+            commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
+            availableCommandsView.addSubview(commandButton)
         }
     }
 
