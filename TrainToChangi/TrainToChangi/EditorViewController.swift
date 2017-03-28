@@ -255,12 +255,20 @@ class EditorViewController: UIViewController {
             guard let jumpCell = currentCommandsView.cellForItem(at: newIndexPath) else {
                     return
             }
+            if !jumpViewsBundle.inverted {
+                let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                     height: jumpCell.frame.midY - jumpViewsBundle.arrowView.frame.origin.y)
 
-            let newSize = CGSize(width: Constants.UI.arrowWidth,
-                                 height: jumpCell.frame.midY - jumpViewsBundle.arrowView.frame.origin.y)
+                jumpViewsBundle.arrowView.frame = CGRect(origin: jumpViewsBundle.arrowView.frame.origin,
+                                                         size: newSize)
+            } else {
+                let newOrigin = CGPoint(jumpCell.frame.midX, jumpCell.frame.midY)
+                let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                     height: jumpViewsBundle.arrowView.frame.origin.y - newOrigin.y
+                                        + jumpViewsBundle.arrowView.frame.height)
+                jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+            }
 
-            jumpViewsBundle.arrowView.frame = CGRect(origin: jumpViewsBundle.arrowView.frame.origin,
-                                                     size: newSize)
 
         } else {
             jumpViewsBundle.jumpTargetIndexPath = newIndexPath
@@ -269,11 +277,19 @@ class EditorViewController: UIViewController {
                     return
             }
 
-            let newOrigin = CGPoint(jumpTargetCell.frame.midX, jumpTargetCell.frame.midY)
-            let newSize = CGSize(width: Constants.UI.arrowWidth,
-                                 height: jumpViewsBundle.arrowView.frame.origin.y - newOrigin.y
-                                    + jumpViewsBundle.arrowView.frame.height)
-            jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+            if !jumpViewsBundle.inverted {
+                let newOrigin = CGPoint(jumpTargetCell.frame.midX, jumpTargetCell.frame.midY)
+                let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                     height: jumpViewsBundle.arrowView.frame.origin.y - newOrigin.y
+                                        + jumpViewsBundle.arrowView.frame.height)
+                jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+            } else {
+                let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                     height: jumpTargetCell.frame.midY - jumpViewsBundle.arrowView.frame.origin.y)
+
+                jumpViewsBundle.arrowView.frame = CGRect(origin: jumpViewsBundle.arrowView.frame.origin,
+                                                         size: newSize)
+            }
         }
     }
 
@@ -281,14 +297,14 @@ class EditorViewController: UIViewController {
         guard let jumpViewsBundle = getJumpViewsBundle(indexPath: jumpIndexPath) else {
             return
         }
-
-        swap(&jumpViewsBundle.jumpIndexPath, &jumpViewsBundle.jumpTargetIndexPath)
+        let temp = jumpViewsBundle.jumpIndexPath
+        jumpViewsBundle.jumpIndexPath = jumpViewsBundle.jumpTargetIndexPath
+        jumpViewsBundle.jumpTargetIndexPath = temp
 
         guard let jumpCell = currentCommandsView.cellForItem(at: jumpViewsBundle.jumpIndexPath),
               let jumpTargetCell = currentCommandsView.cellForItem(at: jumpViewsBundle.jumpTargetIndexPath) else {
                 return
         }
-
 
         if jumpCell.frame.midY < jumpTargetCell.frame.midY {
             let newOrigin = CGPoint(jumpCell.frame.midX, jumpCell.frame.midY)
@@ -296,12 +312,14 @@ class EditorViewController: UIViewController {
                                  height: jumpTargetCell.frame.midY - jumpCell.frame.midY)
             jumpViewsBundle.arrowView.image = UIImage(named: "arrownavyinvert.png")
             jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+            jumpViewsBundle.inverted = true
         } else {
             let newOrigin = CGPoint(jumpTargetCell.frame.midX, jumpTargetCell.frame.midY)
             let newSize = CGSize(width: Constants.UI.arrowWidth,
                                  height: jumpCell.frame.midY - jumpTargetCell.frame.midY)
             jumpViewsBundle.arrowView.image = UIImage(named: "arrownavy.png")
             jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+            jumpViewsBundle.inverted = false
         }
     }
 
@@ -345,6 +363,7 @@ class JumpViewsBundle {
     var jumpIndexPath: IndexPath
     var jumpTargetIndexPath: IndexPath
     var arrowView: UIImageView
+    var inverted = false
 
     init(jumpIndexPath: IndexPath, jumpTargetIndexPath: IndexPath, arrowView: UIImageView) {
         self.jumpIndexPath = jumpIndexPath
