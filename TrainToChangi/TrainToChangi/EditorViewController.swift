@@ -111,33 +111,68 @@ class EditorViewController: UIViewController {
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
-        guard let indexPath = currentCommandsView.indexPathForItem(at: location),
-              let commandCell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
-            return
+        struct DragBundle {
+            static var cellSnapshot: UIView?
+            static var initialIndexPath: IndexPath?
         }
 
         switch gesture.state {
-            case UIGestureRecognizerState.began:
-                currentCommandsView.beginInteractiveMovementForItem(at: indexPath)
-                commandCell.layer.add(AnimationHelper.wiggleAnimation(), forKey: "transform")
+        case .began:
+            guard let indexPath = currentCommandsView.indexPathForItem(at: location),
+                  let cell = currentCommandsView.cellForItem(at: indexPath) else {
+                return
+            }
+            DragBundle.initialIndexPath = indexPath
+            DragBundle.cellSnapshot = snapshotOfCell(inputView: cell)
+            DragBundle.cellSnapshot?.center = cell.center
+            DragBundle.cellSnapshot?.alpha = 0.0
+            currentCommandsView.addSubview(DragBundle.cellSnapshot!)
 
-            case UIGestureRecognizerState.changed:
-                currentCommandsView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-                updateArrowViews()
-                if isCellDraggedOutOfBounds(commandCell) {
-                    commandCell.layer.removeAllAnimations()
-                    currentCommandsView.endInteractiveMovement()
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                DragBundle.cellSnapshot?.center.y = location.y
+                DragBundle.cellSnapshot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                DragBundle.cellSnapshot?.alpha = 0.98
+                cell.alpha = 0.0
+
+            }, completion: { (finished) -> Void in
+                if finished {
+                    cell.isHidden = true
                 }
-            case UIGestureRecognizerState.ended:
-                commandCell.layer.removeAllAnimations()
-                currentCommandsView.endInteractiveMovement()
-            default:
-                currentCommandsView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-                currentCommandsView.cancelInteractiveMovement()
+            })
+
+        case .changed:
+            DragBundle.cellSnapshot?.center.y = location.y
+            guard let indexPath = currentCommandsView.indexPathForItem(at: location),
+                      indexPath != DragBundle.initialIndexPath! else {
+                        return
+            }
+            currentCommandsView.moveItem(at: DragBundle.initialIndexPath!, to: indexPath)
+            DragBundle.initialIndexPath = indexPath
+            currentCommandsView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top,
+                                             animated: true)
+
+        default:
+            let cell = currentCommandsView.cellForItem(at: DragBundle.initialIndexPath!)
+            cell?.isHidden = false
+            cell?.alpha = 0.0
+
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                DragBundle.cellSnapshot?.center = (cell?.center)!
+                DragBundle.cellSnapshot?.transform = CGAffineTransform.identity
+                DragBundle.cellSnapshot?.alpha = 0.0
+                cell?.alpha = 1.0
+            }, completion: { (finished) -> Void in
+                if finished {
+                    DragBundle.initialIndexPath = nil
+                    DragBundle.cellSnapshot!.removeFromSuperview()
+                    DragBundle.cellSnapshot = nil
+                }
+            })
         }
     }
 
     /* Helper func */
+    // TODO: Refactor
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
@@ -149,13 +184,15 @@ class EditorViewController: UIViewController {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
             currentCommandsView.scrollToItem(at: lastIndexPath, at: UICollectionViewScrollPosition.top,
                                              animated: true)
+            let arrowView: UIImageView
 
             if let jumpTargetCell = currentCommandsView.cellForItem(at: penultimateIndexPath) as? CommandCell,
                let jumpCell = currentCommandsView.cellForItem(at: lastIndexPath) as? CommandCell {
 
-                let arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: jumpTargetCell.frame,
+                arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: jumpTargetCell.frame,
                                                                  jumpFrame: jumpCell.frame)
                 self.currentCommandsView.addSubview(arrowView)
+
             } else { // What is happening is that the jump cell and jump target cell are not visible
                 //Get the last visible cell
                 let thirdLastIndexPath = IndexPath(item: model.userEnteredCommands.count - 3, section: 0)
@@ -168,8 +205,8 @@ class EditorViewController: UIViewController {
                 let lastOrigin = CGPoint(thirdLastCell.frame.minX, secondLastFrame.maxY)
                 let lastFrame = CGRect(origin: lastOrigin, size: thirdLastCell.frame.size)
 
-                let arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: secondLastFrame,
-                                                                 jumpFrame: lastFrame)
+                arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: secondLastFrame,
+                                                             jumpFrame: lastFrame)
                 self.currentCommandsView.addSubview(arrowView)
             }
 
@@ -181,29 +218,6 @@ class EditorViewController: UIViewController {
 
     }
 
-    private func isCellDraggedOutOfBounds(_ commandCell: CommandCell) -> Bool {
-        let maxHeight = max(currentCommandsView.frame.height, currentCommandsView.contentSize.height) - 15
-
-        return commandCell.frame.midX < 20 || commandCell.frame.midX > currentCommandsView.frame.width - 20
-            || commandCell.frame.midY < 15 || commandCell.frame.midY > maxHeight
-    }
-
-    private func updateArrowViews() {
-        for jumpViewBundle in jumpViewBundles {
-            if jumpViewBundle.jumpCell.frame.midY < jumpViewBundle.jumpTargetCell.frame.midY {
-                jumpViewBundle.arrowView.image = UIImage(named: "arrownavyinvert.png")
-            } else {
-                jumpViewBundle.arrowView.image = UIImage(named: "arrownavy.png")
-            }
-            let newFrame = CGRect(x: jumpViewBundle.jumpTargetCell.frame.midX,
-                                  y: jumpViewBundle.jumpTargetCell.frame.midY,
-                                  width: Constants.UI.arrowWidth,
-                                  height: jumpViewBundle.jumpCell.frame.midY
-                                    - jumpViewBundle.jumpTargetCell.frame.midY)
-            jumpViewBundle.arrowView.frame = newFrame
-        }
-    }
-
     private func getCellAtGestureLocation(_ location: CGPoint) -> CommandCell? {
         let indexPath = currentCommandsView.indexPathForItem(at: location)
         guard let path = indexPath else {
@@ -213,11 +227,27 @@ class EditorViewController: UIViewController {
         let cell = currentCommandsView.cellForItem(at: path)
         return cell as? CommandCell
     }
+
+    private func snapshotOfCell(inputView: UIView) -> UIView {
+
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
+        UIGraphicsEndImageContext()
+
+        let cellSnapshot: UIView = UIImageView(image: image)
+        cellSnapshot.layer.masksToBounds = false
+        cellSnapshot.layer.cornerRadius = 0.0
+        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
+        cellSnapshot.layer.shadowRadius = 5.0
+        cellSnapshot.layer.shadowOpacity = 0.4
+        return cellSnapshot
+    }
 }
 
 struct JumpViewsBundle {
-    var jumpCell: CommandCell
-    var jumpTargetCell: CommandCell
+    var jumpIndexPath: IndexPath
+    var jumpTargetIndexPath: IndexPath
     var arrowView: UIImageView
 }
 
@@ -282,5 +312,4 @@ extension EditorViewController: UICollectionViewDelegateFlowLayout {
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-    
 }

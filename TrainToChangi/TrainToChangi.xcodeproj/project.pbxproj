@@ -225,6 +225,7 @@
 				76745B721E88598D0039A771 /* ViewController */,
 				76745B711E8859890039A771 /* View */,
 				76745B701E88590A0039A771 /* InterfaceBuilder */,
+				3B6D985A1E8A2D330026872B /* DragDropFramework */,
 				3B6D98551E8904DF0026872B /* Helpers */,
 				3B6D984E1E88FCC30026872B /* Controllers */,
 				D7E0E7491E84B78500237705 /* Tiles.sks */,
@@ -256,6 +257,13 @@
 				3B6D98531E8904500026872B /* AnimationHelper.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		3B6D985A1E8A2D330026872B /* DragDropFramework */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DragDropFramework;
 			sourceTree = "<group>";
 		};
 		3BD7EF911E811DB50029EA57 /* Storage */ = {
