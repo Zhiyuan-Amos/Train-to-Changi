@@ -22,8 +22,7 @@ protocol MapSceneDelegate: class {
 class MapScene: SKScene {
     private var cam: SKCameraNode!
 
-    // can't use "delegate" as name as Swift forbids overriding inherited properties
-    weak var agent: MapSceneDelegate?
+    weak var mapSceneDelegate: MapSceneDelegate?
 
     override func didMove(to view: SKView) {
         // add camera so that can pan
@@ -32,9 +31,9 @@ class MapScene: SKScene {
         self.addChild(cam)
         cam.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
 
-        // replace empty placeholder SKNode with MapStation nodes
-        enumerateChildNodes(withName: "^\\w+Station$", using: { node, _ in
-            self.replace(node, with: MapStation(node, delegate: self))
+        // replace empty placeholder SKNode with StationLevelNode nodes
+        enumerateChildNodes(withName: Constants.Map.stationNameRegex, using: { node, _ in
+            self.replace(node, with: StationLevelNode(node, delegate: self))
         })
     }
 
@@ -51,16 +50,16 @@ class MapScene: SKScene {
         camera?.position.y -= location.y - previousLocation.y
     }
 
-    // replace empty SKNode with MapStation
-    private func replace(_ one: SKNode, with another: MapStation) {
-        one.removeFromParent()
-        addChild(another)
+    // replace empty SKNode with StationLevelNode
+    private func replace(_ node: SKNode, with stationLevelNode: StationLevelNode) {
+        node.removeFromParent()
+        addChild(stationLevelNode)
     }
 }
 
-extension MapScene: MapStationDelegate {
+extension MapScene: StationLevelNodeDelegate {
     func didTouchStation(name: String?) {
         guard let name = name else { return }
-        agent?.didTouchStation(name: name)
+        mapSceneDelegate?.didTouchStation(name: name)
     }
 }

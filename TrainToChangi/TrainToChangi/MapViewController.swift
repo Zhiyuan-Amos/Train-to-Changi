@@ -33,7 +33,7 @@ class MapViewController: UIViewController {
             assertionFailure("Did you set custom class in MapView.sks?")
             return
         }
-        sceneNode.agent = self
+        sceneNode.mapSceneDelegate = self
         sceneNode.scaleMode = .aspectFill
 
         // cast own view so can present scene
@@ -60,11 +60,12 @@ class MapViewController: UIViewController {
                 break
             }
             guard let gameVC = segue.destination as? GameViewController else {
+                assertionFailure("Segue should point to GameViewController")
                 break
             }
             gameVC.initLevel(name: levelName)
         default:
-            break
+            assertionFailure("Segue has a name unaccounted for")
         }
     }
 }

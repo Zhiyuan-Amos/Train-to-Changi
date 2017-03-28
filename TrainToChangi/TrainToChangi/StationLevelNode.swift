@@ -1,5 +1,5 @@
 //
-//  MapStation.swift
+//  StationLevelNode.swift
 //  TrainToChangi
 //
 //  Created by zhongwei zhang on 3/27/17.
@@ -8,17 +8,17 @@
 
 import SpriteKit
 
-protocol MapStationDelegate: class {
+protocol StationLevelNodeDelegate: class {
     func didTouchStation(name: String?)
 }
 
-class MapStation: SKSpriteNode {
-    weak var delegate: MapStationDelegate?
+class StationLevelNode: SKSpriteNode {
+    weak var delegate: StationLevelNodeDelegate?
 
-    init(_ node: SKNode, delegate: MapStationDelegate? = nil) {
+    init(_ node: SKNode, delegate: StationLevelNodeDelegate? = nil) {
         self.delegate = delegate
         let texture = SKTexture(imageNamed: Constants.Map.stationImage)
-        super.init(texture: texture, color: .clear, size: Constants.Map.stationSize)
+        super.init(texture: texture, color: .clear, size: Constants.Map.stationNodeSize)
         self.name = node.name
         self.position = node.position
         self.isUserInteractionEnabled = true // Important. Else touch will not be detected
