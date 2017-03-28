@@ -39,13 +39,11 @@ struct Memory {
             }
         }
     }
-}
 
-extension CGPoint {
-    // make CGPoint init less verbose
-    // swiftlint:disable variable_name
-    init(_ x: CGFloat, _ y: CGFloat) {
-        self.x = x
-        self.y = y
+    // specifies person's actions involving memory, for the game scene
+    enum Action {
+        case putDown                // put payload down to the memory slot
+        case pickUp                 // pick up payload from memory slot
+        case compute(expected: Int) // calculate using payload on the memory slot
     }
 }

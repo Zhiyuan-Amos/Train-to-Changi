@@ -32,7 +32,7 @@ struct Constants {
         static let position = CGPoint(x: 400, y: 140)
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x + size.width / 2, y: position.y + size.height / 2)
-        static let entryPosition = CGPoint(x: position.x + size.width / 2 - Box.size.width / 2 - 10, y: position.y)
+        static let entryPosition = CGPoint(x: position.x + size.width / 2 - Payload.size.width / 2 - 10, y: position.y)
         static let imagePadding: CGFloat = 10
     }
 
@@ -52,8 +52,9 @@ struct Constants {
         static let size = CGSize(width: 60, height: 60)
     }
 
-    struct Box {
+    struct Payload {
         static let imageName = "box"
+        static let labelName = "payload label"
         static let labelOffsetY: CGFloat = -5
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 18
@@ -72,6 +73,7 @@ struct Constants {
         static let animationEnded = Notification.Name(rawValue: "animationEnded")
     }
 
+    // swiftlint:disable type_name
     struct UI {
         static let commandButtonInitialOffsetY: CGFloat = 40
         static let commandButtonOffsetY: CGFloat = 40
@@ -83,14 +85,18 @@ struct Constants {
 
     struct Animation {
         static let moveToConveyorBeltDuration = 2.0
+        static let moveToMemoryDuration = 1.0
 
-        static let moveConveyorBeltVector = CGVector(dx: -Box.size.width - Inbox.imagePadding, dy: 0)
+        static let moveConveyorBeltVector = CGVector(dx: -Payload.size.width - Inbox.imagePadding, dy: 0)
         static let moveConveyorBeltDuration = 0.7
 
         static let afterInboxStepVector = CGVector(dx: 0, dy: -60)
         static let afterInboxStepDuration = 0.5
 
         static let holdingToOutboxDuration = 1.0
+
+        static let discardHoldingValueDuration = 0.5
+        static let holdingValueToMemoryDuration = 0.5
     }
 
     struct Audio {

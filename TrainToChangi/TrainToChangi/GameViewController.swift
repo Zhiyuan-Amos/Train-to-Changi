@@ -9,6 +9,10 @@
 import UIKit
 import SpriteKit
 
+protocol GameVCTouchDelegate: class {
+    func memoryIndex(at: CGPoint) -> Int?
+}
+
 class GameViewController: UIViewController {
 
     // VC is currently first responder, to be changed when we add other views.

@@ -11,7 +11,7 @@ import GameplayKit
 
 // Stores the location that can be reached by player sprite.
 enum WalkDestination {
-    case inbox, outbox, memory(layout: Memory.Layout, index: Int)
+    case inbox, outbox, memory(layout: Memory.Layout, index: Int, action: Memory.Action)
 
     var point: CGPoint {
         switch self {
@@ -19,7 +19,7 @@ enum WalkDestination {
             return Constants.Inbox.goto
         case .outbox:
             return Constants.Outbox.goto
-        case let .memory(layout, index):
+        case let .memory(layout, index, _):
             return layout.locations[index]
         }
     }
@@ -38,6 +38,8 @@ class GameScene: SKScene {
     fileprivate var memoryNodes = [SKSpriteNode]()
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
+
+    fileprivate var memoryLayout: Memory.Layout?
 
     fileprivate var backgroundTileMap: SKTileMapNode!
 }
@@ -114,63 +116,54 @@ extension GameScene {
     }
 
     private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
+        self.memoryLayout = layout
         for (index, _) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
-                assertionFailure("Number of memory values differ from the layout specified. Check level data.")
-                return
+                fatalError("[GameScene:initMemory] " +
+                               "Number of memory values differ from the layout specified. Check level data.")
             }
-            let box = SKSpriteNode(imageNamed: "memory")
-            box.size = Constants.Memory.size
-            box.position = layout.locations[index]
-            box.name = "memory \(index)"
 
-            // TODO: create box for pre-loaded memory values
-            let label = SKLabelNode(text: String(describing: index))
-            label.position = CGPoint(x: label.position.x + Constants.Memory.labelOffsetX,
-                                     y: label.position.y + Constants.Memory.labelOffsetY)
-            label.fontSize = Constants.Memory.labelFontSize
-            box.addChild(label)
-            addChild(box)
+            addChild(MemorySlot(index: index, layout: layout))
         }
     }
 
     private func initInboxNodes(from inboxValues: [Int]) {
         inboxNodes = []
         for (index, value) in inboxValues.enumerated() {
-            //TODO: Wondering if we can place the values init somewhere else.
-            let label = SKLabelNode(text: String(value))
-            label.position.y += Constants.Box.labelOffsetY
-            label.fontName = Constants.Box.fontName
-            label.fontSize = Constants.Box.fontSize
-            label.fontColor = Constants.Box.fontColor
-
-            let box = SKSpriteNode(imageNamed: Constants.Box.imageName)
-            box.size = Constants.Box.size
-            box.position = calculateInboxBoxPosition(index: index)
-            box.zRotation = Constants.Box.rotationAngle
-
-            box.addChild(label)
-            inboxNodes.append(box)
-            self.addChild(box)
+            let payload = Payload(position: calculateInboxBoxPosition(index: index), value: value)
+            inboxNodes.append(payload)
+            self.addChild(payload)
         }
     }
 
     private func calculateInboxBoxPosition(index: Int) -> CGPoint {
-        let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Box.size.width / 2
+        let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Payload.size.width / 2
             + Constants.Inbox.imagePadding
 
-        let offsetX = CGFloat(index) * (Constants.Box.size.width + Constants.Inbox.imagePadding)
+        let offsetX = CGFloat(index) * (Constants.Payload.size.width + Constants.Inbox.imagePadding)
 
         return CGPoint(x: startingX + offsetX, y: inbox.position.y)
     }
 }
 
 // MARK: - Touch
-extension GameScene {
-    func memoryLocation(of point: CGPoint) -> Int {
-        let index = 0
+extension GameScene: GameVCTouchDelegate {
 
-        return index
+    // Accepts a CGPoint and returns the index of memory if the touch is inside the memory grid
+    // returns nil if point is outside the grid
+    func memoryIndex(at point: CGPoint) -> Int? {
+        guard let centers = memoryLayout?.locations else {
+            fatalError("[GameScene:memoryIndex] memoryLayout has not been initialized")
+        }
+
+        // there have to be at least one memory locations to detect
+        guard centers.count > 0 else {
+            return nil
+        }
+
+        // calculate distance between `point` and each memory center, return the one with the min distance
+        let distancesToPoint: [CGFloat] = memoryNodes.map{ $0.position.distance(to: point) }
+        return distancesToPoint.index(of: distancesToPoint.min()!)
     }
 }
 
@@ -206,8 +199,8 @@ extension GameScene {
             animateGoToInbox()
         case .outbox:
             animateGoToOutbox()
-        case .memory(_, _):
-            break
+        case let .memory(layout, index, action):
+            animateGoToMemory(layout, index, action)
         }
     }
 
@@ -227,6 +220,25 @@ extension GameScene {
         })
     }
 
+    private func animateGoToMemory(_ layout: Memory.Layout, _ index: Int, _ action: Memory.Action) {
+        guard index > 0 && index < memoryNodes.count else {
+            fatalError("[GameScene:animateGoToMemory] Trying to access memory out of bound")
+        }
+        let moveAction = SKAction.move(to: layout.locations[index],
+                                       duration: Constants.Animation.moveToMemoryDuration)
+        player.run(moveAction, completion: {
+            // player already moved to memory location, perform memory actions
+            switch action {
+            case .pickUp:
+                self.pickUpMemory(index)
+            case .putDown:
+                self.putDownToMemory(index)
+            case let .compute(expected):
+                self.computeWithMemory(index, expected: expected)
+            }
+        })
+    }
+
     private func animateGoToOutbox() {
         // 1. walk to outbox
         let moveAction = SKAction.move(to: WalkDestination.outbox.point,
@@ -240,6 +252,38 @@ extension GameScene {
             // 3. wait for outbox movements finish, put on outbox
             self.putToOutbox()
         })
+    }
+
+    // player should already move to necessary memory location
+    private func pickUpMemory(_ index: Int) {
+        let memory = memoryNodes[index]
+        let throwHoldingVal = SKAction.fadeOut(withDuration: 0.5)
+        let removeFromParent = SKAction.removeFromParent()
+
+        holdingNode.run(SKAction.sequence([throwHoldingVal, removeFromParent]), completion: {
+            memory.move(toParent: self.player)
+        })
+    }
+
+    // player should already move to necessary memory location
+    private func putDownToMemory(_ index: Int) {
+        guard let copyOfHoldingValue = holdingNode.copy() as? SKSpriteNode else {
+            fatalError("[GameScene:putDownToMemory] Can't make a copy of holding value")
+        }
+
+        let position = memoryNodes[index].position
+
+        copyOfHoldingValue.move(toParent: scene!)
+        let dropHolding = SKAction.move(to: position, duration: 0.5)
+        copyOfHoldingValue.run(dropHolding)
+    }
+
+    private func computeWithMemory(_ index: Int, expected: Int) {
+        guard let payloadOnMemory = memoryNodes[index].childNode(withName: Constants.Payload.labelName)
+              as? SKLabelNode else {
+            fatalError("[GameScene:computeWithMemory] Unable to find payload's label")
+        }
+        payloadOnMemory.text = String(expected)
     }
 
     private func moveConveyorBelt(_ node: SKSpriteNode) {
