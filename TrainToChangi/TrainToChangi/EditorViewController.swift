@@ -12,7 +12,7 @@ import Foundation
 class EditorViewController: UIViewController {
 
     var model: Model!
-    private var jumpViewBundles = [JumpViewsBundle]()
+    private var jumpViewsBundles = [JumpViewsBundle]()
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var editorView: UIImageView!
@@ -32,6 +32,10 @@ class EditorViewController: UIViewController {
 
     @IBAction func resetButtonPressed(_ sender: Any) {
         model.clearAllCommands()
+        for jumpViewsBundle in jumpViewsBundles {
+            jumpViewsBundle.arrowView.removeFromSuperview()
+        }
+        jumpViewsBundles.removeAll()
         currentCommandsView.reloadData()
     }
 
@@ -105,9 +109,9 @@ class EditorViewController: UIViewController {
 
         _ = model.removeCommand(fromIndex: indexPath.item)
         currentCommandsView.deleteItems(at: [indexPath])
-
     }
 
+    //TODO: To refactor
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
@@ -122,6 +126,7 @@ class EditorViewController: UIViewController {
                   let cell = currentCommandsView.cellForItem(at: indexPath) else {
                 return
             }
+
             DragBundle.initialIndexPath = indexPath
             DragBundle.cellSnapshot = snapshotOfCell(inputView: cell)
             DragBundle.cellSnapshot?.center = cell.center
@@ -147,9 +152,22 @@ class EditorViewController: UIViewController {
                         return
             }
             currentCommandsView.moveItem(at: DragBundle.initialIndexPath!, to: indexPath)
+
+            if model.userEnteredCommands[DragBundle.initialIndexPath!.item] == .jump
+            && model.userEnteredCommands[indexPath.item] == .jumpTarget {
+                updateArrowViewsBothJump(jumpIndexPath: DragBundle.initialIndexPath!, jumpTargetIndexPath: indexPath)
+            } else if model.userEnteredCommands[indexPath.item] == .jump
+                   && model.userEnteredCommands[DragBundle.initialIndexPath!.item] == .jumpTarget {
+                updateArrowViewsBothJump(jumpIndexPath: indexPath, jumpTargetIndexPath: DragBundle.initialIndexPath!)
+            } else if model.userEnteredCommands[DragBundle.initialIndexPath!.item] == .jump
+                   || model.userEnteredCommands[DragBundle.initialIndexPath!.item] == .jumpTarget {
+                updateArrowViews(oldIndexPath: DragBundle.initialIndexPath!, newIndexPath: indexPath)
+            } else {
+                updateArrowViews(oldIndexPath: indexPath, newIndexPath: DragBundle.initialIndexPath!)
+            }
+
+            model.moveCommand(fromIndex: DragBundle.initialIndexPath!.item, toIndex: indexPath.item)
             DragBundle.initialIndexPath = indexPath
-            currentCommandsView.scrollToItem(at: indexPath, at: UICollectionViewScrollPosition.top,
-                                             animated: true)
 
         default:
             let cell = currentCommandsView.cellForItem(at: DragBundle.initialIndexPath!)
@@ -167,12 +185,14 @@ class EditorViewController: UIViewController {
                     DragBundle.cellSnapshot!.removeFromSuperview()
                     DragBundle.cellSnapshot = nil
                 }
+                self.currentCommandsView.reloadData()
             })
+
         }
     }
 
     /* Helper func */
-    // TODO: Refactor
+    // TODO: To Refactor
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
@@ -210,12 +230,89 @@ class EditorViewController: UIViewController {
                 self.currentCommandsView.addSubview(arrowView)
             }
 
+            let jumpViewsBundle = JumpViewsBundle(jumpIndexPath: lastIndexPath,
+                                                 jumpTargetIndexPath: penultimateIndexPath,
+                                                 arrowView: arrowView)
+            jumpViewsBundles.append(jumpViewsBundle)
+
         } else {
             currentCommandsView.insertItems(at: [lastIndexPath])
             currentCommandsView.scrollToItem(at: lastIndexPath, at: UICollectionViewScrollPosition.top,
                                              animated: true)
         }
 
+    }
+
+    //TODO: Refactor
+    private func updateArrowViews(oldIndexPath: IndexPath, newIndexPath: IndexPath) {
+        guard let jumpViewsBundle = getJumpViewsBundle(indexPath: oldIndexPath) else {
+            return
+        }
+
+        if oldIndexPath == jumpViewsBundle.jumpIndexPath {
+            jumpViewsBundle.jumpIndexPath = newIndexPath
+
+            guard let jumpCell = currentCommandsView.cellForItem(at: newIndexPath),
+                  let jumpTargetCell = currentCommandsView.cellForItem(at: jumpViewsBundle.jumpTargetIndexPath) else {
+                    return
+            }
+
+            let newOrigin = CGPoint(jumpTargetCell.frame.midX, jumpTargetCell.frame.midY)
+            let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                 height: jumpCell.frame.midY - jumpTargetCell.frame.midY)
+            jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+
+        } else {
+            jumpViewsBundle.jumpTargetIndexPath = newIndexPath
+
+            guard let jumpCell = currentCommandsView.cellForItem(at: jumpViewsBundle.jumpIndexPath),
+                  let jumpTargetCell = currentCommandsView.cellForItem(at: newIndexPath) else {
+                    return
+            }
+
+            let newOrigin = CGPoint(jumpTargetCell.frame.midX, jumpTargetCell.frame.midY)
+            let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                 height: jumpCell.frame.midY - jumpTargetCell.frame.midY)
+            jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+        }
+    }
+
+    private func updateArrowViewsBothJump(jumpIndexPath: IndexPath, jumpTargetIndexPath: IndexPath) {
+        guard let jumpViewsBundle = getJumpViewsBundle(indexPath: jumpIndexPath) else {
+            return
+        }
+
+        swap(&jumpViewsBundle.jumpIndexPath, &jumpViewsBundle.jumpTargetIndexPath)
+
+        guard let jumpCell = currentCommandsView.cellForItem(at: jumpViewsBundle.jumpIndexPath),
+              let jumpTargetCell = currentCommandsView.cellForItem(at: jumpViewsBundle.jumpTargetIndexPath) else {
+                return
+        }
+
+
+        if jumpCell.frame.midY < jumpTargetCell.frame.midY {
+            let newOrigin = CGPoint(jumpCell.frame.midX, jumpCell.frame.midY)
+            let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                 height: jumpTargetCell.frame.midY - jumpCell.frame.midY)
+            jumpViewsBundle.arrowView.image = UIImage(named: "arrownavyinvert.png")
+            jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+        } else {
+            let newOrigin = CGPoint(jumpTargetCell.frame.midX, jumpTargetCell.frame.midY)
+            let newSize = CGSize(width: Constants.UI.arrowWidth,
+                                 height: jumpCell.frame.midY - jumpTargetCell.frame.midY)
+            jumpViewsBundle.arrowView.image = UIImage(named: "arrownavy.png")
+            jumpViewsBundle.arrowView.frame = CGRect(origin: newOrigin, size: newSize)
+        }
+    }
+
+    private func getJumpViewsBundle(indexPath: IndexPath) -> JumpViewsBundle? {
+        for jumpViewBundle in jumpViewsBundles {
+            if jumpViewBundle.jumpIndexPath == indexPath
+                || jumpViewBundle.jumpTargetIndexPath == indexPath {
+                return jumpViewBundle
+            }
+        }
+        return nil
     }
 
     private func getCellAtGestureLocation(_ location: CGPoint) -> CommandCell? {
@@ -229,7 +326,6 @@ class EditorViewController: UIViewController {
     }
 
     private func snapshotOfCell(inputView: UIView) -> UIView {
-
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
         inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
@@ -245,31 +341,32 @@ class EditorViewController: UIViewController {
     }
 }
 
-struct JumpViewsBundle {
+class JumpViewsBundle {
     var jumpIndexPath: IndexPath
     var jumpTargetIndexPath: IndexPath
     var arrowView: UIImageView
+
+    init(jumpIndexPath: IndexPath, jumpTargetIndexPath: IndexPath, arrowView: UIImageView) {
+        self.jumpIndexPath = jumpIndexPath
+        self.jumpTargetIndexPath = jumpTargetIndexPath
+        self.arrowView = arrowView
+    }
 }
 
 extension EditorViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return Constants.UI.numberOfSectionsInCollection
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return model.userEnteredCommands.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath,
-                        to destinationIndexPath: IndexPath) {
-        model.moveCommand(fromIndex: sourceIndexPath.item, toIndex: destinationIndexPath.item)
-    }
-
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.UI.commandCellIdentifier,
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.UI.collectionViewCellIdentifier,
                                                       for: indexPath)
 
         guard let commandCell =  cell as? CommandCell else {
@@ -289,27 +386,29 @@ extension EditorViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
 
-        return CGSize(width: collectionView.frame.width - 10,
-                      height: Constants.UI.commandButtonHeight - 10)
+        return CGSize(width: Constants.UI.collectionCellWidth,
+                      height: Constants.UI.collectionCellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
 
-        let edgeInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 10)
+        let edgeInset = UIEdgeInsets(top: Constants.UI.topEdgeInset,
+                                     left: 0, bottom: 0,
+                                     right: Constants.UI.rightEdgeInset)
         return edgeInset
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return Constants.UI.minimumLineSpacingForSection
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return Constants.UI.minimumInteritemSpacingForSection
     }
 }

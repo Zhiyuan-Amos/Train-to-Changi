@@ -96,7 +96,18 @@ struct Constants {
         static let commandButtonWidthLong: CGFloat = 100
         static let commandIndexWidth: CGFloat = 20
 
-        static let commandCellIdentifier = "CommandCell"
+        static let collectionViewCellIdentifier = "CommandCell"
+
+        static let numberOfSectionsInCollection = 1
+
+        static let topEdgeInset: CGFloat = 10
+        static let rightEdgeInset: CGFloat = 30
+
+        static let minimumLineSpacingForSection: CGFloat = 0
+        static let minimumInteritemSpacingForSection: CGFloat = 0
+
+        static let collectionCellWidth: CGFloat = 160
+        static let collectionCellHeight: CGFloat = 40
 
         static let arrowWidth: CGFloat = 30
     }
