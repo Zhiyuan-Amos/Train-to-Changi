@@ -30,6 +30,11 @@ class EditorViewController: UIViewController {
         addGestureRecognisers()
     }
 
+    @IBAction func resetButtonPressed(_ sender: Any) {
+        model.clearAllCommands()
+        currentCommandsView.reloadData()
+    }
+
     /* Setup Code */
     private func connectDataSourceAndDelegate() {
         currentCommandsView.dataSource = self
@@ -145,18 +150,28 @@ class EditorViewController: UIViewController {
             currentCommandsView.scrollToItem(at: lastIndexPath, at: UICollectionViewScrollPosition.top,
                                              animated: true)
 
-            guard let jumpTargetCell = currentCommandsView.cellForItem(at: penultimateIndexPath) as? CommandCell,
-                let jumpCell = currentCommandsView.cellForItem(at: lastIndexPath) as? CommandCell else {
-                    return
-            }
-            let arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: jumpTargetCell.frame,
-                                                             jumpFrame: jumpCell.frame)
-            self.currentCommandsView.addSubview(arrowView)
-            let newJumpViewsBundle = JumpViewsBundle(jumpCell: jumpCell,
-                                                     jumpTargetCell: jumpTargetCell,
-                                                     arrowView: arrowView)
-            self.jumpViewBundles.append(newJumpViewsBundle)
+            if let jumpTargetCell = currentCommandsView.cellForItem(at: penultimateIndexPath) as? CommandCell,
+               let jumpCell = currentCommandsView.cellForItem(at: lastIndexPath) as? CommandCell {
 
+                let arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: jumpTargetCell.frame,
+                                                                 jumpFrame: jumpCell.frame)
+                self.currentCommandsView.addSubview(arrowView)
+            } else { // What is happening is that the jump cell and jump target cell are not visible
+                //Get the last visible cell
+                let thirdLastIndexPath = IndexPath(item: model.userEnteredCommands.count - 3, section: 0)
+                guard let thirdLastCell = currentCommandsView.cellForItem(at: thirdLastIndexPath) as? CommandCell else {
+                    return
+                }
+                let secondLastOrigin = CGPoint(thirdLastCell.frame.minX, thirdLastCell.frame.maxY)
+                let secondLastFrame = CGRect(origin: secondLastOrigin, size: thirdLastCell.frame.size)
+
+                let lastOrigin = CGPoint(thirdLastCell.frame.minX, secondLastFrame.maxY)
+                let lastFrame = CGRect(origin: lastOrigin, size: thirdLastCell.frame.size)
+
+                let arrowView = UIEntityHelper.generateArrowView(jumpTargetFrame: secondLastFrame,
+                                                                 jumpFrame: lastFrame)
+                self.currentCommandsView.addSubview(arrowView)
+            }
 
         } else {
             currentCommandsView.insertItems(at: [lastIndexPath])
