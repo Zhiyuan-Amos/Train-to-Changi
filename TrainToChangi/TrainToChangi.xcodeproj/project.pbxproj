@@ -27,7 +27,6 @@
 		D71B88551E86AAC1006BC3E9 /* main-track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D71B88541E86AAC1006BC3E9 /* main-track.mp3 */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
-		D744CA5B1E797F70004CCABD /* JumpTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA5A1E797F70004CCABD /* JumpTarget.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
 		D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA681E7A38D7004CCABD /* StorageManager.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
@@ -91,7 +90,6 @@
 		D71B88541E86AAC1006BC3E9 /* main-track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "main-track.mp3"; path = "Audio/main-track.mp3"; sourceTree = SOURCE_ROOT; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
-		D744CA5A1E797F70004CCABD /* JumpTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpTarget.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		D744CA681E7A38D7004CCABD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 				D7A267D51E7796C300DE5774 /* CopyToCommand.swift */,
 				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
 				D7983CE11E76D9A400E650ED /* JumpCommand.swift */,
-				D744CA5A1E797F70004CCABD /* JumpTarget.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -480,7 +477,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D744CA5B1E797F70004CCABD /* JumpTarget.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
@@ -710,6 +706,7 @@
 				A7A10D0C1E86A6C20040DA21 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D76FA81E1E76ADC400CCCFBE /* Build configuration list for PBXProject "TrainToChangi" */ = {
 			isa = XCConfigurationList;
