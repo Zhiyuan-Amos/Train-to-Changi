@@ -98,7 +98,7 @@ struct Constants {
 
         static let collectionViewCellIdentifier = "CommandCell"
 
-        static let numberOfSectionsInCollection = 1
+        static let numberOfSectionsInCollectionView = 1
 
         static let topEdgeInset: CGFloat = 10
         static let rightEdgeInset: CGFloat = 30

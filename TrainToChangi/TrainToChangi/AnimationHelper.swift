@@ -11,14 +11,14 @@ import UIKit
 class AnimationHelper {
 
     static func wiggleAnimation() -> CAKeyframeAnimation {
-        let transformAnim  = CAKeyframeAnimation(keyPath:"transform")
-        transformAnim.values  = [NSValue(caTransform3D: CATransform3DMakeRotation(0.04, 0.0, 0.0, 1.0)),
+        let animation  = CAKeyframeAnimation(keyPath:"transform")
+        animation.values  = [NSValue(caTransform3D: CATransform3DMakeRotation(0.04, 0.0, 0.0, 1.0)),
                                  NSValue(caTransform3D: CATransform3DMakeRotation(-0.04, 0, 0, 1))]
-        transformAnim.autoreverses = true
-        transformAnim.duration  = 0.2
-        transformAnim.repeatCount = Float.infinity
+        animation.autoreverses = true
+        animation.duration  = 0.2
+        animation.repeatCount = Float.infinity
 
-        return transformAnim
+        return animation
     }
 
     static func dragBeganAnimation(location: CGPoint, cell: UICollectionViewCell) {
@@ -35,7 +35,7 @@ class AnimationHelper {
         })
     }
 
-    static func dragEndAnimation(cell: UICollectionViewCell) {
+    static func dragEndedAnimation(cell: UICollectionViewCell) {
         UIView.animate(withDuration: 0.25, animations: { () -> Void in
             DragBundle.cellSnapshot?.center = cell.center
             DragBundle.cellSnapshot?.transform = CGAffineTransform.identity

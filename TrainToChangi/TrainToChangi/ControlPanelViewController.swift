@@ -13,26 +13,19 @@ class ControlPanelViewController: UIViewController {
     var model: Model!
     var logic: Logic!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    /* Control Panel Logic */
-    @IBAction func stopButtonPressed(_ sender: Any) {
+    @IBAction func stopButtonPressed(_ sender: UIButton) {
         model.runState = .stopped
     }
 
-    @IBAction func stepBackButtonPressed(_ sender: Any) {
+    @IBAction func stepBackButtonPressed(_ sender: UIButton) {
         _ = logic.undo()
     }
 
-    @IBAction func stepForwardButtonPressed(_ sender: Any) {
+    @IBAction func stepForwardButtonPressed(_ sender: UIButton) {
         logic.executeNextCommand()
     }
 
-    @IBAction func playButtonPressed(_ sender: Any) {
+    @IBAction func playButtonPressed(_ sender: UIButton) {
         model.runState = .running
         logic.executeCommands()
     }

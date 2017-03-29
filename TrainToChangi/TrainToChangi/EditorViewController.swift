@@ -26,7 +26,7 @@ class EditorViewController: UIViewController {
         setUpLevelDescription()
         loadAvailableCommands()
 
-        adjustCommandsEditorPosition()
+        adjustCurrentCommandsCollectionView()
         addGestureRecognisers()
     }
 
@@ -37,24 +37,27 @@ class EditorViewController: UIViewController {
         currentCommandsView.reloadData()
     }
 
-    /* Setup Code */
+    // MARK: - Setup
     private func connectDataSourceAndDelegate() {
         currentCommandsView.dataSource = self
         currentCommandsView.delegate = self
     }
 
+    // Initialise the height for level description
     private func setUpLevelDescription() {
         levelDescriptionTextView.text = model.currentLevel.levelDescriptor
 
-        let fixedWidth = levelDescriptionTextView.frame.size.width
-        let newSize = levelDescriptionTextView.sizeThatFits(CGSize(width: fixedWidth,
-                                                                   height: CGFloat.greatestFiniteMagnitude))
-        var newFrame = levelDescriptionTextView.frame
-        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-        levelDescriptionTextView.frame = newFrame
+        let defaultWidth = levelDescriptionTextView.frame.size.width
+        let sizeThatFits = CGSize(width: defaultWidth,
+                                  height: CGFloat.greatestFiniteMagnitude)
+        let newSize = levelDescriptionTextView.sizeThatFits(sizeThatFits)
+        levelDescriptionTextView.frame.size = CGSize(width: max(newSize.width, defaultWidth),
+                                                     height: newSize.height)
+
     }
 
-    private func adjustCommandsEditorPosition() {
+    // Adjust the position of current commands collection view to be below level description
+    private func adjustCurrentCommandsCollectionView() {
         let x = currentCommandsView.frame.minX
         let y = levelDescriptionTextView.frame.maxY + 5
         let width = currentCommandsView.frame.width - 5
@@ -63,30 +66,26 @@ class EditorViewController: UIViewController {
         currentCommandsView.frame = CGRect(x: x, y: y, width: width, height: height)
     }
 
+    // Load the available commands from model for the current level
     func loadAvailableCommands() {
         let initialCommandPosition = availableCommandsView.frame.origin
-        var commandButtonOffsetY = Constants.UI.commandButtonInitialOffsetY
-        var commandTag = 0
 
-        for command in model.currentLevel.availableCommands {
-            let currentCommandPositionX = initialCommandPosition.x
-            let currentCommandPositionY = initialCommandPosition.y + commandButtonOffsetY
+        for (commandTag, command) in model.currentLevel.availableCommands.enumerated() {
+            let currentCommandPositionY = initialCommandPosition.y +
+                CGFloat(commandTag) * Constants.UI.commandButtonOffsetY
 
-            let buttonPosition = CGPoint(x: currentCommandPositionX,
+            let buttonPosition = CGPoint(x: initialCommandPosition.x,
                                          y: currentCommandPositionY)
 
             let commandButton = UIEntityHelper.generateCommandUIButton(for: command,
-                                                                            position: buttonPosition,
-                                                                            tag: commandTag)
+                                                                       position: buttonPosition,
+                                                                       tag: commandTag)
             commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
-
-            commandTag += 1
-            commandButtonOffsetY += Constants.UI.commandButtonOffsetY
             view.addSubview(commandButton)
         }
     }
 
-    /* Gestures */
+    // MARK: - Gestures
     private func addGestureRecognisers() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         longPressGesture.minimumPressDuration = 0.3
@@ -96,24 +95,6 @@ class EditorViewController: UIViewController {
         doubleTapGesture.numberOfTapsRequired = 2
         currentCommandsView.addGestureRecognizer(doubleTapGesture)
 
-        let singleTapGesture = UITapGestureRecognizer (target: self, action: #selector(handleSingleTap))
-        currentCommandsView.addGestureRecognizer(singleTapGesture)
-    }
-
-    @objc private func handleSingleTap(gesture: UITapGestureRecognizer) {
-        let location = gesture.location(in: currentCommandsView)
-
-        guard let indexPath = currentCommandsView.indexPathForItem(at: location) else {
-            return
-        }
-
-        guard let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
-            return
-        }
-
-        if isIndexedCommand(indexPath: indexPath) {
-            print("WAHLAHLAH")
-        }
     }
 
     @objc private func handleDoubleTap(gesture: UITapGestureRecognizer) {
@@ -123,26 +104,13 @@ class EditorViewController: UIViewController {
                 return
         }
 
-        guard let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
-            return
-        }
-
-        guard cell.commandImage.frame.contains(location) else {
-            return
-        }
-
+        // clear all jump arrow views before potentially deleting jumpBundle
         removeAllJumpArrows()
 
-        var partnerIndexPath: IndexPath?
-        if isJumpCommand(indexPath: indexPath) {
-            partnerIndexPath = getJumpViewsBundle(indexPath: indexPath)?.jumpTargetIndexPath
-        } else if isJumpTargetCommand(indexPath: indexPath) {
-            partnerIndexPath = getJumpViewsBundle(indexPath: indexPath)?.jumpIndexPath
-        }
-
-        if let partnerIndexPath = partnerIndexPath {
+        // if command is related to jump, need to delete bundle
+        if let jumpPartnerIndexPath = getJumpPartnerIndexPath(indexPath: indexPath) {
             updateJumpBundles(deletedIndexPath: indexPath,
-                              deletedPartnerIndexPath: partnerIndexPath)
+                              deletedPartnerIndexPath: jumpPartnerIndexPath)
             deleteJumpBundle(deletedIndexPath: indexPath)
         } else {
             updateJumpBundles(deletedIndexPath: indexPath)
@@ -162,7 +130,7 @@ class EditorViewController: UIViewController {
                   let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
                 return
             }
-            
+
             initDragBundleAtGestureBegan(indexPath: indexPath, cell: cell)
             currentCommandsView.addSubview(DragBundle.cellSnapshot!)
             AnimationHelper.dragBeganAnimation(location: location, cell: cell)
@@ -175,17 +143,17 @@ class EditorViewController: UIViewController {
             }
             currentCommandsView.moveItem(at: DragBundle.initialIndexPath!, to: indexPath)
 
-            if isOneOfJumpCommands(indexPath: DragBundle.initialIndexPath!)
-                && isOneOfJumpCommands(indexPath: indexPath) {
+            if isJumpRelatedCommand(indexPath: DragBundle.initialIndexPath!)
+                && isJumpRelatedCommand(indexPath: indexPath) {
                 performBothJumpCommandsUpdate(indexPathOne: DragBundle.initialIndexPath!,
                                               indexPathTwo: indexPath)
                 renderJumpArrows()
-            } else if isOneOfJumpCommands(indexPath: DragBundle.initialIndexPath!) {
-                performOneJumpCommandsUpdate(oldIndexPath: DragBundle.initialIndexPath!,
+            } else if isJumpRelatedCommand(indexPath: DragBundle.initialIndexPath!) {
+                performOneJumpCommandUpdate(oldIndexPath: DragBundle.initialIndexPath!,
                                              newIndexPath: indexPath)
                 renderJumpArrows()
-            } else if isOneOfJumpCommands(indexPath: indexPath) {
-                performOneJumpCommandsUpdate(oldIndexPath: indexPath,
+            } else if isJumpRelatedCommand(indexPath: indexPath) {
+                performOneJumpCommandUpdate(oldIndexPath: indexPath,
                                              newIndexPath: DragBundle.initialIndexPath!)
                 renderJumpArrows()
             }
@@ -200,11 +168,11 @@ class EditorViewController: UIViewController {
             }
             cell.isHidden = false
             cell.alpha = 0.0
-            AnimationHelper.dragEndAnimation(cell: cell)
+            AnimationHelper.dragEndedAnimation(cell: cell)
         }
     }
 
-    /* Button actions func */
+    // MARK: - Button Actions Func
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
@@ -215,7 +183,7 @@ class EditorViewController: UIViewController {
         if command == CommandData.jump {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
             let arrowView = drawJumpArrow(topIndexPath: penultimateIndexPath,
-                                      bottomIndexPath: lastIndexPath)
+                                          bottomIndexPath: lastIndexPath)
             currentCommandsView.addSubview(arrowView)
 
             let jumpBundle = JumpBundle(jumpIndexPath: lastIndexPath,
@@ -230,63 +198,68 @@ class EditorViewController: UIViewController {
                                          animated: true)
     }
 
-    /* Drawing Helper func */
-    private func getArrowOriginAt(indexPath: IndexPath) -> CGPoint {
+    // MARK: - Drawing Helper Functions
+    private func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
         return CGPoint(Constants.UI.collectionCellWidth * 0.5,
-                       getMidYOfCellAt(indexPath: indexPath))
+                       getMidYOfCell(at: indexPath))
     }
 
-    private func getMidYOfCellAt(indexPath: IndexPath) -> CGFloat {
+    private func getMidYOfCell(at indexPath: IndexPath) -> CGFloat {
         return Constants.UI.topEdgeInset
             + (CGFloat(indexPath.item + 1) * Constants.UI.collectionCellHeight)
             - (0.5 * Constants.UI.collectionCellHeight)
     }
 
-    private func getHeightBetweenIndexPaths(indexPathOne: IndexPath, indexPathTwo: IndexPath) -> CGFloat {
-        if indexPathOne.item < indexPathTwo.item {
-            return getHeightBetweenIndexPaths(indexPathOne: indexPathTwo, indexPathTwo: indexPathOne)
-        } else {
-            return getMidYOfCellAt(indexPath: indexPathOne) - getMidYOfCellAt(indexPath: indexPathTwo)
-        }
+    private func getHeightBetweenIndexPaths(_ indexPathOne: IndexPath,
+                                            _ indexPathTwo: IndexPath) -> CGFloat {
+        return abs(getMidYOfCell(at: indexPathOne)
+             - getMidYOfCell(at: indexPathTwo))
 
     }
 
-    /* Jump Helper func */
+    // MARK: - Jump Helper Functions
+
+    // update jump bundles when a non-jump related command is being deleted
     private func updateJumpBundles(deletedIndexPath: IndexPath) {
         for jumpBundle in jumpBundles {
-            if jumpBundle.jumpIndexPath != deletedIndexPath
-            && jumpBundle.jumpTargetIndexPath != deletedIndexPath {
-                if jumpBundle.jumpTargetIndexPath.item >= deletedIndexPath.item {
-                    jumpBundle.jumpTargetIndexPath.item -= 1
+            guard jumpBundle.jumpIndexPath == deletedIndexPath
+                && jumpBundle.jumpTargetIndexPath == deletedIndexPath else {
+                    continue
                 }
+            if jumpBundle.jumpTargetIndexPath.item >= deletedIndexPath.item {
+                jumpBundle.jumpTargetIndexPath.item -= 1
+            }
 
-                if jumpBundle.jumpIndexPath.item >= deletedIndexPath.item {
-                    jumpBundle.jumpIndexPath.item -= 1
-                }
+            if jumpBundle.jumpIndexPath.item >= deletedIndexPath.item {
+                jumpBundle.jumpIndexPath.item -= 1
             }
         }
     }
 
+    // update jump bundles when a jump related command is being deleted
     private func updateJumpBundles(deletedIndexPath: IndexPath, deletedPartnerIndexPath: IndexPath) {
         for jumpBundle in jumpBundles {
-            if jumpBundle.jumpIndexPath != deletedIndexPath
-                && jumpBundle.jumpTargetIndexPath != deletedIndexPath {
-                if jumpBundle.jumpTargetIndexPath.item >= deletedIndexPath.item {
-                    jumpBundle.jumpTargetIndexPath.item -= 1
-                }
-
-                if jumpBundle.jumpTargetIndexPath.item >= deletedPartnerIndexPath.item {
-                    jumpBundle.jumpTargetIndexPath.item -= 1
-                }
-
-                if jumpBundle.jumpIndexPath.item >= deletedIndexPath.item {
-                    jumpBundle.jumpIndexPath.item -= 1
-                }
-
-                if jumpBundle.jumpIndexPath.item >= deletedPartnerIndexPath.item {
-                    jumpBundle.jumpIndexPath.item -= 1
-                }
+            guard jumpBundle.jumpIndexPath == deletedIndexPath
+                && jumpBundle.jumpTargetIndexPath == deletedIndexPath else {
+                    continue
             }
+
+            if jumpBundle.jumpTargetIndexPath.item >= deletedIndexPath.item {
+                jumpBundle.jumpTargetIndexPath.item -= 1
+            }
+
+            if jumpBundle.jumpTargetIndexPath.item >= deletedPartnerIndexPath.item {
+                jumpBundle.jumpTargetIndexPath.item -= 1
+            }
+
+            if jumpBundle.jumpIndexPath.item >= deletedIndexPath.item {
+                jumpBundle.jumpIndexPath.item -= 1
+            }
+
+            if jumpBundle.jumpIndexPath.item >= deletedPartnerIndexPath.item {
+                jumpBundle.jumpIndexPath.item -= 1
+            }
+
         }
     }
 
@@ -299,7 +272,6 @@ class EditorViewController: UIViewController {
             }
             index += 1
         }
-        print(index)
         jumpBundles.remove(at: index)
     }
 
@@ -324,7 +296,7 @@ class EditorViewController: UIViewController {
         }
     }
 
-    private func performOneJumpCommandsUpdate(oldIndexPath: IndexPath, newIndexPath: IndexPath) {
+    private func performOneJumpCommandUpdate(oldIndexPath: IndexPath, newIndexPath: IndexPath) {
         guard let jumpBundle = getJumpViewsBundle(indexPath: oldIndexPath) else {
                 return
         }
@@ -343,6 +315,16 @@ class EditorViewController: UIViewController {
             }
         }
         return nil
+    }
+
+    private func getJumpPartnerIndexPath(indexPath: IndexPath) -> IndexPath? {
+        if isJump(indexPath: indexPath) {
+            return getJumpViewsBundle(indexPath: indexPath)?.jumpTargetIndexPath
+        } else if isJumpTarget(indexPath: indexPath) {
+            return getJumpViewsBundle(indexPath: indexPath)?.jumpIndexPath
+        } else {
+            return nil
+        }
     }
 
     private func removeAllJumpArrows() {
@@ -368,9 +350,8 @@ class EditorViewController: UIViewController {
     }
 
     private func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath) -> UIImageView {
-        let origin = getArrowOriginAt(indexPath: topIndexPath)
-        let height = getHeightBetweenIndexPaths(indexPathOne: topIndexPath,
-                                                indexPathTwo: bottomIndexPath)
+        let origin = getArrowOrigin(at: topIndexPath)
+        let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
         return UIEntityHelper.generateArrowView(origin: origin,
                                                 height: height)
     }
@@ -382,20 +363,20 @@ class EditorViewController: UIViewController {
         }
     }
 
-    private func isOneOfJumpCommands(indexPath: IndexPath) -> Bool {
+    private func isJumpRelatedCommand(indexPath: IndexPath) -> Bool {
         return model.userEnteredCommands[indexPath.item] == .jump
             || model.userEnteredCommands[indexPath.item] == .jumpTarget
     }
 
-    private func isJumpCommand(indexPath: IndexPath) -> Bool {
+    private func isJump(indexPath: IndexPath) -> Bool {
         return model.userEnteredCommands[indexPath.item] == .jump
     }
 
-    private func isJumpTargetCommand(indexPath: IndexPath) -> Bool {
+    private func isJumpTarget(indexPath: IndexPath) -> Bool {
         return model.userEnteredCommands[indexPath.item] == .jumpTarget
     }
 
-    /* Gesture Helper func */
+    // MARK: - Gesture Helper Func
     private func initDragBundleAtGestureBegan(indexPath: IndexPath, cell: UICollectionViewCell) {
         DragBundle.initialIndexPath = indexPath
         DragBundle.cellSnapshot = UIEntityHelper.snapshotOfCell(inputView: cell)
@@ -403,7 +384,7 @@ class EditorViewController: UIViewController {
         DragBundle.cellSnapshot?.alpha = 0.0
     }
 
-    /* Other Helper func */
+    // MARK: - Other Helper Func
     private func isIndexedCommand(indexPath: IndexPath) -> Bool {
         switch model.userEnteredCommands[indexPath.item] {
         case .add(_), .copyFrom(_), .copyTo(_):
@@ -429,65 +410,5 @@ class JumpBundle {
         self.jumpIndexPath = jumpIndexPath
         self.jumpTargetIndexPath = jumpTargetIndexPath
         self.arrowView = arrowView
-    }
-}
-
-extension EditorViewController: UICollectionViewDataSource {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return Constants.UI.numberOfSectionsInCollection
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return model.userEnteredCommands.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.UI.collectionViewCellIdentifier,
-                                                      for: indexPath)
-
-        guard let commandCell =  cell as? CommandCell else {
-            fatalError("Cell not assigned the proper view subclass!")
-        }
-
-        let command = model.userEnteredCommands[indexPath.item]
-        commandCell.setImageAndIndex(commandType: command)
-        return commandCell
-    }
-
-}
-
-extension EditorViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: Constants.UI.collectionCellWidth,
-                      height: Constants.UI.collectionCellHeight)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-
-        let edgeInset = UIEdgeInsets(top: Constants.UI.topEdgeInset,
-                                     left: 0, bottom: 0,
-                                     right: Constants.UI.rightEdgeInset)
-        return edgeInset
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return Constants.UI.minimumLineSpacingForSection
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return Constants.UI.minimumInteritemSpacingForSection
     }
 }
