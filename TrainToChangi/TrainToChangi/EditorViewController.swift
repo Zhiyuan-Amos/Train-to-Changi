@@ -194,8 +194,9 @@ class EditorViewController: UIViewController {
             DragBundle.initialIndexPath = indexPath
 
         default:
-            guard let cell = currentCommandsView.cellForItem(at: DragBundle.initialIndexPath!) else {
-                break
+            guard let indexPath = DragBundle.initialIndexPath,
+                let cell = currentCommandsView.cellForItem(at: indexPath) else {
+                    break
             }
             cell.isHidden = false
             cell.alpha = 0.0
