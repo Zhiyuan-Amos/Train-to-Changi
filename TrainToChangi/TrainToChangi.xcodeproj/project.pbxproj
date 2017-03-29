@@ -259,13 +259,6 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
-		3B6D985A1E8A2D330026872B /* DragDropFramework */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = DragDropFramework;
-			sourceTree = "<group>";
-		};
 		3BD7EF911E811DB50029EA57 /* Storage */ = {
 			isa = PBXGroup;
 			children = (

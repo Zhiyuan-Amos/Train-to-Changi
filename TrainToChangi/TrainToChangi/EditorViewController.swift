@@ -92,10 +92,28 @@ class EditorViewController: UIViewController {
         longPressGesture.minimumPressDuration = 0.3
         currentCommandsView.addGestureRecognizer(longPressGesture)
 
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
+        let doubleTapGesture = UITapGestureRecognizer (target: self, action: #selector(handleDoubleTap))
         doubleTapGesture.numberOfTapsRequired = 2
         currentCommandsView.addGestureRecognizer(doubleTapGesture)
 
+        let singleTapGesture = UITapGestureRecognizer (target: self, action: #selector(handleSingleTap))
+        currentCommandsView.addGestureRecognizer(singleTapGesture)
+    }
+
+    @objc private func handleSingleTap(gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: currentCommandsView)
+
+        guard let indexPath = currentCommandsView.indexPathForItem(at: location) else {
+            return
+        }
+
+        guard let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
+            return
+        }
+
+        if isIndexedCommand(indexPath: indexPath) {
+            print("WAHLAHLAH")
+        }
     }
 
     @objc private func handleDoubleTap(gesture: UITapGestureRecognizer) {
@@ -103,6 +121,14 @@ class EditorViewController: UIViewController {
 
         guard let indexPath = currentCommandsView.indexPathForItem(at: location) else {
                 return
+        }
+
+        guard let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
+            return
+        }
+
+        guard cell.commandImage.frame.contains(location) else {
+            return
         }
 
         removeAllJumpArrows()
@@ -133,9 +159,10 @@ class EditorViewController: UIViewController {
         switch gesture.state {
         case .began:
             guard let indexPath = currentCommandsView.indexPathForItem(at: location),
-                  let cell = currentCommandsView.cellForItem(at: indexPath) else {
+                  let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
                 return
             }
+            
             initDragBundleAtGestureBegan(indexPath: indexPath, cell: cell)
             currentCommandsView.addSubview(DragBundle.cellSnapshot!)
             AnimationHelper.dragBeganAnimation(location: location, cell: cell)
@@ -275,7 +302,6 @@ class EditorViewController: UIViewController {
         jumpBundles.remove(at: index)
     }
 
-
     private func performBothJumpCommandsUpdate(indexPathOne: IndexPath, indexPathTwo: IndexPath) {
         guard let jumpBundleOne = getJumpViewsBundle(indexPath: indexPathOne),
               let jumpBundleTwo = getJumpViewsBundle(indexPath: indexPathTwo) else {
@@ -374,6 +400,16 @@ class EditorViewController: UIViewController {
         DragBundle.cellSnapshot = UIEntityHelper.snapshotOfCell(inputView: cell)
         DragBundle.cellSnapshot?.center = cell.center
         DragBundle.cellSnapshot?.alpha = 0.0
+    }
+
+    /* Other Helper func */
+    private func isIndexedCommand(indexPath: IndexPath) -> Bool {
+        switch model.userEnteredCommands[indexPath.item] {
+        case .add(_), .copyFrom(_), .copyTo(_):
+            return true
+        default:
+            return false
+        }
     }
 }
 

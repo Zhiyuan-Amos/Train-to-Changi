@@ -26,7 +26,6 @@ class CommandCell: UICollectionViewCell {
                 setCommandImageAndIndex(imageName: imagePath, index: nil,
                                         indexImageName: nil, width: Constants.UI.commandButtonWidthMid)
         }
-
     }
 
     private func setCommandImageAndIndex(imageName: String, index: Int?,
@@ -46,6 +45,7 @@ class CommandCell: UICollectionViewCell {
         } else {
             commandIndexButton.isHidden = true
         }
+        commandIndexButton.isUserInteractionEnabled = false
 
     }
 
