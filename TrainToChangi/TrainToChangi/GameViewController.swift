@@ -75,3 +75,10 @@ class GameViewController: UIViewController {
         scene.initLevelState(model.currentLevel)
     }
 }
+
+extension GameViewController: MapViewControllerDelegate {
+    func initLevel(name: String?) {
+        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
+        logic = LogicManager(model: model)
+    }
+}

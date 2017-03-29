@@ -26,7 +26,7 @@ class ControlPanelViewController: UIViewController {
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
-        model.runState = .running
+        model.runState = .running(isAnimating: true)
         logic.executeCommands()
     }
 }
