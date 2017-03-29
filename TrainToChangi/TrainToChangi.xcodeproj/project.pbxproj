@@ -32,6 +32,8 @@
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
 		D71B88551E86AAC1006BC3E9 /* main-track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D71B88541E86AAC1006BC3E9 /* main-track.mp3 */; };
+		D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7430DE81E88D9F900B84F14 /* GameLogic.swift */; };
+		D7430DEB1E88E70C00B84F14 /* GameLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7430DEA1E88E70C00B84F14 /* GameLogicDelegate.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
@@ -102,6 +104,8 @@
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
 		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
 		D71B88541E86AAC1006BC3E9 /* main-track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "main-track.mp3"; path = "Audio/main-track.mp3"; sourceTree = SOURCE_ROOT; };
+		D7430DE81E88D9F900B84F14 /* GameLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
+		D7430DEA1E88E70C00B84F14 /* GameLogicDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogicDelegate.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 				A71209681E81888A0039B257 /* Logic.swift */,
 				D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */,
 				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
+				D7430DE81E88D9F900B84F14 /* GameLogic.swift */,
+				D7430DEA1E88E70C00B84F14 /* GameLogicDelegate.swift */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 				A7A10CE81E865A190040DA21 /* LevelDataHelper.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
+				D7430DEB1E88E70C00B84F14 /* GameLogicDelegate.swift in Sources */,
 				A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */,
 				76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,
@@ -552,6 +559,7 @@
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
+				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
 				A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */,

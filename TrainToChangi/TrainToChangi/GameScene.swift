@@ -181,6 +181,8 @@ extension GameScene {
             fatalError("[GameScene:catchNotification] userInfo should contain destination")
         }
 
+        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationBegan,
+                                                     object: nil, userInfo: nil))
         move(to: destination)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
