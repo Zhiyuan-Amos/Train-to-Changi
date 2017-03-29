@@ -10,15 +10,27 @@ import UIKit
 
 class UIEntityHelper {
 
-    static func generateArrowView(jumpTargetFrame: CGRect, jumpFrame: CGRect) -> UIImageView {
-        let arrowOrigin = CGPoint(jumpTargetFrame.midX, jumpTargetFrame.midY)
+    static func snapshotOfCell(inputView: UIView) -> UIView {
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()! as UIImage
+        UIGraphicsEndImageContext()
+
+        let cellSnapshot: UIView = UIImageView(image: image)
+        cellSnapshot.layer.masksToBounds = false
+        cellSnapshot.layer.cornerRadius = 0.0
+        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
+        cellSnapshot.layer.shadowRadius = 5.0
+        cellSnapshot.layer.shadowOpacity = 0.4
+        return cellSnapshot
+    }
+
+    static func generateArrowView(origin: CGPoint, height: CGFloat) -> UIImageView {
         let arrowSize = CGSize(width: Constants.UI.arrowWidth,
-                               height: jumpFrame.midY - jumpTargetFrame.midY)
-        print(arrowOrigin)
-        print(arrowSize)
+                               height: height)
         let arrowView = UIImageView()
         arrowView.image = UIImage(named: "arrownavy.png")
-        arrowView.frame = CGRect(origin: arrowOrigin, size: arrowSize)
+        arrowView.frame = CGRect(origin: origin, size: arrowSize)
 
         return arrowView
     }

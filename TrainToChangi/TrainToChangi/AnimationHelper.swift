@@ -20,4 +20,33 @@ class AnimationHelper {
 
         return transformAnim
     }
+
+    static func dragBeganAnimation(location: CGPoint, cell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
+            DragBundle.cellSnapshot?.center.y = location.y
+            DragBundle.cellSnapshot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+            DragBundle.cellSnapshot?.alpha = 0.98
+            cell.alpha = 0.0
+
+        }, completion: { (finished) -> Void in
+            if finished {
+                cell.isHidden = true
+            }
+        })
+    }
+
+    static func dragEndAnimation(cell: UICollectionViewCell) {
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
+            DragBundle.cellSnapshot?.center = cell.center
+            DragBundle.cellSnapshot?.transform = CGAffineTransform.identity
+            DragBundle.cellSnapshot?.alpha = 0.0
+            cell.alpha = 1.0
+        }, completion: { (finished) -> Void in
+            if finished {
+                DragBundle.initialIndexPath = nil
+                DragBundle.cellSnapshot!.removeFromSuperview()
+                DragBundle.cellSnapshot = nil
+            }
+        })
+    }
 }
