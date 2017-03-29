@@ -50,7 +50,7 @@
 		D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */; };
 		D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA82C1E76ADC400CCCFBE /* GameScene.swift */; };
 		D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */; };
-		D76FA8321E76ADC400CCCFBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8301E76ADC400CCCFBE /* Main.storyboard */; };
+		D76FA8321E76ADC400CCCFBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8301E76ADC400CCCFBE /* Main.storyboard */; settings = {ASSET_TAGS = (bu, ); }; };
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
 		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
@@ -227,7 +227,6 @@
 				76745B721E88598D0039A771 /* ViewController */,
 				76745B711E8859890039A771 /* View */,
 				76745B701E88590A0039A771 /* InterfaceBuilder */,
-				3B6D985A1E8A2D330026872B /* DragDropFramework */,
 				3B6D98551E8904DF0026872B /* Helpers */,
 				3B6D984E1E88FCC30026872B /* Controllers */,
 				D7E0E7491E84B78500237705 /* Tiles.sks */,
@@ -287,10 +286,7 @@
 		76745B701E88590A0039A771 /* InterfaceBuilder */ = {
 			isa = PBXGroup;
 			children = (
-				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
-				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
 				76745B6C1E8855870039A771 /* MapScene.sks */,
-				D7E0E7491E84B78500237705 /* Tiles.sks */,
 			);
 			name = InterfaceBuilder;
 			sourceTree = "<group>";
@@ -298,11 +294,6 @@
 		76745B711E8859890039A771 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A712096A1E8189060039B257 /* CommandCell.swift */,
-				A712096B1E8189060039B257 /* CommandLabel.swift */,
-				22DC750125724E9BA28BA9EB /* Memory.swift */,
-				22DC76E79326E3E327A4B086 /* MemorySlot.swift */,
-				22DC7A12469B8258C38128E2 /* Payload.swift */,
 				76E0F66C1E88F9B40051325C /* StationLevelNode.swift */,
 			);
 			name = View;
@@ -311,8 +302,6 @@
 		76745B721E88598D0039A771 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
-				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
 				76745B6E1E8857EC0039A771 /* MapScene.swift */,
 				76745B731E885A030039A771 /* MapViewController.swift */,
 			);
@@ -432,6 +421,9 @@
 		D76FA81B1E76ADC400CCCFBE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					bu,
+				);
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = nus.cs3217.a0139655u;

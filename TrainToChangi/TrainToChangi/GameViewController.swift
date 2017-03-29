@@ -42,6 +42,12 @@ class GameViewController: UIViewController {
         model.runState = .running(isAnimating: false)
     }
 
+    @IBAction func exitButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: {
+            AudioPlayer.sharedInstance.stopBackgroundMusic()
+        })
+    }
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
