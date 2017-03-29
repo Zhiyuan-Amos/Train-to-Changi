@@ -65,24 +65,15 @@ extension GameScene {
         guard let tileSet = SKTileSet(named: Constants.Background.tileSet) else {
             fatalError("Ground Tiles Tile Set not found")
         }
+        guard let bgTile = tileSet.tileGroups.first(
+            where: {$0.name == Constants.Background.tileGroup}) else {
+            fatalError("Grey Tiles definition not found")
+        }
 
-        backgroundTileMap = SKTileMapNode(tileSet: tileSet,
-                                          columns: columns,
-                                          rows: rows,
-                                          tileSize: size)
-
+        backgroundTileMap = SKTileMapNode(tileSet: tileSet, columns: columns, rows: rows,
+                                          tileSize: size, fillWith: bgTile)
+        backgroundTileMap.position = CGPoint(x: view!.frame.midX, y: view!.frame.midY)
         addChild(backgroundTileMap)
-
-        let tileGroups = tileSet.tileGroups
-        guard let bgTile = tileGroups.first(where: {$0.name == Constants.Background.tileGroup}) else {
-            fatalError("No Grey Tiles definition found")
-        }
-
-        for row in 1...rows {
-            for column in 1...columns {
-                backgroundTileMap.setTileGroup(bgTile, forColumn: column, row: row)
-            }
-        }
     }
 
     private func initPlayer() {

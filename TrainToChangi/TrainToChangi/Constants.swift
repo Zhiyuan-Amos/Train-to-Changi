@@ -37,8 +37,8 @@ struct Constants {
     }
 
     struct Background {
-        static let rows = 24
-        static let columns = 32
+        static let rows = 12
+        static let columns = 16
         static let size = CGSize(width: 64, height: 64)
         static let tileSet = "Ground Tiles"
         static let tileGroup = "Grey Tiles"
