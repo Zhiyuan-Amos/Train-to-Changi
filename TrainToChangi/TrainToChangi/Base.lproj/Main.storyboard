@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kMw-hA-jzt">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,27 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Map View Controller-->
+        <scene sceneID="NqG-I3-A5o">
+            <objects>
+                <viewController id="kMw-hA-jzt" customClass="MapViewController" customModule="TrainToChangi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tIl-aX-CNU"/>
+                        <viewControllerLayoutGuide type="bottom" id="VZL-K8-La2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VzY-8q-CSM" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="BV1-FR-VrT" kind="presentation" identifier="startLevel" id="xck-NJ-49F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LUd-ed-Rq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-855" y="38"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
@@ -89,7 +110,7 @@
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="train_vert" translatesAutoresizingMaskIntoConstraints="NO" id="pir-D3-pGS">
-                                <rect key="frame" x="0.0" y="0.0" width="176" height="768"/>
+                                <rect key="frame" x="0.0" y="0.0" width="176" height="682"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
@@ -136,6 +157,14 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYw-YL-YlW">
+                                <rect key="frame" x="-27" y="681" width="230" height="87"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="exit"/>
+                                <connections>
+                                    <action selector="exitButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="pHZ-IJ-Bht"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <gestureRecognizers/>
                     </view>
@@ -148,11 +177,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24.609375" y="38.28125"/>
+            <point key="canvasLocation" x="384.9609375" y="37.5"/>
         </scene>
     </scenes>
     <resources>
         <image name="editor" width="339" height="1042"/>
+        <image name="exit" width="176" height="87"/>
         <image name="playbutton" width="188" height="187"/>
         <image name="stepback" width="188" height="186"/>
         <image name="stepforward" width="188" height="187"/>

@@ -149,20 +149,20 @@ extension GameScene {
 // MARK: - Touch
 extension GameScene: GameVCTouchDelegate {
 
-    // Accepts a CGPoint and returns the index of memory if the touch is inside the memory grid
-    // returns nil if point is outside the grid
-    func memoryIndex(at point: CGPoint) -> Int? {
+    // Accepts a CGPoint and returns the index of memory if the touch is inside the memory grid.
+    // Returns nil if `userTouchedPoint` is outside the grid.
+    func memoryIndex(at userTouchedPoint: CGPoint) -> Int? {
         guard let centers = memoryLayout?.locations else {
             fatalError("[GameScene:memoryIndex] memoryLayout has not been initialized")
         }
 
-        // there have to be at least one memory locations to detect
+        // there have to be at least one memory location to detect
         guard centers.count > 0 else {
             return nil
         }
 
         // calculate distance between `point` and each memory center, return the one with the min distance
-        let distancesToPoint: [CGFloat] = memoryNodes.map{ $0.position.distance(to: point) }
+        let distancesToPoint: [CGFloat] = memoryNodes.map{ $0.position.distance(to: userTouchedPoint) }
         return distancesToPoint.index(of: distancesToPoint.min()!)
     }
 }
@@ -229,10 +229,10 @@ extension GameScene {
         player.run(moveAction, completion: {
             // player already moved to memory location, perform memory actions
             switch action {
-            case .pickUp:
-                self.pickUpMemory(index)
-            case .putDown:
-                self.putDownToMemory(index)
+            case .get:
+                self.getValueFromMemory(at: index)
+            case .put:
+                self.putValueToMemory(to: index)
             case let .compute(expected):
                 self.computeWithMemory(index, expected: expected)
             }
@@ -254,19 +254,21 @@ extension GameScene {
         })
     }
 
+    // Player when at the location of a memory location, discards holding value, picks up box from memory
     // player should already move to necessary memory location
-    private func pickUpMemory(_ index: Int) {
+    private func getValueFromMemory(at index: Int) {
         let memory = memoryNodes[index]
-        let throwHoldingVal = SKAction.fadeOut(withDuration: 0.5)
+        let throwPersonValue = SKAction.fadeOut(withDuration: Constants.Animation.discardHoldingValueDuration)
         let removeFromParent = SKAction.removeFromParent()
 
-        holdingNode.run(SKAction.sequence([throwHoldingVal, removeFromParent]), completion: {
+        holdingNode.run(SKAction.sequence([throwPersonValue, removeFromParent]), completion: {
             memory.move(toParent: self.player)
         })
     }
 
+    // Player when at the location of a memory location, drops a duplicate of his holding value to memory
     // player should already move to necessary memory location
-    private func putDownToMemory(_ index: Int) {
+    private func putValueToMemory(to index: Int) {
         guard let copyOfHoldingValue = holdingNode.copy() as? SKSpriteNode else {
             fatalError("[GameScene:putDownToMemory] Can't make a copy of holding value")
         }
@@ -274,10 +276,11 @@ extension GameScene {
         let position = memoryNodes[index].position
 
         copyOfHoldingValue.move(toParent: scene!)
-        let dropHolding = SKAction.move(to: position, duration: 0.5)
-        copyOfHoldingValue.run(dropHolding)
+        let dropHoldingValue = SKAction.move(to: position, duration: Constants.Animation.holdingValueToMemoryDuration)
+        copyOfHoldingValue.run(dropHoldingValue)
     }
 
+    // Do animations for command like "add 0", add value in memory to the person value
     private func computeWithMemory(_ index: Int, expected: Int) {
         guard let payloadOnMemory = memoryNodes[index].childNode(withName: Constants.Payload.labelName)
               as? SKLabelNode else {

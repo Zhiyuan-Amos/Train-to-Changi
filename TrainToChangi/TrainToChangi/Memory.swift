@@ -42,8 +42,8 @@ struct Memory {
 
     // specifies person's actions involving memory, for the game scene
     enum Action {
-        case putDown                // put payload down to the memory slot
-        case pickUp                 // pick up payload from memory slot
+        case put                    // put payload down to the memory slot
+        case get                    // pick up payload from memory slot
         case compute(expected: Int) // calculate using payload on the memory slot
     }
 }
