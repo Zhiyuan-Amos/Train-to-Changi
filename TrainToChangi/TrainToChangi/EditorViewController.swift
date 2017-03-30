@@ -30,30 +30,11 @@ class EditorViewController: UIViewController {
         adjustCurrentCommandsCollectionView()
         addGestureRecognisers()
 
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(runStateUpdated(notification:)),
-            name: Constants.NotificationNames.runStateUpdated, object: nil)
+        registerObservers()
     }
 
     @objc fileprivate func runStateUpdated(notification: Notification) {
-        switch model.runState {
-        case .running:
-            resetButton.isEnabled = false
-            currentCommandsView.isUserInteractionEnabled = false
-            availableCommandsView.isUserInteractionEnabled = false
-        case .paused:
-            resetButton.isEnabled = true
-            currentCommandsView.isUserInteractionEnabled = true
-            availableCommandsView.isUserInteractionEnabled = true
-        case .lost:
-            resetButton.isEnabled = true
-            currentCommandsView.isUserInteractionEnabled = true
-            availableCommandsView.isUserInteractionEnabled = true
-        case .won:
-            resetButton.isEnabled = false
-            currentCommandsView.isUserInteractionEnabled = false
-            availableCommandsView.isUserInteractionEnabled = false
-        }
+        updateViewsState()
     }
 
     @IBAction func resetButtonPressed(_ sender: Any) {
@@ -418,6 +399,35 @@ class EditorViewController: UIViewController {
             return true
         default:
             return false
+        }
+    }
+
+    private func registerObservers() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(runStateUpdated(notification:)),
+            name: Constants.NotificationNames.runStateUpdated, object: nil)
+    }
+
+    // Helper function that updates whether the views are enabled depending
+    // on the `model.runState`.
+    private func updateViewsState() {
+        switch model.runState {
+        case .running:
+            resetButton.isEnabled = false
+            currentCommandsView.isUserInteractionEnabled = false
+            availableCommandsView.isUserInteractionEnabled = false
+        case .paused:
+            resetButton.isEnabled = true
+            currentCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isUserInteractionEnabled = true
+        case .lost:
+            resetButton.isEnabled = true
+            currentCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isUserInteractionEnabled = true
+        case .won:
+            resetButton.isEnabled = false
+            currentCommandsView.isUserInteractionEnabled = false
+            availableCommandsView.isUserInteractionEnabled = false
         }
     }
 }

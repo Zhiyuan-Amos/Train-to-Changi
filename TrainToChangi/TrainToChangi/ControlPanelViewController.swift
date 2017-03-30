@@ -19,34 +19,11 @@ class ControlPanelViewController: UIViewController {
     @IBOutlet weak var stepForwardButton: UIButton!
 
     override func viewDidLoad() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(runStateUpdated(notification:)),
-            name: Constants.NotificationNames.runStateUpdated, object: nil)
+        registerObservers()
     }
 
     @objc fileprivate func runStateUpdated(notification: Notification) {
-        switch model.runState {
-        case .running:
-            stopButton.isEnabled = true
-            stepBackButton.isEnabled = true
-            playButton.isEnabled = false
-            stepForwardButton.isEnabled = true
-        case .paused:
-            stopButton.isEnabled = true
-            stepBackButton.isEnabled = true
-            playButton.isEnabled = true
-            stepForwardButton.isEnabled = true
-        case .lost:
-            stopButton.isEnabled = true
-            stepBackButton.isEnabled = true
-            playButton.isEnabled = false
-            stepForwardButton.isEnabled = false
-        case .won:
-            stopButton.isEnabled = false
-            stepBackButton.isEnabled = false
-            playButton.isEnabled = false
-            stepForwardButton.isEnabled = false
-        }
+        updateButtonsState()
     }
 
     //TODO: GameScene need to support
@@ -69,5 +46,38 @@ class ControlPanelViewController: UIViewController {
     @IBAction func playButtonPressed(_ sender: UIButton) {
         model.runState = .running(isAnimating: false)
         logic.executeCommands()
+    }
+
+    private func registerObservers() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(runStateUpdated(notification:)),
+            name: Constants.NotificationNames.runStateUpdated, object: nil)
+    }
+
+    // Helper function that updates whether the buttons are enabled depending
+    // on the `model.runState`.
+    private func updateButtonsState() {
+        switch model.runState {
+        case .running:
+            stopButton.isEnabled = true
+            stepBackButton.isEnabled = true
+            playButton.isEnabled = false
+            stepForwardButton.isEnabled = true
+        case .paused:
+            stopButton.isEnabled = true
+            stepBackButton.isEnabled = true
+            playButton.isEnabled = true
+            stepForwardButton.isEnabled = true
+        case .lost:
+            stopButton.isEnabled = true
+            stepBackButton.isEnabled = true
+            playButton.isEnabled = false
+            stepForwardButton.isEnabled = false
+        case .won:
+            stopButton.isEnabled = false
+            stepBackButton.isEnabled = false
+            playButton.isEnabled = false
+            stepForwardButton.isEnabled = false
+        }
     }
 }
