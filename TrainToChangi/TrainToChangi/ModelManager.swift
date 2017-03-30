@@ -32,8 +32,12 @@ class ModelManager: Model {
     private var levelManager: LevelManager
     private var _userEnteredCommands: CommandDataList
 
-    init(levelData: LevelData) {
-        _userEnteredCommands = CommandDataLinkedList()
+    init(levelData: LevelData, commandDataListInfo: CommandDataListInfo?) {
+        if let commandDataListInfo = commandDataListInfo {
+            _userEnteredCommands = CommandDataLinkedList(commandDataListInfo: commandDataListInfo)
+        } else {
+            _userEnteredCommands = CommandDataLinkedList()
+        }
         levelManager = LevelManager(levelData: levelData)
         levelState = levelManager.level.initialState
     }

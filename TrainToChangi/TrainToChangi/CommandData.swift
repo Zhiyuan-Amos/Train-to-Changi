@@ -33,29 +33,6 @@ enum CommandData {
             return "jumpTarget"
         }
     }
-
-    static func convertFromString(commandString: String) -> CommandData? {
-        let commandArr = commandString.characters.split { $0 == "_" }.map(String.init)
-
-        switch commandArr[0] {
-            case "inbox":
-                return CommandData.inbox
-            case "outbox":
-                return CommandData.outbox
-            case "jumpTarget":
-                return CommandData.jumpTarget
-            case "copyFrom":
-                return CommandData.copyFrom(memoryIndex: Int(commandArr[1]))
-            case "copyTo":
-                return CommandData.copyTo(memoryIndex: Int(commandArr[1]))
-            case "add":
-                return CommandData.add(memoryIndex: Int(commandArr[1]))
-            case "jump":
-                return CommandData.jump
-            default:
-                return nil
-        }
-    }
 }
 
 extension CommandData: Equatable {

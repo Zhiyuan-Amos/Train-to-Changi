@@ -15,6 +15,7 @@ struct LevelDataHelper {
     static let jumpCommand = CommandData.jump
     static let addCommand = CommandData.add(memoryIndex: nil)
     static let copyToCommand = CommandData.copyTo(memoryIndex: nil)
+    static let copyFromCommand = CommandData.copyFrom(memoryIndex: nil)
 
     static func levelData(levelIndex: Int) -> LevelData {
         return preloadedLevelsData[levelIndex]

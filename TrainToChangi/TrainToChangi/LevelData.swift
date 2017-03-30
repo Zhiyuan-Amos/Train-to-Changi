@@ -37,7 +37,11 @@ struct LevelOneData: LevelData {
                            + "Drag and drop commands to move all boxes to Outbox."
 
     let availableCommands: [CommandData] = [LevelDataHelper.inboxCommand,
-                                            LevelDataHelper.outboxCommand]
+                                            LevelDataHelper.outboxCommand,
+                                            LevelDataHelper.addCommand,
+                                            LevelDataHelper.copyToCommand,
+                                            LevelDataHelper.jumpCommand,
+                                            LevelDataHelper.copyFromCommand]
 
     let memoryValues: [Int?] = []
 

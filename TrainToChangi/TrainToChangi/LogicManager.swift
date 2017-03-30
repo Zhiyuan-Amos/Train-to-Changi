@@ -3,38 +3,33 @@
 // It also contains methods pertaining to the game logic.
 //
 import Foundation
-//TODO: Refactor into GameLogic.
-class LogicManager: Logic {
+class LogicManager: Logic, GameLogicDelegate {
     unowned private let model: Model
+    private let gameLogic: GameLogic
     private var iterator: CommandDataListIterator!
-    private let parser: CommandDataParser
-    private let updater: RunStateUpdater
     private var executedCommands: Stack<Command>
-    private var isExecutionAllowed: Bool
+
+    var numCommandsExecuted: Int {
+        return executedCommands.count
+    }
 
     init(model: Model) {
         self.model = model
-        self.parser = CommandDataParser(model: model)
-        self.updater = RunStateUpdater(model: model)
-        self.executedCommands = Stack() //TODO: Change to array
-        self.isExecutionAllowed = true
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(catchNotification(notification:)),
-            name: Constants.NotificationNames.animationEnded, object: nil)
-    }
-
-    @objc fileprivate func catchNotification(notification: Notification) {
-        isExecutionAllowed = true
+        self.executedCommands = Stack()
+        self.gameLogic = GameLogic(model: model)
+        gameLogic.gameLogicDelegate = self
     }
 
     // Executes the list of commands that user has selected.
+    // As this method will busy-wait, it is run in background thread. 
     func executeCommands() {
         DispatchQueue.global(qos: .background).async {
-            while self.model.runState == .running {
-                guard self.isExecutionAllowed else {
+            while case .running = self.model.runState {
+                guard self.model.runState == .running(isAnimating: false) else {
+                    usleep(100000)
                     continue
                 }
+
                 self.executeNextCommand()
             }
         }
@@ -47,8 +42,9 @@ class LogicManager: Logic {
             fatalError("User should not be allowed to undo")
         }
 
-        command.undo()
-        iterator.previous() // TODO: Think of how to update visuals
+        gameLogic.undo(command)
+        iterator.previous()
+
         return !executedCommands.isEmpty
     }
 
@@ -56,34 +52,13 @@ class LogicManager: Logic {
     func executeNextCommand() {
         if iterator == nil {
             iterator = model.makeCommandDataListIterator()
-            parser.iterator = iterator
+            gameLogic.parser = CommandDataParser(model: model, iterator: iterator)
         }
 
-        guard let commandData = iterator.next() else {
-            model.runState = .lost(error: .incompleteOutboxValues)
+        guard let executedCommand = gameLogic.execute(commandData: iterator.next()) else {
             return
         }
-        //TODO: clean up
-        switch commandData {
-        case .inbox, .outbox:
-            isExecutionAllowed = false
-        default:
-            break
-        }
 
-        let command = parser.parse(commandData: commandData)
-        let commandResult = command.execute()
-
-        executedCommands.push(command)
-
-        updater.updateRunState(commandResult: commandResult)
-        if model.runState == .won {
-            updateNumStepsTaken()
-        }
-    }
-
-    private func updateNumStepsTaken() {
-        let jumpTargetCount = executedCommands.filter { command in command is JumpTarget }.count
-        model.numSteps = executedCommands.count - jumpTargetCount
+        executedCommands.push(executedCommand)
     }
 }

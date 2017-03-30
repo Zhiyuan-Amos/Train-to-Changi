@@ -6,9 +6,11 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
+import Foundation
+
 // MARK - List Node
 
-fileprivate protocol CommandDataListNode: class {
+protocol CommandDataListNode: class {
     var commandData: CommandData { get }
     var next: CommandDataListNode? { get set }
     var previous: CommandDataListNode? { get set }
@@ -26,15 +28,17 @@ fileprivate class IterativeListNode: CommandDataListNode {
 
 fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
-    var jumpTarget: IterativeListNode! // use ! to silence xcode use of self
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
+    var jumpTarget: IterativeListNode! // use ! to silence xcode use of self
 
-    init(commandData: CommandData) {
+    init(commandData: CommandData, hasJumpTarget: Bool = true) {
         self.commandData = commandData
-        self.jumpTarget = IterativeListNode(commandData: .jumpTarget)
-        self.previous = jumpTarget
-        self.jumpTarget.next = self
+        if hasJumpTarget {
+            self.jumpTarget = IterativeListNode(commandData: .jumpTarget)
+            self.previous = jumpTarget
+            self.jumpTarget.next = self
+        }
     }
 }
 
@@ -62,6 +66,9 @@ protocol CommandDataList {
 
     // Returns an iterator for the CommandDataList.
     func makeIterator() -> CommandDataListIterator
+
+    // Used for storage.
+    func asListInfo() -> CommandDataListInfo
 
     // TODO: ADT _checkrep, make sure both sides are connected, jump and target connected.
 }
@@ -128,7 +135,6 @@ class CommandDataLinkedList: CommandDataList {
         return remove(node)
     }
 
-
     func removeAll() {
         head = nil
     }
@@ -146,6 +152,10 @@ class CommandDataLinkedList: CommandDataList {
             array.append(node.commandData)
         }
         return array
+    }
+
+    func asListInfo() -> CommandDataListInfo {
+        return CommandDataListInfo(array: toArray(), jumpMappings: jumpMappings())
     }
 
     // MARK - Private helpers
@@ -176,13 +186,13 @@ class CommandDataLinkedList: CommandDataList {
         return count
     }
 
-    private func initNode(commandData: CommandData) -> CommandDataListNode {
+    fileprivate func initNode(commandData: CommandData) -> CommandDataListNode {
         return commandData.isJumpCommand
             ? JumpListNode(commandData: commandData)
             : IterativeListNode(commandData: commandData)
     }
 
-    private func append(_ newNode: Node) {
+    fileprivate func append(_ newNode: Node) {
         guard let lastNode = last else {
             head = newNode
             return
@@ -191,7 +201,7 @@ class CommandDataLinkedList: CommandDataList {
         lastNode.next = newNode
     }
 
-    private func node(atIndex index: Int) -> Node? {
+    fileprivate func node(atIndex index: Int) -> Node? {
         if index >= 0 {
             var node = head
             var i = index
@@ -272,6 +282,34 @@ class CommandDataLinkedList: CommandDataList {
         return nil
     }
 
+    fileprivate func indexOf(_ node: Node) -> Int {
+        var curr = head
+        var index = 0
+        while curr != nil {
+            if curr === node {
+                return index
+            }
+            curr = curr?.next
+            index += 1
+        }
+        preconditionFailure("Node must exist!")
+    }
+
+    private func jumpMappings() -> [Int: Int] {
+        var map: [Int: Int] = [:]
+
+        var curr = head
+        while curr != nil {
+            if let jump = curr as? JumpListNode {
+                let jumpParentIndex = indexOf(jump)
+                let jumpTargetIndex = indexOf(jump.jumpTarget)
+                map[jumpParentIndex] = jumpTargetIndex
+            }
+            curr = curr?.next
+        }
+        return map
+    }
+
 }
 
 extension CommandDataLinkedList {
@@ -280,18 +318,52 @@ extension CommandDataLinkedList {
     }
 }
 
-class CommandDataListIterator: Sequence, IteratorProtocol {
-    private var commandDataList: CommandDataList
-    private var current: CommandDataListNode? {
-        willSet(newValue) {
-            print("Changing to \(newValue?.commandData)")
+extension CommandDataLinkedList {
+    convenience init(commandDataListInfo: CommandDataListInfo) {
+        self.init()
+        let array = commandDataListInfo.array
+        let jumpMappings = commandDataListInfo.jumpMappings
+
+        for commandData in array {
+            let newNode: CommandDataListNode = commandData.isJumpCommand
+                ? JumpListNode(commandData: commandData, hasJumpTarget: false)
+                : IterativeListNode(commandData: commandData)
+            append(newNode)
+        }
+
+        for (jumpParentIndex, jumpTargetIndex) in jumpMappings {
+            guard let jumpNode = node(atIndex: jumpParentIndex) as? JumpListNode,
+                  let jumpTargetNode = node(atIndex: jumpTargetIndex) as? IterativeListNode else {
+                fatalError("Jump Mappings not set up properly!")
+            }
+            jumpNode.jumpTarget = jumpTargetNode
         }
     }
+}
+
+class CommandDataListIterator: Sequence, IteratorProtocol {
+    private var commandDataLinkedList: CommandDataLinkedList
     private var isFirstCall: Bool
 
-    init(_ commandDataList: CommandDataList) {
-        self.commandDataList = commandDataList
-        self.current = (commandDataList as? CommandDataLinkedList)?.first
+    private var current: CommandDataListNode? {
+        willSet(newNode) {
+            guard let newNode = newNode else {
+                return
+            }
+            let index = commandDataLinkedList.indexOf(newNode)
+            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
+                                            object: nil,
+                                            userInfo: ["index": index])
+        }
+    }
+
+    var index: Int? {
+        return current == nil ? nil : commandDataLinkedList.indexOf(current!)
+    }
+
+    init(_ commandDataLinkedList: CommandDataLinkedList) {
+        self.commandDataLinkedList = commandDataLinkedList
+        self.current = commandDataLinkedList.first
         self.isFirstCall = true
     }
 
@@ -310,19 +382,25 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
     }
 
     func previous() {
-        // TODO: Remove previous? Let command's undo handle
+        current = current?.previous
     }
 
     func jump() {
         guard let current = current as? JumpListNode else {
             preconditionFailure("Cannot jump on a non-jump command")
         }
+
         self.current = current.jumpTarget
     }
 
+    func moveIterator(to index: Int) {
+        current = commandDataLinkedList.node(atIndex: index)
+        isFirstCall = true
+    }
+
     func reset() {
-        current = (commandDataList as? CommandDataLinkedList)?.first
-        self.isFirstCall = true
+        current = commandDataLinkedList.first
+        isFirstCall = true
     }
 
 }

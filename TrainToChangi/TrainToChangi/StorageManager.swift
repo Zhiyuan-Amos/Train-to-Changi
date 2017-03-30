@@ -24,21 +24,19 @@ class StorageManager {
         userData.completeLevel(levelIndex: levelIndex)
     }
 
-    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandData]) {
-        userData.updateAddedCommands(levelIndex: levelIndex,
-                                     userAddedCommands: userAddedCommands)
+    func updateAddedCommandsInfo(levelIndex: Int, commandDataListInfo: CommandDataListInfo) {
+        userData.updateAddedCommandsInfo(levelIndex: levelIndex,
+                                     commandDataListInfo: commandDataListInfo)
     }
 
     func hasCompletedLevel(levelIndex: Int) -> Bool {
-        return false
+        return userData.completedLevelIndexes.contains(levelIndex)
     }
-
 
     func save() {
         let fileNameToSave = Config.saveSlot.rawValue + pListExtension
 
     }
-
 
 //    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandEnum]) {
 //        currentSaveSlot.updateAddedCommands(levelIndex: levelIndex,
