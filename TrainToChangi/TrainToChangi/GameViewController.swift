@@ -15,28 +15,9 @@ protocol GameVCTouchDelegate: class {
 
 class GameViewController: UIViewController {
 
-    // VC is currently first responder, to be changed when we add other views.
-    fileprivate var model: Model
-    fileprivate var logic: Logic
-    // Passed in by app delegate
-    fileprivate var storage = StorageManager()
-
-    required init?(coder aDecoder: NSCoder) {
-        // Change level by setting levelIndex here.
-        let levelIndex = 0
-        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: levelIndex),
-                             commandDataListInfo: storage.userData.addedCommands(levelIndex: levelIndex))
-        logic = LogicManager(model: model)
-        super.init(coder: aDecoder)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(animationBegan(notification:)),
-            name: Constants.NotificationNames.animationBegan, object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(animationEnded(notification:)),
-            name: Constants.NotificationNames.animationEnded, object: nil)
-    }
+    fileprivate var model: Model!
+    fileprivate var logic: Logic!
+    fileprivate var storage: StorageManager!
 
     @objc fileprivate func animationBegan(notification: Notification) {
         model.runState = .running(isAnimating: true)
@@ -58,6 +39,13 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationBegan(notification:)),
+            name: Constants.NotificationNames.animationBegan, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationEnded(notification:)),
+            name: Constants.NotificationNames.animationEnded, object: nil)
         presentGameScene()
         AudioPlayer.sharedInstance.playBackgroundMusic()
     }
@@ -87,9 +75,11 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController: MapViewControllerDelegate {
-    func initLevel(name: String?) {
+    func initLevel(name: String?, storage: StorageManager) {
+        self.storage = storage
         let levelIndex = 0
-        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: levelIndex),
+        model = ModelManager(levelIndex: levelIndex,
+                             levelData: LevelDataHelper.levelData(levelIndex: levelIndex),
                              commandDataListInfo: storage.userData.addedCommands(levelIndex: levelIndex))
         logic = LogicManager(model: model)
     }

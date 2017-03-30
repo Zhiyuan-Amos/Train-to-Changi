@@ -13,6 +13,12 @@ class StorageManager {
     private let pListExtension = ".plist"
     private let userDataKey = "userDataKey"
 
+    init() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(commandDataListUpdate(notification:)),
+            name: Constants.NotificationNames.commandDataListUpdate, object: nil)
+    }
+
     // If userData has been saved, we read from file
     // else return new userData
     private(set) lazy var userData: UserData = {
@@ -21,6 +27,17 @@ class StorageManager {
         }
         return UserData()
     }()
+
+    @objc fileprivate func commandDataListUpdate(notification: Notification) {
+        guard let levelIndex = notification.userInfo?["levelIndex"] as? Int,
+              let commandDataListInfo =
+            notification.userInfo?["commandDataListInfo"] as? CommandDataListInfo else {
+            fatalError("Not sent properly.")
+        }
+
+        updateAddedCommandsInfo(levelIndex: levelIndex,
+                                commandDataListInfo: commandDataListInfo)
+    }
 
     func completeLevel(levelIndex: Int) {
         userData.completeLevel(levelIndex: levelIndex)
@@ -45,9 +62,7 @@ class StorageManager {
         archiver.finishEncoding()
 
         let isSaveSuccessful = data.write(to: url, atomically: true)
-        if !isSaveSuccessful {
-            assertionFailure("Save failed!!")
-        }
+        assert(isSaveSuccessful, "Save cannot fail!")
     }
 
     func load() -> UserData? {

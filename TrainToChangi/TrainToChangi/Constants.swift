@@ -75,6 +75,7 @@ struct Constants {
 
     struct NotificationNames {
         static let moveProgramCounter = Notification.Name(rawValue: "moveProgramCounter")
+        static let commandDataListUpdate = Notification.Name(rawValue: "commandDataListUpdate")
         static let movePersonInScene = Notification.Name(rawValue: "movePersonInScene")
         static let initScene = Notification.Name(rawValue: "initScene")
         static let animationBegan = Notification.Name(rawValue: "animationBegan")

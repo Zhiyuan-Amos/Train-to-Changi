@@ -17,13 +17,12 @@ class UserData: NSObject, NSCoding {
     // Not done in a cumulative way in case we implement branching paths
     private(set) var completedLevelIndexes: [Int] = []
 
-    private(set )var levelIndexToAddedCommandsInfo: [Int: CommandDataListInfo] = [:]
+    private(set) var levelIndexToAddedCommandsInfo: [Int: CommandDataListInfo] = [:]
 
     override init() {
         super.init()
     }
 
-    // Called after level is won
     func completeLevel(levelIndex: Int) {
         if completedLevelIndexes.contains(levelIndex) {
             return
@@ -31,7 +30,6 @@ class UserData: NSObject, NSCoding {
         completedLevelIndexes.append(levelIndex)
     }
 
-    // Called by app delegate after app quits, or when user press back/win level.
     func updateAddedCommandsInfo(levelIndex: Int, commandDataListInfo: CommandDataListInfo) {
         levelIndexToAddedCommandsInfo[levelIndex] = commandDataListInfo
     }
