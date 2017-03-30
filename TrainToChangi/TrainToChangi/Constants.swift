@@ -1,4 +1,5 @@
 import UIKit
+import SpriteKit
 
 struct Constants {
     // Struct is not meant to be initialised
@@ -21,7 +22,7 @@ struct Constants {
     struct Inbox {
         static let size = CGSize(width: 420, height: 60)
         static let position = CGPoint(x: 575,
-                                      y: ViewDimensions.height - size.height / 2)
+                                      y: ViewDimensions.height - size.height / 2 - 40)
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x - size.width / 2, y: position.y - size.height / 2)
         static let imagePadding: CGFloat = 10
@@ -32,7 +33,8 @@ struct Constants {
         static let position = CGPoint(x: 400, y: 140)
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x + size.width / 2, y: position.y + size.height / 2)
-        static let entryPosition = CGPoint(x: position.x + size.width / 2 - Payload.size.width / 2 - 10, y: position.y)
+        static let entryPosition = CGPoint(x: position.x + size.width / 2
+            - Payload.size.width / 2 - 10, y: position.y + Payload.imageOffsetY)
         static let imagePadding: CGFloat = 10
     }
 
@@ -56,6 +58,7 @@ struct Constants {
         static let imageName = "box"
         static let labelName = "payload label"
         static let labelOffsetY: CGFloat = -5
+        static let imageOffsetY: CGFloat = 35
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 18
         static let fontColor = UIColor.darkGray
@@ -126,6 +129,14 @@ struct Constants {
 
         static let discardHoldingValueDuration = 0.5
         static let holdingValueToMemoryDuration = 0.5
+
+        static let conveyorBeltFrames = [SKTexture(imageNamed: "conveyor-belt-1"),
+                                         SKTexture(imageNamed: "conveyor-belt-2"),
+                                         SKTexture(imageNamed: "conveyor-belt-3")]
+        static let conveyorBeltTimePerFrame = 0.05
+        static let conveyorBeltAnimationCount = 4
+        static let inboxAnimationKey = "inboxMoving"
+        static let outboxAnimationKey = "outboxMoving"
     }
 
     struct Audio {
