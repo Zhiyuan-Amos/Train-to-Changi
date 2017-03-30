@@ -10,20 +10,35 @@ import Foundation
 
 class StorageManager {
 
-    var currentSaveSlot = UserData()
-    private var userDataFileName = "User1.plist"
+    private let pListExtension = ".plist"
 
-    func storeUserData() {
-        // save currentSaveSlot user data into file
-    }
+    // If userData has been saved, we read from file
+    // else return new userData
+    private(set) var userData: UserData = {
+        let fileNameToLoad = Config.saveSlot.rawValue + ".plist"
 
-    func loadUserData() {
-        // load from file into currentSaveSlot
-    }
+        return UserData()
+    }()
 
     func completeLevel(levelIndex: Int) {
-        currentSaveSlot.completeLevel(levelIndex: levelIndex)
+        userData.completeLevel(levelIndex: levelIndex)
     }
+
+    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandData]) {
+        userData.updateAddedCommands(levelIndex: levelIndex,
+                                     userAddedCommands: userAddedCommands)
+    }
+
+    func hasCompletedLevel(levelIndex: Int) -> Bool {
+        return false
+    }
+
+
+    func save() {
+        let fileNameToSave = Config.saveSlot.rawValue + pListExtension
+
+    }
+
 
 //    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandEnum]) {
 //        currentSaveSlot.updateAddedCommands(levelIndex: levelIndex,

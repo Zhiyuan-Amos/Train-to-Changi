@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     // VC is currently first responder, to be changed when we add other views.
     fileprivate let model: Model
     private let logic: Logic
+    private let storage: StorageManager
 
     // The area which shows availableCommandsForUser
     @IBOutlet private var availableCommandsView: UIView!
@@ -28,6 +29,8 @@ class GameViewController: UIViewController {
         // Change level by setting levelIndex here.
         model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
         logic = LogicManager(model: model)
+        // To be done by app delegate
+        storage = StorageManager()
         super.init(coder: aDecoder)
     }
 

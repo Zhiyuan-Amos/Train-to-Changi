@@ -26,4 +26,8 @@ class UserData {
     func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandData]) {
         levelIndexToAddedCommands[levelIndex] = userAddedCommands
     }
+
+    func addedCommands(levelIndex: Int) -> [CommandData]? {
+        return levelIndexToAddedCommands[levelIndex]
+    }
 }
