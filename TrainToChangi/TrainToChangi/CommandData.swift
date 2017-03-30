@@ -21,16 +21,39 @@ enum CommandData {
             return "inbox"
         case .outbox:
             return "outbox"
-        case .copyFrom(_):
-            return "copyFrom"
-        case .copyTo(_):
-            return "copyTo"
-        case .add(_):
-            return "add"
+        case .copyFrom(let index):
+            return "copyFrom_\(index)"
+        case .copyTo(let index):
+            return "copyTo_\(index)"
+        case .add(let index):
+            return "add_\(index)"
         case .jump:
             return "jump"
         case .jumpTarget:
             return "jumpTarget"
+        }
+    }
+
+    init(commandString: String) {
+        let commandArr = commandString.characters.split{$0 == "_"}.map(String.init)
+
+        switch commandArr[0] {
+        case "inbox":
+            self = CommandData.inbox
+        case "outbox":
+            self = CommandData.outbox
+        case "copyFrom":
+            self = CommandData.copyFrom(memoryIndex: Int(commandArr[1]))
+        case "copyTo":
+            self = CommandData.copyTo(memoryIndex: Int(commandArr[1]))
+        case "add":
+            self =  CommandData.add(memoryIndex: Int(commandArr[1]))
+        case "jump":
+            self = CommandData.jump
+        case "jumpTarget":
+            self = CommandData.jumpTarget
+        default:
+            fatalError("Should never happen.")
         }
     }
 }

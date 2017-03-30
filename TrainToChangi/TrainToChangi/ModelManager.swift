@@ -62,6 +62,10 @@ class ModelManager: Model {
         return _userEnteredCommands.toArray()
     }
 
+    var userEnteredCommandsAsListInfo: CommandDataListInfo {
+        return _userEnteredCommands.asListInfo()
+    }
+
     // MARK - API for GameViewController.
 
     func addCommand(commandEnum: CommandData) {
