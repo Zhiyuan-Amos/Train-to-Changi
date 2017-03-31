@@ -89,12 +89,12 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         scene.initLevelState(model.currentLevel)
     }
-    
+
     private func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(animationBegan(notification:)),
             name: Constants.NotificationNames.animationBegan, object: nil)
-        
+
         NotificationCenter.default.addObserver(
             self, selector: #selector(animationEnded(notification:)),
             name: Constants.NotificationNames.animationEnded, object: nil)
