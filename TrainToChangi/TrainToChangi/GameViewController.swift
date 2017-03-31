@@ -24,14 +24,7 @@ class GameViewController: UIViewController {
         model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
         logic = LogicManager(model: model)
         super.init(coder: aDecoder)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(animationBegan(notification:)),
-            name: Constants.NotificationNames.animationBegan, object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(animationEnded(notification:)),
-            name: Constants.NotificationNames.animationEnded, object: nil)
+        registerObservers()
     }
 
     // Updates `model.runState` to `.running(isAnimating: true) if the
@@ -95,6 +88,16 @@ class GameViewController: UIViewController {
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
         scene.initLevelState(model.currentLevel)
+    }
+    
+    private func registerObservers() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationBegan(notification:)),
+            name: Constants.NotificationNames.animationBegan, object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationEnded(notification:)),
+            name: Constants.NotificationNames.animationEnded, object: nil)
     }
 }
 
