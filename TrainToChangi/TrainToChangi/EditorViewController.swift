@@ -230,8 +230,8 @@ class EditorViewController: UIViewController {
     // update jump bundles when a non-jump related command is being deleted
     private func updateJumpBundles(deletedIndexPath: IndexPath) {
         for jumpBundle in jumpBundles {
-            guard jumpBundle.jumpIndexPath == deletedIndexPath
-                && jumpBundle.jumpTargetIndexPath == deletedIndexPath else {
+            guard jumpBundle.jumpIndexPath != deletedIndexPath
+                && jumpBundle.jumpTargetIndexPath != deletedIndexPath else {
                     continue
                 }
             if jumpBundle.jumpTargetIndexPath.item >= deletedIndexPath.item {
@@ -247,8 +247,8 @@ class EditorViewController: UIViewController {
     // update jump bundles when a jump related command is being deleted
     private func updateJumpBundles(deletedIndexPath: IndexPath, deletedPartnerIndexPath: IndexPath) {
         for jumpBundle in jumpBundles {
-            guard jumpBundle.jumpIndexPath == deletedIndexPath
-                && jumpBundle.jumpTargetIndexPath == deletedIndexPath else {
+            guard jumpBundle.jumpIndexPath != deletedIndexPath
+                && jumpBundle.jumpTargetIndexPath != deletedIndexPath else {
                     continue
             }
 
