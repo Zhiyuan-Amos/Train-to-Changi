@@ -88,6 +88,7 @@ struct Constants {
         static let animationBegan = Notification.Name(rawValue: "animationBegan")
         static let animationEnded = Notification.Name(rawValue: "animationEnded")
         static let runStateUpdated = Notification.Name(rawValue: "runStateUpdated")
+        static let resetGameScene = Notification.Name(rawValue: "resetGameScene")
     }
 
     struct SegueIds {

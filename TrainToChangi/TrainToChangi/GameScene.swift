@@ -26,8 +26,9 @@ enum WalkDestination {
 }
 
 class GameScene: SKScene {
-    // when `isAnimating` == true, command must wait for animation to finish before executing next command
-    fileprivate(set) var isAnimating = false
+    fileprivate var hasPaused = false
+
+    fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
     fileprivate let player = SKSpriteNode(imageNamed: "player")
 
@@ -38,6 +39,11 @@ class GameScene: SKScene {
     fileprivate var memoryNodes = [SKSpriteNode]()
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
+    fileprivate var payloads: [SKSpriteNode] {
+        var array = inboxNodes + memoryNodes + outboxNodes
+        array.append(holdingNode)
+        return array
+    }
 
     fileprivate var memoryLayout: Memory.Layout?
 
@@ -49,12 +55,23 @@ extension GameScene {
 
     // Called by so that Scene knows data of current Level
     func initLevelState(_ level: Level) {
+        self.level = level
         initBackground()
         initPlayer()
         initInbox(values: level.initialState.inputs)
         initOutbox()
         initNotification()
         initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
+    }
+
+    // Dynamic elements include `player` position, `player` value,
+    // `payload`s on the inbox and outbox belt and on memory.
+    // This method is called when the state of the scene needs to be
+    // rewound to starting point. Static elements are not refreshed again.
+    func rePresentDynamicElements() {
+        _ = payloads.map { payload in payload.removeFromParent() }
+        initInboxNodes(from: level.initialState.inputs)
+        setPlayerAttributes()
     }
 
     private func initBackground() {
@@ -77,10 +94,14 @@ extension GameScene {
     }
 
     private func initPlayer() {
+        setPlayerAttributes()
+        addChild(player)
+    }
+
+    private func setPlayerAttributes() {
         player.size = Constants.Player.size
         player.position = Constants.Player.position
         player.zPosition = Constants.Player.zPosition
-        addChild(player)
     }
 
     private func initInbox(values: [Int]) {
@@ -99,8 +120,11 @@ extension GameScene {
 
     private func initNotification() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(catchNotification(notification:)),
+            self, selector: #selector(notifiedMovePerson(notification:)),
             name: Constants.NotificationNames.movePersonInScene, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(notifiedResetScene(notification:)),
+            name: Constants.NotificationNames.resetGameScene, object: nil)
     }
 
     private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
@@ -160,7 +184,7 @@ extension GameScene {
 
     // Receive notification to control the game scene. Responds accordingly.
     // notification must contains `userInfo` with "destination" defined
-    @objc fileprivate func catchNotification(notification: Notification) {
+    @objc fileprivate func notifiedMovePerson(notification: Notification) {
         guard let userInfo = notification.userInfo else {
             fatalError("[GameScene:catchNotification] Notification has no userInfo")
         }
@@ -169,19 +193,33 @@ extension GameScene {
             fatalError("[GameScene:catchNotification] userInfo should contain destination")
         }
 
+        hasPaused = false
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationBegan,
                                                      object: nil, userInfo: nil))
         move(to: destination)
         //TODO: animation duration cannot be hardcoded
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            // this check is necessary or after 2 sec the next command will still execute
+            guard !self.hasPaused else { return }
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
         })
+    }
+
+    @objc fileprivate func notifiedResetScene(notification: Notification) {
+        removeAllAnimations()
+        rePresentDynamicElements()
     }
 }
 
 // MARK: - Animations
 extension GameScene {
+
+    fileprivate func removeAllAnimations() {
+        hasPaused = true
+        player.removeAllActions()
+        _ = payloads.flatMap { payload in payload.removeAllActions() }
+    }
 
     // Move the player to a WalkDestination
     fileprivate func move(to destination: WalkDestination) {
