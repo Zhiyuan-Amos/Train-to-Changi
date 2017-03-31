@@ -15,22 +15,38 @@ protocol GameVCTouchDelegate: class {
 
 class GameViewController: UIViewController {
 
+    // VC is currently first responder, to be changed when we add other views.
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var storage: StorageManager!
 
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        registerObservers()
+    }
+
+    // Updates `model.runState` to `.running(isAnimating: true) if the
+    // current `model.runState` is `.running(isAnimating: false)`.
+    // This is to prevent scenarios such as user pressing `stepForwardButton`,
+    // in which `model.runState` is set to `.paused`, but set to `.running` when
+    // animation started, which then triggers `animationEnded(notification:)`, 
+    // thus setting the runState incorrectly.
+    // -SeeAlso: animationEnded(notification:)
     @objc fileprivate func animationBegan(notification: Notification) {
-        model.runState = .running(isAnimating: true)
+        if model.runState == .running(isAnimating: false) {
+            model.runState = .running(isAnimating: true)
+        }
     }
 
+    // Updates `model.runState` to `.running(isAnimating: false) if the
+    // current `model.runState` is `.running(isAnimating: true)`.
+    // This is to prevent scenarios such as user pressing `stepForwardButton`,
+    // in which `model.runState` is set to `.paused`, but after the animation
+    // has ended and this method is called, it sets the runState incorrectly to `.running`.
     @objc fileprivate func animationEnded(notification: Notification) {
-        model.runState = .running(isAnimating: false)
-    }
-
-    @IBAction func exitButtonPressed(_ sender: Any) {
-        dismiss(animated: true, completion: {
-            AudioPlayer.sharedInstance.stopBackgroundMusic()
-        })
+        if model.runState == .running(isAnimating: true) {
+            model.runState = .running(isAnimating: false)
+        }
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -39,13 +55,6 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(animationBegan(notification:)),
-            name: Constants.NotificationNames.animationBegan, object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(animationEnded(notification:)),
-            name: Constants.NotificationNames.animationEnded, object: nil)
         presentGameScene()
         AudioPlayer.sharedInstance.playBackgroundMusic()
     }
@@ -61,6 +70,12 @@ class GameViewController: UIViewController {
         }
     }
 
+    @IBAction func exitButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: {
+            AudioPlayer.sharedInstance.stopBackgroundMusic()
+        })
+    }
+
     /// Use GameScene to move/animate the game objects
     func presentGameScene() {
         let scene = GameScene(size: view.bounds.size)
@@ -72,6 +87,16 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         scene.initLevelState(model.currentLevel)
     }
+    
+    private func registerObservers() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationBegan(notification:)),
+            name: Constants.NotificationNames.animationBegan, object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(animationEnded(notification:)),
+            name: Constants.NotificationNames.animationEnded, object: nil)
+    }
 }
 
 extension GameViewController: MapViewControllerDelegate {
@@ -79,8 +104,8 @@ extension GameViewController: MapViewControllerDelegate {
         self.storage = storage
         let levelIndex = 0
         model = ModelManager(levelIndex: levelIndex,
-                             levelData: LevelDataHelper.levelData(levelIndex: levelIndex),
-                             commandDataListInfo: storage.userData.addedCommands(levelIndex: levelIndex))
+                             levelData: LevelDataHelper.levelData(levelIndex: 0),
+                             commandDataListInfo: storage.userData.addedCommands(levelIndex: 0))
         logic = LogicManager(model: model)
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kMw-hA-jzt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kMw-hA-jzt">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,14 +43,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="626-si-ZTN" userLabel="Editor">
-                                <rect key="frame" x="648" y="72" width="376" height="576"/>
+                                <rect key="frame" x="648" y="72" width="424" height="576"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="1JH-tH-YXE" kind="embed" identifier="EditorSegue" id="CKQ-uE-Byf"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWA-yB-w3z">
-                                <rect key="frame" x="648" y="672" width="376" height="96"/>
+                                <rect key="frame" x="648" y="672" width="424" height="96"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="KBR-OJ-fFv" kind="embed" identifier="ControlPanelSegue" id="6QC-Xw-750"/>
@@ -86,7 +86,7 @@
                         <viewControllerLayoutGuide type="bottom" id="LfF-f7-BUP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Tkd-9Y-ReJ">
-                        <rect key="frame" x="0.0" y="0.0" width="376" height="576"/>
+                        <rect key="frame" x="0.0" y="0.0" width="424" height="576"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="editor" translatesAutoresizingMaskIntoConstraints="NO" id="1Xj-qD-OPS">
@@ -105,7 +105,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CommandCell" id="4Yn-2t-Zef" customClass="CommandCell" customModule="TrainToChangi" customModuleProvider="target">
-                                        <rect key="frame" x="5" y="0.0" width="191" height="57"/>
+                                        <rect key="frame" x="4.5" y="0.0" width="191" height="57"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="191" height="57"/>
@@ -157,6 +157,7 @@
                         <outlet property="currentCommandsView" destination="oSJ-Cl-MNP" id="khZ-Db-7Pj"/>
                         <outlet property="editorView" destination="1Xj-qD-OPS" id="Aas-hc-U9N"/>
                         <outlet property="levelDescriptionTextView" destination="jft-9R-iCA" id="2Ky-b3-xHS"/>
+                        <outlet property="resetButton" destination="dy1-XF-9cF" id="wQA-ne-IP6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FuK-8z-h2Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -172,7 +173,7 @@
                         <viewControllerLayoutGuide type="bottom" id="eB4-6w-9cs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mzH-iT-Njn">
-                        <rect key="frame" x="0.0" y="0.0" width="376" height="96"/>
+                        <rect key="frame" x="0.0" y="0.0" width="424" height="96"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ug5-5d-GKx" userLabel="Controls">
@@ -229,6 +230,12 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="playButton" destination="s7J-KX-aRt" id="Qba-gU-V4M"/>
+                        <outlet property="stepBackButton" destination="agn-4v-A72" id="bnS-WE-UVk"/>
+                        <outlet property="stepForwardButton" destination="ODL-16-rW8" id="owa-C9-yYl"/>
+                        <outlet property="stopButton" destination="z2T-qC-EX0" id="5mQ-Un-fJx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37u-s3-zG6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -31,8 +31,8 @@ class GameScene: SKScene {
 
     fileprivate let player = SKSpriteNode(imageNamed: "player")
 
-    fileprivate let inbox = SKSpriteNode()
-    fileprivate let outbox = SKSpriteNode()
+    fileprivate let inbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
+    fileprivate let outbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
 
     fileprivate var inboxNodes = [SKSpriteNode]()
     fileprivate var memoryNodes = [SKSpriteNode]()
@@ -85,16 +85,13 @@ extension GameScene {
 
     private func initInbox(values: [Int]) {
         inbox.size = Constants.Inbox.size
-        inbox.color = Constants.Inbox.color
         inbox.position = Constants.Inbox.position
         addChild(inbox)
         initInboxNodes(from: values)
     }
 
     private func initOutbox() {
-
         outbox.size = Constants.Outbox.size
-        outbox.color = Constants.Outbox.color
         outbox.position = Constants.Outbox.position
 
         addChild(outbox)
@@ -133,7 +130,7 @@ extension GameScene {
 
         let offsetX = CGFloat(index) * (Constants.Payload.size.width + Constants.Inbox.imagePadding)
 
-        return CGPoint(x: startingX + offsetX, y: inbox.position.y)
+        return CGPoint(x: startingX + offsetX, y: inbox.position.y + Constants.Payload.imageOffsetY)
     }
 }
 
@@ -206,9 +203,14 @@ extension GameScene {
             // 2. step aside after getting box
             let stepAside = SKAction.move(by: Constants.Animation.afterInboxStepVector,
                                           duration: Constants.Animation.afterInboxStepDuration)
+
             // 3. meantime inbox items move left
             self.player.run(stepAside, completion: {
                 _ = self.inboxNodes.map { node in self.moveConveyorBelt(node) }
+                let inboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                    timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
+                    count: Constants.Animation.conveyorBeltAnimationCount)
+                self.inbox.run(inboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
             })
         })
     }
@@ -239,6 +241,10 @@ extension GameScene {
         player.run(moveAction, completion: {
             // 2. then, outbox items move left
             _ = self.outboxNodes.map { node in self.moveConveyorBelt(node) }
+            let outboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
+                count: Constants.Animation.conveyorBeltAnimationCount)
+            self.outbox.run(outboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
         })
         let wait = SKAction.wait(forDuration: Constants.Animation.moveToConveyorBeltDuration)
         player.run(wait, completion: {

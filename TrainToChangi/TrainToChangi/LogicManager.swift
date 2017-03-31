@@ -23,14 +23,22 @@ class LogicManager: Logic, GameLogicDelegate {
     // Executes the list of commands that user has selected.
     // As this method will busy-wait, it is run in background thread. 
     func executeCommands() {
+        let lock = NSLock()
         DispatchQueue.global(qos: .background).async {
             while case .running = self.model.runState {
-                guard self.model.runState == .running(isAnimating: false) else {
-                    usleep(100000)
-                    continue
+                // Allows only 1 `executeNextCommand()` to be queued in main thread
+                lock.lock()
+
+                while self.model.runState == .running(isAnimating: true) {
+                    usleep(Constants.Logic.oneMillisecond)
                 }
 
-                self.executeNextCommand()
+                // execution of command must be done on main thread to allow the update
+                // of UI buttons during the change of run states.
+                DispatchQueue.main.async {
+                    self.executeNextCommand()
+                    lock.unlock()
+                }
             }
         }
     }
