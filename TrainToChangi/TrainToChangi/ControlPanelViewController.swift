@@ -34,14 +34,26 @@ class ControlPanelViewController: UIViewController {
         model.runState = .paused
     }
 
+    // Undo the previous command. If game is already playing, sets `model.runState`
+    // to `.paused` and stops after current command execution.
     @IBAction func stepBackButtonPressed(_ sender: UIButton) {
+        let currentRunState = model.runState
         model.runState = .paused
-        _ = logic.undo()
+
+        if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
+            logic.undo()
+        }
     }
 
+    // Executes the next command. If game is already playing, sets `model.runState`
+    // to `.paused` and stops after current command execution.
     @IBAction func stepForwardButtonPressed(_ sender: UIButton) {
+        let currentRunState = model.runState
         model.runState = .paused
-        logic.executeNextCommand()
+
+        if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
+            logic.executeNextCommand()
+        }
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {

@@ -10,7 +10,7 @@ protocol Logic: class {
 
     func executeCommands()
 
-    func undo() -> Bool
+    func undo()
 
     func executeNextCommand()
 

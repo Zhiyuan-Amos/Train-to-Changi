@@ -23,13 +23,13 @@ class LogicManager: Logic, GameLogicDelegate {
     // Executes the list of commands that user has selected.
     // As this method will busy-wait, it is run in background thread. 
     func executeCommands() {
-        let lock = NSLock()
+        let binarySemaphore = DispatchSemaphore(value: 1)
         DispatchQueue.global(qos: .background).async {
             while case .running = self.model.runState {
                 // Allows only 1 `executeNextCommand()` to be queued in main thread
-                lock.lock()
+                binarySemaphore.wait()
 
-                while self.model.runState == .running(isAnimating: true) {
+                while self.model.runState != .running(isAnimating: false) {
                     usleep(Constants.Logic.oneMillisecond)
                 }
 
@@ -37,23 +37,20 @@ class LogicManager: Logic, GameLogicDelegate {
                 // of UI buttons during the change of run states.
                 DispatchQueue.main.async {
                     self.executeNextCommand()
-                    lock.unlock()
+                    binarySemaphore.signal()
                 }
             }
         }
     }
 
     // Reverts the state of the model by one command execution backward.
-    // Returns true if there's still commands to be undone.
-    func undo() -> Bool {
+    func undo() {
         guard let command = executedCommands.pop() else {
             fatalError("User should not be allowed to undo")
         }
 
         gameLogic.undo(command)
         iterator.previous()
-
-        return !executedCommands.isEmpty
     }
 
     // Executes the next command.
