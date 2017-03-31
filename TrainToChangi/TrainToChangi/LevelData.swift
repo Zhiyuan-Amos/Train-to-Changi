@@ -43,7 +43,7 @@ struct LevelOneData: LevelData {
                                             LevelDataHelper.jumpCommand,
                                             LevelDataHelper.copyFromCommand]
 
-    let memoryValues: [Int?] = []
+    let memoryValues: [Int?] = [nil, nil]
 
     private let start = 0
     private let end = 10
