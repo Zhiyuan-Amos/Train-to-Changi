@@ -47,6 +47,11 @@ fileprivate class JumpListNode: CommandDataListNode {
 protocol CommandDataList {
 
     // Appends `commandData` to the end of the list.
+    // I'm trying to think of how to reduce code smell here
+    // because these functions handle jump (add jump auto add jumpTarget), while
+    // the private helper functions named similarly with different
+    // parameters don't. e.g. append(_ node: Node) doesn't care if its jump
+    // Wanted to rename to appendNew but sounds weird too..
     func append(commandData: CommandData)
 
     // Inserts `commandData` into the list at `index`.
@@ -321,16 +326,20 @@ extension CommandDataLinkedList {
 extension CommandDataLinkedList {
     convenience init(commandDataListInfo: CommandDataListInfo) {
         self.init()
-        let array = commandDataListInfo.array
-        let jumpMappings = commandDataListInfo.jumpMappings
+        setUpListNodes(commandDataArray: commandDataListInfo.commandDataArray)
+        setUpJumpReferences(jumpMappings: commandDataListInfo.jumpMappings)
+    }
 
-        for commandData in array {
+    private func setUpListNodes(commandDataArray: [CommandData]) {
+        for commandData in commandDataArray {
             let newNode: CommandDataListNode = commandData.isJumpCommand
-                ? JumpListNode(commandData: commandData, hasJumpTarget: false)
-                : IterativeListNode(commandData: commandData)
+                    ? JumpListNode(commandData: commandData, hasJumpTarget: false)
+                    : IterativeListNode(commandData: commandData)
             append(newNode)
         }
+    }
 
+    private func setUpJumpReferences(jumpMappings: [Int: Int]) {
         for (jumpParentIndex, jumpTargetIndex) in jumpMappings {
             guard let jumpNode = node(atIndex: jumpParentIndex) as? JumpListNode,
                   let jumpTargetNode = node(atIndex: jumpTargetIndex) as? IterativeListNode else {

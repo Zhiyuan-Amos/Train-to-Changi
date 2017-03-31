@@ -10,28 +10,28 @@ import Foundation
 
 // Wrapper class for storing purposes.
 class CommandDataListInfo: NSObject, NSCoding {
-    let arrayKeyString = "array"
+    let commandDataArrayKeyString = "commandDataArray"
     let jumpMappingsKeyString = "jumpMappings"
 
-    let array: [CommandData]
+    let commandDataArray: [CommandData]
     let jumpMappings: [Int: Int]
 
     init(array: [CommandData], jumpMappings: [Int: Int]) {
-        self.array = array
+        self.commandDataArray = array
         self.jumpMappings = jumpMappings
     }
 
     func encode(with aCoder: NSCoder) {
         var stringArr: [String] = []
-        for commandData in array {
+        for commandData in commandDataArray {
             stringArr.append(commandData.toString())
         }
-        aCoder.encode(stringArr, forKey: arrayKeyString)
+        aCoder.encode(stringArr, forKey: commandDataArrayKeyString)
         aCoder.encode(jumpMappings, forKey: jumpMappingsKeyString)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        guard let stringArr = aDecoder.decodeObject(forKey: arrayKeyString) as? [String],
+        guard let stringArr = aDecoder.decodeObject(forKey: commandDataArrayKeyString) as? [String],
               let jumpMappings = aDecoder.decodeObject(forKey: jumpMappingsKeyString) as? [Int: Int] else {
             assertionFailure("Failed to load")
             return nil
@@ -41,7 +41,7 @@ class CommandDataListInfo: NSObject, NSCoding {
             let commandData = CommandData(commandString: commandDataString)
             array.append(commandData)
         }
-        self.array = array
+        self.commandDataArray = array
         self.jumpMappings = jumpMappings
     }
 }
