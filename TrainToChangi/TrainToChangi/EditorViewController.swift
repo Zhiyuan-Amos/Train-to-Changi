@@ -421,22 +421,14 @@ class EditorViewController: UIViewController {
     // on the `model.runState`.
     private func updateViewsState() {
         switch model.runState {
-        case .running:
+        case .running, .won, .singleRun:
             resetButton.isEnabled = false
             currentCommandsView.isUserInteractionEnabled = false
             availableCommandsView.isUserInteractionEnabled = false
-        case .paused:
+        case .paused, .lost:
             resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
-        case .lost:
-            resetButton.isEnabled = true
-            currentCommandsView.isUserInteractionEnabled = true
-            availableCommandsView.isUserInteractionEnabled = true
-        case .won:
-            resetButton.isEnabled = false
-            currentCommandsView.isUserInteractionEnabled = false
-            availableCommandsView.isUserInteractionEnabled = false
         }
     }
 

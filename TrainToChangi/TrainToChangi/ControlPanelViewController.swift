@@ -37,23 +37,19 @@ class ControlPanelViewController: UIViewController {
     // Undo the previous command. If game is already playing, sets `model.runState`
     // to `.paused` and stops after current command execution.
     @IBAction func stepBackButtonPressed(_ sender: UIButton) {
-        let currentRunState = model.runState
-        model.runState = .paused
-
-        if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
+        if model.runState != .running(isAnimating: false) && model.runState != .running(isAnimating: true) {
             logic.undo()
         }
+        model.runState = .paused
     }
 
     // Executes the next command. If game is already playing, sets `model.runState`
     // to `.paused` and stops after current command execution.
     @IBAction func stepForwardButtonPressed(_ sender: UIButton) {
-        let currentRunState = model.runState
-        model.runState = .paused
-
-        if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
+        if model.runState != .running(isAnimating: false) && model.runState != .running(isAnimating: true) {
             logic.executeNextCommand()
         }
+        model.runState = .singleRun
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
@@ -88,6 +84,11 @@ class ControlPanelViewController: UIViewController {
             stepForwardButton.isEnabled = false
         case .won:
             stopButton.isEnabled = false
+            stepBackButton.isEnabled = false
+            playButton.isEnabled = false
+            stepForwardButton.isEnabled = false
+        case .singleRun:
+            stopButton.isEnabled = true
             stepBackButton.isEnabled = false
             playButton.isEnabled = false
             stepForwardButton.isEnabled = false
