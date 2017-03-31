@@ -16,8 +16,27 @@ class ModelManager: Model {
         get {
             return levelState.runState
         }
+        // State machine
         set(newState) {
-            levelState.runState = newState
+            switch runState {
+            case .running, .paused:
+                levelState.runState = newState
+            case .won:
+                // when game is won, user should not be allowed to set the `runState`
+                // to `.running`, `.paused` or `.lost`
+                break
+            case .lost:
+                switch newState {
+                case .paused:
+                    levelState.runState = newState
+                default:
+                    break
+                }
+            }
+
+            let notification = Notification(name: Constants.NotificationNames.runStateUpdated,
+                                            object: nil, userInfo: nil)
+            NotificationCenter.default.post(notification)
         }
     }
     var numSteps: Int {

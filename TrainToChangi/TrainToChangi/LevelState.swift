@@ -5,7 +5,7 @@ struct LevelState {
 
     var outputs: [Int] = []
     var personValue: Int?
-    var runState: RunState = .stopped
+    var runState: RunState = .paused
     var numSteps: Int = 0
     var programCounter: Int?
 

@@ -65,7 +65,7 @@ struct Constants {
         static let size = CGSize(width: 40, height: 40)
         // Rotate a random value from 0 degrees to 5 degrees
         static var rotationAngle: CGFloat {
-            return CGFloat((M_PI_4 / 9) * drand48())
+            return CGFloat((.pi / 36) * drand48())
         }
     }
 
@@ -82,6 +82,7 @@ struct Constants {
         static let initScene = Notification.Name(rawValue: "initScene")
         static let animationBegan = Notification.Name(rawValue: "animationBegan")
         static let animationEnded = Notification.Name(rawValue: "animationEnded")
+        static let runStateUpdated = Notification.Name(rawValue: "runStateUpdated")
     }
 
     struct SegueIds {
@@ -113,6 +114,10 @@ struct Constants {
         static let collectionCellHeight: CGFloat = 40
 
         static let arrowWidth: CGFloat = 30
+    }
+
+    struct Logic {
+        static let oneMillisecond: UInt32 = 100000
     }
 
     struct Animation {

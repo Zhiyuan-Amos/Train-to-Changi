@@ -17,7 +17,7 @@ class OutboxCommand: Command {
         }
 
         prevValueOnPerson = value
-
+        model.updateValueOnPerson(to: nil)
         model.appendValueIntoOutbox(value)
 
         return CommandResult()
