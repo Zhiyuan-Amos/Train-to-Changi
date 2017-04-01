@@ -11,11 +11,8 @@ import Foundation
 protocol LevelData {
 
     var levelName: String { get }
-
     var levelDescription: String { get }
-
     var availableCommands: [CommandData] { get }
-
     var memoryValues: [Int?] { get }
 
     // Define random inputs for each level because we can have levels

@@ -15,8 +15,6 @@ protocol Model: class {
     // The Commands that user has added.
     var userEnteredCommands: [CommandData] { get }
 
-    var userEnteredCommandsAsListInfo: CommandDataListInfo { get }
-
     // The current inputs left in the inbox area.
     var currentInputs: [Int] { get }
 

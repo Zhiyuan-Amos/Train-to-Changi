@@ -53,7 +53,7 @@ enum CommandData {
         case "jumpTarget":
             self = CommandData.jumpTarget
         default:
-            fatalError("Should never happen.")
+            fatalError("Should never happen, undefined enum.")
         }
     }
 }

@@ -32,9 +32,9 @@ fileprivate class JumpListNode: CommandDataListNode {
     var previous: CommandDataListNode?
     var jumpTarget: IterativeListNode! // use ! to silence xcode use of self
 
-    init(commandData: CommandData, hasJumpTarget: Bool = true) {
+    init(commandData: CommandData, initJumpTarget: Bool = true) {
         self.commandData = commandData
-        if hasJumpTarget {
+        if initJumpTarget {
             self.jumpTarget = IterativeListNode(commandData: .jumpTarget)
             self.previous = jumpTarget
             self.jumpTarget.next = self
@@ -160,7 +160,7 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func asListInfo() -> CommandDataListInfo {
-        return CommandDataListInfo(array: toArray(), jumpMappings: jumpMappings())
+        return CommandDataListInfo(array: toArray(), jumpMappings: getJumpMappings())
     }
 
     // MARK - Private helpers
@@ -300,7 +300,7 @@ class CommandDataLinkedList: CommandDataList {
         preconditionFailure("Node must exist!")
     }
 
-    private func jumpMappings() -> [Int: Int] {
+    private var getJumpMappings: [Int: Int] {
         var map: [Int: Int] = [:]
 
         var curr = head
@@ -333,7 +333,7 @@ extension CommandDataLinkedList {
     private func setUpListNodes(commandDataArray: [CommandData]) {
         for commandData in commandDataArray {
             let newNode: CommandDataListNode = commandData.isJumpCommand
-                    ? JumpListNode(commandData: commandData, hasJumpTarget: false)
+                    ? JumpListNode(commandData: commandData, initJumpTarget: false)
                     : IterativeListNode(commandData: commandData)
             append(newNode)
         }

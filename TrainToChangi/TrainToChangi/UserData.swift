@@ -11,12 +11,14 @@ import Foundation
 // Stores user specific data.
 // Done this way to easily support multiple save slots in the app.
 class UserData: NSObject, NSCoding {
-    let completedLevelIndexesKeyString = "completedLevelIndexes"
-    let addedCommandsInfoKeyString = "addedCommands"
+    let completedLevelIndexesKey = "completedLevelIndexes"
+    let addedCommandsInfoKey = "addedCommands"
 
     // Not done in a cumulative way in case we implement branching paths
     private(set) var completedLevelIndexes: [Int] = []
 
+    // Maps a level's index to its `CommandDataListInfo` representing
+    // the `commandData` added by the user in the editor.
     private(set) var levelIndexToAddedCommandsInfo: [Int: CommandDataListInfo] = [:]
 
     override init() {
@@ -34,24 +36,24 @@ class UserData: NSObject, NSCoding {
         levelIndexToAddedCommandsInfo[levelIndex] = commandDataListInfo
     }
 
-    func addedCommands(levelIndex: Int) -> CommandDataListInfo? {
+    func getAddedCommands(levelIndex: Int) -> CommandDataListInfo? {
         return levelIndexToAddedCommandsInfo[levelIndex]
     }
 
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(completedLevelIndexes, forKey: completedLevelIndexesKeyString)
-        aCoder.encode(levelIndexToAddedCommandsInfo, forKey: addedCommandsInfoKeyString)
+        aCoder.encode(completedLevelIndexes, forKey: completedLevelIndexesKey)
+        aCoder.encode(levelIndexToAddedCommandsInfo, forKey: addedCommandsInfoKey)
     }
 
     required init?(coder aDecoder: NSCoder) {
         guard let completedLevelIndexes =
-            aDecoder.decodeObject(forKey: completedLevelIndexesKeyString) as? [Int],
+            aDecoder.decodeObject(forKey: completedLevelIndexesKey) as? [Int],
             let levelIndexToAddedCommandsInfo =
-        aDecoder.decodeObject(forKey: addedCommandsInfoKeyString) as? [Int: CommandDataListInfo] else {
+        aDecoder.decodeObject(forKey: addedCommandsInfoKey) as? [Int: CommandDataListInfo] else {
                 assertionFailure("Failed to load.")
                 return nil
         }
-        
+
         self.completedLevelIndexes = completedLevelIndexes
         self.levelIndexToAddedCommandsInfo = levelIndexToAddedCommandsInfo
     }

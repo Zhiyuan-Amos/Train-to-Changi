@@ -43,7 +43,7 @@ class StorageManager {
         userData.completeLevel(levelIndex: levelIndex)
     }
 
-    func updateAddedCommandsInfo(levelIndex: Int, commandDataListInfo: CommandDataListInfo) {
+    private func updateAddedCommandsInfo(levelIndex: Int, commandDataListInfo: CommandDataListInfo) {
         userData.updateAddedCommandsInfo(levelIndex: levelIndex,
                                          commandDataListInfo: commandDataListInfo)
     }

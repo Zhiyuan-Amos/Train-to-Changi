@@ -29,7 +29,7 @@ class GameViewController: UIViewController {
     // current `model.runState` is `.running(isAnimating: false)`.
     // This is to prevent scenarios such as user pressing `stepForwardButton`,
     // in which `model.runState` is set to `.paused`, but set to `.running` when
-    // animation started, which then triggers `animationEnded(notification:)`, 
+    // animation started, which then triggers `animationEnded(notification:)`,
     // thus setting the runState incorrectly.
     // -SeeAlso: animationEnded(notification:)
     @objc fileprivate func animationBegan(notification: Notification) {
@@ -87,12 +87,12 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         scene.initLevelState(model.currentLevel)
     }
-    
+
     private func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(animationBegan(notification:)),
             name: Constants.NotificationNames.animationBegan, object: nil)
-        
+
         NotificationCenter.default.addObserver(
             self, selector: #selector(animationEnded(notification:)),
             name: Constants.NotificationNames.animationEnded, object: nil)
@@ -105,7 +105,7 @@ extension GameViewController: MapViewControllerDelegate {
         let levelIndex = 0
         model = ModelManager(levelIndex: levelIndex,
                              levelData: LevelDataHelper.levelData(levelIndex: 0),
-                             commandDataListInfo: storage.userData.addedCommands(levelIndex: 0))
+                             commandDataListInfo: storage.userData.getAddedCommands(levelIndex: 0))
         logic = LogicManager(model: model)
     }
 }
