@@ -26,7 +26,7 @@ enum WalkDestination {
 }
 
 class GameScene: SKScene {
-    fileprivate var hasPaused = false
+    fileprivate var hasPaused = false // Reflects the game state, not the scene state
 
     fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
@@ -69,7 +69,7 @@ extension GameScene {
     // This method is called when the state of the scene needs to be
     // rewound to starting point. Static elements are not refreshed again.
     func rePresentDynamicElements() {
-        _ = payloads.map { payload in payload.removeFromParent() }
+        payloads.forEach { payload in payload.removeFromParent() }
         initInboxNodes(from: level.initialState.inputs)
         setPlayerAttributes()
     }
@@ -120,10 +120,10 @@ extension GameScene {
 
     private func initNotification() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(notifiedMovePerson(notification:)),
+            self, selector: #selector(handleMovePerson(notification:)),
             name: Constants.NotificationNames.movePersonInScene, object: nil)
         NotificationCenter.default.addObserver(
-            self, selector: #selector(notifiedResetScene(notification:)),
+            self, selector: #selector(handleResetScene(notification:)),
             name: Constants.NotificationNames.resetGameScene, object: nil)
     }
 
@@ -184,13 +184,10 @@ extension GameScene {
 
     // Receive notification to control the game scene. Responds accordingly.
     // notification must contains `userInfo` with "destination" defined
-    @objc fileprivate func notifiedMovePerson(notification: Notification) {
-        guard let userInfo = notification.userInfo else {
-            fatalError("[GameScene:catchNotification] Notification has no userInfo")
-        }
-
-        guard let destination = userInfo["destination"] as? WalkDestination else {
-            fatalError("[GameScene:catchNotification] userInfo should contain destination")
+    @objc fileprivate func handleMovePerson(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let destination = userInfo["destination"] as? WalkDestination else {
+            fatalError("[GameScene:handleMovePerson] Notification not set up properly")
         }
 
         hasPaused = false
@@ -206,7 +203,7 @@ extension GameScene {
         })
     }
 
-    @objc fileprivate func notifiedResetScene(notification: Notification) {
+    @objc fileprivate func handleResetScene(notification: Notification) {
         removeAllAnimations()
         rePresentDynamicElements()
     }
@@ -218,7 +215,7 @@ extension GameScene {
     fileprivate func removeAllAnimations() {
         hasPaused = true
         player.removeAllActions()
-        _ = payloads.flatMap { payload in payload.removeAllActions() }
+        payloads.forEach { payload in payload.removeAllActions() }
     }
 
     // Move the player to a WalkDestination
@@ -245,7 +242,7 @@ extension GameScene {
 
             // 3. meantime inbox items move left
             self.player.run(stepAside, completion: {
-                _ = self.inboxNodes.map { node in self.moveConveyorBelt(node) }
+                self.inboxNodes.forEach { node in self.moveConveyorBelt(node) }
                 let inboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
                     timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
                     count: Constants.Animation.conveyorBeltAnimationCount)
@@ -279,7 +276,7 @@ extension GameScene {
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
         player.run(moveAction, completion: {
             // 2. then, outbox items move left
-            _ = self.outboxNodes.map { node in self.moveConveyorBelt(node) }
+            self.outboxNodes.forEach { node in self.moveConveyorBelt(node) }
             let outboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
                 timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
                 count: Constants.Animation.conveyorBeltAnimationCount)

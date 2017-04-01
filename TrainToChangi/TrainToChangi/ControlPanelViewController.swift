@@ -60,6 +60,7 @@ class ControlPanelViewController: UIViewController {
 //                             levelData: LevelDataHelper.levelData(levelIndex: 0))
 //        logic = LogicManager(model: model)
         model.runState = .paused
+        postResetSceneNotification()
     }
 
     // Undo the previous command. If game is already playing, sets `model.runState`
@@ -91,5 +92,11 @@ class ControlPanelViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
+    }
+
+    private func postResetSceneNotification() {
+        let notification = Notification(name: Constants.NotificationNames.resetGameScene,
+                                        object: nil, userInfo: nil)
+        NotificationCenter.default.post(notification)
     }
 }

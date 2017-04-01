@@ -19,11 +19,8 @@ class ModelManager: Model {
         // State machine
         set(newState) {
             switch runState {
-            case .running:
+            case .running, .paused:
                 levelState.runState = newState
-            case .paused:
-                levelState.runState = newState
-                postResetSceneNotification()
             case .won:
                 // when game is won, user should not be allowed to set the `runState`
                 // to `.running`, `.paused` or `.lost`
@@ -190,12 +187,6 @@ class ModelManager: Model {
         let notification = Notification(name: Constants.NotificationNames.movePersonInScene,
                                         object: nil,
                                         userInfo: ["destination": destination])
-        NotificationCenter.default.post(notification)
-    }
-
-    private func postResetSceneNotification() {
-        let notification = Notification(name: Constants.NotificationNames.resetGameScene,
-                                        object: nil, userInfo: nil)
         NotificationCenter.default.post(notification)
     }
 
