@@ -65,7 +65,7 @@ class StorageManager {
         assert(isSaveSuccessful, "Save cannot fail!")
     }
 
-    func load() -> UserData? {
+    private func load() -> UserData? {
         let fileNameToLoad = Config.saveSlot.rawValue + pListExtension
         let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToLoad)
 

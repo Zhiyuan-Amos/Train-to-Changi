@@ -300,7 +300,7 @@ class CommandDataLinkedList: CommandDataList {
         preconditionFailure("Node must exist!")
     }
 
-    private var getJumpMappings: [Int: Int] {
+    private func getJumpMappings() -> [Int: Int] {
         var map: [Int: Int] = [:]
 
         var curr = head
