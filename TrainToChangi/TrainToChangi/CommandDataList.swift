@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK - List Node
+// MARK - CommandDataListNode
 
 protocol CommandDataListNode: class {
     var commandData: CommandData { get }
@@ -30,37 +30,42 @@ fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
-    var jumpTarget: IterativeListNode! // use ! to silence xcode use of self
+    weak var jumpTarget: IterativeListNode?
 
     init(commandData: CommandData, initJumpTarget: Bool = true) {
         self.commandData = commandData
         if initJumpTarget {
             self.jumpTarget = IterativeListNode(commandData: .jumpTarget)
             self.previous = jumpTarget
-            self.jumpTarget.next = self
+            self.jumpTarget?.next = self
         }
     }
 }
 
-// MARK - List
+// MARK - CommandDataList
 
 protocol CommandDataList {
 
     // Appends `commandData` to the end of the list.
-    // I'm trying to think of how to reduce code smell here
-    // because these functions handle jump (add jump auto add jumpTarget), while
-    // the private helper functions named similarly with different
-    // parameters don't. e.g. append(_ node: Node) doesn't care if its jump
-    // Wanted to rename to appendNew but sounds weird too..
+    // If `commandData` is a jump-related command, also appends
+    // its associated `jumpTarget` in front of it.
     func append(commandData: CommandData)
 
     // Inserts `commandData` into the list at `index`.
+    // If `commandData` is a jump-related command, also inserts
+    // its associated `jumpTarget` in front of it.
+    // If `atIndex` is >= length of list, appends the commandData to the list.
+    // - Precondition: atIndex >= 0
     func insert(commandData: CommandData, atIndex: Int)
 
     // Removes `commandData` at `index` from the list.
+    // If `commandData` at index is a jump-related command, also removes
+    // its associated `jumpTarget`.
+    // - Precondition: atIndex must be valid: >= 0 and < length of list
     func remove(atIndex: Int) -> CommandData
 
     // Moves `commandData` from `sourceIndex` to `destIndex`.
+    // - Precondition: sourceIndex and destIndex must be valid: >= 0 and < length of list
     func move(sourceIndex: Int, destIndex: Int)
 
     // Empties the list.
@@ -72,7 +77,7 @@ protocol CommandDataList {
     // Returns an iterator for the CommandDataList.
     func makeIterator() -> CommandDataListIterator
 
-    // Used for storage.
+    // Returns a representation of the `CommandDataList` used for storage.
     func asListInfo() -> CommandDataListInfo
 
     // TODO: ADT _checkrep, make sure both sides are connected, jump and target connected.
@@ -89,52 +94,53 @@ class CommandDataLinkedList: CommandDataList {
 
     // MARK - API implementations
 
-    var isEmpty: Bool {
+    fileprivate var isEmpty: Bool {
         return head == nil
     }
 
-    subscript(index: Int) -> CommandData {
-        let node = self.node(atIndex: index)
-        guard let commandData = node?.commandData else {
-            preconditionFailure("Index is not valid.")
-        }
-        return commandData
-    }
-
     func append(commandData: CommandData) {
-        assert(commandData != .jumpTarget)
         let newNode = initNode(commandData: commandData)
         if let jumpNode = newNode as? JumpListNode {
-            append(jumpNode.jumpTarget)
-            return
+            guard let jumpTargetNode = jumpNode.jumpTarget else {
+                fatalError("All jump nodes should have a jump target!")
+            }
+            append(jumpTargetNode)
+        } else {
+            append(newNode)
         }
-        append(newNode)
     }
 
     func insert(commandData: CommandData, atIndex index: Int) {
-        assert(commandData != .jumpTarget)
         let newNode = initNode(commandData: commandData)
         insert(newNode, atIndex: index)
         if let jumpNode = newNode as? JumpListNode {
-            insert(jumpNode.jumpTarget, atIndex: index)
+            guard let jumpTargetNode = jumpNode.jumpTarget else {
+                fatalError("All jump nodes should have a jump target!")
+            }
+            insert(jumpTargetNode, atIndex: index)
         }
     }
 
     func move(sourceIndex: Int, destIndex: Int) {
         // TODO: make sure index valid..
 
-        let node = self.node(atIndex: sourceIndex)
-        move(node!, toIndex: destIndex)
+        guard let node = node(atIndex: sourceIndex) else {
+            return
+        }
+        move(node, toIndex: destIndex)
     }
 
     func remove(atIndex index: Int) -> CommandData {
         guard let node = self.node(atIndex: index) else {
             preconditionFailure("Index is not valid.")
         }
-        if let node = node as? JumpListNode {
-            _ = remove(node.jumpTarget)
-        } else if let jumpParent = jumpParentOf(node) as? JumpListNode {
-            _ = remove(jumpParent)
+        if let jumpNode = node as? JumpListNode {
+            guard let jumpTargetNode = jumpNode.jumpTarget else {
+                fatalError("All jump nodes should have a jump target!")
+            }
+            _ = remove(jumpTargetNode)
+        } else if let jumpParentNode = jumpParentOf(node) as? JumpListNode {
+            _ = remove(jumpParentNode)
         }
 
         return remove(node)
@@ -307,7 +313,10 @@ class CommandDataLinkedList: CommandDataList {
         while curr != nil {
             if let jump = curr as? JumpListNode {
                 let jumpParentIndex = indexOf(jump)
-                let jumpTargetIndex = indexOf(jump.jumpTarget)
+                guard let jumpTargetNode = jump.jumpTarget else {
+                    fatalError("All jump nodes should have a jump target!")
+                }
+                let jumpTargetIndex = indexOf(jumpTargetNode)
                 map[jumpParentIndex] = jumpTargetIndex
             }
             curr = curr?.next

@@ -14,9 +14,7 @@ class StorageManager {
     private let userDataKey = "userDataKey"
 
     init() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(commandDataListUpdate(notification:)),
-            name: Constants.NotificationNames.commandDataListUpdate, object: nil)
+        initNotification()
     }
 
     // If userData has been saved, we read from file
@@ -27,17 +25,6 @@ class StorageManager {
         }
         return UserData()
     }()
-
-    @objc fileprivate func commandDataListUpdate(notification: Notification) {
-        guard let levelIndex = notification.userInfo?["levelIndex"] as? Int,
-              let commandDataListInfo =
-            notification.userInfo?["commandDataListInfo"] as? CommandDataListInfo else {
-            fatalError("Not sent properly.")
-        }
-
-        updateAddedCommandsInfo(levelIndex: levelIndex,
-                                commandDataListInfo: commandDataListInfo)
-    }
 
     func completeLevel(levelIndex: Int) {
         userData.completeLevel(levelIndex: levelIndex)
@@ -87,6 +74,23 @@ class StorageManager {
         let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToLoad)
         // TODO: Improve handling
         try? FileManager.default.removeItem(at: url)
+    }
+
+    private func initNotification() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(commandDataListUpdate(notification:)),
+            name: Constants.NotificationNames.commandDataListUpdate, object: nil)
+    }
+
+    @objc fileprivate func commandDataListUpdate(notification: Notification) {
+        guard let levelIndex = notification.userInfo?["levelIndex"] as? Int,
+            let commandDataListInfo =
+            notification.userInfo?["commandDataListInfo"] as? CommandDataListInfo else {
+                fatalError("Not sent properly.")
+        }
+
+        updateAddedCommandsInfo(levelIndex: levelIndex,
+                                commandDataListInfo: commandDataListInfo)
     }
 
     private func getUrlOfFileInDocumentDirectory(fileName: String) -> URL {
