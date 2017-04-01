@@ -81,6 +81,14 @@ class StorageManager {
         return userData
     }
 
+    // Deletes the saved userData file.
+    private func clearUserData() {
+        let fileNameToLoad = Config.saveSlot.rawValue + pListExtension
+        let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToLoad)
+        // TODO: Improve handling
+        try? FileManager.default.removeItem(at: url)
+    }
+
     private func getUrlOfFileInDocumentDirectory(fileName: String) -> URL {
         // Get the URL of the Documents Directory
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
