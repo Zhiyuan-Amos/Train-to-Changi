@@ -31,6 +31,11 @@ class GameScene: SKScene {
     fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
     fileprivate let player = SKSpriteNode(imageNamed: "player")
+    fileprivate var playerLastPosition: CGPoint?
+    fileprivate var playerPickupPosition: CGPoint {
+        return CGPoint(x: player.position.x,
+                       y: player.position.y - Constants.Player.pickupOffsetY)
+    }
 
     fileprivate let inbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
     fileprivate let outbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
@@ -39,11 +44,12 @@ class GameScene: SKScene {
     fileprivate var memoryNodes = [SKSpriteNode]()
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
-    fileprivate var payloads: [SKSpriteNode] {
-        var array = inboxNodes + memoryNodes + outboxNodes
-        array.append(holdingNode)
+
+    fileprivate lazy var payloads: [SKSpriteNode] = { [unowned self] in
+        var array = self.inboxNodes + self.memoryNodes + self.outboxNodes
+        array.append(self.holdingNode)
         return array
-    }
+    }()
 
     fileprivate var memoryLayout: Memory.Layout?
 
@@ -66,12 +72,25 @@ extension GameScene {
 
     // Dynamic elements include `player` position, `player` value,
     // `payload`s on the inbox and outbox belt and on memory.
-    // This method is called when the state of the scene needs to be
-    // rewound to starting point. Static elements are not refreshed again.
-    func rePresentDynamicElements() {
+    // This method is called when scene is changed abruptly, by buttons "Stop", "Step backward".
+    // Pass `levelState` to specify the locations of each sprite. If it's nil then re init from start.
+    // Static elements are not refreshed again.
+    func rePresentDynamicElements(levelState: LevelState? = nil) {
         payloads.forEach { payload in payload.removeFromParent() }
-        initInboxNodes(from: level.initialState.inputs)
-        setPlayerAttributes()
+        payloads.removeAll()
+        player.removeAllChildren()
+        if let levelState = levelState {
+            initConveyorNodes(inboxValues: levelState.inputs, outboxValues: levelState.outputs)
+            guard let memoryLayout = memoryLayout else {
+                assertionFailure("Can't re-presenting scene with intermediate state when scene is not initialized")
+                return
+            }
+            initMemory(from: levelState.memoryValues, layout: memoryLayout)
+            setPlayerAttributes(position: playerLastPosition, payloadValue: levelState.personValue)
+        } else {
+            initConveyorNodes(inboxValues: level.initialState.inputs)
+            setPlayerAttributes()
+        }
     }
 
     private func initBackground() {
@@ -84,7 +103,7 @@ extension GameScene {
         }
         guard let bgTile = tileSet.tileGroups.first(
             where: {$0.name == Constants.Background.tileGroup}) else {
-            fatalError("Grey Tiles definition not found")
+                fatalError("Grey Tiles definition not found")
         }
 
         backgroundTileMap = SKTileMapNode(tileSet: tileSet, columns: columns, rows: rows,
@@ -98,9 +117,20 @@ extension GameScene {
         addChild(player)
     }
 
-    private func setPlayerAttributes() {
+    private func setPlayerAttributes(position: CGPoint? = nil, payloadValue: Int? = nil) {
+        guard (position != nil) || (payloadValue == nil) else {
+            assertionFailure("Can't specify payload value without specifying position")
+            return
+        }
         player.size = Constants.Player.size
-        player.position = Constants.Player.position
+        if let position = position, let payloadValue = payloadValue {
+            player.position = position
+            holdingNode = Payload(position: playerPickupPosition, value: payloadValue)
+            player.addChild(holdingNode)
+        } else {
+            player.position = Constants.Player.position
+            playerLastPosition = player.position
+        }
         player.zPosition = Constants.Player.zPosition
     }
 
@@ -108,7 +138,7 @@ extension GameScene {
         inbox.size = Constants.Inbox.size
         inbox.position = Constants.Inbox.position
         addChild(inbox)
-        initInboxNodes(from: values)
+        initConveyorNodes(inboxValues: values)
     }
 
     private func initOutbox() {
@@ -132,29 +162,45 @@ extension GameScene {
         for (index, _) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 fatalError("[GameScene:initMemory] " +
-                               "Number of memory values differ from the layout specified. Check level data.")
+                    "Number of memory values differ from the layout specified. Check level data.")
             }
 
             addChild(MemorySlot(index: index, layout: layout))
         }
     }
 
-    private func initInboxNodes(from inboxValues: [Int]) {
+    private func initConveyorNodes(inboxValues: [Int], outboxValues: [Int]? = nil) {
         inboxNodes = []
+
         for (index, value) in inboxValues.enumerated() {
-            let payload = Payload(position: calculateInboxBoxPosition(index: index), value: value)
+            let position = calculatePayloadPositionOnConveyor(index: index, forInbox: true)
+            let payload = Payload(position: position, value: value)
             inboxNodes.append(payload)
+            self.addChild(payload)
+        }
+
+        guard let outboxValues = outboxValues else { return }
+
+        outboxNodes = []
+
+        for (index, value) in outboxValues.enumerated() {
+            let position = calculatePayloadPositionOnConveyor(index: index, forInbox: false)
+            let payload = Payload(position: position, value: value)
+            outboxNodes.append(payload)
             self.addChild(payload)
         }
     }
 
-    private func calculateInboxBoxPosition(index: Int) -> CGPoint {
-        let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Payload.size.width / 2
-            + Constants.Inbox.imagePadding
+    private func calculatePayloadPositionOnConveyor(index: Int, forInbox: Bool) -> CGPoint {
+        let startingX = forInbox ? Constants.Inbox.payloadStartingX : Constants.Outbox.entryPosition.x
 
-        let offsetX = CGFloat(index) * (Constants.Payload.size.width + Constants.Inbox.imagePadding)
+        let imagePadding = forInbox ? Constants.Inbox.imagePadding : Constants.Outbox.imagePadding
+        let offsetX = CGFloat(index) * (Constants.Payload.size.width + imagePadding)
 
-        return CGPoint(x: startingX + offsetX, y: inbox.position.y + Constants.Payload.imageOffsetY)
+        let x = forInbox ? startingX + offsetX : startingX - offsetX
+        let y = (forInbox ? inbox.position.y : outbox.position.y) + Constants.Payload.imageOffsetY
+
+        return CGPoint(x: x, y: y)
     }
 }
 
@@ -205,7 +251,11 @@ extension GameScene {
 
     @objc fileprivate func handleResetScene(notification: Notification) {
         removeAllAnimations()
-        rePresentDynamicElements()
+        if let levelState = notification.object as? LevelState {
+            rePresentDynamicElements(levelState: levelState)
+        } else {
+            rePresentDynamicElements()
+        }
     }
 }
 
@@ -234,6 +284,7 @@ extension GameScene {
         // 1. walk to inbox
         let moveAction = SKAction.move(to: WalkDestination.inbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
+        playerLastPosition = player.position
         player.run(moveAction, completion: {
             self.grabFromInbox()
             // 2. step aside after getting box
@@ -243,8 +294,10 @@ extension GameScene {
             // 3. meantime inbox items move left
             self.player.run(stepAside, completion: {
                 self.inboxNodes.forEach { node in self.moveConveyorBelt(node) }
-                let inboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
-                    timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
+                let inboxAnimation = SKAction.repeat(
+                    SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                                     timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
+                                     resize: false, restore: true),
                     count: Constants.Animation.conveyorBeltAnimationCount)
                 self.inbox.run(inboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
             })
@@ -257,6 +310,7 @@ extension GameScene {
         }
         let moveAction = SKAction.move(to: layout.locations[index],
                                        duration: Constants.Animation.moveToMemoryDuration)
+        playerLastPosition = player.position
         player.run(moveAction, completion: {
             // player already moved to memory location, perform memory actions
             switch action {
@@ -274,11 +328,14 @@ extension GameScene {
         // 1. walk to outbox
         let moveAction = SKAction.move(to: WalkDestination.outbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
+        playerLastPosition = player.position
         player.run(moveAction, completion: {
             // 2. then, outbox items move left
             self.outboxNodes.forEach { node in self.moveConveyorBelt(node) }
-            let outboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
-                timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
+            let outboxAnimation = SKAction.repeat(
+                SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                                 timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
+                                 resize: false, restore: true),
                 count: Constants.Animation.conveyorBeltAnimationCount)
             self.outbox.run(outboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
         })

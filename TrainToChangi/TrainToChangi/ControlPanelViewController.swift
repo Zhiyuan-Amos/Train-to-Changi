@@ -69,6 +69,7 @@ class ControlPanelViewController: UIViewController {
         if model.runState != .running(isAnimating: false) && model.runState != .running(isAnimating: true) {
             logic.stepBack()
         }
+        postResetSceneNotification(levelState: model.levelState)
         model.runState = .paused
     }
 
@@ -94,9 +95,11 @@ class ControlPanelViewController: UIViewController {
             name: Constants.NotificationNames.runStateUpdated, object: nil)
     }
 
-    private func postResetSceneNotification() {
+    // Omit parameter to reset the scene to the beginning.
+    // Pass `levelState` to set to intermediate state.
+    private func postResetSceneNotification(levelState: LevelState? = nil) {
         let notification = Notification(name: Constants.NotificationNames.resetGameScene,
-                                        object: nil, userInfo: nil)
+                                        object: levelState, userInfo: nil)
         NotificationCenter.default.post(notification)
     }
 }

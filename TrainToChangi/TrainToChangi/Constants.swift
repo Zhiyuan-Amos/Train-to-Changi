@@ -17,6 +17,7 @@ struct Constants {
         static let size = CGSize(width: 80, height: 80)
         static let position = CGPoint(x: ViewDimensions.width * 0.2, y: ViewDimensions.height / 2)
         static let zPosition = CGFloat(10)
+        static let pickupOffsetY = CGFloat(-50)
     }
 
     struct Inbox {
@@ -26,6 +27,7 @@ struct Constants {
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x - size.width / 2, y: position.y - size.height / 2)
         static let imagePadding: CGFloat = 10
+        static let payloadStartingX = position.x - size.width / 2 + Payload.size.width / 2 + imagePadding
     }
 
     struct Outbox {
