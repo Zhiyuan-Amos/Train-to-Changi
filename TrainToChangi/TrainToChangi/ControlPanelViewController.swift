@@ -21,9 +21,35 @@ class ControlPanelViewController: UIViewController {
     override func viewDidLoad() {
         registerObservers()
     }
+    
+    // Updates whether the buttons are enabled.
+    private func updateButtons(stopButtonIsEnabled: Bool, stepBackButtonIsEnabled: Bool,
+                               playButtonIsEnabled: Bool, stepForwardButtonIsEnabled: Bool) {
+        stopButton.isEnabled = stopButtonIsEnabled
+        stepBackButton.isEnabled = stepBackButtonIsEnabled
+        playButton.isEnabled = playButtonIsEnabled
+        stepForwardButton.isEnabled = stepForwardButtonIsEnabled
+    }
 
-    @objc fileprivate func runStateUpdated(notification: Notification) {
-        updateButtonsState()
+    // Updates whether the buttons are enabled depending on the `model.runState`.
+    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
+        switch model.runState {
+        case .running:
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
+                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: true)
+        case .paused:
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
+                          playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+        case .lost:
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
+                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+        case .won:
+            updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
+                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+        case .stepping:
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: false,
+                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+        }
     }
 
     //TODO: GameScene need to support
@@ -49,7 +75,7 @@ class ControlPanelViewController: UIViewController {
         if model.runState != .running(isAnimating: false) && model.runState != .running(isAnimating: true) {
             logic.executeNextCommand()
         }
-        model.runState = .singleRun
+        model.runState = .stepping
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
@@ -59,39 +85,7 @@ class ControlPanelViewController: UIViewController {
 
     private func registerObservers() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(runStateUpdated(notification:)),
+            self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
-    }
-
-    // Helper function that updates whether the buttons are enabled depending
-    // on the `model.runState`.
-    private func updateButtonsState() {
-        switch model.runState {
-        case .running:
-            stopButton.isEnabled = true
-            stepBackButton.isEnabled = true
-            playButton.isEnabled = false
-            stepForwardButton.isEnabled = true
-        case .paused:
-            stopButton.isEnabled = true
-            stepBackButton.isEnabled = true
-            playButton.isEnabled = true
-            stepForwardButton.isEnabled = true
-        case .lost:
-            stopButton.isEnabled = true
-            stepBackButton.isEnabled = true
-            playButton.isEnabled = false
-            stepForwardButton.isEnabled = false
-        case .won:
-            stopButton.isEnabled = false
-            stepBackButton.isEnabled = false
-            playButton.isEnabled = false
-            stepForwardButton.isEnabled = false
-        case .singleRun:
-            stopButton.isEnabled = true
-            stepBackButton.isEnabled = false
-            playButton.isEnabled = false
-            stepForwardButton.isEnabled = false
-        }
     }
 }

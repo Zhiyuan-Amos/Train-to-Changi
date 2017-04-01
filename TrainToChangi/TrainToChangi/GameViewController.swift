@@ -28,16 +28,16 @@ class GameViewController: UIViewController {
     }
 
     // Updates `model.runState` to `.running(isAnimating: true).
-    @objc fileprivate func animationBegan(notification: Notification) {
+    @objc fileprivate func handleAnimationBegin(notification: Notification) {
         model.runState = .running(isAnimating: true)
     }
 
     // Updates `model.runState` accordingly depending on what is the current
     // `model.runState`.
-    @objc fileprivate func animationEnded(notification: Notification) {
+    @objc fileprivate func handleAnimationEnd(notification: Notification) {
         if model.runState == .running(isAnimating: true) {
             model.runState = .running(isAnimating: false)
-        } else if model.runState == .singleRun {
+        } else if model.runState == .stepping {
             model.runState = .paused
         }
     }
@@ -83,11 +83,11 @@ class GameViewController: UIViewController {
 
     private func registerObservers() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(animationBegan(notification:)),
+            self, selector: #selector(handleAnimationBegin(notification:)),
             name: Constants.NotificationNames.animationBegan, object: nil)
 
         NotificationCenter.default.addObserver(
-            self, selector: #selector(animationEnded(notification:)),
+            self, selector: #selector(handleAnimationEnd(notification:)),
             name: Constants.NotificationNames.animationEnded, object: nil)
     }
 }

@@ -348,6 +348,7 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
         self.current = current.jumpTarget
     }
 
+    // This function is only called by `JumpCommand` during `undo()`. 
     func moveIterator(to index: Int) {
         current = commandDataLinkedList.node(atIndex: index)
     }

@@ -32,7 +32,7 @@ class ModelManager: Model {
                 default:
                     break
                 }
-            case .singleRun:
+            case .stepping:
                 switch newState {
                 case .running:
                     break
