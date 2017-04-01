@@ -21,7 +21,7 @@ class ControlPanelViewController: UIViewController {
     override func viewDidLoad() {
         registerObservers()
     }
-    
+
     // Updates whether the buttons are enabled.
     private func updateButtons(stopButtonIsEnabled: Bool, stepBackButtonIsEnabled: Bool,
                                playButtonIsEnabled: Bool, stepForwardButtonIsEnabled: Bool) {
@@ -72,10 +72,12 @@ class ControlPanelViewController: UIViewController {
     // Executes the next command. If game is already playing, sets `model.runState`
     // to `.paused` and stops after current command execution.
     @IBAction func stepForwardButtonPressed(_ sender: UIButton) {
-        if model.runState != .running(isAnimating: false) && model.runState != .running(isAnimating: true) {
+        let currentRunState = model.runState
+        model.runState = .stepping
+
+        if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
             logic.executeNextCommand()
         }
-        model.runState = .stepping
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
