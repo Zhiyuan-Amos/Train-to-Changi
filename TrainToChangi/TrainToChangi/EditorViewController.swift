@@ -96,34 +96,47 @@ class EditorViewController: UIViewController {
         longPressGesture.minimumPressDuration = 0.3
         currentCommandsView.addGestureRecognizer(longPressGesture)
 
-        let doubleTapGesture = UITapGestureRecognizer (target: self, action: #selector(handleDoubleTap))
-        doubleTapGesture.numberOfTapsRequired = 2
-        currentCommandsView.addGestureRecognizer(doubleTapGesture)
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
+        swipeGesture.direction = .right
+        currentCommandsView.addGestureRecognizer(swipeGesture)
 
     }
 
-    @objc private func handleDoubleTap(gesture: UITapGestureRecognizer) {
+    @objc private func handleSwipe(gesture: UISwipeGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
-        guard let indexPath = currentCommandsView.indexPathForItem(at: location) else {
+        guard let indexPath = currentCommandsView.indexPathForItem(at: location),
+              let cell = currentCommandsView.cellForItem(at: indexPath) else {
                 return
         }
 
-        // clear all jump arrow views before potentially deleting jumpBundle
-        removeAllJumpArrows()
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
+            cell.center.x += 300
+            cell.alpha = 0.0
+        }, completion: { (finished) -> Void in
+            if finished {
+                // clear all jump arrow views before potentially deleting jumpBundle
+                self.removeAllJumpArrows()
 
-        // if command is related to jump, need to delete bundle
-        if let jumpPartnerIndexPath = getJumpPartnerIndexPath(indexPath: indexPath) {
-            updateJumpBundles(deletedIndexPath: indexPath,
-                              deletedPartnerIndexPath: jumpPartnerIndexPath)
-            deleteJumpBundle(deletedIndexPath: indexPath)
-        } else {
-            updateJumpBundles(deletedIndexPath: indexPath)
-        }
-        renderJumpArrows()
+                //reset cell position and alpha
+                cell.center.x -= 300
+                cell.alpha = 1.0
 
-        _ = model.removeCommand(fromIndex: indexPath.item)
-        currentCommandsView.reloadData()
+                // if command is related to jump, need to delete bundle
+                if let jumpPartnerIndexPath = self.getJumpPartnerIndexPath(indexPath: indexPath) {
+                    self.updateJumpBundles(deletedIndexPath: indexPath,
+                                      deletedPartnerIndexPath: jumpPartnerIndexPath)
+                    self.deleteJumpBundle(deletedIndexPath: indexPath)
+                } else {
+                    self.updateJumpBundles(deletedIndexPath: indexPath)
+                }
+                self.renderJumpArrows()
+
+                _ = self.model.removeCommand(fromIndex: indexPath.item)
+                self.currentCommandsView.reloadData()
+
+            }
+        })
     }
 
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {

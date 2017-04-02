@@ -46,6 +46,7 @@ class AnimationHelper {
                 DragBundle.initialIndexPath = nil
                 DragBundle.cellSnapshot!.removeFromSuperview()
                 DragBundle.cellSnapshot = nil
+                cell.isHidden = false
             }
         })
     }

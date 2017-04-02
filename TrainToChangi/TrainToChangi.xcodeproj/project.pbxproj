@@ -227,32 +227,14 @@
 		3B16804D1E778785002286F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				3B78A68A1E90CD1100A652D9 /* Sprites */,
+				3B78A6881E90CCC100A652D9 /* Scene */,
 				76745B721E88598D0039A771 /* ViewController */,
 				76745B711E8859890039A771 /* View */,
 				76745B701E88590A0039A771 /* InterfaceBuilder */,
 				3B6D98551E8904DF0026872B /* Helpers */,
-				3B6D984E1E88FCC30026872B /* Controllers */,
-				D7E0E7491E84B78500237705 /* Tiles.sks */,
-				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
-				A712096A1E8189060039B257 /* CommandCell.swift */,
-				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
-				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
-				22DC750125724E9BA28BA9EB /* Memory.swift */,
-				22DC76E79326E3E327A4B086 /* MemorySlot.swift */,
-				22DC7A12469B8258C38128E2 /* Payload.swift */,
 			);
 			name = UI;
-			sourceTree = "<group>";
-		};
-		3B6D984E1E88FCC30026872B /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
-				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
-				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
-				3B04A7D31E8BE13C00B317ED /* EditorViewControllerExtensions.swift */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		3B6D98551E8904DF0026872B /* Helpers */ = {
@@ -262,6 +244,26 @@
 				3B6D98531E8904500026872B /* AnimationHelper.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		3B78A6881E90CCC100A652D9 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				76745B6E1E8857EC0039A771 /* MapScene.swift */,
+				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		3B78A68A1E90CD1100A652D9 /* Sprites */ = {
+			isa = PBXGroup;
+			children = (
+				76E0F66C1E88F9B40051325C /* StationLevelNode.swift */,
+				22DC750125724E9BA28BA9EB /* Memory.swift */,
+				22DC76E79326E3E327A4B086 /* MemorySlot.swift */,
+				22DC7A12469B8258C38128E2 /* Payload.swift */,
+			);
+			name = Sprites;
 			sourceTree = "<group>";
 		};
 		3BD7EF911E811DB50029EA57 /* Storage */ = {
@@ -288,6 +290,9 @@
 		76745B701E88590A0039A771 /* InterfaceBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				D7E0E7491E84B78500237705 /* Tiles.sks */,
+				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
+				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
 				76745B6C1E8855870039A771 /* MapScene.sks */,
 			);
 			name = InterfaceBuilder;
@@ -296,7 +301,7 @@
 		76745B711E8859890039A771 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				76E0F66C1E88F9B40051325C /* StationLevelNode.swift */,
+				A712096A1E8189060039B257 /* CommandCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -304,8 +309,11 @@
 		76745B721E88598D0039A771 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				76745B6E1E8857EC0039A771 /* MapScene.swift */,
 				76745B731E885A030039A771 /* MapViewController.swift */,
+				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
+				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
+				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
+				3B04A7D31E8BE13C00B317ED /* EditorViewControllerExtensions.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
