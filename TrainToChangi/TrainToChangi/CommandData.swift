@@ -63,20 +63,15 @@ extension CommandData: Equatable {
 
 func == (lhs: CommandData, rhs: CommandData) -> Bool {
     switch (lhs, rhs) {
-    case (.inbox, .inbox):
+    case (.inbox, .inbox),
+         (.outbox, .outbox),
+         (.jump, .jump),
+         (.jumpTarget, .jumpTarget):
         return true
-    case (.outbox, .outbox):
-        return true
-    case (let .copyFrom(indexOne), let .copyFrom(indexTwo)):
+    case let (.copyFrom(indexOne), .copyFrom(indexTwo)),
+         let (.copyTo(indexOne), .copyTo(indexTwo)),
+         let (.add(indexOne), .add(indexTwo)):
         return indexOne == indexTwo
-    case (let .copyTo(indexOne), let .copyTo(indexTwo)):
-        return indexOne == indexTwo
-    case (let .add(indexOne), let .add(indexTwo)):
-        return indexOne == indexTwo
-    case (.jump, .jump):
-        return true
-    case (.jumpTarget, .jumpTarget):
-        return true
     default: return false
     }
 }
