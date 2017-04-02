@@ -22,7 +22,7 @@ class StorageManager {
 
     // If userData has been saved, we read from file
     // else return new userData
-    private(set) lazy var userData: UserData = {
+    private lazy var userData: UserData = {
         if let userData = self.load() {
             return userData
         }
@@ -40,6 +40,10 @@ class StorageManager {
 
     func hasCompletedLevel(levelIndex: Int) -> Bool {
         return userData.completedLevelIndexes.contains(levelIndex)
+    }
+
+    func getUserAddedCommandsAsListInfo(levelIndex: Int) -> CommandDataListInfo? {
+        return userData.getAddedCommands(levelIndex: 0)
     }
 
     func save() {

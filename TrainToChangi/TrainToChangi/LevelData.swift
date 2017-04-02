@@ -5,11 +5,9 @@
 
 import Foundation
 
-// Not sure if this is the legit way to do this.
-// Maybe we can cocoapods this.
-// Maybe the only thing that needs to be in code is the algorithm.
-protocol LevelData {
+// MARK - Protocol for every game level data.
 
+protocol LevelData {
     var levelName: String { get }
     var levelDescription: String { get }
     var availableCommands: [CommandData] { get }
@@ -25,30 +23,71 @@ protocol LevelData {
     func algorithm(inputs: [Int]) -> [Int]
 }
 
-struct LevelOneData: LevelData {
+// MARK - Alias for brevity in Level Data structs.
+
+extension LevelData {
+    fileprivate typealias Helper = Constants.LevelDataHelper
+    fileprivate typealias Cmd = Constants.LevelDataHelper.Commands
+}
+
+// MARK - Protocol for levels with randomized inputs.
+
+protocol RandomizedInputsLevel {
+    var start: Int { get }
+    var end: Int { get }
+    var count: Int { get }
+}
+
+// MARK - Default implementation for levels conforming to RandomizedInputsLevel.
+
+extension LevelData where Self: RandomizedInputsLevel {
+    var randomInputs: [Int] {
+        return randomizeInputs(start: start, end: end, count: count)
+    }
+
+    // Randomizes `count` number of inputs in the range
+    // of `start` to `end`, inclusive of `end`.
+    // Count must be >= 0
+    private func randomizeInputs(start: Int, end: Int, count: Int) -> [Int] {
+        guard count >= 0 else {
+            preconditionFailure("Count must be >= 0")
+        }
+        var randomizedResults: [Int] = []
+        for _ in 0..<count {
+            let randomNumber = randomizeNumber(from: start, to: end)
+            randomizedResults.append(randomNumber)
+        }
+        return randomizedResults
+    }
+
+    // Returns a random number between the range, inclusive of to.
+    private func randomizeNumber(from start: Int, to end: Int) -> Int {
+        return Int(arc4random_uniform(UInt32(end-start+1))) + start
+    }
+}
+
+// MARK - Level Data structs.
+
+struct LevelOneData: LevelData, RandomizedInputsLevel {
 
     let levelName = "The Beginning"
 
     let levelDescription = "The MRT needs your help to power up!"
-                           + LevelDataHelper.newLine
+                           + Helper.newLine
                            + "Drag and drop commands to move all boxes to Outbox."
 
-    let availableCommands: [CommandData] = [LevelDataHelper.inboxCommand,
-                                            LevelDataHelper.outboxCommand,
-                                            LevelDataHelper.addCommand,
-                                            LevelDataHelper.copyToCommand,
-                                            LevelDataHelper.jumpCommand,
-                                            LevelDataHelper.copyFromCommand]
+    let availableCommands: [CommandData] = [Cmd.inbox,
+                                            Cmd.outbox,
+                                            Cmd.add,
+                                            Cmd.copyTo,
+                                            Cmd.jump,
+                                            Cmd.copyFrom]
 
     let memoryValues: [Int?] = [nil, nil]
 
-    private let start = 0
-    private let end = 10
-    private let count = 3
-
-    var randomInputs: [Int] {
-        return LevelDataHelper.randomizeInputs(start: start, end: end, count: count)
-    }
+    let start = 0
+    let end = 10
+    let count = 3
 
     func algorithm(inputs: [Int]) -> [Int] {
         return moveInputsOver(inputs: inputs)
@@ -61,28 +100,24 @@ struct LevelOneData: LevelData {
 
 }
 
-struct LevelTwoData: LevelData {
+struct LevelTwoData: LevelData, RandomizedInputsLevel {
 
     let levelName = "What is going on?"
 
     let levelDescription = "Wow, that's a whole lot of boxes!"
-                           + LevelDataHelper.newLine
+                           + Helper.newLine
                            + "Can you power up the MRT, "
                            + "using only one inbox and outbox command?."
 
-    let availableCommands: [CommandData] = [LevelDataHelper.inboxCommand,
-                                            LevelDataHelper.outboxCommand,
-                                            LevelDataHelper.jumpCommand]
+    let availableCommands: [CommandData] = [Cmd.inbox,
+                                            Cmd.outbox,
+                                            Cmd.jump]
 
     let memoryValues: [Int?] = []
 
-    private let start = 0
-    private let end = 20
-    private let count = 20
-
-    var randomInputs: [Int] {
-        return LevelDataHelper.randomizeInputs(start: start, end: end, count: count)
-    }
+    let start = 0
+    let end = 20
+    let count = 20
 
     func algorithm(inputs: [Int]) -> [Int] {
         return moveInputsOver(inputs: inputs)
@@ -95,32 +130,28 @@ struct LevelTwoData: LevelData {
 
 }
 
-struct LevelThreeData: LevelData {
+struct LevelThreeData: LevelData, RandomizedInputsLevel {
 
     let levelName = "You know how to add, right?"
 
     let levelDescription = "The boxes do not provide enough power by themselves."
-                           + LevelDataHelper.newLine
+                           + Helper.newLine
                            + "Notice that you are provided with locations "
                            + "to place boxes down on the floor, "
                            + "and the COPYTO, ADD functionality. "
                            + "Sum up each pair of boxes, before moving them to outbox."
 
-    let availableCommands: [CommandData] = [LevelDataHelper.inboxCommand,
-                                            LevelDataHelper.outboxCommand,
-                                            LevelDataHelper.jumpCommand,
-                                            LevelDataHelper.addCommand,
-                                            LevelDataHelper.copyToCommand]
+    let availableCommands: [CommandData] = [Cmd.inbox,
+                                            Cmd.outbox,
+                                            Cmd.jump,
+                                            Cmd.add,
+                                            Cmd.copyTo]
 
     let memoryValues: [Int?] = [nil, nil]
 
-    private let start = 1
-    private let end = 4
-    private let count = 8
-
-    var randomInputs: [Int] {
-        return LevelDataHelper.randomizeInputs(start: start, end: end, count: count)
-    }
+    let start = 1
+    let end = 4
+    let count = 8
 
     func algorithm(inputs: [Int]) -> [Int] {
         return sumUpPairs(inputs: inputs)

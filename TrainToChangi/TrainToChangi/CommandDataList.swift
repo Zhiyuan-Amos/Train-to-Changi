@@ -30,7 +30,7 @@ fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
-    var jumpTarget: IterativeListNode? // Unable to set this as weak property.
+    var jumpTarget: IterativeListNode?
 
     init(commandData: CommandData) {
         self.commandData = commandData
@@ -144,9 +144,8 @@ class CommandDataLinkedList: CommandDataList {
     func removeAll() {
         // To prevent circular reference and memory leaks, remove in naive way.
         // This ensures that both previous and next links are broken upon removal.
-        // This is a workaround because setting properties to weak results in
-        // strange behavior whereby the weak property reference is not initialised
-        // when its needed.
+        // This is a workaround because setting properties to weak
+        // prevents them from being initialised.
         while let head = head {
             _ = remove(node: head)
         }

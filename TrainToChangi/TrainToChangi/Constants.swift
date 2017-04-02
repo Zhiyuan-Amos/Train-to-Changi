@@ -148,4 +148,17 @@ struct Constants {
     struct Audio {
         static let bgMusic = "main-track"
     }
+
+    struct LevelDataHelper {
+        static let newLine = "\n"
+
+        struct Commands {
+            static let inbox = CommandData.inbox
+            static let outbox = CommandData.outbox
+            static let jump = CommandData.jump
+            static let add = CommandData.add(memoryIndex: nil)
+            static let copyTo = CommandData.copyTo(memoryIndex: nil)
+            static let copyFrom = CommandData.copyFrom(memoryIndex: nil)
+        }
+    }
 }
