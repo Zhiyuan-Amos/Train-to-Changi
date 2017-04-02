@@ -12,10 +12,7 @@ protocol LevelData {
     var levelDescription: String { get }
     var availableCommands: [CommandData] { get }
     var memoryValues: [Int?] { get }
-
-    // Define random inputs for each level because we can have levels
-    // that specifically do not have negative values, etc.
-    var randomInputs: [Int] { get }
+    var inputs: [Int] { get }
 
     // TODO: Add hints, speech bubble to hand hold user a little
 
@@ -41,7 +38,7 @@ protocol RandomizedInputsLevel {
 // MARK - Default implementation for levels conforming to RandomizedInputsLevel.
 
 extension LevelData where Self: RandomizedInputsLevel {
-    var randomInputs: [Int] {
+    var inputs: [Int] {
         return randomizeInputs(start: start, end: end, count: count)
     }
 

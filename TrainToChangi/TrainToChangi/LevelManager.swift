@@ -12,17 +12,19 @@ class LevelManager {
         self.level = initLevel(levelData: levelData)
     }
 
-    // Returns random inputs for the current level, and the expected outputs
+    // Returns inputs for the current level, and the expected outputs
     // for these inputs.
-    func randomizeInputsOutputs() -> ([Int], [Int]) {
-        let inputs = levelData.randomInputs
+    // If called on a level with random inputs, every call will re-randomize
+    // the inputs.
+    func getInputsOutputs() -> ([Int], [Int]) {
+        let inputs = levelData.inputs
         let outputs = levelData.algorithm(inputs: inputs)
         return (inputs, outputs)
     }
 
     private func initLevel(levelData: LevelData) -> Level {
         let levelName = levelData.levelName
-        let inputsShownToUser = levelData.randomInputs
+        let inputsShownToUser = levelData.inputs
         let availableCommands = levelData.availableCommands
         let levelDescriptor = levelData.levelDescription
         let expectedOutputs = levelData.algorithm(inputs: inputsShownToUser)
