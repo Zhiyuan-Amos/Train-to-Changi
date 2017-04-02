@@ -1,3 +1,7 @@
+protocol GameLogicDelegate: class {
+    var numCommandsExecuted: Int { get }
+}
+
 class GameLogic {
     unowned private let model: Model
     var parser: CommandDataParser!
@@ -10,7 +14,7 @@ class GameLogic {
     }
 
     // Reverts the state of the model by one command execution backward.
-    func undo(_ command: Command) {
+    func stepBack(_ command: Command) {
         command.undo()
     }
 
@@ -18,7 +22,7 @@ class GameLogic {
     // Returns nil if `commandData` is nil or `commandData` cannot be parsed
     // into a Command e.g `.jumpTarget`. Returns the executed command otherwise.
     // Updates `model.runState` accordingly as well.
-    func execute(commandData: CommandData?) -> Command? {
+    func stepForward(commandData: CommandData?) -> Command? {
         // If there's no `commandData` and game hasn't been won, it implies
         // that there are no commands left to be executed i.e game lost.
         guard let commandData = commandData else {
