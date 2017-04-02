@@ -15,7 +15,6 @@ protocol GameVCTouchDelegate: class {
 
 class GameViewController: UIViewController {
 
-    // VC is currently first responder, to be changed when we add other views.
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var storage: Storage!
@@ -25,29 +24,15 @@ class GameViewController: UIViewController {
         registerObservers()
     }
 
-    // Updates `model.runState` to `.running(isAnimating: true).
-    @objc fileprivate func handleAnimationBegin(notification: Notification) {
-        model.runState = .running(isAnimating: true)
-    }
-
-    // Updates `model.runState` accordingly depending on what is the current
-    // `model.runState`.
-    @objc fileprivate func handleAnimationEnd(notification: Notification) {
-        if model.runState == .running(isAnimating: true) {
-            model.runState = .running(isAnimating: false)
-        } else if model.runState == .stepping {
-            model.runState = .paused
-        }
-    }
-
     override var prefersStatusBarHidden: Bool {
         return true
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerObservers()
         presentGameScene()
-        // AudioPlayer.sharedInstance.playBackgroundMusic()
+        AudioPlayer.sharedInstance.playBackgroundMusic()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -79,6 +64,7 @@ class GameViewController: UIViewController {
         scene.initLevelState(model.currentLevel)
     }
 
+    // MARK -- Event Handling
     private func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleAnimationBegin(notification:)),
@@ -111,5 +97,20 @@ extension GameViewController: MapViewControllerDelegate {
             }
         }
         preconditionFailure("StationName does not exist!")
+    }
+
+    // Updates `model.runState` to `.running(isAnimating: true).
+    @objc fileprivate func handleAnimationBegin(notification: Notification) {
+        model.runState = .running(isAnimating: true)
+    }
+
+    // Updates `model.runState` accordingly depending on what is the current
+    // `model.runState`.
+    @objc fileprivate func handleAnimationEnd(notification: Notification) {
+        if model.runState == .running(isAnimating: true) {
+            model.runState = .running(isAnimating: false)
+        } else if model.runState == .stepping {
+            model.runState = .paused
+        }
     }
 }
