@@ -73,6 +73,7 @@ class EditorViewController: UIViewController {
     // Load the available commands from model for the current level
     func loadAvailableCommands() {
         let initialCommandPosition = availableCommandsView.frame.origin
+        availableCommandsView.frame.size.height = 0
 
         for (commandTag, command) in model.currentLevel.availableCommands.enumerated() {
             let currentCommandPositionY = initialCommandPosition.y +
@@ -86,6 +87,7 @@ class EditorViewController: UIViewController {
                                                                        tag: commandTag)
             commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
             commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
+            availableCommandsView.frame.size.height += commandButton.frame.size.height
             availableCommandsView.addSubview(commandButton)
         }
     }

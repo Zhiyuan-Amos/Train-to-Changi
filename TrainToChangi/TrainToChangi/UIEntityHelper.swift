@@ -38,12 +38,12 @@ class UIEntityHelper {
     static func generateCommandUIButton(for commandType: CommandData,
                                         position: CGPoint, tag: Int) -> UIButton {
         let size = CGSize(width: getCommandButtonWidth(commandType),
-                          height: Constants.UI.commandButtonHeight)
+                          height: 40)
         let frame = CGRect(origin: position, size: size)
         let imagePath = commandType.toString() + ".png"
 
         let commandButton = UIButton(frame: frame)
-        commandButton.setImage(UIImage(named: imagePath), for: UIControlState.normal)
+        commandButton.setBackgroundImage(UIImage(named: imagePath), for: UIControlState.normal)
         commandButton.tag = tag
 
         return commandButton
