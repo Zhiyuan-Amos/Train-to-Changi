@@ -30,15 +30,10 @@ fileprivate class JumpListNode: CommandDataListNode {
     let commandData: CommandData
     var next: CommandDataListNode?
     var previous: CommandDataListNode?
-    weak var jumpTarget: IterativeListNode?
+    var jumpTarget: IterativeListNode? // Unable to set this as weak property.
 
-    init(commandData: CommandData, initJumpTarget: Bool = true) {
+    init(commandData: CommandData) {
         self.commandData = commandData
-        if initJumpTarget {
-            self.jumpTarget = IterativeListNode(commandData: .jumpTarget)
-            self.previous = jumpTarget
-            self.jumpTarget?.next = self
-        }
     }
 }
 
@@ -131,7 +126,7 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func remove(atIndex index: Int) -> CommandData {
-        guard let node = self.node(atIndex: index) else {
+        guard let node = node(atIndex: index) else {
             preconditionFailure("Index is not valid.")
         }
         if let jumpNode = node as? JumpListNode {
@@ -147,7 +142,14 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func removeAll() {
-        head = nil
+        // To prevent circular reference and memory leaks, remove in naive way.
+        // This ensures that both previous and next links are broken upon removal.
+        // This is a workaround because setting properties to weak results in
+        // strange behavior whereby the weak property reference is not initialised
+        // when its needed.
+        while let head = head {
+            _ = remove(node: head)
+        }
     }
 
     func toArray() -> [CommandData] {
@@ -198,9 +200,20 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     fileprivate func initNode(commandData: CommandData) -> CommandDataListNode {
-        return commandData.isJumpCommand
-            ? JumpListNode(commandData: commandData)
-            : IterativeListNode(commandData: commandData)
+        if commandData.isJumpCommand {
+            // Init target node as well.
+            let jumpListNode = JumpListNode(commandData: commandData)
+            let jumpTargetNode = IterativeListNode(commandData: .jumpTarget)
+
+            // Init links.
+            jumpListNode.jumpTarget = jumpTargetNode
+            jumpListNode.previous = jumpTargetNode
+            jumpTargetNode.next = jumpListNode
+
+            return jumpListNode
+        }
+
+        return IterativeListNode(commandData: commandData)
     }
 
     fileprivate func append(node: Node) {
@@ -344,7 +357,7 @@ extension CommandDataLinkedList {
     private func setUpListNodes(commandDataArray: [CommandData]) {
         for commandData in commandDataArray {
             let newNode: CommandDataListNode = commandData.isJumpCommand
-                    ? JumpListNode(commandData: commandData, initJumpTarget: false)
+                    ? JumpListNode(commandData: commandData)
                     : IterativeListNode(commandData: commandData)
             append(node: newNode)
         }
