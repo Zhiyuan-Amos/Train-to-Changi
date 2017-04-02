@@ -134,7 +134,7 @@ class CommandDataLinkedList: CommandDataList {
                 fatalError("All jump nodes should have a jump target!")
             }
             _ = remove(node: jumpTargetNode)
-        } else if let jumpParentNode = jumpParentOf(node) as? JumpListNode {
+        } else if let jumpParentNode = jumpParentOf(node: node) as? JumpListNode {
             _ = remove(node: jumpParentNode)
         }
 
@@ -296,7 +296,7 @@ class CommandDataLinkedList: CommandDataList {
         return remove(node: last)
     }
 
-    private func jumpParentOf(_ node: Node) -> Node? {
+    private func jumpParentOf(node: Node) -> Node? {
         var curr = head
         while curr != nil {
             if let jumpNode = curr as? JumpListNode, jumpNode.jumpTarget === node {
@@ -307,7 +307,7 @@ class CommandDataLinkedList: CommandDataList {
         return nil
     }
 
-    fileprivate func indexOf(_ node: Node) -> Int {
+    fileprivate func indexOf(node: Node) -> Int {
         var curr = head
         var index = 0
         while curr != nil {
@@ -325,12 +325,12 @@ class CommandDataLinkedList: CommandDataList {
 
         var curr = head
         while curr != nil {
-            if let jump = curr as? JumpListNode {
-                let jumpParentIndex = indexOf(jump)
-                guard let jumpTargetNode = jump.jumpTarget else {
+            if let jumpNode = curr as? JumpListNode {
+                let jumpParentIndex = indexOf(node: jumpNode)
+                guard let jumpTargetNode = jumpNode.jumpTarget else {
                     fatalError("All jump nodes should have a jump target!")
                 }
-                let jumpTargetIndex = indexOf(jumpTargetNode)
+                let jumpTargetIndex = indexOf(node: jumpTargetNode)
                 map[jumpParentIndex] = jumpTargetIndex
             }
             curr = curr?.next
@@ -382,7 +382,7 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
             guard let newNode = newNode else {
                 return
             }
-            let index = commandDataLinkedList.indexOf(newNode)
+            let index = commandDataLinkedList.indexOf(node: newNode)
             NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
                                             object: nil,
                                             userInfo: ["index": index])
@@ -390,7 +390,10 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
     }
 
     var index: Int? {
-        return current == nil ? nil : commandDataLinkedList.indexOf(current!)
+        guard let current = current else {
+            return nil
+        }
+        return commandDataLinkedList.indexOf(node: current)
     }
 
     init(_ commandDataLinkedList: CommandDataLinkedList) {

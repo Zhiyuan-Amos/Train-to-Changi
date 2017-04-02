@@ -9,6 +9,6 @@
 // Should this be under storage? I separated it because its not really stored..
 struct Levels {
     static let levelData: [LevelData] = [LevelOneData(),
-                                          LevelTwoData(),
-                                          LevelThreeData()]
+                                         LevelTwoData(),
+                                         LevelThreeData()]
 }
