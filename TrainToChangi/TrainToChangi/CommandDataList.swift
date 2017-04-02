@@ -104,20 +104,20 @@ class CommandDataLinkedList: CommandDataList {
             guard let jumpTargetNode = jumpNode.jumpTarget else {
                 fatalError("All jump nodes should have a jump target!")
             }
-            append(jumpTargetNode)
+            append(node: jumpTargetNode)
         } else {
-            append(newNode)
+            append(node: newNode)
         }
     }
 
     func insert(commandData: CommandData, atIndex index: Int) {
         let newNode = initNode(commandData: commandData)
-        insert(newNode, atIndex: index)
+        insert(node: newNode, atIndex: index)
         if let jumpNode = newNode as? JumpListNode {
             guard let jumpTargetNode = jumpNode.jumpTarget else {
                 fatalError("All jump nodes should have a jump target!")
             }
-            insert(jumpTargetNode, atIndex: index)
+            insert(node: jumpTargetNode, atIndex: index)
         }
     }
 
@@ -127,7 +127,7 @@ class CommandDataLinkedList: CommandDataList {
         guard let node = node(atIndex: sourceIndex) else {
             return
         }
-        move(node, toIndex: destIndex)
+        move(node: node, toIndex: destIndex)
     }
 
     func remove(atIndex index: Int) -> CommandData {
@@ -138,12 +138,12 @@ class CommandDataLinkedList: CommandDataList {
             guard let jumpTargetNode = jumpNode.jumpTarget else {
                 fatalError("All jump nodes should have a jump target!")
             }
-            _ = remove(jumpTargetNode)
+            _ = remove(node: jumpTargetNode)
         } else if let jumpParentNode = jumpParentOf(node) as? JumpListNode {
-            _ = remove(jumpParentNode)
+            _ = remove(node: jumpParentNode)
         }
 
-        return remove(node)
+        return remove(node: node)
     }
 
     func removeAll() {
@@ -203,13 +203,13 @@ class CommandDataLinkedList: CommandDataList {
             : IterativeListNode(commandData: commandData)
     }
 
-    fileprivate func append(_ newNode: Node) {
+    fileprivate func append(node: Node) {
         guard let lastNode = last else {
-            head = newNode
+            head = node
             return
         }
-        newNode.previous = lastNode
-        lastNode.next = newNode
+        node.previous = lastNode
+        lastNode.next = node
     }
 
     fileprivate func node(atIndex index: Int) -> Node? {
@@ -242,20 +242,20 @@ class CommandDataLinkedList: CommandDataList {
         return (prev, next)
     }
 
-    private func insert(_ newNode: Node, atIndex index: Int) {
+    fileprivate func insert(node: Node, atIndex index: Int) {
         let (prev, next) = nodesBeforeAndAfter(index: index)
 
-        newNode.previous = prev
-        newNode.next = next
-        prev?.next = newNode
-        next?.previous = newNode
+        node.previous = prev
+        node.next = next
+        prev?.next = node
+        next?.previous = node
 
         if prev == nil {
-            head = newNode
+            head = node
         }
     }
 
-    private func remove(_ node: Node) -> CommandData {
+    private func remove(node: Node) -> CommandData {
         let prev = node.previous
         let next = node.next
 
@@ -272,14 +272,16 @@ class CommandDataLinkedList: CommandDataList {
         return node.commandData
     }
 
-    private func move(_ node: Node, toIndex: Int) {
-        _ = remove(node)
-        insert(node, atIndex: toIndex)
+    private func move(node: Node, toIndex: Int) {
+        _ = remove(node: node)
+        insert(node: node, atIndex: toIndex)
     }
 
     private func removeLast() -> CommandData {
-        assert(!isEmpty)
-        return remove(last!)
+        guard let last = last else {
+            preconditionFailure("List cannot be empty!")
+        }
+        return remove(node: last)
     }
 
     private func jumpParentOf(_ node: Node) -> Node? {
@@ -344,7 +346,7 @@ extension CommandDataLinkedList {
             let newNode: CommandDataListNode = commandData.isJumpCommand
                     ? JumpListNode(commandData: commandData, initJumpTarget: false)
                     : IterativeListNode(commandData: commandData)
-            append(newNode)
+            append(node: newNode)
         }
     }
 

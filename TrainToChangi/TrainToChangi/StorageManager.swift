@@ -13,6 +13,9 @@ class StorageManager {
     private let pListExtension = ".plist"
     private let userDataKey = "userDataKey"
 
+    // Hardcode in until we implement multiple slots with UserDefaults.
+    private let saveSlotRawValue = "SlotOne"
+
     init() {
         initNotification()
     }
@@ -40,7 +43,7 @@ class StorageManager {
     }
 
     func save() {
-        let fileNameToSave = Config.saveSlot.rawValue + pListExtension
+        let fileNameToSave = saveSlotRawValue + pListExtension
         let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToSave)
         let data = NSMutableData()
         let archiver = NSKeyedArchiver(forWritingWith: data)
@@ -53,10 +56,11 @@ class StorageManager {
     }
 
     private func load() -> UserData? {
-        let fileNameToLoad = Config.saveSlot.rawValue + pListExtension
+        let fileNameToLoad = saveSlotRawValue + pListExtension
         let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToLoad)
 
         guard let data = NSData(contentsOf: url) else {
+            // File not found.
             return nil
         }
         let unarchiver = NSKeyedUnarchiver(forReadingWith: data as Data)
@@ -64,13 +68,18 @@ class StorageManager {
         let decoded = unarchiver.decodeObject(forKey: userDataKey)
         unarchiver.finishDecoding()
 
-        let userData = decoded as? UserData
+        guard let userData = decoded as? UserData else {
+            // We fatalError here instead of asserting and returning nil to prevent
+            // user's saved file from being overwritten because of a bug
+            // in code potentially introduced due to an update.
+            fatalError("Loading cannot fail if file is found.")
+        }
         return userData
     }
 
     // Deletes the saved userData file.
     private func clearUserData() {
-        let fileNameToLoad = Config.saveSlot.rawValue + pListExtension
+        let fileNameToLoad = saveSlotRawValue + pListExtension
         let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToLoad)
         // TODO: Improve handling
         try? FileManager.default.removeItem(at: url)

@@ -27,7 +27,6 @@
 		76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E0F66C1E88F9B40051325C /* StationLevelNode.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
-		A77AAE991E8CFE4600261A3A /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE981E8CFE4600261A3A /* Config.swift */; };
 		A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */; };
 		A7A10CE81E865A190040DA21 /* LevelDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE71E865A190040DA21 /* LevelDataHelper.swift */; };
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
@@ -102,7 +101,6 @@
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
-		A77AAE981E8CFE4600261A3A /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListInfo.swift; sourceTree = "<group>"; };
 		A7A10CE71E865A190040DA21 /* LevelDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDataHelper.swift; sourceTree = "<group>"; };
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				D71B88541E86AAC1006BC3E9 /* main-track.mp3 */,
-				A77AAE981E8CFE4600261A3A /* Config.swift */,
 				D7A267D21E7796BD00DE5774 /* Constants.swift */,
 				D7983CE51E76E99C00E650ED /* Queue.swift */,
 				D7A267DC1E77A01D00DE5774 /* Stack.swift */,
@@ -595,7 +592,6 @@
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */,
-				A77AAE991E8CFE4600261A3A /* Config.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
