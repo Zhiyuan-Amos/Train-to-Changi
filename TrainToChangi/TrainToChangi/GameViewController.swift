@@ -27,27 +27,18 @@ class GameViewController: UIViewController {
         registerObservers()
     }
 
-    // Updates `model.runState` to `.running(isAnimating: true) if the
-    // current `model.runState` is `.running(isAnimating: false)`.
-    // This is to prevent scenarios such as user pressing `stepForwardButton`,
-    // in which `model.runState` is set to `.paused`, but set to `.running` when
-    // animation started, which then triggers `animationEnded(notification:)`, 
-    // thus setting the runState incorrectly.
-    // -SeeAlso: animationEnded(notification:)
-    @objc fileprivate func animationBegan(notification: Notification) {
-        if model.runState == .running(isAnimating: false) {
-            model.runState = .running(isAnimating: true)
-        }
+    // Updates `model.runState` to `.running(isAnimating: true).
+    @objc fileprivate func handleAnimationBegin(notification: Notification) {
+        model.runState = .running(isAnimating: true)
     }
 
-    // Updates `model.runState` to `.running(isAnimating: false) if the
-    // current `model.runState` is `.running(isAnimating: true)`.
-    // This is to prevent scenarios such as user pressing `stepForwardButton`,
-    // in which `model.runState` is set to `.paused`, but after the animation
-    // has ended and this method is called, it sets the runState incorrectly to `.running`.
-    @objc fileprivate func animationEnded(notification: Notification) {
+    // Updates `model.runState` accordingly depending on what is the current
+    // `model.runState`.
+    @objc fileprivate func handleAnimationEnd(notification: Notification) {
         if model.runState == .running(isAnimating: true) {
             model.runState = .running(isAnimating: false)
+        } else if model.runState == .stepping {
+            model.runState = .paused
         }
     }
 
@@ -89,14 +80,14 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         scene.initLevelState(model.currentLevel)
     }
-    
+
     private func registerObservers() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(animationBegan(notification:)),
+            self, selector: #selector(handleAnimationBegin(notification:)),
             name: Constants.NotificationNames.animationBegan, object: nil)
-        
+
         NotificationCenter.default.addObserver(
-            self, selector: #selector(animationEnded(notification:)),
+            self, selector: #selector(handleAnimationEnd(notification:)),
             name: Constants.NotificationNames.animationEnded, object: nil)
     }
 }

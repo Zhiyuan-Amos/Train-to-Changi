@@ -32,6 +32,13 @@ class ModelManager: Model {
                 default:
                     break
                 }
+            case .stepping:
+                switch newState {
+                case .running:
+                    break
+                default:
+                    levelState.runState = newState
+                }
             }
 
             let notification = Notification(name: Constants.NotificationNames.runStateUpdated,

@@ -16,12 +16,24 @@ class GameLogic {
 
     // Parses the `commandData` and executes the corresponding command.
     // Returns nil if `commandData` is nil or `commandData` cannot be parsed
-    // into a Command e.g `.jumpTarget`. Returns true otherwise.
+    // into a Command e.g `.jumpTarget`. Returns the executed command otherwise.
+    // Updates `model.runState` accordingly as well.
     func execute(commandData: CommandData?) -> Command? {
+        // If there's no `commandData` and game hasn't been won, it implies
+        // that there are no commands left to be executed i.e game lost.
         guard let commandData = commandData else {
             model.runState = .lost(error: .incompleteOutboxValues)
             return nil
         }
+
+        // Commands with animations will automatically toggle `model.runState`
+        // from `.stepping` to `.paused`. However, `.jump` and `.jumpTarget` does not have
+        // animation, thus we have to manually toggle it back to `.paused`.
+        if (commandData == .jump || commandData == .jumpTarget) && model.runState == .stepping {
+            model.runState = .paused
+        }
+
+        // Only `.jumpTarget` returns nil as it isn't a command.
         guard let command = parser.parse(commandData: commandData) else {
             return nil
         }

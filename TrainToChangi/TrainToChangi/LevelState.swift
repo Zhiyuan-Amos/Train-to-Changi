@@ -7,7 +7,6 @@ struct LevelState {
     var personValue: Int?
     var runState: RunState = .paused
     var numSteps: Int = 0
-    var programCounter: Int?
 
     init(inputs: [Int], memoryValues: [Int?]) {
         self.inputs = inputs
