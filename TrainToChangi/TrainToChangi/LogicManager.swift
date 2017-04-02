@@ -3,15 +3,11 @@
 // It also contains methods pertaining to the game logic.
 //
 import Foundation
-class LogicManager: Logic, GameLogicDelegate {
+class LogicManager: Logic {
     unowned private let model: Model
     private let gameLogic: GameLogic
     private var iterator: CommandDataListIterator!
-    private var executedCommands: Stack<Command>
-
-    var numCommandsExecuted: Int {
-        return executedCommands.count
-    }
+    fileprivate var executedCommands: Stack<Command>
 
     init(model: Model) {
         self.model = model
@@ -21,8 +17,8 @@ class LogicManager: Logic, GameLogicDelegate {
     }
 
     // Executes the list of commands that user has selected.
-    // As this method will busy-wait, it is run in background thread. 
-    func executeCommands() {
+    // As this method will busy-wait, it is run in background thread.
+    func run() {
         let binarySemaphore = DispatchSemaphore(value: 1)
         DispatchQueue.global(qos: .background).async {
             while case .running = self.model.runState {
@@ -36,7 +32,7 @@ class LogicManager: Logic, GameLogicDelegate {
                 // execution of command must be done on main thread to allow the update
                 // of UI buttons during the change of run states.
                 DispatchQueue.main.async {
-                    self.executeNextCommand()
+                    self.stepForward()
                     binarySemaphore.signal()
                 }
             }
@@ -44,26 +40,32 @@ class LogicManager: Logic, GameLogicDelegate {
     }
 
     // Reverts the state of the model by one command execution backward.
-    func undo() {
+    func stepBack() {
         guard let command = executedCommands.pop() else {
             fatalError("User should not be allowed to undo")
         }
 
-        gameLogic.undo(command)
+        gameLogic.stepBack(command)
         iterator.previous()
     }
 
     // Executes the next command.
-    func executeNextCommand() {
+    func stepForward() {
         if iterator == nil {
             iterator = model.makeCommandDataListIterator()
             gameLogic.parser = CommandDataParser(model: model, iterator: iterator)
         }
 
-        guard let executedCommand = gameLogic.execute(commandData: iterator.next()) else {
+        guard let executedCommand = gameLogic.stepForward(commandData: iterator.next()) else {
             return
         }
 
         executedCommands.push(executedCommand)
+    }
+}
+
+extension LogicManager: GameLogicDelegate {
+    var numCommandsExecuted: Int {
+        return executedCommands.count
     }
 }

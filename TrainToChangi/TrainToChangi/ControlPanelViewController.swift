@@ -64,7 +64,7 @@ class ControlPanelViewController: UIViewController {
     // to `.paused` and stops after current command execution.
     @IBAction func stepBackButtonPressed(_ sender: UIButton) {
         if model.runState != .running(isAnimating: false) && model.runState != .running(isAnimating: true) {
-            logic.undo()
+            logic.stepBack()
         }
         model.runState = .paused
     }
@@ -76,13 +76,13 @@ class ControlPanelViewController: UIViewController {
         model.runState = .stepping
 
         if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
-            logic.executeNextCommand()
+            logic.stepForward()
         }
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
         model.runState = .running(isAnimating: false)
-        logic.executeCommands()
+        logic.run()
     }
 
     private func registerObservers() {
