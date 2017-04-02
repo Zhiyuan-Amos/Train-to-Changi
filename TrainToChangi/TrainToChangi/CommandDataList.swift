@@ -49,8 +49,8 @@ protocol CommandDataList {
     // Inserts `commandData` into the list at `index`.
     // If `commandData` is a jump-related command, also inserts
     // its associated `jumpTarget` in front of it.
-    // If `atIndex` is >= length of list, appends the commandData to the list.
-    // - Precondition: atIndex >= 0
+    // If `atIndex` is == length of list, appends the commandData to the list.
+    // - Precondition: atIndex >= 0 and <= length of list
     func insert(commandData: CommandData, atIndex: Int)
 
     // Removes `commandData` at `index` from the list.
@@ -117,9 +117,8 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func move(sourceIndex: Int, destIndex: Int) {
-        // TODO: make sure index valid..
-
         guard let node = node(atIndex: sourceIndex) else {
+            preconditionFailure("Index is not valid")
             return
         }
         move(node: node, toIndex: destIndex)
