@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 
 protocol MapViewControllerDelegate: class {
-    func initLevel(name: String?, storage: StorageManager)
+    func initLevel(name: String?, storage: Storage)
 }
 
 // View controller of the level map.
@@ -20,7 +20,7 @@ protocol MapViewControllerDelegate: class {
 // Storyboard must be set to custom class "SKView".
 class MapViewController: UIViewController {
 
-    var storage: StorageManager!
+    var storage: Storage!
 
     override func viewDidLoad() {
         super.viewDidLoad()

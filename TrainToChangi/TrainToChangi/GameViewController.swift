@@ -18,7 +18,7 @@ class GameViewController: UIViewController {
     // VC is currently first responder, to be changed when we add other views.
     fileprivate var model: Model!
     fileprivate var logic: Logic!
-    fileprivate var storage: StorageManager!
+    fileprivate var storage: Storage!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -100,7 +100,7 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController: MapViewControllerDelegate {
-    func initLevel(name: String?, storage: StorageManager) {
+    func initLevel(name: String?, storage: Storage) {
         self.storage = storage
         let levelIndex = 0
         model = ModelManager(levelIndex: levelIndex,

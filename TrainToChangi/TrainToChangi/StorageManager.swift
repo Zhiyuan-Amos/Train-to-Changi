@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StorageManager {
+class StorageManager: Storage {
 
     private let pListExtension = ".plist"
     private let userDataKey = "userDataKey"
@@ -28,15 +28,6 @@ class StorageManager {
         }
         return UserData()
     }()
-
-    func completeLevel(levelIndex: Int) {
-        userData.completeLevel(levelIndex: levelIndex)
-    }
-
-    private func updateAddedCommandsInfo(levelIndex: Int, commandDataListInfo: CommandDataListInfo) {
-        userData.updateAddedCommandsInfo(levelIndex: levelIndex,
-                                         commandDataListInfo: commandDataListInfo)
-    }
 
     func hasCompletedLevel(levelIndex: Int) -> Bool {
         return userData.completedLevelIndexes.contains(levelIndex)
@@ -95,7 +86,7 @@ class StorageManager {
             name: Constants.NotificationNames.commandDataListUpdate, object: nil)
     }
 
-    @objc fileprivate func commandDataListUpdate(notification: Notification) {
+    @objc private func commandDataListUpdate(notification: Notification) {
         guard let levelIndex = notification.userInfo?["levelIndex"] as? Int,
             let commandDataListInfo =
             notification.userInfo?["commandDataListInfo"] as? CommandDataListInfo else {
@@ -104,6 +95,16 @@ class StorageManager {
 
         updateAddedCommandsInfo(levelIndex: levelIndex,
                                 commandDataListInfo: commandDataListInfo)
+    }
+
+    private func updateAddedCommandsInfo(levelIndex: Int, commandDataListInfo: CommandDataListInfo) {
+        userData.updateAddedCommandsInfo(levelIndex: levelIndex,
+                                         commandDataListInfo: commandDataListInfo)
+    }
+
+    // Receive notification that level is completed, then call this func.
+    private func completeLevel(levelIndex: Int) {
+        userData.completeLevel(levelIndex: levelIndex)
     }
 
     private func getUrlOfFileInDocumentDirectory(fileName: String) -> URL {
