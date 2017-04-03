@@ -119,7 +119,6 @@ class CommandDataLinkedList: CommandDataList {
     func move(sourceIndex: Int, destIndex: Int) {
         guard let node = node(atIndex: sourceIndex) else {
             preconditionFailure("Index is not valid")
-            return
         }
         move(node: node, toIndex: destIndex)
     }

@@ -34,7 +34,7 @@ class StorageManager: Storage {
     }
 
     func getUserAddedCommandsAsListInfo(levelIndex: Int) -> CommandDataListInfo? {
-        return userData.getAddedCommands(levelIndex: 0)
+        return userData.getAddedCommands(levelIndex: levelIndex)
     }
 
     func save() {

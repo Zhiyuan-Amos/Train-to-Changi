@@ -76,6 +76,10 @@ struct Constants {
         static let stationNodeSize = CGSize(width: 200, height: 200)
     }
 
+    struct StationNames {
+        static let stationNames = ["KentRidgeStation", "CityHallStation", "ChangiStation"]
+    }
+
     struct NotificationNames {
         static let moveProgramCounter = Notification.Name(rawValue: "moveProgramCounter")
         static let commandDataListUpdate = Notification.Name(rawValue: "commandDataListUpdate")

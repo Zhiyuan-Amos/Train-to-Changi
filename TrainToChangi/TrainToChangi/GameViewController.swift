@@ -102,10 +102,23 @@ class GameViewController: UIViewController {
 extension GameViewController: MapViewControllerDelegate {
     func initLevel(name: String?, storage: Storage) {
         self.storage = storage
-        let levelIndex = 0
+        guard let name = name else {
+            fatalError("Station must have a name!")
+        }
+        let levelIndex = indexOfStation(name: name)
         model = ModelManager(levelIndex: levelIndex,
                              levelData: Levels.levelData[levelIndex],
                              commandDataListInfo: storage.getUserAddedCommandsAsListInfo(levelIndex: levelIndex))
         logic = LogicManager(model: model)
+    }
+
+    private func indexOfStation(name: String) -> Int {
+        let levelNames = Constants.StationNames.stationNames
+        for (index, levelName) in levelNames.enumerated() {
+            if levelName == name {
+                return index
+            }
+        }
+        preconditionFailure("StationName does not exist!")
     }
 }
