@@ -12,6 +12,7 @@ class DragDropViewController: UIViewController {
 
     var model: Model!
     fileprivate var jumpBundles = [JumpBundle]()
+    fileprivate var updatingCellIndexPath: IndexPath?
 
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var currentCommandsView: UICollectionView!
@@ -75,13 +76,62 @@ extension DragDropViewController {
         swipeGesture.direction = .right
         currentCommandsView.addGestureRecognizer(swipeGesture)
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        currentCommandsView.addGestureRecognizer(tapGesture)
+
+    }
+
+    @objc private func handleTap(gesture: UISwipeGestureRecognizer) {
+        let location = gesture.location(in: currentCommandsView)
+
+        guard let indexPath = currentCommandsView.indexPathForItem(at: location),
+              let cell = currentCommandsView.cellForItem(at: indexPath),
+              isIndexedCommand(indexPath: indexPath) else {
+                return
+        }
+
+        let indexCommand = model.userEnteredCommands[indexPath.item]
+
+        if updatingCellIndexPath == nil {
+            updatingCellIndexPath = indexPath
+            switch indexCommand {
+            case .add(let index), .copyTo(let index), .copyFrom(let index):
+                updateCellIndex(cell: cell, index: index!)
+            default:
+                break
+            }
+        } else if updatingCellIndexPath == indexPath {
+            updatingCellIndexPath = nil
+            switch indexCommand {
+            case .add(let index), .copyTo(let index), .copyFrom(let index):
+                cancelUpdateCellIndex(cell: cell, index: index!)
+            default:
+                break
+            }
+
+        }
+    }
+
+    private func updateCellIndex(cell: UICollectionViewCell, index: Int) {
+        cell.layer.backgroundColor = UIColor.red.cgColor
+        NotificationCenter.default.post(name: Constants.NotificationNames.updateCommandIndexEvent,
+                                        object: index,
+                                        userInfo: nil)
+    }
+
+    private func cancelUpdateCellIndex(cell: UICollectionViewCell, index: Int) {
+        cell.layer.backgroundColor = nil
+        NotificationCenter.default.post(name: Constants.NotificationNames.cancelUpdateCommandIndexEvent,
+                                        object: index,
+                                        userInfo: nil)
     }
 
     @objc private func handleSwipe(gesture: UISwipeGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
         guard let indexPath = currentCommandsView.indexPathForItem(at: location),
-              let cell = currentCommandsView.cellForItem(at: indexPath) else {
+              let cell = currentCommandsView.cellForItem(at: indexPath),
+              updatingCellIndexPath == nil else {
                 return
         }
 
@@ -92,6 +142,10 @@ extension DragDropViewController {
 
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
+
+        guard updatingCellIndexPath == nil else {
+            return
+        }
 
         switch gesture.state {
         case .began:
@@ -309,7 +363,7 @@ extension DragDropViewController {
     }
 
 
-    private func isIndexedCommand(indexPath: IndexPath) -> Bool {
+    fileprivate func isIndexedCommand(indexPath: IndexPath) -> Bool {
         switch model.userEnteredCommands[indexPath.item] {
         case .add(_), .copyFrom(_), .copyTo(_):
             return true
@@ -332,6 +386,39 @@ extension DragDropViewController {
             self, selector: #selector(handleAddCommand(notification:)),
             name: Constants.NotificationNames.userAddCommandEvent,
             object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleSelectedIndex(notification:)),
+            name: Constants.NotificationNames.userSelectedIndexEvent,
+            object: nil)
+    }
+
+    @objc fileprivate func handleSelectedIndex(notification: Notification) {
+        guard let index = notification.object as? Int,
+              let indexPath = updatingCellIndexPath,
+              let cell = currentCommandsView.cellForItem(at: indexPath) else {
+            fatalError("Notification Data is not of type Int")
+        }
+
+        let command = model.userEnteredCommands[indexPath.item]
+        _ = model.removeCommand(fromIndex: indexPath.item)
+
+        switch command {
+        case .copyFrom(_):
+            model.insertCommand(commandEnum: CommandData.copyFrom(memoryIndex: index),
+                                atIndex: indexPath.item)
+        case .copyTo(_):
+            model.insertCommand(commandEnum: CommandData.copyTo(memoryIndex: index),
+                                atIndex: indexPath.item)
+        case .add(_):
+            model.insertCommand(commandEnum: CommandData.add(memoryIndex: index),
+                                atIndex: indexPath.item)
+        default:
+            break
+        }
+        currentCommandsView.reloadData()
+        updatingCellIndexPath = nil
+        cell.layer.backgroundColor = nil
     }
 
     // Updates whether the views are enabled depending on the `model.runState`.

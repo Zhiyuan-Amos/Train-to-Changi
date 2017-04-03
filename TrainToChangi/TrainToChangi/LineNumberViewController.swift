@@ -72,6 +72,7 @@ extension LineNumberViewController {
 
     @objc private func handleResetCommand(notification: Notification) {
         lineNumberCollection.reloadData()
+        programCounter.isHidden = true
     }
 
     @objc private func handleScroll(notification: Notification) {
@@ -92,7 +93,7 @@ extension LineNumberViewController {
                     fatalError("Misconfiguration of notification on sender's side")
         }
 
-        var origin = cell.frame.origin
+        let origin = cell.frame.origin
         // `programCounter` is hidden at the start before the user presses the `play` /
         // `stepForward` button
         if programCounter.isHidden {

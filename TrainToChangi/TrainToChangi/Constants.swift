@@ -93,6 +93,9 @@ struct Constants {
         static let userDeleteCommandEvent = Notification.Name(rawValue: "userDeleteCommandEvent")
         static let userResetCommandEvent = Notification.Name(rawValue: "userResetCommandEvent")
         static let userScrollEvent = Notification.Name(rawValue: "userScrollEvent")
+        static let updateCommandIndexEvent = Notification.Name(rawValue: "updateCommandIndexEvent")
+        static let cancelUpdateCommandIndexEvent = Notification.Name(rawValue: "cancelUpdateCommandIndexEvent")
+        static let userSelectedIndexEvent = Notification.Name(rawValue: "userSelectedIndexEvent")
     }
 
     struct SegueIds {

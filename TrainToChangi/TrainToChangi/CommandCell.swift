@@ -37,7 +37,8 @@ class CommandCell: UICollectionViewCell {
 
         commandImage.image = UIImage(named: imageName)
 
-        if let indexImageName = indexImageName {
+        if let indexImageName = indexImageName,
+           let index = index {
             commandIndex.text = "\(index)"
             commandIndex.isHidden = false
         } else {
