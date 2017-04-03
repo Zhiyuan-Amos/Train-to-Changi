@@ -11,11 +11,10 @@ import UIKit
 class DragDropViewController: UIViewController {
 
     var model: Model!
-    private var jumpBundles = [JumpBundle]()
+    fileprivate var jumpBundles = [JumpBundle]()
 
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var currentCommandsView: UICollectionView!
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +40,33 @@ class DragDropViewController: UIViewController {
         currentCommandsView.delegate = self
     }
 
-    // MARK: - Gestures
-    private func addGestureRecognisers() {
+    fileprivate func deleteCommand(indexPath: IndexPath) {
+        // clear all jump arrow views before potentially deleting jumpBundle
+        removeAllJumpArrows()
+
+        // if command is related to jump, need to delete bundle
+        if let jumpPartnerIndexPath = getJumpPartnerIndexPath(indexPath: indexPath) {
+            updateJumpBundles(deletedIndexPath: indexPath,
+                              deletedPartnerIndexPath: jumpPartnerIndexPath)
+            deleteJumpBundle(deletedIndexPath: indexPath)
+        } else {
+            updateJumpBundles(deletedIndexPath: indexPath)
+        }
+        renderJumpArrows()
+
+        _ = model.removeCommand(fromIndex: indexPath.item)
+        currentCommandsView.reloadData()
+
+        NotificationCenter.default.post(name: Constants.NotificationNames.userDeleteCommandEvent,
+                                        object: nil,
+                                        userInfo: nil)
+    }
+}
+
+// MARK: - Gestures
+extension DragDropViewController {
+
+    fileprivate func addGestureRecognisers() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         longPressGesture.minimumPressDuration = 0.3
         currentCommandsView.addGestureRecognizer(longPressGesture)
@@ -117,39 +141,25 @@ class DragDropViewController: UIViewController {
         }
     }
 
-    private func deleteCommand(indexPath: IndexPath) {
-        // clear all jump arrow views before potentially deleting jumpBundle
-        removeAllJumpArrows()
-
-        // if command is related to jump, need to delete bundle
-        if let jumpPartnerIndexPath = getJumpPartnerIndexPath(indexPath: indexPath) {
-            updateJumpBundles(deletedIndexPath: indexPath,
-                                   deletedPartnerIndexPath: jumpPartnerIndexPath)
-            deleteJumpBundle(deletedIndexPath: indexPath)
-        } else {
-            updateJumpBundles(deletedIndexPath: indexPath)
-        }
-        renderJumpArrows()
-
-        _ = model.removeCommand(fromIndex: indexPath.item)
-        currentCommandsView.reloadData()
-
-        NotificationCenter.default.post(name: Constants.NotificationNames.userDeleteCommandEvent,
-                                        object: nil,
-                                        userInfo: nil)
-    }
-
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = currentCommandsView.contentOffset;
+        let offset = currentCommandsView.contentOffset
         NotificationCenter.default.post(name: Constants.NotificationNames.userScrollEvent,
                                         object: offset,
                                         userInfo: nil)
     }
 
-    // MARK: - Jump Helper Functions
+    private func initDragBundleAtGestureBegan(indexPath: IndexPath, cell: UICollectionViewCell) {
+        DragBundle.initialIndexPath = indexPath
+        DragBundle.cellSnapshot = UIEntityHelper.snapshotOfCell(inputView: cell)
+        DragBundle.cellSnapshot?.center = cell.center
+        DragBundle.cellSnapshot?.alpha = 0.0
+    }
+}
 
+// MARK: - Delete Helper Functions
+extension DragDropViewController {
     // update jump bundles when a non-jump related command is being deleted
-    private func updateJumpBundles(deletedIndexPath: IndexPath) {
+    fileprivate func updateJumpBundles(deletedIndexPath: IndexPath) {
         for jumpBundle in jumpBundles {
             guard jumpBundle.jumpIndexPath != deletedIndexPath
                 && jumpBundle.jumpTargetIndexPath != deletedIndexPath else {
@@ -166,7 +176,7 @@ class DragDropViewController: UIViewController {
     }
 
     // update jump bundles when a jump related command is being deleted
-    private func updateJumpBundles(deletedIndexPath: IndexPath, deletedPartnerIndexPath: IndexPath) {
+    fileprivate func updateJumpBundles(deletedIndexPath: IndexPath, deletedPartnerIndexPath: IndexPath) {
         for jumpBundle in jumpBundles {
             guard jumpBundle.jumpIndexPath != deletedIndexPath
                 && jumpBundle.jumpTargetIndexPath != deletedIndexPath else {
@@ -192,7 +202,7 @@ class DragDropViewController: UIViewController {
         }
     }
 
-    private func deleteJumpBundle(deletedIndexPath: IndexPath) {
+    fileprivate func deleteJumpBundle(deletedIndexPath: IndexPath) {
         var index = 0
         for jumpBundle in jumpBundles {
             if jumpBundle.jumpIndexPath == deletedIndexPath
@@ -204,7 +214,7 @@ class DragDropViewController: UIViewController {
         jumpBundles.remove(at: index)
     }
 
-    private func performBothJumpCommandsUpdate(indexPathOne: IndexPath, indexPathTwo: IndexPath) {
+    fileprivate func performBothJumpCommandsUpdate(indexPathOne: IndexPath, indexPathTwo: IndexPath) {
         guard let jumpBundleOne = getJumpViewsBundle(indexPath: indexPathOne),
             let jumpBundleTwo = getJumpViewsBundle(indexPath: indexPathTwo) else {
                 return
@@ -225,7 +235,7 @@ class DragDropViewController: UIViewController {
         }
     }
 
-    private func performOneJumpCommandUpdate(oldIndexPath: IndexPath, newIndexPath: IndexPath) {
+    fileprivate func performOneJumpCommandUpdate(oldIndexPath: IndexPath, newIndexPath: IndexPath) {
         guard let jumpBundle = getJumpViewsBundle(indexPath: oldIndexPath) else {
             return
         }
@@ -236,7 +246,7 @@ class DragDropViewController: UIViewController {
         }
     }
 
-    private func getJumpViewsBundle(indexPath: IndexPath) -> JumpBundle? {
+    fileprivate func getJumpViewsBundle(indexPath: IndexPath) -> JumpBundle? {
         for jumpBundle in jumpBundles {
             if jumpBundle.jumpIndexPath == indexPath
                 || jumpBundle.jumpTargetIndexPath == indexPath {
@@ -246,7 +256,7 @@ class DragDropViewController: UIViewController {
         return nil
     }
 
-    private func getJumpPartnerIndexPath(indexPath: IndexPath) -> IndexPath? {
+    fileprivate func getJumpPartnerIndexPath(indexPath: IndexPath) -> IndexPath? {
         if isJump(indexPath: indexPath) {
             return getJumpViewsBundle(indexPath: indexPath)?.jumpTargetIndexPath
         } else if isJumpTarget(indexPath: indexPath) {
@@ -256,13 +266,13 @@ class DragDropViewController: UIViewController {
         }
     }
 
-    private func removeAllJumpArrows() {
+    fileprivate func removeAllJumpArrows() {
         for jumpBundle in jumpBundles {
             jumpBundle.arrowView.removeFromSuperview()
         }
     }
 
-    private func redrawAllJumpArrows() -> [UIImageView] {
+    fileprivate func redrawAllJumpArrows() -> [UIImageView] {
         var jumpArrows = [UIImageView]()
         for jumpBundle in jumpBundles {
             if jumpBundle.jumpIndexPath.item < jumpBundle.jumpTargetIndexPath.item {
@@ -278,35 +288,27 @@ class DragDropViewController: UIViewController {
         return jumpArrows
     }
 
-    private func renderJumpArrows() {
+    fileprivate func renderJumpArrows() {
         removeAllJumpArrows()
         for jumpArrow in redrawAllJumpArrows() {
             currentCommandsView.addSubview(jumpArrow)
         }
     }
 
-    private func isJumpRelatedCommand(indexPath: IndexPath) -> Bool {
+    fileprivate func isJumpRelatedCommand(indexPath: IndexPath) -> Bool {
         return model.userEnteredCommands[indexPath.item] == .jump
             || model.userEnteredCommands[indexPath.item] == .jumpTarget
     }
 
-    private func isJump(indexPath: IndexPath) -> Bool {
+    fileprivate func isJump(indexPath: IndexPath) -> Bool {
         return model.userEnteredCommands[indexPath.item] == .jump
     }
 
-    private func isJumpTarget(indexPath: IndexPath) -> Bool {
+    fileprivate func isJumpTarget(indexPath: IndexPath) -> Bool {
         return model.userEnteredCommands[indexPath.item] == .jumpTarget
     }
 
-    // MARK: - Gesture Helper Func
-    private func initDragBundleAtGestureBegan(indexPath: IndexPath, cell: UICollectionViewCell) {
-        DragBundle.initialIndexPath = indexPath
-        DragBundle.cellSnapshot = UIEntityHelper.snapshotOfCell(inputView: cell)
-        DragBundle.cellSnapshot?.center = cell.center
-        DragBundle.cellSnapshot?.alpha = 0.0
-    }
 
-    // MARK: - Other Helper Func
     private func isIndexedCommand(indexPath: IndexPath) -> Bool {
         switch model.userEnteredCommands[indexPath.item] {
         case .add(_), .copyFrom(_), .copyTo(_):
@@ -315,9 +317,12 @@ class DragDropViewController: UIViewController {
             return false
         }
     }
+}
 
-    // MARK -- Event Handling
-    private func registerObservers() {
+// MARK -- Event Handling
+extension DragDropViewController {
+
+    fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated,
@@ -341,7 +346,7 @@ class DragDropViewController: UIViewController {
         }
     }
 
-    @objc private func handleAddCommand(notification: Notification) {
+    @objc fileprivate func handleAddCommand(notification: Notification) {
         guard let command = notification.object as? CommandData else {
             fatalError("Notification Data is not of type CommandData")
         }

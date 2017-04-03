@@ -70,9 +70,11 @@ class EditorViewController: UIViewController {
                                         object: command,
                                         userInfo: nil)
     }
+}
 
-    //MARK -- Event Handling
-    private func registerObservers() {
+//MARK -- Event Handling
+extension EditorViewController {
+    fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)

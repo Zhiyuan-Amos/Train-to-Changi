@@ -11,7 +11,7 @@ import UIKit
 class LineNumberViewController: UIViewController {
 
     var model: Model!
-    
+
     @IBOutlet weak var programCounter: UIImageView!
     @IBOutlet weak var lineNumberCollection: UICollectionView!
 
@@ -22,14 +22,15 @@ class LineNumberViewController: UIViewController {
         registerObservers()
     }
 
-    // MARK -- Setup
     private func connectDataSourceAndDelegate() {
         lineNumberCollection.dataSource = self
         lineNumberCollection.delegate = self
     }
+}
 
-    // MARK -- Event Handling
-    private func registerObservers() {
+// MARK -- Event Handling
+extension LineNumberViewController {
+    fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleDeleteCommand(notification:)),
             name: Constants.NotificationNames.userDeleteCommandEvent,

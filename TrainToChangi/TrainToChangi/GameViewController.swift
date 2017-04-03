@@ -53,7 +53,7 @@ class GameViewController: UIViewController {
     }
 
     /// Use GameScene to move/animate the game objects
-    func presentGameScene() {
+    private func presentGameScene() {
         let scene = GameScene(size: view.bounds.size)
         guard let skView = view as? SKView else {
             assertionFailure("View should be a SpriteKit View!")
@@ -64,8 +64,12 @@ class GameViewController: UIViewController {
         scene.initLevelState(model.currentLevel)
     }
 
-    // MARK -- Event Handling
-    private func registerObservers() {
+
+}
+
+// MARK -- Event Handling
+extension GameViewController {
+    fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleAnimationBegin(notification:)),
             name: Constants.NotificationNames.animationBegan, object: nil)
