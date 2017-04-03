@@ -19,6 +19,7 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var levelDescriptionTextView: UITextView!
     @IBOutlet weak var currentCommandsView: UICollectionView!
     @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var programCounter: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +32,6 @@ class EditorViewController: UIViewController {
         addGestureRecognisers()
 
         registerObservers()
-    }
-
-    @objc fileprivate func runStateUpdated(notification: Notification) {
-        updateViewsState()
     }
 
     @IBAction func resetButtonPressed(_ sender: Any) {
@@ -404,30 +401,48 @@ class EditorViewController: UIViewController {
 
     private func registerObservers() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(runStateUpdated(notification:)),
+            self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleProgramCounterUpdate(notification:)),
+            name: Constants.NotificationNames.moveProgramCounter, object: nil)
     }
 
-    // Helper function that updates whether the views are enabled depending
-    // on the `model.runState`.
-    private func updateViewsState() {
+    // Updates whether the views are enabled depending on the `model.runState`.
+    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
-        case .running:
+        case .running, .won, .stepping:
             resetButton.isEnabled = false
             currentCommandsView.isUserInteractionEnabled = false
             availableCommandsView.isUserInteractionEnabled = false
-        case .paused:
+        case .paused, .lost:
             resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
-        case .lost:
-            resetButton.isEnabled = true
-            currentCommandsView.isUserInteractionEnabled = true
-            availableCommandsView.isUserInteractionEnabled = true
-        case .won:
-            resetButton.isEnabled = false
-            currentCommandsView.isUserInteractionEnabled = false
-            availableCommandsView.isUserInteractionEnabled = false
+        }
+    }
+
+    // Updates the position of the program counter image depending on which 
+    // command is currently being executed.
+    @objc fileprivate func handleProgramCounterUpdate(notification: Notification) {
+        guard let index = notification.userInfo?["index"] as? Int,
+            let cell = currentCommandsView.cellForItem(
+                at: IndexPath(row: index, section: 0)) else {
+                    fatalError("Misconfiguration of notification on sender's side")
+        }
+
+        var origin = currentCommandsView.convert(cell.frame.origin, to: view)
+        origin.x -= (programCounter.frame.size.width + Constants.UI.programCounterOffsetX)
+
+        // `programCounter` is hidden at the start before the user presses the `play` /
+        // `stepForward` button.
+        if programCounter.isHidden {
+            programCounter.isHidden = false
+            programCounter.frame.origin = origin
+        } else {
+            UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
+                           animations: { self.programCounter.frame.origin = origin })
         }
     }
 }

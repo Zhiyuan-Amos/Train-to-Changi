@@ -119,6 +119,8 @@ struct Constants {
         static let collectionCellHeight: CGFloat = 40
 
         static let arrowWidth: CGFloat = 30
+
+        static let programCounterOffsetX: CGFloat = 5
     }
 
     struct Logic {
@@ -139,6 +141,8 @@ struct Constants {
 
         static let discardHoldingValueDuration = 0.5
         static let holdingValueToMemoryDuration = 0.5
+
+        static let programCounterMovementDuration = 0.1
 
         static let conveyorBeltFrames = [SKTexture(imageNamed: "conveyor-belt-1"),
                                          SKTexture(imageNamed: "conveyor-belt-2"),

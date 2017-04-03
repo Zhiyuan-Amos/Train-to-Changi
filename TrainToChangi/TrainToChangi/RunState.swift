@@ -3,6 +3,7 @@ enum RunState {
     case lost(error: ExecutionError)
     case won
     case paused
+    case stepping
 }
 
 extension RunState: Equatable {
@@ -17,6 +18,8 @@ func == (lhs: RunState, rhs: RunState) -> Bool {
     case (.won, .won):
         return true
     case (.paused, .paused):
+        return true
+    case (.stepping, .stepping):
         return true
     default:
         return false

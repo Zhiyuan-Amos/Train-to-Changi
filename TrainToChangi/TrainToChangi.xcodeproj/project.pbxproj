@@ -39,7 +39,6 @@
 		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
 		D71B88551E86AAC1006BC3E9 /* main-track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D71B88541E86AAC1006BC3E9 /* main-track.mp3 */; };
 		D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7430DE81E88D9F900B84F14 /* GameLogic.swift */; };
-		D7430DEB1E88E70C00B84F14 /* GameLogicDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7430DEA1E88E70C00B84F14 /* GameLogicDelegate.swift */; };
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
@@ -117,7 +116,6 @@
 		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
 		D71B88541E86AAC1006BC3E9 /* main-track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "main-track.mp3"; path = "Audio/main-track.mp3"; sourceTree = SOURCE_ROOT; };
 		D7430DE81E88D9F900B84F14 /* GameLogic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
-		D7430DEA1E88E70C00B84F14 /* GameLogicDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLogicDelegate.swift; sourceTree = "<group>"; };
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
@@ -221,7 +219,7 @@
 				D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */,
 				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
 				D7430DE81E88D9F900B84F14 /* GameLogic.swift */,
-				D7430DEA1E88E70C00B84F14 /* GameLogicDelegate.swift */,
+				3B1680431E77848E002286F6 /* Commands */,
 			);
 			name = Logic;
 			sourceTree = "<group>";
@@ -376,7 +374,6 @@
 				3B16804D1E778785002286F6 /* UI */,
 				3B16804C1E778779002286F6 /* Logic */,
 				3B1680451E7784B3002286F6 /* Model */,
-				3B1680431E77848E002286F6 /* Commands */,
 				3B1680421E778484002286F6 /* Commons */,
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
 				D76FA8331E76ADC400CCCFBE /* Assets.xcassets */,
@@ -593,7 +590,6 @@
 				3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
-				D7430DEB1E88E70C00B84F14 /* GameLogicDelegate.swift in Sources */,
 				A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */,
 				76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,

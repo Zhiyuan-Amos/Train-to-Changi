@@ -376,11 +376,10 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
     private var isFirstCall: Bool
 
     private var current: CommandDataListNode? {
-        willSet(newNode) {
-            guard let newNode = newNode else {
+        didSet {
+            guard let index = index else {
                 return
             }
-            let index = commandDataLinkedList.indexOf(node: newNode)
             NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
                                             object: nil,
                                             userInfo: ["index": index])
@@ -396,7 +395,6 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
 
     init(_ commandDataLinkedList: CommandDataLinkedList) {
         self.commandDataLinkedList = commandDataLinkedList
-        self.current = commandDataLinkedList.first
         self.isFirstCall = true
     }
 
@@ -407,6 +405,7 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
     func next() -> CommandData? {
         if isFirstCall {
             isFirstCall = false
+            current = commandDataLinkedList.first
             return current?.commandData
         }
 
@@ -426,13 +425,12 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
         self.current = current.jumpTarget
     }
 
+    // This function is only called by jump-related commands during `undo`.
     func moveIterator(to index: Int) {
         current = commandDataLinkedList.node(atIndex: index)
-        isFirstCall = true
     }
 
     func reset() {
-        current = commandDataLinkedList.first
         isFirstCall = true
     }
 
