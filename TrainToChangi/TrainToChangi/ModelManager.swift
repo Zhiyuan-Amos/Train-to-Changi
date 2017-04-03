@@ -128,6 +128,10 @@ class ModelManager: Model {
         levelState = levelManager.level.initialState
     }
 
+    func getCommandDataListInfo() -> CommandDataListInfo {
+        return _userEnteredCommands.asListInfo()
+    }
+
     // MARK - API for Logic.
 
     func makeCommandDataListIterator() -> CommandDataListIterator {
