@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,12 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions
                      launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
         // We retrieve the first view controller from the navigation
         // controller and pass to it the instance of StorageManager.
         guard let mapViewController = window?.rootViewController as? MapViewController else {
             fatalError("Root view controller not set correctly!")
         }
         mapViewController.storage = storage
+
+        // Connect Firebase
+        FIRApp.configure()
         return true
     }
 

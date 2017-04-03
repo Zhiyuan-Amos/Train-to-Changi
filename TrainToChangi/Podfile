@@ -6,6 +6,7 @@ target 'TrainToChangi' do
   use_frameworks!
 
   # Pods for TrainToChangi
+  pod 'Firebase/Core'
 
   target 'TrainToChangiTests' do
     inherit! :search_paths
