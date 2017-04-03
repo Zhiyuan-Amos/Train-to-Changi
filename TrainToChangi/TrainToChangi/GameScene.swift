@@ -45,12 +45,6 @@ class GameScene: SKScene {
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
 
-    fileprivate lazy var payloads: [SKSpriteNode] = { [unowned self] in
-        var array = self.inboxNodes + self.memoryNodes + self.outboxNodes
-        array.append(self.holdingNode)
-        return array
-    }()
-
     fileprivate var memoryLayout: Memory.Layout?
 
     fileprivate var backgroundTileMap: SKTileMapNode!
@@ -76,8 +70,12 @@ extension GameScene {
     // Pass `levelState` to specify the locations of each sprite. If it's nil then re init from start.
     // Static elements are not refreshed again.
     func rePresentDynamicElements(levelState: LevelState? = nil) {
-        payloads.forEach { payload in payload.removeFromParent() }
-        payloads.removeAll()
+        inboxNodes.forEach { inboxNode in inboxNode.removeFromParent() }
+        inboxNodes.removeAll()
+        outboxNodes.forEach { outboxNode in outboxNode.removeFromParent() }
+        outboxNodes.removeAll()
+        memoryNodes.forEach { memoryNode in memoryNode.removeFromParent() }
+        memoryNodes.removeAll()
         player.removeAllChildren()
         if let levelState = levelState { // game in .stepping state
             initConveyorNodes(inboxValues: levelState.inputs, outboxValues: levelState.outputs)
@@ -128,14 +126,15 @@ extension GameScene {
             return
         }
         player.size = Constants.Player.size
-        if let position = position, let payloadValue = payloadValue {
+        if let position = position {
             player.position = position
-            holdingNode = Payload(position: playerPickupPosition, value: payloadValue)
-            player.addChild(holdingNode)
+            if let payloadValue = payloadValue {
+                holdingNode = Payload(position: playerPickupPosition, value: payloadValue)
+                addChild(holdingNode)
+                holdingNode.move(toParent: player)
+            }
         } else {
             player.position = Constants.Player.position
-            playerLastPositions = Stack<CGPoint>()
-            playerLastPositions.push(player.position)
         }
         player.zPosition = Constants.Player.zPosition
     }
@@ -271,7 +270,9 @@ extension GameScene {
     fileprivate func removeAllAnimations() {
         hasPaused = true
         player.removeAllActions()
-        payloads.forEach { payload in payload.removeAllActions() }
+        inboxNodes.forEach { inboxNode in inboxNode.removeAllActions() }
+        outboxNodes.forEach { outboxNode in outboxNode.removeAllActions() }
+        memoryNodes.forEach { memoryNode in memoryNode.removeAllActions() }
     }
 
     // Move the player to a WalkDestination
@@ -292,7 +293,6 @@ extension GameScene {
         let moveAction = SKAction.move(to: WalkDestination.inbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
         player.run(moveAction, completion: {
-            self.playerLastPositions.push(self.player.position)
             self.grabFromInbox()
             // 2. step aside after getting box
             let stepAside = SKAction.move(by: Constants.Animation.afterInboxStepVector,

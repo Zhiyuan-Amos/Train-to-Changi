@@ -71,6 +71,7 @@ class ControlPanelViewController: UIViewController {
         }
         postResetSceneNotification(levelState: model.levelState)
         model.runState = .paused
+        print(model.levelState) // debug
     }
 
     // Executes the next command. If game is already playing, sets `model.runState`
@@ -82,6 +83,7 @@ class ControlPanelViewController: UIViewController {
         if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
             logic.stepForward()
         }
+        print(model.levelState) // debug
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
