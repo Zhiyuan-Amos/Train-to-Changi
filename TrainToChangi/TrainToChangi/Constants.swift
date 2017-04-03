@@ -115,7 +115,7 @@ struct Constants {
         static let numberOfSectionsInCollectionView = 1
 
         static let topEdgeInset: CGFloat = 10
-        static let rightEdgeInset: CGFloat = 60
+        static let rightEdgeInset: CGFloat = 10
 
         static let minimumLineSpacingForSection: CGFloat = 0
         static let minimumInteritemSpacingForSection: CGFloat = 0

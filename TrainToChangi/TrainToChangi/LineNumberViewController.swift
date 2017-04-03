@@ -76,11 +76,10 @@ class LineNumberViewController: UIViewController {
                     fatalError("Misconfiguration of notification on sender's side")
         }
 
-        var origin = lineNumberCollection.convert(cell.frame.origin, to: view)
-        origin.x -= (programCounter.frame.size.width + Constants.UI.programCounterOffsetX)
+        var origin = cell.frame.origin
 
         // `programCounter` is hidden at the start before the user presses the `play` /
-        // `stepForward` button.
+        // `stepForward` button
         if programCounter.isHidden {
             programCounter.isHidden = false
             programCounter.frame.origin = origin
@@ -88,6 +87,7 @@ class LineNumberViewController: UIViewController {
             UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
                            animations: { self.programCounter.frame.origin = origin })
         }
+        print(programCounter.frame.origin)
     }
 
 }

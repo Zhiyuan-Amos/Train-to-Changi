@@ -18,12 +18,10 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var currentCommandsView: UIView!
     @IBOutlet weak var lineNumberView: UIView!
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpLevelDescription()
         loadAvailableCommands()
-        adjustCurrentCommandsCollectionView()
         registerObservers()
     }
 
@@ -39,33 +37,8 @@ class EditorViewController: UIViewController {
     // Initialise the height for level description
     private func setUpLevelDescription() {
         levelDescriptionTextView.text = model.currentLevel.levelDescriptor
-
-        let defaultWidth = levelDescriptionTextView.frame.size.width
-        let sizeThatFits = CGSize(width: defaultWidth,
-                                  height: CGFloat.greatestFiniteMagnitude)
-        let newSize = levelDescriptionTextView.sizeThatFits(sizeThatFits)
-        levelDescriptionTextView.frame.size = CGSize(width: max(newSize.width, defaultWidth),
-                                                     height: newSize.height)
-
+        levelDescriptionTextView.isScrollEnabled = true
     }
-
-    private func adjustCurrentCommandsCollectionView() {
-        currentCommandsView.frame.origin.y = levelDescriptionTextView.frame.maxY
-                                            + levelDescriptionTextView.frame.size.height
-                                            + 10
-
-        currentCommandsView.frame.size.height = view.frame.height
-                                                - currentCommandsView.frame.origin.y
-
-        lineNumberView.frame.origin.y = levelDescriptionTextView.frame.maxY
-                                        + levelDescriptionTextView.frame.size.height
-                                        + 10
-        
-        lineNumberView.frame.size.height = view.frame.height
-                                            - lineNumberView.frame.origin.y
-
-    }
-
     // Load the available commands from model for the current level
     func loadAvailableCommands() {
         let initialCommandPosition = availableCommandsView.frame.origin

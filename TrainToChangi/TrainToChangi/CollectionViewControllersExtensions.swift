@@ -34,15 +34,6 @@ extension DragDropViewController: UICollectionViewDataSource {
 }
 
 extension DragDropViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: Constants.UI.collectionCellWidth,
-                      height: Constants.UI.collectionCellHeight)
-    }
-
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -92,14 +83,6 @@ extension LineNumberViewController: UICollectionViewDataSource {
 }
 
 extension LineNumberViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: 50,
-                      height: Constants.UI.collectionCellHeight)
-    }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
