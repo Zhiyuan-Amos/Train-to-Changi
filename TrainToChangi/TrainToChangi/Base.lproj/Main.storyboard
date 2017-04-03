@@ -30,7 +30,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUd-ed-Rq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1088" y="-122"/>
+            <point key="canvasLocation" x="-306" y="-123"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -77,7 +77,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="456" y="-122"/>
+            <point key="canvasLocation" x="455.85937499999994" y="-122.65625"/>
         </scene>
         <!--Editor View Controller-->
         <scene sceneID="IWV-7H-uDE">
@@ -107,7 +107,7 @@
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e0O-q7-0jc">
-                                <rect key="frame" x="76" y="146" width="45" height="527"/>
+                                <rect key="frame" x="76" y="146" width="47" height="527"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="a4a-Cn-2Dm" kind="embed" id="frc-fb-wKe"/>
@@ -131,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FuK-8z-h2Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="413" y="891"/>
+            <point key="canvasLocation" x="412.5" y="890.234375"/>
         </scene>
         <!--Control Panel View Controller-->
         <scene sceneID="lz3-Qn-rT3">
@@ -208,7 +208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37u-s3-zG6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-306" y="848"/>
+            <point key="canvasLocation" x="218" y="427"/>
         </scene>
         <!--Drag Drop View Controller-->
         <scene sceneID="t6O-ek-pAv">
@@ -233,7 +233,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CommandCell" id="4Yn-2t-Zef" customClass="CommandCell" customModule="TrainToChangi" customModuleProvider="target">
-                                        <rect key="frame" x="5.5" y="0.0" width="150" height="41"/>
+                                        <rect key="frame" x="6" y="0.0" width="150" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="150" height="41"/>
@@ -265,7 +265,7 @@
                                 </cells>
                             </collectionView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dy1-XF-9cF">
-                                <rect key="frame" x="113.5" y="476" width="52.5" height="51"/>
+                                <rect key="frame" x="113" y="476" width="53" height="51"/>
                                 <state key="normal" image="reset"/>
                                 <connections>
                                     <action selector="resetButtonPressed:" destination="1JH-tH-YXE" eventType="touchUpInside" id="LrC-zW-iWE"/>
@@ -292,7 +292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u6V-i4-hWH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791.89453125" y="951.953125"/>
+            <point key="canvasLocation" x="771" y="679"/>
         </scene>
         <!--Line Number View Controller-->
         <scene sceneID="ETb-qS-fXG">
@@ -303,11 +303,11 @@
                         <viewControllerLayoutGuide type="bottom" id="ZDX-kA-DYD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mV8-yF-vbt">
-                        <rect key="frame" x="0.0" y="0.0" width="45" height="527"/>
+                        <rect key="frame" x="0.0" y="0.0" width="47" height="527"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y5E-eB-rMe">
-                                <rect key="frame" x="16" y="0.0" width="34" height="527"/>
+                                <rect key="frame" x="16" y="0.0" width="35" height="527"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="SDb-6Y-qgF">
                                     <size key="itemSize" width="25" height="41"/>
@@ -317,7 +317,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LineNumberCell" id="hwI-OX-XnU" customClass="LineNumberCell" customModule="TrainToChangi" customModuleProvider="target">
-                                        <rect key="frame" x="4.5" y="0.0" width="25" height="41"/>
+                                        <rect key="frame" x="5" y="0.0" width="25" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="25" height="41"/>
@@ -364,7 +364,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4wL-94-ZFN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="688" y="952"/>
+            <point key="canvasLocation" x="771" y="1159"/>
         </scene>
     </scenes>
     <resources>

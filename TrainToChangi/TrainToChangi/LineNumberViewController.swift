@@ -103,7 +103,7 @@ extension LineNumberViewController {
             UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
                            animations: { self.programCounter.frame.origin = origin })
         }
-        print(programCounter.frame.origin)
+
     }
 
 }
