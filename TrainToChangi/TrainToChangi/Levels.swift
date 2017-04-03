@@ -6,7 +6,8 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-// Should this be under storage? I separated it because its not really stored..
+// This struct is separated from Storage because the data is not written to file/
+// any other storage medium.
 struct Levels {
     static let levelData: [LevelData] = [LevelOneData(),
                                          LevelTwoData(),
