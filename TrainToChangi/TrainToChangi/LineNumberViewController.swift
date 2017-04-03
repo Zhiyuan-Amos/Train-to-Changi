@@ -18,6 +18,7 @@ class LineNumberViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         connectDataSourceAndDelegate()
+        lineNumberCollection.isScrollEnabled = false
         registerObservers()
     }
 
@@ -48,6 +49,11 @@ class LineNumberViewController: UIViewController {
             self, selector: #selector(handleProgramCounterUpdate(notification:)),
             name: Constants.NotificationNames.moveProgramCounter,
             object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleScroll(notification:)),
+            name: Constants.NotificationNames.userScrollEvent,
+            object: nil)
     }
 
     @objc private func handleAddCommand(notification: Notification) {
@@ -67,6 +73,15 @@ class LineNumberViewController: UIViewController {
         lineNumberCollection.reloadData()
     }
 
+    @objc private func handleScroll(notification: Notification) {
+        guard let offset = notification.object as? CGPoint else {
+            fatalError("Scroll event object should be CGPoint")
+        }
+        var contentOffset = lineNumberCollection.contentOffset
+        contentOffset.y = offset.y
+        lineNumberCollection.setContentOffset(contentOffset, animated: false)
+    }
+
     // Updates the position of the program counter image depending on which
     // command is currently being executed.
     @objc fileprivate func handleProgramCounterUpdate(notification: Notification) {
@@ -77,7 +92,6 @@ class LineNumberViewController: UIViewController {
         }
 
         var origin = cell.frame.origin
-
         // `programCounter` is hidden at the start before the user presses the `play` /
         // `stepForward` button
         if programCounter.isHidden {

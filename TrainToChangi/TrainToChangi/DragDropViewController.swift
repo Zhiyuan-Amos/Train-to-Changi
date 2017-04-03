@@ -139,6 +139,13 @@ class DragDropViewController: UIViewController {
                                         userInfo: nil)
     }
 
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = currentCommandsView.contentOffset;
+        NotificationCenter.default.post(name: Constants.NotificationNames.userScrollEvent,
+                                        object: offset,
+                                        userInfo: nil)
+    }
+
     // MARK: - Drawing Helper Functions
     private func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
         return CGPoint(Constants.UI.collectionCellWidth * 0.5,
@@ -346,7 +353,6 @@ class DragDropViewController: UIViewController {
             self, selector: #selector(handleAddCommand(notification:)),
             name: Constants.NotificationNames.userAddCommandEvent,
             object: nil)
-
     }
 
     // Updates whether the views are enabled depending on the `model.runState`.
