@@ -31,7 +31,7 @@ class GameScene: SKScene {
     fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
     fileprivate let player = SKSpriteNode(imageNamed: "player")
-    fileprivate var playerLastPosition: CGPoint?
+    fileprivate var playerPositions = Stack<CGPoint>()
     fileprivate var playerPickupPosition: CGPoint {
         return CGPoint(x: player.position.x,
                        y: player.position.y - Constants.Player.pickupOffsetY)
@@ -87,7 +87,9 @@ extension GameScene {
                 return
             }
             initMemory(from: levelState.memoryValues, layout: memoryLayout)
-            setPlayerAttributes(position: playerLastPosition, payloadValue: levelState.personValue)
+            _ = playerPositions.pop() // the last position is the current position
+            let position = playerPositions.pop()
+            setPlayerAttributes(position: position, payloadValue: levelState.personValue)
         } else { // game start from the beginning
             initConveyorNodes(inboxValues: level.initialState.inputs)
             setPlayerAttributes()
@@ -133,7 +135,8 @@ extension GameScene {
             player.addChild(holdingNode)
         } else {
             player.position = Constants.Player.position
-            playerLastPosition = player.position
+            playerPositions = Stack<CGPoint>()
+            playerPositions.push(player.position)
         }
         player.zPosition = Constants.Player.zPosition
     }
@@ -288,8 +291,8 @@ extension GameScene {
         // 1. walk to inbox
         let moveAction = SKAction.move(to: WalkDestination.inbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
-        playerLastPosition = player.position
         player.run(moveAction, completion: {
+            self.playerPositions.push(self.player.position)
             self.grabFromInbox()
             // 2. step aside after getting box
             let stepAside = SKAction.move(by: Constants.Animation.afterInboxStepVector,
@@ -314,8 +317,8 @@ extension GameScene {
         }
         let moveAction = SKAction.move(to: layout.locations[index],
                                        duration: Constants.Animation.moveToMemoryDuration)
-        playerLastPosition = player.position
         player.run(moveAction, completion: {
+            self.playerPositions.push(self.player.position)
             // player already moved to memory location, perform memory actions
             switch action {
             case .get:
@@ -332,8 +335,8 @@ extension GameScene {
         // 1. walk to outbox
         let moveAction = SKAction.move(to: WalkDestination.outbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
-        playerLastPosition = player.position
         player.run(moveAction, completion: {
+            self.playerPositions.push(self.player.position)
             // 2. then, outbox items move left
             self.outboxNodes.forEach { node in self.moveConveyorBelt(node) }
             let outboxAnimation = SKAction.repeat(
