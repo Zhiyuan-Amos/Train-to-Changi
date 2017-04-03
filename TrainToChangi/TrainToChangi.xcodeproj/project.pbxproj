@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		22DC72056227D6FB2A2B7317 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC720C670405A3CBCEE615 /* CommandCell.swift */; };
 		22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */; };
 		22DC75774D88B666E05504A2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7B36D1FFE9AF4BD45996 /* Memory.swift */; };
 		22DC77801B64633600E0D12F /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22DC7A7B3B1E8394B0C46B8B /* Tiles.sks */; };
@@ -29,9 +28,9 @@
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		76745B6D1E8855870039A771 /* MapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76745B6C1E8855870039A771 /* MapScene.sks */; };
 		76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76745B6E1E8857EC0039A771 /* MapScene.swift */; };
+		76B43F671E92AB6500B818D1 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B43F661E92AB6500B818D1 /* CommandCell.swift */; };
 		76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E0F66C1E88F9B40051325C /* StationLevelNode.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
-		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */; };
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
@@ -80,7 +79,6 @@
 
 /* Begin PBXFileReference section */
 		22DC71ABD989136378CEAF90 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
-		22DC720C670405A3CBCEE615 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		22DC73404D86B8D3D4682983 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		22DC77C5F418604BA6587B7B /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -103,10 +101,10 @@
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
 		76745B6C1E8855870039A771 /* MapScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MapScene.sks; sourceTree = "<group>"; };
 		76745B6E1E8857EC0039A771 /* MapScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapScene.swift; sourceTree = "<group>"; };
+		76B43F661E92AB6500B818D1 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		76E0F66C1E88F9B40051325C /* StationLevelNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationLevelNode.swift; sourceTree = "<group>"; };
 		A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
-		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListInfo.swift; sourceTree = "<group>"; };
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
@@ -295,8 +293,8 @@
 		76745B711E8859890039A771 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				76B43F661E92AB6500B818D1 /* CommandCell.swift */,
 				76E0F66C1E88F9B40051325C /* StationLevelNode.swift */,
-				22DC720C670405A3CBCEE615 /* CommandCell.swift */,
 				22DC7A5AE59C9E90DD4EC46E /* MemorySlot.swift */,
 				22DC71ABD989136378CEAF90 /* Payload.swift */,
 			);
@@ -608,7 +606,6 @@
 				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A7D163471E90C55E0073EC46 /* Storage.swift in Sources */,
-				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
 				A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */,
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
@@ -616,8 +613,8 @@
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 				3B04A7D41E8BE13C00B317ED /* EditorViewControllerExtensions.swift in Sources */,
 				22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */,
-				22DC72056227D6FB2A2B7317 /* CommandCell.swift in Sources */,
 				22DC7ED806E5191FAC5E6160 /* GameScene.swift in Sources */,
+				76B43F671E92AB6500B818D1 /* CommandCell.swift in Sources */,
 				22DC7DED22DD82B940526501 /* MapViewController.swift in Sources */,
 				22DC75774D88B666E05504A2 /* Memory.swift in Sources */,
 				22DC79205746F0CFA782DB18 /* MemorySlot.swift in Sources */,
