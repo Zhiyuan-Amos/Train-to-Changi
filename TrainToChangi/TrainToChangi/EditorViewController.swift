@@ -15,7 +15,6 @@ class EditorViewController: UIViewController {
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!
-    @IBOutlet weak var programCounter: UIImageView!
     @IBOutlet weak var currentCommandsView: UIView!
     @IBOutlet weak var lineNumberView: UIView!
 
@@ -25,6 +24,7 @@ class EditorViewController: UIViewController {
         setUpLevelDescription()
         loadAvailableCommands()
         adjustCurrentCommandsCollectionView()
+        registerObservers()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -97,4 +97,22 @@ class EditorViewController: UIViewController {
                                         object: command,
                                         userInfo: nil)
     }
+
+    //MARK -- Event Handling
+    private func registerObservers() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleRunStateUpdate(notification:)),
+            name: Constants.NotificationNames.runStateUpdated, object: nil)
+    }
+
+    // Updates whether the views are enabled depending on the `model.runState`.
+    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
+        switch model.runState {
+        case .running, .won, .stepping:
+            availableCommandsView.isUserInteractionEnabled = false
+        case .paused, .lost:
+            availableCommandsView.isUserInteractionEnabled = true
+        }
+    }
+
 }

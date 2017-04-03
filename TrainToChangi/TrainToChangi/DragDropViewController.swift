@@ -15,6 +15,7 @@ class DragDropViewController: UIViewController {
 
     @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var currentCommandsView: UICollectionView!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -345,22 +346,18 @@ class DragDropViewController: UIViewController {
             self, selector: #selector(handleAddCommand(notification:)),
             name: Constants.NotificationNames.userAddCommandEvent,
             object: nil)
+
     }
 
+    // Updates whether the views are enabled depending on the `model.runState`.
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
-        case .running:
+        case .running, .won, .stepping:
             resetButton.isEnabled = false
             currentCommandsView.isUserInteractionEnabled = false
-        case .paused:
+        case .paused, .lost:
             resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
-        case .lost:
-            resetButton.isEnabled = true
-            currentCommandsView.isUserInteractionEnabled = true
-        case .won:
-            resetButton.isEnabled = false
-            currentCommandsView.isUserInteractionEnabled = false
         }
     }
 

@@ -11,6 +11,8 @@ import UIKit
 class LineNumberViewController: UIViewController {
 
     var model: Model!
+    
+    @IBOutlet weak var programCounter: UIImageView!
     @IBOutlet weak var lineNumberCollection: UICollectionView!
 
     override func viewDidLoad() {
@@ -41,6 +43,11 @@ class LineNumberViewController: UIViewController {
             self, selector: #selector(handleResetCommand(notification:)),
             name: Constants.NotificationNames.userResetCommandEvent,
             object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleProgramCounterUpdate(notification:)),
+            name: Constants.NotificationNames.moveProgramCounter,
+            object: nil)
     }
 
     @objc private func handleAddCommand(notification: Notification) {
@@ -58,6 +65,29 @@ class LineNumberViewController: UIViewController {
 
     @objc private func handleResetCommand(notification: Notification) {
         lineNumberCollection.reloadData()
+    }
+
+    // Updates the position of the program counter image depending on which
+    // command is currently being executed.
+    @objc fileprivate func handleProgramCounterUpdate(notification: Notification) {
+        guard let index = notification.userInfo?["index"] as? Int,
+            let cell = lineNumberCollection.cellForItem(
+                at: IndexPath(row: index, section: 0)) else {
+                    fatalError("Misconfiguration of notification on sender's side")
+        }
+
+        var origin = lineNumberCollection.convert(cell.frame.origin, to: view)
+        origin.x -= (programCounter.frame.size.width + Constants.UI.programCounterOffsetX)
+
+        // `programCounter` is hidden at the start before the user presses the `play` /
+        // `stepForward` button.
+        if programCounter.isHidden {
+            programCounter.isHidden = false
+            programCounter.frame.origin = origin
+        } else {
+            UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
+                           animations: { self.programCounter.frame.origin = origin })
+        }
     }
 
 }
