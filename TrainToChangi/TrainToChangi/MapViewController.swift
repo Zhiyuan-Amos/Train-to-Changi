@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 
 protocol MapViewControllerDelegate: class {
-    func initLevel(name: String?)
+    func initLevel(name: String?, storage: Storage)
 }
 
 // View controller of the level map.
@@ -19,6 +19,8 @@ protocol MapViewControllerDelegate: class {
 // Note that the view under MapViewControllerScene in 
 // Storyboard must be set to custom class "SKView".
 class MapViewController: UIViewController {
+
+    var storage: Storage!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +65,7 @@ class MapViewController: UIViewController {
                 assertionFailure("Segue should point to GameViewController")
                 break
             }
-            gameVC.initLevel(name: levelName)
+            gameVC.initLevel(name: levelName, storage: storage)
         default:
             assertionFailure("Segue has a name unaccounted for")
         }

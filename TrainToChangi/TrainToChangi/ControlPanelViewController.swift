@@ -55,8 +55,10 @@ class ControlPanelViewController: UIViewController {
     //TODO: GameScene need to support
     @IBAction func stopButtonPressed(_ sender: UIButton) {
         //TODO: Temporary method to load levels.
-        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
-        logic = LogicManager(model: model)
+        // Comment out first since no reference to storage here
+//        model = ModelManager(leveIndex: 0,
+//                             levelData: LevelDataHelper.levelData(levelIndex: 0))
+//        logic = LogicManager(model: model)
         model.runState = .paused
     }
 

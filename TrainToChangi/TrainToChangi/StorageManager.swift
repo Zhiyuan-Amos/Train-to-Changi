@@ -8,173 +8,113 @@
 
 import Foundation
 
-class StorageManager {
+class StorageManager: Storage {
 
-    var currentSaveSlot = UserData()
-    private var userDataFileName = "User1.plist"
+    private let pListExtension = ".plist"
+    private let userDataKey = "userDataKey"
 
-    func storeUserData() {
-        // save currentSaveSlot user data into file
+    // Hardcode in until we implement multiple slots with UserDefaults.
+    private let saveSlotRawValue = "SlotOne"
+
+    init() {
+        initNotification()
     }
 
-    func loadUserData() {
-        // load from file into currentSaveSlot
+    // If userData has been saved, we read from file
+    // else return new userData
+    private lazy var userData: UserData = {
+        if let userData = self.load() {
+            return userData
+        }
+        return UserData()
+    }()
+
+    func hasCompletedLevel(levelIndex: Int) -> Bool {
+        return userData.completedLevelIndexes.contains(levelIndex)
     }
 
-    func completeLevel(levelIndex: Int) {
-        currentSaveSlot.completeLevel(levelIndex: levelIndex)
+    func getUserAddedCommandsAsListInfo(levelIndex: Int) -> CommandDataListInfo? {
+        return userData.getAddedCommands(levelIndex: levelIndex)
     }
 
-//    func updateAddedCommands(levelIndex: Int, userAddedCommands: [CommandEnum]) {
-//        currentSaveSlot.updateAddedCommands(levelIndex: levelIndex,
-//                                            userAddedCommands: userAddedCommands)
-//    }
-//
-//    /// Loads the levels list from the plist
-//    func readLevelListFromDocument() -> [String: NSMutableDictionary] {
-//        let fileURL = getDocumentURL(fileName: fileName)
-//
-//        var levelDictionary: [String: NSMutableDictionary]
-//        levelDictionary = NSDictionary(contentsOf: fileURL) as? [String: NSMutableDictionary]
-//            ?? initSaveFile(fileName: fileName)
-//
-//        return levelDictionary
-//    }
-//
-//    func readLevelCompletion(levelName: String) -> Bool {
-//        var levelDictionary = readLevelListFromDocument()
-//        let level = levelDictionary[levelName]
-//        let completion = level?["completedBefore"] as? Bool
-//        return completion!
-//    }
-//
-//    func readLevelInput(levelName: String) -> [Int] {
-//        var levelDictionary = readLevelListFromDocument()
-//        let level = levelDictionary[levelName]
-//        let input = level?["input"] as? [Int]
-//        return input!
-//    }
-//
-//    func readLevelExpectedOutput(levelName: String) -> [Int] {
-//        var levelDictionary = readLevelListFromDocument()
-//        let level = levelDictionary[levelName]
-//        let expectedOutput = level?["expectedOutput"] as? [Int]
-//        return expectedOutput!
-//    }
-//
-//    func readLevelDescription(levelName: String) -> String {
-//        var levelDictionary = readLevelListFromDocument()
-//        let level = levelDictionary[levelName]
-//        let description = level?["expectedOutput"] as? String
-//        return description!
-//    }
-//
-//    func readLevelCommands(levelName: String) -> [String] {
-//        var levelDictionary = readLevelListFromDocument()
-//        let level = levelDictionary[levelName]
-//        let commands = level?["command"] as? [String]
-//        return commands!
-//    }
-//
-//    func readSavedLevelCurrentCommands() -> [String] {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSDictionary(contentsOfFile: path)!
-//        return savedLevelDictionary["currentCommands"] as! [String]
-//    }
-//
-//    func readSavedLevelInput() -> [Int] {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSDictionary(contentsOfFile: path)!
-//        return savedLevelDictionary["input"] as! [Int]
-//    }
-//
-//    func readSavedLevelOutput() -> [Int] {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSDictionary(contentsOfFile: path)!
-//        return savedLevelDictionary["output"] as! [Int]
-//    }
-//
-//    func readSavedLevelMemory() -> [Int] {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSDictionary(contentsOfFile: path)!
-//        return savedLevelDictionary["memory"] as! [Int]
-//    }
-//
-//    func readSavedLevelPersonValue() -> Int {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSDictionary(contentsOfFile: path)!
-//        return savedLevelDictionary["personValue"] as! Int
-//    }
-//
-//    func updateSavedLevelCurrentCommands(currentCommands: [String]) {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSMutableDictionary(contentsOfFile: path)!
-//        savedLevelDictionary["currentCommands"] = currentCommands
-//        savedLevelDictionary.write(toFile: path, atomically: true)
-//    }
-//
-//    func updateSavedLevelInput(input: [Int]) {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSMutableDictionary(contentsOfFile: path)!
-//        savedLevelDictionary["input"] = input
-//        savedLevelDictionary.write(toFile: path, atomically: true)
-//    }
-//
-//    func updateSavedLevelOutput(output: [Int]) {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSMutableDictionary(contentsOfFile: path)!
-//        savedLevelDictionary["output"] = output
-//        savedLevelDictionary.write(toFile: path, atomically: true)
-//    }
-//
-//    func updateSavedLevelMemory(memory: [Int]) {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSMutableDictionary(contentsOfFile: path)!
-//        savedLevelDictionary["memory"] = memory
-//        savedLevelDictionary.write(toFile: path, atomically: true)
-//    }
-//
-//    func updateSavedLevelPersonValue(personValue: Int) {
-//        let path = Bundle.main.path(forResource: savedLevelFileName, ofType: "plist")!
-//        let savedLevelDictionary = NSMutableDictionary(contentsOfFile: path)!
-//        savedLevelDictionary["personValue"] = personValue
-//        savedLevelDictionary.write(toFile: path, atomically: true)
-//    }
-//
-//    private func getDocumentURL(fileName: String) -> URL {
-//        // Get the URL of the Documents Directory
-//        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-//
-//        // Get the URL for a file in the Documents Directory
-//        let documentDirectory = urls[0]
-//        let fileURL = documentDirectory.appendingPathComponent(fileName)
-//        return fileURL
-//    }
-//
-//    private func initSaveFile(fileName: String) -> [String: NSMutableDictionary] {
-//        let path = Bundle.main.path(forResource: fileName, ofType: "plist")!
-//        let levelDictionary = NSDictionary(contentsOfFile: path)! as! [String: NSMutableDictionary]
-//
-//        let fileURL = getDocumentURL(fileName: fileName)
-//
-//        saveDictionaryToFile(fileURL: fileURL, dictionary: levelDictionary)
-//        return levelDictionary
-//    }
-//
-//    @discardableResult
-//    private func saveDictionaryToFile(fileURL: URL, dictionary: [String: NSMutableDictionary]) -> Bool {
-//        let toSave = NSMutableDictionary()
-//        toSave.setDictionary(dictionary)
-//        let isSaved = toSave.write(to: fileURL, atomically: true)
-//        return isSaved
-//    }
-//
-//    func loadLevel(stationName: String) -> Level {
-//        for level in PreloadedLevels.allLevels {
-//            if level.levelName == stationName {
-//                return level
-//            }
-//        }
-//        fatalError("Level unable to be found")
-//    }
+    func save() {
+        let fileNameToSave = saveSlotRawValue + pListExtension
+        let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToSave)
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWith: data)
+
+        archiver.encode(userData, forKey: userDataKey)
+        archiver.finishEncoding()
+
+        let isSaveSuccessful = data.write(to: url, atomically: true)
+        assert(isSaveSuccessful, "Save cannot fail!")
+    }
+
+    private func load() -> UserData? {
+        let fileNameToLoad = saveSlotRawValue + pListExtension
+        let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToLoad)
+
+        guard let data = NSData(contentsOf: url) else {
+            // File not found.
+            return nil
+        }
+        let unarchiver = NSKeyedUnarchiver(forReadingWith: data as Data)
+
+        let decoded = unarchiver.decodeObject(forKey: userDataKey)
+        unarchiver.finishDecoding()
+
+        guard let userData = decoded as? UserData else {
+            // We fatalError here instead of asserting and returning nil to prevent
+            // user's saved file from being overwritten because of a bug
+            // in code potentially introduced due to an update.
+            fatalError("Loading cannot fail if file is found.")
+        }
+        return userData
+    }
+
+    // Deletes the saved userData file.
+    private func clearUserData() {
+        let fileNameToLoad = saveSlotRawValue + pListExtension
+        let url = getUrlOfFileInDocumentDirectory(fileName: fileNameToLoad)
+        // TODO: Improve handling
+        try? FileManager.default.removeItem(at: url)
+    }
+
+    private func initNotification() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(commandDataListUpdate(notification:)),
+            name: Constants.NotificationNames.commandDataListUpdate, object: nil)
+    }
+
+    @objc private func commandDataListUpdate(notification: Notification) {
+        guard let levelIndex = notification.userInfo?["levelIndex"] as? Int,
+            let commandDataListInfo =
+            notification.userInfo?["commandDataListInfo"] as? CommandDataListInfo else {
+                fatalError("Not sent properly.")
+        }
+
+        updateAddedCommandsInfo(levelIndex: levelIndex,
+                                commandDataListInfo: commandDataListInfo)
+    }
+
+    private func updateAddedCommandsInfo(levelIndex: Int, commandDataListInfo: CommandDataListInfo) {
+        userData.updateAddedCommandsInfo(levelIndex: levelIndex,
+                                         commandDataListInfo: commandDataListInfo)
+    }
+
+    // Receive notification that level is completed, then call this func.
+    private func completeLevel(levelIndex: Int) {
+        userData.completeLevel(levelIndex: levelIndex)
+    }
+
+    private func getUrlOfFileInDocumentDirectory(fileName: String) -> URL {
+        // Get the URL of the Documents Directory
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+
+        // Get the URL for a file in the Documents Directory
+        let documentDirectory = urls[0]
+        let fileURL = documentDirectory.appendingPathComponent(fileName)
+        return fileURL
+    }
+
 }

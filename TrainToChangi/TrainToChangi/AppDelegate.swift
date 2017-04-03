@@ -12,10 +12,29 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let storage: Storage = StorageManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions
                      launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // We retrieve the first view controller from the navigation
+        // controller and pass to it the instance of StorageManager.
+        guard let mapViewController = window?.rootViewController as? MapViewController else {
+            fatalError("Root view controller not set correctly!")
+        }
+        mapViewController.storage = storage
         return true
     }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        storage.save()
+    }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        storage.save()
+    }
+
+    func applicationWillResignActive(_ application: UIApplication) {
+        storage.save()
+    }
+
 }

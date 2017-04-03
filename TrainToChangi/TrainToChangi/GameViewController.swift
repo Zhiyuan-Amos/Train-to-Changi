@@ -16,13 +16,11 @@ protocol GameVCTouchDelegate: class {
 class GameViewController: UIViewController {
 
     // VC is currently first responder, to be changed when we add other views.
-    fileprivate var model: Model
-    fileprivate var logic: Logic
+    fileprivate var model: Model!
+    fileprivate var logic: Logic!
+    fileprivate var storage: Storage!
 
     required init?(coder aDecoder: NSCoder) {
-        // Change level by setting levelIndex here.
-        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
-        logic = LogicManager(model: model)
         super.init(coder: aDecoder)
         registerObservers()
     }
@@ -93,8 +91,25 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController: MapViewControllerDelegate {
-    func initLevel(name: String?) {
-        model = ModelManager(levelData: LevelDataHelper.levelData(levelIndex: 0))
+    func initLevel(name: String?, storage: Storage) {
+        self.storage = storage
+        guard let name = name else {
+            fatalError("Station must have a name!")
+        }
+        let levelIndex = indexOfStation(name: name)
+        model = ModelManager(levelIndex: levelIndex,
+                             levelData: Levels.levelData[levelIndex],
+                             commandDataListInfo: storage.getUserAddedCommandsAsListInfo(levelIndex: levelIndex))
         logic = LogicManager(model: model)
+    }
+
+    private func indexOfStation(name: String) -> Int {
+        let levelNames = Constants.StationNames.stationNames
+        for (index, levelName) in levelNames.enumerated() {
+            if levelName == name {
+                return index
+            }
+        }
+        preconditionFailure("StationName does not exist!")
     }
 }

@@ -76,8 +76,13 @@ struct Constants {
         static let stationNodeSize = CGSize(width: 200, height: 200)
     }
 
+    struct StationNames {
+        static let stationNames = ["KentRidgeStation", "CityHallStation", "ChangiStation"]
+    }
+
     struct NotificationNames {
         static let moveProgramCounter = Notification.Name(rawValue: "moveProgramCounter")
+        static let commandDataListUpdate = Notification.Name(rawValue: "commandDataListUpdate")
         static let movePersonInScene = Notification.Name(rawValue: "movePersonInScene")
         static let initScene = Notification.Name(rawValue: "initScene")
         static let animationBegan = Notification.Name(rawValue: "animationBegan")
@@ -150,5 +155,18 @@ struct Constants {
 
     struct Audio {
         static let bgMusic = "main-track"
+    }
+
+    struct LevelDataHelper {
+        static let newLine = "\n"
+
+        struct Commands {
+            static let inbox = CommandData.inbox
+            static let outbox = CommandData.outbox
+            static let jump = CommandData.jump
+            static let add = CommandData.add(memoryIndex: nil)
+            static let copyTo = CommandData.copyTo(memoryIndex: nil)
+            static let copyFrom = CommandData.copyFrom(memoryIndex: nil)
+        }
     }
 }

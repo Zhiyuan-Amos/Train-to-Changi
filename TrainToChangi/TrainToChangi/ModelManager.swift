@@ -58,8 +58,15 @@ class ModelManager: Model {
     private var levelManager: LevelManager
     private var _userEnteredCommands: CommandDataList
 
-    init(levelData: LevelData) {
-        _userEnteredCommands = CommandDataLinkedList()
+    private var levelIndex: Int
+
+    init(levelIndex: Int, levelData: LevelData, commandDataListInfo: CommandDataListInfo?) {
+        if let commandDataListInfo = commandDataListInfo {
+            _userEnteredCommands = CommandDataLinkedList(commandDataListInfo: commandDataListInfo)
+        } else {
+            _userEnteredCommands = CommandDataLinkedList()
+        }
+        self.levelIndex = levelIndex
         levelManager = LevelManager(levelData: levelData)
         levelState = levelManager.level.initialState
     }
@@ -84,27 +91,37 @@ class ModelManager: Model {
         return _userEnteredCommands.toArray()
     }
 
+    var userEnteredCommandsAsListInfo: CommandDataListInfo {
+        return _userEnteredCommands.asListInfo()
+    }
+
     // MARK - API for GameViewController.
 
     func addCommand(commandEnum: CommandData) {
         _userEnteredCommands.append(commandData: commandEnum)
+        postCommandDataListUpdateNotification()
     }
 
     func insertCommand(commandEnum: CommandData, atIndex index: Int) {
         _userEnteredCommands.insert(commandData: commandEnum, atIndex: index)
+        postCommandDataListUpdateNotification()
     }
 
     // Removes the command at specified Index from userEnteredCommands.
     func removeCommand(fromIndex index: Int) -> CommandData {
-        return _userEnteredCommands.remove(atIndex: index)
+        let commandData = _userEnteredCommands.remove(atIndex: index)
+        postCommandDataListUpdateNotification()
+        return commandData
     }
 
     func moveCommand(fromIndex: Int, toIndex: Int) {
-        return _userEnteredCommands.move(sourceIndex: fromIndex, destIndex: toIndex)
+        _userEnteredCommands.move(sourceIndex: fromIndex, destIndex: toIndex)
+        postCommandDataListUpdateNotification()
     }
 
     func clearAllCommands() {
         _userEnteredCommands.removeAll()
+        postCommandDataListUpdateNotification()
     }
 
     func resetPlayState() {
@@ -153,6 +170,14 @@ class ModelManager: Model {
     }
 
     // MARK - Private helpers
+
+    private func postCommandDataListUpdateNotification() {
+        let notification = Notification(name: Constants.NotificationNames.commandDataListUpdate,
+                                        object: nil,
+                                        userInfo: ["levelIndex": levelIndex,
+                                                   "commandDataListInfo": userEnteredCommandsAsListInfo])
+        NotificationCenter.default.post(notification)
+    }
 
     private func postMoveNotification(destination: WalkDestination) {
         let notification = Notification(name: Constants.NotificationNames.movePersonInScene,
