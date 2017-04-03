@@ -79,15 +79,16 @@ extension GameScene {
         payloads.forEach { payload in payload.removeFromParent() }
         payloads.removeAll()
         player.removeAllChildren()
-        if let levelState = levelState {
+        if let levelState = levelState { // game in .stepping state
             initConveyorNodes(inboxValues: levelState.inputs, outboxValues: levelState.outputs)
             guard let memoryLayout = memoryLayout else {
+                // `memoryLayout` should already be initialized, else this func is called wrongly
                 assertionFailure("Can't re-presenting scene with intermediate state when scene is not initialized")
                 return
             }
             initMemory(from: levelState.memoryValues, layout: memoryLayout)
             setPlayerAttributes(position: playerLastPosition, payloadValue: levelState.personValue)
-        } else {
+        } else { // game start from the beginning
             initConveyorNodes(inboxValues: level.initialState.inputs)
             setPlayerAttributes()
         }
@@ -118,6 +119,9 @@ extension GameScene {
     }
 
     private func setPlayerAttributes(position: CGPoint? = nil, payloadValue: Int? = nil) {
+        // - If position is nil, payloadValue must be nil as well. This is to set Player at the start of the game.
+        // - When position is set, payloadValue should also be set (however payloadValue may be nil as the player
+        //   may not hold anything).
         guard (position != nil) || (payloadValue == nil) else {
             assertionFailure("Can't specify payload value without specifying position")
             return
