@@ -25,16 +25,6 @@ class UIEntityHelper {
         return cellSnapshot
     }
 
-    static func generateArrowView(origin: CGPoint, height: CGFloat) -> UIImageView {
-        let arrowSize = CGSize(width: Constants.UI.arrowWidth,
-                               height: height)
-        let arrowView = UIImageView()
-        arrowView.image = UIImage(named: "arrownavy.png")
-        arrowView.frame = CGRect(origin: origin, size: arrowSize)
-
-        return arrowView
-    }
-
     static func generateCommandUIButton(for commandType: CommandData,
                                         position: CGPoint, tag: Int) -> UIButton {
         let size = CGSize(width: getCommandButtonWidth(commandType),
@@ -70,6 +60,42 @@ class UIEntityHelper {
             case .copyTo(_), .copyFrom(_):
                 return Constants.UI.commandButtonWidthLong
         }
+    }
+
+    // MARK: - Jump Arrow Drawing Helper Functions
+    static func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath) -> UIImageView {
+        let origin = getArrowOrigin(at: topIndexPath)
+        let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
+        return generateArrowView(origin: origin,
+                                 height: height)
+    }
+
+    static func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
+        return CGPoint(Constants.UI.collectionCellWidth * 0.5,
+                       getMidYOfCell(at: indexPath))
+    }
+
+    static func getMidYOfCell(at indexPath: IndexPath) -> CGFloat {
+        return Constants.UI.topEdgeInset
+            + (CGFloat(indexPath.item + 1) * Constants.UI.collectionCellHeight)
+            - (0.5 * Constants.UI.collectionCellHeight)
+    }
+
+    static func getHeightBetweenIndexPaths(_ indexPathOne: IndexPath,
+                                            _ indexPathTwo: IndexPath) -> CGFloat {
+        return abs(getMidYOfCell(at: indexPathOne)
+            - getMidYOfCell(at: indexPathTwo))
+
+    }
+
+    static func generateArrowView(origin: CGPoint, height: CGFloat) -> UIImageView {
+        let arrowSize = CGSize(width: Constants.UI.arrowWidth,
+                               height: height)
+        let arrowView = UIImageView()
+        arrowView.image = UIImage(named: "arrownavy.png")
+        arrowView.frame = CGRect(origin: origin, size: arrowSize)
+
+        return arrowView
     }
 
 }

@@ -30,7 +30,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUd-ed-Rq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-855" y="38"/>
+            <point key="canvasLocation" x="-1088" y="-122"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -77,7 +77,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-23.4375" y="37.5"/>
+            <point key="canvasLocation" x="456" y="-122"/>
         </scene>
         <!--Editor View Controller-->
         <scene sceneID="IWV-7H-uDE">
@@ -131,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FuK-8z-h2Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="440.0390625" y="680.859375"/>
+            <point key="canvasLocation" x="413" y="891"/>
         </scene>
         <!--Control Panel View Controller-->
         <scene sceneID="lz3-Qn-rT3">
@@ -208,7 +208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="37u-s3-zG6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-59.179687499999993" y="588.28125"/>
+            <point key="canvasLocation" x="-306" y="848"/>
         </scene>
         <!--Drag Drop View Controller-->
         <scene sceneID="t6O-ek-pAv">
@@ -292,7 +292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u6V-i4-hWH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="840.52734375" y="680.859375"/>
+            <point key="canvasLocation" x="792" y="952"/>
         </scene>
         <!--Line Number View Controller-->
         <scene sceneID="ETb-qS-fXG">
@@ -323,7 +323,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="25" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3A-Ei-a6q">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p3A-Ei-a6q">
                                                     <rect key="frame" x="0.0" y="5" width="23" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -334,8 +334,8 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="bottomMargin" secondItem="p3A-Ei-a6q" secondAttribute="bottom" constant="-2" id="T4w-29-Pto"/>
-                                            <constraint firstAttribute="trailing" secondItem="p3A-Ei-a6q" secondAttribute="trailing" constant="1" id="Wag-A9-jvg"/>
-                                            <constraint firstItem="p3A-Ei-a6q" firstAttribute="leading" secondItem="hwI-OX-XnU" secondAttribute="leadingMargin" constant="-6" id="bYV-2R-wkf"/>
+                                            <constraint firstAttribute="trailing" secondItem="p3A-Ei-a6q" secondAttribute="trailing" constant="2" id="Wag-A9-jvg"/>
+                                            <constraint firstItem="p3A-Ei-a6q" firstAttribute="leading" secondItem="hwI-OX-XnU" secondAttribute="leadingMargin" constant="-8" id="bYV-2R-wkf"/>
                                             <constraint firstItem="p3A-Ei-a6q" firstAttribute="top" secondItem="hwI-OX-XnU" secondAttribute="topMargin" constant="-3" id="kww-8Y-vT1"/>
                                         </constraints>
                                         <connections>
@@ -364,7 +364,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4wL-94-ZFN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="706.34765625" y="680.859375"/>
+            <point key="canvasLocation" x="688" y="952"/>
         </scene>
     </scenes>
     <resources>

@@ -146,25 +146,6 @@ class DragDropViewController: UIViewController {
                                         userInfo: nil)
     }
 
-    // MARK: - Drawing Helper Functions
-    private func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
-        return CGPoint(Constants.UI.collectionCellWidth * 0.5,
-                       getMidYOfCell(at: indexPath))
-    }
-
-    private func getMidYOfCell(at indexPath: IndexPath) -> CGFloat {
-        return Constants.UI.topEdgeInset
-            + (CGFloat(indexPath.item + 1) * Constants.UI.collectionCellHeight)
-            - (0.5 * Constants.UI.collectionCellHeight)
-    }
-
-    private func getHeightBetweenIndexPaths(_ indexPathOne: IndexPath,
-                                            _ indexPathTwo: IndexPath) -> CGFloat {
-        return abs(getMidYOfCell(at: indexPathOne)
-            - getMidYOfCell(at: indexPathTwo))
-
-    }
-
     // MARK: - Jump Helper Functions
 
     // update jump bundles when a non-jump related command is being deleted
@@ -285,23 +266,16 @@ class DragDropViewController: UIViewController {
         var jumpArrows = [UIImageView]()
         for jumpBundle in jumpBundles {
             if jumpBundle.jumpIndexPath.item < jumpBundle.jumpTargetIndexPath.item {
-                jumpBundle.arrowView = drawJumpArrow(topIndexPath: jumpBundle.jumpIndexPath,
-                                                     bottomIndexPath: jumpBundle.jumpTargetIndexPath)
+                jumpBundle.arrowView = UIEntityHelper.drawJumpArrow(topIndexPath: jumpBundle.jumpIndexPath,
+                                                                    bottomIndexPath: jumpBundle.jumpTargetIndexPath)
                 jumpArrows.append(jumpBundle.arrowView)
             } else {
-                jumpBundle.arrowView = drawJumpArrow(topIndexPath: jumpBundle.jumpTargetIndexPath,
-                                                     bottomIndexPath: jumpBundle.jumpIndexPath)
+                jumpBundle.arrowView = UIEntityHelper.drawJumpArrow(topIndexPath: jumpBundle.jumpTargetIndexPath,
+                                                                    bottomIndexPath: jumpBundle.jumpIndexPath)
                 jumpArrows.append(jumpBundle.arrowView)
             }
         }
         return jumpArrows
-    }
-
-    private func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath) -> UIImageView {
-        let origin = getArrowOrigin(at: topIndexPath)
-        let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        return UIEntityHelper.generateArrowView(origin: origin,
-                                                height: height)
     }
 
     private func renderJumpArrows() {
@@ -377,8 +351,8 @@ class DragDropViewController: UIViewController {
 
         if command == CommandData.jump {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
-            let arrowView = drawJumpArrow(topIndexPath: penultimateIndexPath,
-                                          bottomIndexPath: lastIndexPath)
+            let arrowView = UIEntityHelper.drawJumpArrow(topIndexPath: penultimateIndexPath,
+                                                         bottomIndexPath: lastIndexPath)
             currentCommandsView.addSubview(arrowView)
 
             let jumpBundle = JumpBundle(jumpIndexPath: lastIndexPath,
