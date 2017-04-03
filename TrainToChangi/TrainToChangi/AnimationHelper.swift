@@ -21,6 +21,22 @@ class AnimationHelper {
         return animation
     }
 
+    static func swipeDeleteAnimation(cell: UICollectionViewCell, indexPath: IndexPath,
+                                     deleteFunction: @escaping (IndexPath) -> Void) {
+        UIView.animate(withDuration: 0.25, animations: { () -> Void in
+            cell.center.x += 300
+            cell.alpha = 0.0
+        }, completion: { (finished) -> Void in
+            if finished {
+                //reset cell position and alpha
+                cell.center.x -= 300
+                cell.alpha = 1.0
+
+                deleteFunction(indexPath)
+            }
+        })
+    }
+
     static func dragBeganAnimation(location: CGPoint, cell: UICollectionViewCell) {
         UIView.animate(withDuration: 0.25, animations: { () -> Void in
             DragBundle.cellSnapshot?.center.y = location.y

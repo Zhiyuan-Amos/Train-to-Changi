@@ -11,7 +11,7 @@
 		22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */; };
 		22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E79326E3E327A4B086 /* MemorySlot.swift */; };
 		22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC750125724E9BA28BA9EB /* Memory.swift */; };
-		3B04A7D41E8BE13C00B317ED /* EditorViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04A7D31E8BE13C00B317ED /* EditorViewControllerExtensions.swift */; };
+		3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */; };
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
@@ -19,6 +19,9 @@
 		3B6D98521E88FE970026872B /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98511E88FE970026872B /* ControlPanelViewController.swift */; };
 		3B6D98541E8904500026872B /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98531E8904500026872B /* AnimationHelper.swift */; };
 		3B6D98591E89129C0026872B /* UIEntityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98581E89129C0026872B /* UIEntityHelper.swift */; };
+		3B78A68C1E9124CF00A652D9 /* DragDropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */; };
+		3B78A68E1E91545700A652D9 /* LineNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B78A68D1E91545700A652D9 /* LineNumberCell.swift */; };
+		3B78A6931E915A1E00A652D9 /* LineNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */; };
 		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		76745B6D1E8855870039A771 /* MapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76745B6C1E8855870039A771 /* MapScene.sks */; };
@@ -83,7 +86,7 @@
 		22DC76E79326E3E327A4B086 /* MemorySlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemorySlot.swift; sourceTree = "<group>"; };
 		22DC7A12469B8258C38128E2 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 		38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.release.xcconfig"; sourceTree = "<group>"; };
-		3B04A7D31E8BE13C00B317ED /* EditorViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewControllerExtensions.swift; sourceTree = "<group>"; };
+		3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewControllersExtensions.swift; sourceTree = "<group>"; };
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
@@ -91,6 +94,9 @@
 		3B6D98511E88FE970026872B /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		3B6D98531E8904500026872B /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		3B6D98581E89129C0026872B /* UIEntityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIEntityHelper.swift; sourceTree = "<group>"; };
+		3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropViewController.swift; sourceTree = "<group>"; };
+		3B78A68D1E91545700A652D9 /* LineNumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberCell.swift; sourceTree = "<group>"; };
+		3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberViewController.swift; sourceTree = "<group>"; };
 		3BD7EF9B1E812F790029EA57 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -266,6 +272,14 @@
 			name = Sprites;
 			sourceTree = "<group>";
 		};
+		3B78A6911E91554F00A652D9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		3BD7EF911E811DB50029EA57 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				A712096A1E8189060039B257 /* CommandCell.swift */,
+				3B78A68D1E91545700A652D9 /* LineNumberCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -309,11 +324,13 @@
 		76745B721E88598D0039A771 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				3B78A6911E91554F00A652D9 /* Extensions */,
 				76745B731E885A030039A771 /* MapViewController.swift */,
 				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
 				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
+				3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */,
+				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
 				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
-				3B04A7D31E8BE13C00B317ED /* EditorViewControllerExtensions.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -588,7 +605,9 @@
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
 				A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */,
 				D7A267D31E7796BD00DE5774 /* Constants.swift in Sources */,
+				3B78A68C1E9124CF00A652D9 /* DragDropViewController.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
+				3B78A6931E915A1E00A652D9 /* LineNumberViewController.swift in Sources */,
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
 				3B6D98591E89129C0026872B /* UIEntityHelper.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
@@ -597,6 +616,7 @@
 				A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */,
 				3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
+				3B78A68E1E91545700A652D9 /* LineNumberCell.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
 				A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */,
 				76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */,
@@ -622,7 +642,7 @@
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
-				3B04A7D41E8BE13C00B317ED /* EditorViewControllerExtensions.swift in Sources */,
+				3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */,
 				22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */,
 				22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */,
 				22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */,

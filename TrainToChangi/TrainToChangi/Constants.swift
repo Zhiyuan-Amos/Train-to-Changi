@@ -88,6 +88,10 @@ struct Constants {
         static let animationBegan = Notification.Name(rawValue: "animationBegan")
         static let animationEnded = Notification.Name(rawValue: "animationEnded")
         static let runStateUpdated = Notification.Name(rawValue: "runStateUpdated")
+
+        static let userAddCommandEvent = Notification.Name(rawValue: "userAddCommandEvent")
+        static let userDeleteCommandEvent = Notification.Name(rawValue: "userDeleteCommandEvent")
+        static let userResetCommandEvent = Notification.Name(rawValue: "userResetCommandEvent")
     }
 
     struct SegueIds {
@@ -97,25 +101,26 @@ struct Constants {
     // swiftlint:disable type_name
     struct UI {
         static let commandButtonInitialOffsetY: CGFloat = 20
-        static let commandButtonOffsetY: CGFloat = 40
-        static let commandButtonHeight: CGFloat = 50
+        static let commandButtonOffsetY: CGFloat = 30
+        static let commandButtonHeight: CGFloat = 40
 
-        static let commandButtonWidthShort: CGFloat = 60
-        static let commandButtonWidthMid: CGFloat = 80
-        static let commandButtonWidthLong: CGFloat = 100
+        static let commandButtonWidthShort: CGFloat = 40
+        static let commandButtonWidthMid: CGFloat = 60
+        static let commandButtonWidthLong: CGFloat = 80
         static let commandIndexWidth: CGFloat = 20
 
-        static let collectionViewCellIdentifier = "CommandCell"
+        static let dragDropCollectionViewCellIdentifier = "CommandCell"
+        static let lineNumberCollectionViewCellIdentifier = "LineNumberCell"
 
         static let numberOfSectionsInCollectionView = 1
 
         static let topEdgeInset: CGFloat = 10
-        static let rightEdgeInset: CGFloat = 30
+        static let rightEdgeInset: CGFloat = 60
 
         static let minimumLineSpacingForSection: CGFloat = 0
         static let minimumInteritemSpacingForSection: CGFloat = 0
 
-        static let collectionCellWidth: CGFloat = 160
+        static let collectionCellWidth: CGFloat = 100
         static let collectionCellHeight: CGFloat = 40
 
         static let arrowWidth: CGFloat = 30
