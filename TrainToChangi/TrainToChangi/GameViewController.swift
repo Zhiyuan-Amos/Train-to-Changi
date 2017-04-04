@@ -19,7 +19,6 @@ class GameViewController: UIViewController {
     // VC is currently first responder, to be changed when we add other views.
     fileprivate var model: Model!
     fileprivate var logic: Logic!
-    fileprivate var storage: Storage!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -101,15 +100,14 @@ class GameViewController: UIViewController {
 }
 
 extension GameViewController: MapViewControllerDelegate {
-    func initLevel(name: String?, storage: Storage) {
-        self.storage = storage
+    func initLevel(name: String?) {
         guard let name = name else {
             fatalError("Station must have a name!")
         }
         let levelIndex = indexOfStation(name: name)
         model = ModelManager(levelIndex: levelIndex,
                              levelData: Levels.levelData[levelIndex],
-                             commandDataListInfo: storage.getUserAddedCommandsAsListInfo(levelIndex: levelIndex))
+                             commandDataListInfo: nil)
         logic = LogicManager(model: model)
     }
 

@@ -35,13 +35,11 @@
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
 		A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEB1E865AD10040DA21 /* LevelManager.swift */; };
-		A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEC1E865AD10040DA21 /* UserData.swift */; };
 		A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */; };
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		A7A8FB201E93C7980008E3D6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB1F1E93C7980008E3D6 /* DataService.swift */; };
 		A7A8FB221E93CA290008E3D6 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB211E93CA290008E3D6 /* AuthService.swift */; };
 		A7A8FB241E93D4300008E3D6 /* CommandDataListInfo+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB231E93D4300008E3D6 /* CommandDataListInfo+.swift */; };
-		A7D163471E90C55E0073EC46 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163461E90C55E0073EC46 /* Storage.swift */; };
 		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
 		BCE534D000279DEF6C5C359F /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
 		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
@@ -50,7 +48,6 @@
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
-		D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA681E7A38D7004CCABD /* StorageManager.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
 		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
 		D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC42B1E76C55600ED2A1B /* LogicManager.swift */; };
@@ -115,7 +112,6 @@
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
 		A7A10CEB1E865AD10040DA21 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
-		A7A10CEC1E865AD10040DA21 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		A7A10D031E86A6C20040DA21 /* TrainToChangiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrainToChangiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainToChangiTests.swift; sourceTree = "<group>"; };
 		A7A10D071E86A6C20040DA21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -123,7 +119,6 @@
 		A7A8FB1F1E93C7980008E3D6 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		A7A8FB211E93CA290008E3D6 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		A7A8FB231E93D4300008E3D6 /* CommandDataListInfo+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CommandDataListInfo+.swift"; sourceTree = "<group>"; };
-		A7D163461E90C55E0073EC46 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
 		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
@@ -132,7 +127,6 @@
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
-		D744CA681E7A38D7004CCABD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
 		D75BC42B1E76C55600ED2A1B /* LogicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicManager.swift; sourceTree = "<group>"; };
@@ -281,16 +275,6 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
-		3BD7EF911E811DB50029EA57 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				D744CA681E7A38D7004CCABD /* StorageManager.swift */,
-				A7D163461E90C55E0073EC46 /* Storage.swift */,
-				A7A10CEC1E865AD10040DA21 /* UserData.swift */,
-			);
-			name = Storage;
-			sourceTree = "<group>";
-		};
 		4AF3A78D82E761EB3D5635BA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,7 +381,6 @@
 			children = (
 				A7A8FB1E1E93C78A0008E3D6 /* Services */,
 				A7D163481E90CC860073EC46 /* Levels */,
-				3BD7EF911E811DB50029EA57 /* Storage */,
 				3B16804D1E778785002286F6 /* UI */,
 				3B16804C1E778779002286F6 /* Logic */,
 				3B1680451E7784B3002286F6 /* Model */,
@@ -687,12 +670,9 @@
 				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A7A8FB241E93D4300008E3D6 /* CommandDataListInfo+.swift in Sources */,
-				A7D163471E90C55E0073EC46 /* Storage.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
-				A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */,
 				76745B741E885A030039A771 /* MapViewController.swift in Sources */,
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
-				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 				3B04A7D41E8BE13C00B317ED /* EditorViewControllerExtensions.swift in Sources */,
