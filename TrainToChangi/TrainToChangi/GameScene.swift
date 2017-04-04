@@ -26,12 +26,12 @@ enum WalkDestination {
 }
 
 class GameScene: SKScene {
-    fileprivate var hasPaused = false // Reflects the game state, not the scene state
+    fileprivate var hasPaused = false // Reflects the run state, not the scene state
 
     fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
     fileprivate let player = SKSpriteNode(imageNamed: "player")
-    fileprivate var playerLastPositions = Stack<CGPoint>()
+    fileprivate var playerPreviousPositions = Stack<CGPoint>()
     fileprivate var playerPickupPosition: CGPoint {
         return CGPoint(x: player.position.x,
                        y: player.position.y - Constants.Player.pickupOffsetY)
@@ -85,7 +85,7 @@ extension GameScene {
                 return
             }
             initMemory(from: levelState.memoryValues, layout: memoryLayout)
-            let position = playerLastPositions.pop()
+            let position = playerPreviousPositions.pop()
             setPlayerAttributes(position: position, payloadValue: levelState.personValue)
         } else { // game start from the beginning
             initConveyorNodes(inboxValues: level.initialState.inputs)
@@ -247,7 +247,7 @@ extension GameScene {
         move(to: destination)
         //TODO: animation duration cannot be hardcoded
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            // this check is necessary or after 2 sec the next command will still execute
+            // this check is necessary or after 2 sec the notification will be posted when it shouldn't
             guard !self.hasPaused else { return }
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
@@ -288,7 +288,7 @@ extension GameScene {
     }
 
     private func animateGoToInbox() {
-        playerLastPositions.push(player.position)
+        playerPreviousPositions.push(player.position)
         // 1. walk to inbox
         let moveAction = SKAction.move(to: WalkDestination.inbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
@@ -315,7 +315,7 @@ extension GameScene {
         guard index > 0 && index < memoryNodes.count else {
             fatalError("[GameScene:animateGoToMemory] Trying to access memory out of bound")
         }
-        playerLastPositions.push(player.position)
+        playerPreviousPositions.push(player.position)
         let moveAction = SKAction.move(to: layout.locations[index],
                                        duration: Constants.Animation.moveToMemoryDuration)
         player.run(moveAction, completion: {
@@ -332,7 +332,7 @@ extension GameScene {
     }
 
     private func animateGoToOutbox() {
-        playerLastPositions.push(player.position)
+        playerPreviousPositions.push(player.position)
         // 1. walk to outbox
         let moveAction = SKAction.move(to: WalkDestination.outbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
