@@ -8,7 +8,7 @@ class LogicManager: Logic {
     private let gameLogic: GameLogic
     private var iterator: CommandDataListIterator!
     fileprivate(set) var executedCommands: Stack<Command>
-    
+
     var canUndo: Bool {
         return executedCommands.isEmpty
     }
@@ -30,7 +30,7 @@ class LogicManager: Logic {
                 binarySemaphore.wait()
 
                 while self.model.runState != .running(isAnimating: false) {
-                    usleep(Constants.Logic.oneMillisecond)
+                    usleep(Constants.Time.oneMillisecond)
                 }
 
                 // execution of command must be done on main thread to allow the update
@@ -60,11 +60,17 @@ class LogicManager: Logic {
             gameLogic.parser = CommandDataParser(model: model, iterator: iterator)
         }
 
-        guard let executedCommand = gameLogic.stepForward(commandData: iterator.next()) else {
-            return
+        let commandData = iterator.current
+        if let executedCommand = gameLogic.stepForward(commandData: commandData) {
+            executedCommands.push(executedCommand)
         }
 
-        executedCommands.push(executedCommand)
+        if commandData != .jump {
+            iterator.next()
+        }
+
+        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
+                                                     object: nil, userInfo: nil))
     }
 }
 

@@ -174,7 +174,7 @@ class CommandDataLinkedList: CommandDataList {
         return head
     }
 
-    private var last: Node? {
+    fileprivate var last: Node? {
         guard var node = head else {
             return nil
         }
@@ -371,23 +371,31 @@ extension CommandDataLinkedList {
     }
 }
 
-class CommandDataListIterator: Sequence, IteratorProtocol {
+//TODO: Rename
+class CommandDataListIterator {
     private var commandDataLinkedList: CommandDataLinkedList
-    private var isFirstCall: Bool
 
-    private var current: CommandDataListNode? {
+    private var currentNode: CommandDataListNode? {
         didSet {
-            guard let index = index else {
+            // If current is nil, iterator.next() will cause current to be nil again.
+            // In this situation, the programCounter should not move.
+            guard oldValue != nil || currentNode != nil else {
                 return
             }
-            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
-                                            object: nil,
-                                            userInfo: ["index": index])
+
+            index != nil ? NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
+                                                           object: nil, userInfo: ["index": index!]) :
+                            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
+                                                            object: nil, userInfo: nil)
         }
     }
 
+    var current: CommandData? {
+        return currentNode?.commandData
+    }
+
     var index: Int? {
-        guard let current = current else {
+        guard let current = currentNode else {
             return nil
         }
         return commandDataLinkedList.indexOf(node: current)
@@ -395,43 +403,31 @@ class CommandDataListIterator: Sequence, IteratorProtocol {
 
     init(_ commandDataLinkedList: CommandDataLinkedList) {
         self.commandDataLinkedList = commandDataLinkedList
-        self.isFirstCall = true
+        self.currentNode = commandDataLinkedList.first
     }
 
     func makeIterator() -> CommandDataListIterator {
         return self
     }
 
-    func next() -> CommandData? {
-        if isFirstCall {
-            isFirstCall = false
-            current = commandDataLinkedList.first
-            return current?.commandData
-        }
-
-        current = current?.next
-        return current?.commandData
+    func next() {
+        currentNode = currentNode?.next
     }
 
     func previous() {
-        current = current?.previous
+        currentNode = currentNode?.previous
     }
 
     func jump() {
-        guard let current = current as? JumpListNode else {
+        guard let current = currentNode as? JumpListNode else {
             preconditionFailure("Cannot jump on a non-jump command")
         }
 
-        self.current = current.jumpTarget
+        self.currentNode = current.jumpTarget
     }
 
     // This function is only called by jump-related commands during `undo`.
     func moveIterator(to index: Int) {
-        current = commandDataLinkedList.node(atIndex: index)
+        currentNode = commandDataLinkedList.node(atIndex: index)
     }
-
-    func reset() {
-        isFirstCall = true
-    }
-
 }

@@ -63,8 +63,6 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         scene.initLevelState(model.currentLevel)
     }
-
-
 }
 
 // MARK -- Event Handling

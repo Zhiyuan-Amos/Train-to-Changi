@@ -39,6 +39,7 @@ class EditorViewController: UIViewController {
         levelDescriptionTextView.text = model.currentLevel.levelDescriptor
         levelDescriptionTextView.isScrollEnabled = true
     }
+
     // Load the available commands from model for the current level
     func loadAvailableCommands() {
         let initialCommandPosition = availableCommandsView.frame.origin
@@ -87,16 +88,13 @@ extension EditorViewController {
             availableCommandsView.isUserInteractionEnabled = false
             availableCommandsView.isHidden = true
         case .paused, .lost:
-            resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isHidden = true
         case .start:
-            resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isHidden = false
         }
     }
-
 }
