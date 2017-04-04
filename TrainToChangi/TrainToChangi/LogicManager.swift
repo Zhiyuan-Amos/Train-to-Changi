@@ -45,12 +45,27 @@ class LogicManager: Logic {
 
     // Reverts the state of the model by one command execution backward.
     func stepBack() {
+        // Since we do not store jump targets as executable commands, there
+        // will be no actual undoing done except for moving the iterator
+        // to the previous index.
+        guard iterator.current != .jumpTarget else {
+            iterator.previous()
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
+                                                         object: nil, userInfo: nil))
+            return
+        }
+
         guard let command = executedCommands.pop() else {
             fatalError("User should not be allowed to undo")
         }
 
         gameLogic.stepBack(command)
-        iterator.previous()
+        if !(command is JumpCommand) {
+            iterator.previous()
+        }
+
+        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
+                                                     object: nil, userInfo: nil))
     }
 
     // Executes the next command.

@@ -64,6 +64,10 @@ extension LineNumberViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleAnimationEnd(notification:)),
+            name: Constants.NotificationNames.animationEnded, object: nil)
     }
 
     @objc private func handleAddCommand(notification: Notification) {
@@ -96,11 +100,16 @@ extension LineNumberViewController {
     // Updates the position of the program counter image depending on which
     // command is currently being executed.
     @objc fileprivate func handleProgramCounterUpdate(notification: Notification) {
-        DispatchQueue.global(qos: .background).async {
-            self.semaphore.wait()
-            self.busyWait()
+        let serialQueue = DispatchQueue(label: Constants.Concurrency.serialQueue)
 
-            DispatchQueue.main.async {
+        serialQueue.async {
+            self.semaphore.wait()
+            if self.model.runState == .running(isAnimating: true)
+                || self.model.runState == .stepping {
+                self.semaphore.wait()
+            }
+
+            DispatchQueue.main.sync {
                 self.updateProgramCounterCoordinates(notification: notification)
             }
         }
@@ -131,6 +140,10 @@ extension LineNumberViewController {
             UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
                            animations: { self.programCounter.frame.origin.y += CGFloat(40) })
         }
+    }
+
+    @objc fileprivate func handleAnimationEnd(notification: Notification) {
+        semaphore.signal()
     }
 
     @objc fileprivate func handleEndOfCommandExecution(notification: Notification) {

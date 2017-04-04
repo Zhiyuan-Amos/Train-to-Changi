@@ -82,6 +82,10 @@ struct Constants {
         static let stationNames = ["KentRidgeStation", "CityHallStation", "ChangiStation"]
     }
 
+    struct Concurrency {
+        static let serialQueue = "serialQueue"
+    }
+
     struct NotificationNames {
         static let moveProgramCounter = Notification.Name(rawValue: "moveProgramCounter")
         static let commandDataListUpdate = Notification.Name(rawValue: "commandDataListUpdate")
