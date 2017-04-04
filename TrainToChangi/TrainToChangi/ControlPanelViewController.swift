@@ -38,7 +38,8 @@ class ControlPanelViewController: UIViewController {
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
                           playButtonIsEnabled: false, stepForwardButtonIsEnabled: true)
         case .paused:
-            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
+            let stepBackButtonIsEnabled = logic.canUndo ? false : true
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
                           playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
         case .lost:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
@@ -49,11 +50,19 @@ class ControlPanelViewController: UIViewController {
         case .stepping:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: false,
                           playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+        case .start:
+            updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
+                          playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
         }
     }
 
     @IBAction func stopButtonPressed(_ sender: UIButton) {
-        model.runState = .paused
+        //TODO: Temporary method to load levels.
+        // Comment out first since no reference to storage here
+//        model = ModelManager(leveIndex: 0,
+//                             levelData: LevelDataHelper.levelData(levelIndex: 0))
+//        logic = LogicManager(model: model)
+        model.runState = .start
         postResetSceneNotification()
     }
 

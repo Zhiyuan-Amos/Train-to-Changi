@@ -7,7 +7,11 @@ class LogicManager: Logic {
     unowned private let model: Model
     private let gameLogic: GameLogic
     private var iterator: CommandDataListIterator!
-    fileprivate var executedCommands: Stack<Command>
+    fileprivate(set) var executedCommands: Stack<Command>
+    
+    var canUndo: Bool {
+        return executedCommands.isEmpty
+    }
 
     init(model: Model) {
         self.model = model
