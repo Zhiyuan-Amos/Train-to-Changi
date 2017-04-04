@@ -85,10 +85,17 @@ extension EditorViewController {
         switch model.runState {
         case .running, .won, .stepping:
             availableCommandsView.isUserInteractionEnabled = false
-        case .paused, .lost, .start:
+            availableCommandsView.isHidden = true
+        case .paused, .lost:
             resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isHidden = true
+        case .start:
+            resetButton.isEnabled = true
+            currentCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isHidden = false
         }
     }
 
