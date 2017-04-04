@@ -205,13 +205,13 @@ extension DragDropViewController {
 
             if jumpMapping.key < jumpMapping.value {
                 let arrowView = Drawer.drawJumpArrow(topIndexPath: parentIndexPath,
-                                                             bottomIndexPath: targetIndexPath,
-                                                             reversed: true, arrowWidthIndex: index)
+                                                     bottomIndexPath: targetIndexPath,
+                                                     reversed: true, arrowWidthIndex: index)
                 jumpArrows.append(arrowView)
             } else {
                 let arrowView = Drawer.drawJumpArrow(topIndexPath: targetIndexPath,
-                                                             bottomIndexPath: parentIndexPath,
-                                                             reversed: false, arrowWidthIndex: index)
+                                                     bottomIndexPath: parentIndexPath,
+                                                     reversed: false, arrowWidthIndex: index)
                 jumpArrows.append(arrowView)
             }
         }

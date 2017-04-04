@@ -21,32 +21,30 @@ import UIKit
     }
 
     override func draw(_ rect: CGRect) {
-        let point = CGPoint(5, 5)
+        let point = CGPoint(Constants.UI.arrowView.originX,
+                            Constants.UI.arrowView.originY)
+
         let arrowHead = CGMutablePath()
         arrowHead.addLines(between: getArrowHeadPoints(point: point))
-
-        let arrowHeadBeizer = UIBezierPath(cgPath: arrowHead)
-        arrowHeadBeizer.stroke()
+        let arrowHeadBezier = UIBezierPath(cgPath: arrowHead)
+        arrowHeadBezier.stroke()
 
         let arrowTail = CGMutablePath()
         arrowTail.addLines(between: getArrowTailPoints(point: point, width: self.frame.width * 0.5))
-
-        let arrowTailBeizer = UIBezierPath(cgPath: arrowTail)
-        arrowTailBeizer.stroke()
+        let arrowTailBezier = UIBezierPath(cgPath: arrowTail)
+        arrowTailBezier.stroke()
 
         let arrowVert = CGMutablePath()
         arrowVert.addLines(between: getVerticalLinePoints(point: point, length: self.frame.height - 10,
                                                           width: self.frame.width * 0.5))
-
-        let arrowVertBeizer = UIBezierPath(cgPath: arrowVert)
-        arrowVertBeizer.stroke()
+        let arrowVertBezier = UIBezierPath(cgPath: arrowVert)
+        arrowVertBezier.stroke()
 
         let arrowBot = CGMutablePath()
         arrowBot.addLines(between: getHorizontalLinePoints(point: point, length: self.frame.height - 10,
                                                            width: self.frame.width * 0.5))
-
-        let arrowBotBeizer = UIBezierPath(cgPath: arrowBot)
-        arrowBotBeizer.stroke()
+        let arrowBotBezier = UIBezierPath(cgPath: arrowBot)
+        arrowBotBezier.stroke()
 
     }
 

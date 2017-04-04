@@ -127,9 +127,17 @@ struct Constants {
         static let collectionCellWidth: CGFloat = 100
         static let collectionCellHeight: CGFloat = 40
 
-        static let arrowWidth: CGFloat = 30
+
 
         static let programCounterOffsetX: CGFloat = 5
+
+        static let userSelectedIndexNotificationDelay = 200
+
+        struct arrowView {
+            static let originX: CGFloat = 5
+            static let originY: CGFloat = 5
+            static let arrowWidth: CGFloat = 30
+        }
     }
 
     struct Logic {

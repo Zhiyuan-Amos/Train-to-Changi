@@ -162,7 +162,8 @@ extension GameScene {
 
         targetMemNode.texture = SKTexture(imageNamed: "memory-select")
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200), execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Constants.UI.userSelectedIndexNotificationDelay),
+                                      execute: {
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.userSelectedIndexEvent,
                                                          object: targetMemNode.index, userInfo: nil))
             for memNode in self.memoryNodes {
