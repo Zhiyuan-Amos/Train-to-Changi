@@ -63,10 +63,14 @@ class UIEntityDrawer {
     }
 
     // MARK: - Jump Arrow Drawing Helper Functions
-    static func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath) -> UIView {
+    static func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath,
+                              reversed: Bool, arrowWidthIndex: Int) -> ArrowView {
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        return generateArrowView(origin: origin, height: height)
+        let width = Constants.UI.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / 10.0))
+
+        return reversed ? generateReverseArrowView(origin: origin, height: height, width: width)
+                        : generateArrowView(origin: origin, height: height, width: width)
     }
 
     static func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
@@ -87,16 +91,16 @@ class UIEntityDrawer {
 
     }
 
-    static func generateArrowView(origin: CGPoint, height: CGFloat) -> UIView {
-        let arrowSize = CGSize(width: Constants.UI.arrowWidth,
+    static func generateArrowView(origin: CGPoint, height: CGFloat, width: CGFloat) -> ArrowView {
+        let arrowSize = CGSize(width: width,
                                height: height)
 
         let arrowView = ArrowView(frame: CGRect(origin: origin, size: arrowSize))
         return arrowView
     }
 
-    static func generateReverseArrowView(origin: CGPoint, height: CGFloat) -> UIView {
-        let arrowSize = CGSize(width: Constants.UI.arrowWidth,
+    static func generateReverseArrowView(origin: CGPoint, height: CGFloat, width: CGFloat) -> ArrowView {
+        let arrowSize = CGSize(width: width,
                                height: height)
 
         let arrowView = ArrowView(frame: CGRect(origin: origin, size: arrowSize))
@@ -104,6 +108,4 @@ class UIEntityDrawer {
         arrowView.transform = transfrom
         return arrowView
     }
-
-
 }

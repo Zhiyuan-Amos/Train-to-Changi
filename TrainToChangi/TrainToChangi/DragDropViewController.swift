@@ -11,7 +11,7 @@ import UIKit
 class DragDropViewController: UIViewController {
 
     var model: Model!
-    fileprivate var jumpBundles = [JumpBundle]()
+    fileprivate var jumpArrows = [ArrowView]()
     fileprivate var updatingCellIndexPath: IndexPath?
 
     @IBOutlet weak var resetButton: UIButton!
@@ -27,7 +27,6 @@ class DragDropViewController: UIViewController {
     @IBAction func resetButtonPressed(_ sender: Any) {
         model.clearAllCommands()
         removeAllJumpArrows()
-        jumpBundles.removeAll()
         currentCommandsView.reloadData()
 
         NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
@@ -42,22 +41,9 @@ class DragDropViewController: UIViewController {
     }
 
     fileprivate func deleteCommand(indexPath: IndexPath) {
-        // clear all jump arrow views before potentially deleting jumpBundle
-        removeAllJumpArrows()
-
-        // if command is related to jump, need to delete bundle
-        if let jumpPartnerIndexPath = getJumpPartnerIndexPath(indexPath: indexPath) {
-            updateJumpBundles(deletedIndexPath: indexPath,
-                              deletedPartnerIndexPath: jumpPartnerIndexPath)
-            deleteJumpBundle(deletedIndexPath: indexPath)
-        } else {
-            updateJumpBundles(deletedIndexPath: indexPath)
-        }
-        renderJumpArrows()
-
         _ = model.removeCommand(fromIndex: indexPath.item)
         currentCommandsView.reloadData()
-
+        renderJumpArrows()
         NotificationCenter.default.post(name: Constants.NotificationNames.userDeleteCommandEvent,
                                         object: nil,
                                         userInfo: nil)
@@ -165,23 +151,9 @@ extension DragDropViewController {
                     return
             }
             currentCommandsView.moveItem(at: DragBundle.initialIndexPath!, to: indexPath)
-
-            if isJumpRelatedCommand(indexPath: DragBundle.initialIndexPath!)
-                && isJumpRelatedCommand(indexPath: indexPath) {
-                performBothJumpCommandsUpdate(indexPathOne: DragBundle.initialIndexPath!,
-                                              indexPathTwo: indexPath)
-                renderJumpArrows()
-            } else if isJumpRelatedCommand(indexPath: DragBundle.initialIndexPath!) {
-                performOneJumpCommandUpdate(oldIndexPath: DragBundle.initialIndexPath!,
-                                            newIndexPath: indexPath)
-                renderJumpArrows()
-            } else if isJumpRelatedCommand(indexPath: indexPath) {
-                performOneJumpCommandUpdate(oldIndexPath: indexPath,
-                                            newIndexPath: DragBundle.initialIndexPath!)
-                renderJumpArrows()
-            }
-
             model.moveCommand(fromIndex: DragBundle.initialIndexPath!.item, toIndex: indexPath.item)
+
+            renderJumpArrows()
             DragBundle.initialIndexPath = indexPath
 
         default:
@@ -210,133 +182,32 @@ extension DragDropViewController {
     }
 }
 
-// MARK: - Delete Helper Functions
+// MARK: - Jump Arrow Drawing Helper Functions
 extension DragDropViewController {
-    // update jump bundles when a non-jump related command is being deleted
-    fileprivate func updateJumpBundles(deletedIndexPath: IndexPath) {
-        for jumpBundle in jumpBundles {
-            guard jumpBundle.jumpIndexPath != deletedIndexPath
-                && jumpBundle.jumpTargetIndexPath != deletedIndexPath else {
-                    continue
-            }
-            if jumpBundle.jumpTargetIndexPath.item >= deletedIndexPath.item {
-                jumpBundle.jumpTargetIndexPath.item -= 1
-            }
-
-            if jumpBundle.jumpIndexPath.item >= deletedIndexPath.item {
-                jumpBundle.jumpIndexPath.item -= 1
-            }
-        }
-    }
-
-    // update jump bundles when a jump related command is being deleted
-    fileprivate func updateJumpBundles(deletedIndexPath: IndexPath, deletedPartnerIndexPath: IndexPath) {
-        for jumpBundle in jumpBundles {
-            guard jumpBundle.jumpIndexPath != deletedIndexPath
-                && jumpBundle.jumpTargetIndexPath != deletedIndexPath else {
-                    continue
-            }
-
-            if jumpBundle.jumpTargetIndexPath.item >= deletedIndexPath.item {
-                jumpBundle.jumpTargetIndexPath.item -= 1
-            }
-
-            if jumpBundle.jumpTargetIndexPath.item >= deletedPartnerIndexPath.item {
-                jumpBundle.jumpTargetIndexPath.item -= 1
-            }
-
-            if jumpBundle.jumpIndexPath.item >= deletedIndexPath.item {
-                jumpBundle.jumpIndexPath.item -= 1
-            }
-
-            if jumpBundle.jumpIndexPath.item >= deletedPartnerIndexPath.item {
-                jumpBundle.jumpIndexPath.item -= 1
-            }
-
-        }
-    }
-
-    fileprivate func deleteJumpBundle(deletedIndexPath: IndexPath) {
-        var index = 0
-        for jumpBundle in jumpBundles {
-            if jumpBundle.jumpIndexPath == deletedIndexPath
-                || jumpBundle.jumpTargetIndexPath == deletedIndexPath {
-                break
-            }
-            index += 1
-        }
-        jumpBundles.remove(at: index)
-    }
-
-    fileprivate func performBothJumpCommandsUpdate(indexPathOne: IndexPath, indexPathTwo: IndexPath) {
-        guard let jumpBundleOne = getJumpViewsBundle(indexPath: indexPathOne),
-            let jumpBundleTwo = getJumpViewsBundle(indexPath: indexPathTwo) else {
-                return
-        }
-
-        if indexPathOne == jumpBundleOne.jumpIndexPath {
-            if indexPathTwo == jumpBundleTwo.jumpIndexPath {
-                swap(&jumpBundleOne.jumpIndexPath, &jumpBundleTwo.jumpIndexPath)
-            } else {
-                swap(&jumpBundleOne.jumpIndexPath, &jumpBundleTwo.jumpTargetIndexPath)
-            }
-        } else {
-            if indexPathTwo == jumpBundleTwo.jumpIndexPath {
-                swap(&jumpBundleOne.jumpTargetIndexPath, &jumpBundleTwo.jumpIndexPath)
-            } else {
-                swap(&jumpBundleOne.jumpTargetIndexPath, &jumpBundleTwo.jumpTargetIndexPath)
-            }
-        }
-    }
-
-    fileprivate func performOneJumpCommandUpdate(oldIndexPath: IndexPath, newIndexPath: IndexPath) {
-        guard let jumpBundle = getJumpViewsBundle(indexPath: oldIndexPath) else {
-            return
-        }
-        if oldIndexPath == jumpBundle.jumpIndexPath {
-            jumpBundle.jumpIndexPath = newIndexPath
-        } else {
-            jumpBundle.jumpTargetIndexPath = newIndexPath
-        }
-    }
-
-    fileprivate func getJumpViewsBundle(indexPath: IndexPath) -> JumpBundle? {
-        for jumpBundle in jumpBundles {
-            if jumpBundle.jumpIndexPath == indexPath
-                || jumpBundle.jumpTargetIndexPath == indexPath {
-                return jumpBundle
-            }
-        }
-        return nil
-    }
-
-    fileprivate func getJumpPartnerIndexPath(indexPath: IndexPath) -> IndexPath? {
-        if isJump(indexPath: indexPath) {
-            return getJumpViewsBundle(indexPath: indexPath)?.jumpTargetIndexPath
-        } else if isJumpTarget(indexPath: indexPath) {
-            return getJumpViewsBundle(indexPath: indexPath)?.jumpIndexPath
-        } else {
-            return nil
-        }
-    }
 
     fileprivate func removeAllJumpArrows() {
-        for jumpBundle in jumpBundles {
-            jumpBundle.arrowView.removeFromSuperview()
+        for jumpArrow in jumpArrows {
+            jumpArrow.removeFromSuperview()
         }
+        jumpArrows.removeAll()
     }
 
-    fileprivate func redrawAllJumpArrows() -> [UIView] {
-        var jumpArrows = [UIView]()
-        for jumpBundle in jumpBundles {
-            if jumpBundle.jumpIndexPath.item < jumpBundle.jumpTargetIndexPath.item {
-                jumpBundle.arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: jumpBundle.jumpIndexPath,
-                                                                    bottomIndexPath: jumpBundle.jumpTargetIndexPath)
-                jumpArrows.append(jumpBundle.arrowView)
+    fileprivate func redrawAllJumpArrows() -> [ArrowView] {
+        var jumpArrows = [ArrowView]()
+        for (index, jumpMapping) in model.getCommandDataListInfo().jumpMappings.enumerated() {
+            let parentIndexPath = IndexPath(item: jumpMapping.key, section: 0)
+            let targetIndexPath = IndexPath(item: jumpMapping.value, section: 0)
+
+            if jumpMapping.key < jumpMapping.value {
+                let arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: parentIndexPath,
+                                                             bottomIndexPath: targetIndexPath,
+                                                             reversed: true, arrowWidthIndex: index)
+                jumpArrows.append(arrowView)
             } else {
-                jumpBundle.arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: jumpBundle.jumpTargetIndexPath,
-                                                                    bottomIndexPath: jumpBundle.jumpIndexPath)
-                jumpArrows.append(jumpBundle.arrowView)
+                let arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: targetIndexPath,
+                                                             bottomIndexPath: parentIndexPath,
+                                                             reversed: false, arrowWidthIndex: index)
+                jumpArrows.append(arrowView)
             }
         }
         return jumpArrows
@@ -344,7 +215,8 @@ extension DragDropViewController {
 
     fileprivate func renderJumpArrows() {
         removeAllJumpArrows()
-        for jumpArrow in redrawAllJumpArrows() {
+        jumpArrows = redrawAllJumpArrows()
+        for jumpArrow in jumpArrows {
             currentCommandsView.addSubview(jumpArrow)
         }
     }
@@ -361,7 +233,6 @@ extension DragDropViewController {
     fileprivate func isJumpTarget(indexPath: IndexPath) -> Bool {
         return model.userEnteredCommands[indexPath.item] == .jumpTarget
     }
-
 
     fileprivate func isIndexedCommand(indexPath: IndexPath) -> Bool {
         switch model.userEnteredCommands[indexPath.item] {
@@ -443,15 +314,7 @@ extension DragDropViewController {
 
         if command == CommandData.jump {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
-            let arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: penultimateIndexPath,
-                                                         bottomIndexPath: lastIndexPath)
-
-            currentCommandsView.addSubview(arrowView)
-
-            let jumpBundle = JumpBundle(jumpIndexPath: lastIndexPath,
-                                        jumpTargetIndexPath: penultimateIndexPath,
-                                        arrowView: arrowView)
-            jumpBundles.append(jumpBundle)
+            renderJumpArrows()
         } else {
             currentCommandsView.insertItems(at: [lastIndexPath])
         }
@@ -464,17 +327,4 @@ extension DragDropViewController {
 class DragBundle {
     static var cellSnapshot: UIView?
     static var initialIndexPath: IndexPath?
-}
-
-class JumpBundle {
-    var jumpIndexPath: IndexPath
-    var jumpTargetIndexPath: IndexPath
-    var arrowView: UIView
-    var inverted = false
-
-    init(jumpIndexPath: IndexPath, jumpTargetIndexPath: IndexPath, arrowView: UIView) {
-        self.jumpIndexPath = jumpIndexPath
-        self.jumpTargetIndexPath = jumpTargetIndexPath
-        self.arrowView = arrowView
-    }
 }
