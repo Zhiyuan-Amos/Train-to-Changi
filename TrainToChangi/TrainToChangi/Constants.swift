@@ -173,9 +173,9 @@ struct Constants {
             static let inbox = CommandData.inbox
             static let outbox = CommandData.outbox
             static let jump = CommandData.jump
-            static let add = CommandData.add(memoryIndex: nil)
-            static let copyTo = CommandData.copyTo(memoryIndex: nil)
-            static let copyFrom = CommandData.copyFrom(memoryIndex: nil)
+            static let add = CommandData.add(memoryIndex: 0)
+            static let copyTo = CommandData.copyTo(memoryIndex: 0)
+            static let copyFrom = CommandData.copyFrom(memoryIndex: 0)
         }
     }
 }

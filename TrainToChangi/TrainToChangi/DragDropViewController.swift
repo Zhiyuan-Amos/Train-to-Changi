@@ -10,6 +10,9 @@ import UIKit
 
 class DragDropViewController: UIViewController {
 
+    fileprivate typealias Drawer = UIEntityDrawer
+    fileprivate typealias Animator = AnimationHelper
+
     var model: Model!
     fileprivate var jumpArrows = [ArrowView]()
     fileprivate var updatingCellIndexPath: IndexPath?
@@ -55,7 +58,7 @@ extension DragDropViewController {
 
     fileprivate func addGestureRecognisers() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        longPressGesture.minimumPressDuration = 0.3
+        longPressGesture.minimumPressDuration = 0.2
         currentCommandsView.addGestureRecognizer(longPressGesture)
 
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
@@ -121,7 +124,7 @@ extension DragDropViewController {
                 return
         }
 
-        AnimationHelper.swipeDeleteAnimation(cell: cell, indexPath: indexPath,
+        Animator.swipeDeleteAnimation(cell: cell, indexPath: indexPath,
                                              deleteFunction: deleteCommand)
 
     }
@@ -129,41 +132,43 @@ extension DragDropViewController {
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
-        guard updatingCellIndexPath == nil else {
+        if updatingCellIndexPath != nil {
             return
         }
 
         switch gesture.state {
         case .began:
             guard let indexPath = currentCommandsView.indexPathForItem(at: location),
-                let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell else {
+                  let cell = currentCommandsView.cellForItem(at: indexPath) as? CommandCell,
+                  location.x < cell.frame.midX else {
                     return
             }
 
             initDragBundleAtGestureBegan(indexPath: indexPath, cell: cell)
             currentCommandsView.addSubview(DragBundle.cellSnapshot!)
-            AnimationHelper.dragBeganAnimation(location: location, cell: cell)
+            Animator.dragBeganAnimation(location: location, cell: cell)
 
         case .changed:
             DragBundle.cellSnapshot?.center.y = location.y
             guard let indexPath = currentCommandsView.indexPathForItem(at: location),
-                indexPath != DragBundle.initialIndexPath! else {
+                  let initialIndexPath = DragBundle.initialIndexPath,
+                  indexPath !=  initialIndexPath else {
                     return
             }
-            currentCommandsView.moveItem(at: DragBundle.initialIndexPath!, to: indexPath)
-            model.moveCommand(fromIndex: DragBundle.initialIndexPath!.item, toIndex: indexPath.item)
+            currentCommandsView.moveItem(at: initialIndexPath, to: indexPath)
+            model.moveCommand(fromIndex: initialIndexPath.item, toIndex: indexPath.item)
 
             renderJumpArrows()
             DragBundle.initialIndexPath = indexPath
 
         default:
             guard let indexPath = DragBundle.initialIndexPath,
-                let cell = currentCommandsView.cellForItem(at: indexPath) else {
+                  let cell = currentCommandsView.cellForItem(at: indexPath) else {
                     break
             }
             cell.isHidden = false
             cell.alpha = 0.0
-            AnimationHelper.dragEndedAnimation(cell: cell)
+            Animator.dragEndedAnimation(cell: cell)
         }
     }
 
@@ -176,7 +181,7 @@ extension DragDropViewController {
 
     private func initDragBundleAtGestureBegan(indexPath: IndexPath, cell: UICollectionViewCell) {
         DragBundle.initialIndexPath = indexPath
-        DragBundle.cellSnapshot = UIEntityDrawer.snapshotOfCell(inputView: cell)
+        DragBundle.cellSnapshot = Drawer.snapshotOfCell(inputView: cell)
         DragBundle.cellSnapshot?.center = cell.center
         DragBundle.cellSnapshot?.alpha = 0.0
     }
@@ -199,12 +204,12 @@ extension DragDropViewController {
             let targetIndexPath = IndexPath(item: jumpMapping.value, section: 0)
 
             if jumpMapping.key < jumpMapping.value {
-                let arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: parentIndexPath,
+                let arrowView = Drawer.drawJumpArrow(topIndexPath: parentIndexPath,
                                                              bottomIndexPath: targetIndexPath,
                                                              reversed: true, arrowWidthIndex: index)
                 jumpArrows.append(arrowView)
             } else {
-                let arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: targetIndexPath,
+                let arrowView = Drawer.drawJumpArrow(topIndexPath: targetIndexPath,
                                                              bottomIndexPath: parentIndexPath,
                                                              reversed: false, arrowWidthIndex: index)
                 jumpArrows.append(arrowView)

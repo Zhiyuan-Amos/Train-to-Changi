@@ -34,6 +34,25 @@ enum CommandData {
         }
     }
 
+    internal func toFilePath() -> String {
+        switch self {
+        case .inbox:
+            return "inbox"
+        case .outbox:
+            return "outbox"
+        case .copyFrom(let index):
+            return "copyFrom"
+        case .copyTo(let index):
+            return "copyTo"
+        case .add(let index):
+            return "add"
+        case .jump:
+            return "jump"
+        case .jumpTarget:
+            return "jumpTarget"
+        }
+    }
+
     init(commandString: String) {
         let commandArr = commandString.characters.split{$0 == "_"}.map(String.init)
 

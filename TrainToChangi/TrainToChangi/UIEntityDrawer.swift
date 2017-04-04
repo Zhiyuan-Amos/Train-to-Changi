@@ -30,7 +30,7 @@ class UIEntityDrawer {
         let size = CGSize(width: getCommandButtonWidth(commandType),
                           height: Constants.UI.collectionCellHeight)
         let frame = CGRect(origin: position, size: size)
-        let imagePath = commandType.toString() + ".png"
+        let imagePath = commandType.toFilePath() + ".png"
 
         let commandButton = UIButton(frame: frame)
         commandButton.setBackgroundImage(UIImage(named: imagePath), for: UIControlState.normal)
@@ -43,7 +43,7 @@ class UIEntityDrawer {
         let size = CGSize(width: getCommandButtonWidth(commandType),
                           height: Constants.UI.commandButtonHeight)
         let frame = CGRect(origin: position, size: size)
-        let imagePath = commandType.toString() + ".png"
+        let imagePath = commandType.toFilePath() + ".png"
 
         let commandImageView = UIImageView(frame: frame)
         commandImageView.image = UIImage(named: imagePath)

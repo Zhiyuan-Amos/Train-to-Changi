@@ -14,7 +14,7 @@ class CommandCell: UICollectionViewCell {
     @IBOutlet weak var commandIndex: UILabel!
 
     func setImageAndIndex(commandType: CommandData) {
-        let imagePath = commandType.toString() + ".png"
+        let imagePath = commandType.toFilePath() + ".png"
         switch commandType {
         case .add(let index):
             setCommandImageAndIndex(imageName: imagePath, index: index,
