@@ -1,0 +1,79 @@
+//
+//  ArrowView.swift
+//  TrainToChangi
+//
+//  Created by Ang Wei Hao Desmond on 3/4/17.
+//  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
+//
+
+import UIKit
+
+@IBDesignable class ArrowView: UIView {
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.isOpaque = false
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.isOpaque = false
+    }
+
+    override func draw(_ rect: CGRect) {
+        let point = CGPoint(5, 5)
+        let arrowHead = CGMutablePath()
+        arrowHead.addLines(between: getArrowHeadPoints(point: point))
+
+        let arrowHeadBeizer = UIBezierPath(cgPath: arrowHead)
+        arrowHeadBeizer.stroke()
+
+        let arrowTail = CGMutablePath()
+        arrowTail.addLines(between: getArrowTailPoints(point: point, width: self.frame.width * 0.5))
+
+        let arrowTailBeizer = UIBezierPath(cgPath: arrowTail)
+        arrowTailBeizer.stroke()
+
+        let arrowVert = CGMutablePath()
+        arrowVert.addLines(between: getVerticalLinePoints(point: point, length: self.frame.height - 10,
+                                                          width: self.frame.width * 0.5))
+
+        let arrowVertBeizer = UIBezierPath(cgPath: arrowVert)
+        arrowVertBeizer.stroke()
+
+        let arrowBot = CGMutablePath()
+        arrowBot.addLines(between: getHorizontalLinePoints(point: point, length: self.frame.height - 10,
+                                                           width: self.frame.width * 0.5))
+
+        let arrowBotBeizer = UIBezierPath(cgPath: arrowBot)
+        arrowBotBeizer.stroke()
+
+    }
+
+    private func getArrowHeadPoints(point: CGPoint) -> [CGPoint] {
+        let topPoint = CGPoint(x: point.x + 5,
+                               y: point.y - 5)
+        let bottomPoint = CGPoint(x: point.x + 5,
+                                  y: point.y + 5)
+
+        return [topPoint, point, bottomPoint]
+    }
+
+    private func getArrowTailPoints(point: CGPoint, width: CGFloat) -> [CGPoint] {
+        let tailPoint = CGPoint(x: point.x + width, y: point.y)
+        return [point, tailPoint]
+    }
+
+    private func getVerticalLinePoints(point: CGPoint, length: CGFloat, width: CGFloat) -> [CGPoint] {
+        let topPoint = CGPoint(x: point.x + width, y: point.y)
+        let bottomPoint = CGPoint(x: point.x + width, y: point.y + length)
+        return [topPoint, bottomPoint]
+    }
+
+    private func getHorizontalLinePoints(point: CGPoint, length: CGFloat, width: CGFloat) -> [CGPoint] {
+        let endPoint = CGPoint(x: point.x, y: point.y + length)
+        let vertBottomPoint = CGPoint(x: point.x + width, y: point.y + length)
+        return [endPoint, vertBottomPoint]
+    }
+
+}

@@ -51,7 +51,7 @@ class EditorViewController: UIViewController {
             let buttonPosition = CGPoint(x: initialCommandPosition.x,
                                          y: currentCommandPositionY)
 
-            let commandButton = UIEntityHelper.generateCommandUIButton(for: command,
+            let commandButton = UIEntityDrawer.generateCommandUIButton(for: command,
                                                                        position: buttonPosition,
                                                                        tag: commandTag)
             commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)

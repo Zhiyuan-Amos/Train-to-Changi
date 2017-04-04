@@ -204,7 +204,7 @@ extension DragDropViewController {
 
     private func initDragBundleAtGestureBegan(indexPath: IndexPath, cell: UICollectionViewCell) {
         DragBundle.initialIndexPath = indexPath
-        DragBundle.cellSnapshot = UIEntityHelper.snapshotOfCell(inputView: cell)
+        DragBundle.cellSnapshot = UIEntityDrawer.snapshotOfCell(inputView: cell)
         DragBundle.cellSnapshot?.center = cell.center
         DragBundle.cellSnapshot?.alpha = 0.0
     }
@@ -326,15 +326,15 @@ extension DragDropViewController {
         }
     }
 
-    fileprivate func redrawAllJumpArrows() -> [UIImageView] {
-        var jumpArrows = [UIImageView]()
+    fileprivate func redrawAllJumpArrows() -> [UIView] {
+        var jumpArrows = [UIView]()
         for jumpBundle in jumpBundles {
             if jumpBundle.jumpIndexPath.item < jumpBundle.jumpTargetIndexPath.item {
-                jumpBundle.arrowView = UIEntityHelper.drawJumpArrow(topIndexPath: jumpBundle.jumpIndexPath,
+                jumpBundle.arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: jumpBundle.jumpIndexPath,
                                                                     bottomIndexPath: jumpBundle.jumpTargetIndexPath)
                 jumpArrows.append(jumpBundle.arrowView)
             } else {
-                jumpBundle.arrowView = UIEntityHelper.drawJumpArrow(topIndexPath: jumpBundle.jumpTargetIndexPath,
+                jumpBundle.arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: jumpBundle.jumpTargetIndexPath,
                                                                     bottomIndexPath: jumpBundle.jumpIndexPath)
                 jumpArrows.append(jumpBundle.arrowView)
             }
@@ -443,8 +443,9 @@ extension DragDropViewController {
 
         if command == CommandData.jump {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
-            let arrowView = UIEntityHelper.drawJumpArrow(topIndexPath: penultimateIndexPath,
+            let arrowView = UIEntityDrawer.drawJumpArrow(topIndexPath: penultimateIndexPath,
                                                          bottomIndexPath: lastIndexPath)
+
             currentCommandsView.addSubview(arrowView)
 
             let jumpBundle = JumpBundle(jumpIndexPath: lastIndexPath,
@@ -468,10 +469,10 @@ class DragBundle {
 class JumpBundle {
     var jumpIndexPath: IndexPath
     var jumpTargetIndexPath: IndexPath
-    var arrowView: UIImageView
+    var arrowView: UIView
     var inverted = false
 
-    init(jumpIndexPath: IndexPath, jumpTargetIndexPath: IndexPath, arrowView: UIImageView) {
+    init(jumpIndexPath: IndexPath, jumpTargetIndexPath: IndexPath, arrowView: UIView) {
         self.jumpIndexPath = jumpIndexPath
         self.jumpTargetIndexPath = jumpTargetIndexPath
         self.arrowView = arrowView

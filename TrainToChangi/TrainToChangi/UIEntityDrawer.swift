@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UIEntityHelper {
+class UIEntityDrawer {
 
     static func snapshotOfCell(inputView: UIView) -> UIView {
         UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
@@ -63,15 +63,14 @@ class UIEntityHelper {
     }
 
     // MARK: - Jump Arrow Drawing Helper Functions
-    static func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath) -> UIImageView {
+    static func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath) -> UIView {
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        return generateArrowView(origin: origin,
-                                 height: height)
+        return generateArrowView(origin: origin, height: height)
     }
 
     static func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
-        return CGPoint(Constants.UI.collectionCellWidth * 0.5,
+        return CGPoint(Constants.UI.collectionCellWidth,
                        getMidYOfCell(at: indexPath))
     }
 
@@ -82,20 +81,29 @@ class UIEntityHelper {
     }
 
     static func getHeightBetweenIndexPaths(_ indexPathOne: IndexPath,
-                                            _ indexPathTwo: IndexPath) -> CGFloat {
+                                           _ indexPathTwo: IndexPath) -> CGFloat {
         return abs(getMidYOfCell(at: indexPathOne)
-            - getMidYOfCell(at: indexPathTwo))
+            - getMidYOfCell(at: indexPathTwo)) * 1.03
 
     }
 
-    static func generateArrowView(origin: CGPoint, height: CGFloat) -> UIImageView {
+    static func generateArrowView(origin: CGPoint, height: CGFloat) -> UIView {
         let arrowSize = CGSize(width: Constants.UI.arrowWidth,
                                height: height)
-        let arrowView = UIImageView()
-        arrowView.image = UIImage(named: "arrownavy.png")
-        arrowView.frame = CGRect(origin: origin, size: arrowSize)
 
+        let arrowView = ArrowView(frame: CGRect(origin: origin, size: arrowSize))
         return arrowView
     }
+
+    static func generateReverseArrowView(origin: CGPoint, height: CGFloat) -> UIView {
+        let arrowSize = CGSize(width: Constants.UI.arrowWidth,
+                               height: height)
+
+        let arrowView = ArrowView(frame: CGRect(origin: origin, size: arrowSize))
+        let transfrom = CGAffineTransform(scaleX: 1, y: -1)
+        arrowView.transform = transfrom
+        return arrowView
+    }
+
 
 }
