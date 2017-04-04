@@ -30,6 +30,7 @@
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A719C9851E9275C900BA7178 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A719C9841E9275C800BA7178 /* GoogleService-Info.plist */; };
 		A719C9861E9275C900BA7178 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A719C9841E9275C800BA7178 /* GoogleService-Info.plist */; };
+		A73956831E927E3B007B9886 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73956821E927E3B007B9886 /* LoginViewController.swift */; };
 		A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */; };
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
@@ -106,6 +107,7 @@
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		A719C9841E9275C800BA7178 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A73956821E927E3B007B9886 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListInfo.swift; sourceTree = "<group>"; };
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
+				A73956821E927E3B007B9886 /* LoginViewController.swift */,
 				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
 				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
 				3B04A7D31E8BE13C00B317ED /* EditorViewControllerExtensions.swift */,
@@ -643,6 +646,7 @@
 				3B6D98591E89129C0026872B /* UIEntityHelper.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
+				A73956831E927E3B007B9886 /* LoginViewController.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
 				A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */,
 				3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */,

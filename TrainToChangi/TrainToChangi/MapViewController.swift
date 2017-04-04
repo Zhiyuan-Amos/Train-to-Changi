@@ -9,6 +9,7 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import FirebaseAuth
 
 protocol MapViewControllerDelegate: class {
     func initLevel(name: String?, storage: Storage)
@@ -46,6 +47,15 @@ class MapViewController: UIViewController {
         skView.presentScene(sceneNode)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        // Makes sure that user is logged in.
+        guard FIRAuth.auth()?.currentUser != nil else {
+            // show login viewcontroller
+            performSegue(withIdentifier: "login", sender: nil)
+            return
+        }
+    }
+
     override var shouldAutorotate: Bool {
         return true
     }
@@ -66,6 +76,7 @@ class MapViewController: UIViewController {
                 break
             }
             gameVC.initLevel(name: levelName, storage: storage)
+        case Constants.SegueIds.login?: break
         default:
             assertionFailure("Segue has a name unaccounted for")
         }

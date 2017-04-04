@@ -7,6 +7,9 @@ target 'TrainToChangi' do
 
   # Pods for TrainToChangi
   pod 'Firebase/Core'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  pod 'GoogleSignIn'
 
   target 'TrainToChangiTests' do
     inherit! :search_paths

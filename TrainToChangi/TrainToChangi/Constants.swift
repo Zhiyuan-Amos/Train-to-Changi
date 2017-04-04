@@ -92,6 +92,7 @@ struct Constants {
 
     struct SegueIds {
         static let startLevel = "startLevel"
+        static let login = "login"
     }
 
     // swiftlint:disable type_name

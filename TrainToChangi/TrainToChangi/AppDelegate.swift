@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
+import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,8 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         mapViewController.storage = storage
 
-        // Connect Firebase
+        // Use Firebase library to configure APIs
         FIRApp.configure()
+
+        initGoogleSignIn()
+
         return true
     }
 
@@ -42,4 +47,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         storage.save()
     }
 
+}
+
+extension AppDelegate: GIDSignInDelegate {
+    fileprivate func initGoogleSignIn() {
+        GIDSignIn.sharedInstance().clientID = FIRApp.defaultApp()?.options.clientID
+        GIDSignIn.sharedInstance().delegate = self
+    }
+
+    // MARK - GIDSignInDelegate protocol
+
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        }
+
+        // User signed into google
+
+        // Get googleID token and google access token
+        // and exchange for Firebase credential
+        guard let authentication = user.authentication else { return }
+        let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                          accessToken: authentication.accessToken)
+
+        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
+            if let error = error {
+                return
+            }
+            //User signed into firebase
+            //Add user into database
+            //            self.databaseRef = FIRDatabase.database().reference()
+            //
+            //            self.databaseRef.child("user_profiles").child(user!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            //
+            //                let snapshot = snapshot.value as? NSDictionary
+            //                if snapshot == nil {
+            //                    self.databaseRef.child("user_profiles").child(user!.uid).child("name").setValue(user?.displayName)
+            //                    self.databaseRef.child("user_profiles").child(user!.uid).child("email").setValue(user?.email)
+            //                }
+            //
+            //                 Segue
+            //                let mainStoryboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
+            //
+            //                self.window?.rootViewController?.performSegue(withIdentifier: "HomeViewSegue", sender: nil)
+            //            })
+        })
+    }
+
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+    }
+
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url,
+                                                 sourceApplication: sourceApplication,
+                                                 annotation: annotation)
+
+        @available(iOS 9.0, *)
+        func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
+            -> Bool {
+                return GIDSignIn.sharedInstance().handle(url,
+                                                         sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                         annotation: [:])
+        }
+    }
 }

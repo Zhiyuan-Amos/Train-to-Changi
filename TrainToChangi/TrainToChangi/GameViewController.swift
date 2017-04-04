@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import FirebaseAuth
 
 protocol GameVCTouchDelegate: class {
     func memoryIndex(at: CGPoint) -> Int?
@@ -23,6 +24,15 @@ class GameViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         registerObservers()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        // Makes sure that user is logged in.
+        guard FIRAuth.auth()?.currentUser != nil else {
+            // show login viewcontroller
+            performSegue(withIdentifier: "login", sender: nil)
+            return
+        }
     }
 
     // Updates `model.runState` to `.running(isAnimating: true).
