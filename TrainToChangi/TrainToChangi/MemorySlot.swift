@@ -7,7 +7,7 @@ import SpriteKit
 
 // Custom SKSpriteNode for the memory slots on the ground
 class MemorySlot: SKSpriteNode {
-    private var index: Int
+    private(set) var index: Int
     private var layout: Memory.Layout
 
     init(index: Int, layout: Memory.Layout) {
@@ -32,7 +32,4 @@ class MemorySlot: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func getIndex() -> Int {
-        return index
-    }
 }

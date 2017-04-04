@@ -32,7 +32,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         registerObservers()
         presentGameScene()
-        // AudioPlayer.sharedInstance.playBackgroundMusic()
+        AudioPlayer.sharedInstance.playBackgroundMusic()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
