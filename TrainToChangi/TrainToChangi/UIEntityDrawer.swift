@@ -67,7 +67,7 @@ class UIEntityDrawer {
                               reversed: Bool, arrowWidthIndex: Int) -> ArrowView {
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        let width = Constants.UI.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / 10.0))
+        let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / 10.0))
 
         return reversed ? generateReverseArrowView(origin: origin, height: height, width: width)
                         : generateArrowView(origin: origin, height: height, width: width)

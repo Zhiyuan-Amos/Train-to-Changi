@@ -25,6 +25,7 @@ class DragDropViewController: UIViewController {
         connectDataSourceAndDelegate()
         addGestureRecognisers()
         registerObservers()
+        renderJumpArrows()
     }
 
     @IBAction func resetButtonPressed(_ sender: Any) {
