@@ -11,15 +11,15 @@ import FirebaseDatabase
 
 // For Firebase storage
 // To enable CommandDataListInfo to be saved to Firebase, we represent it as a Dictionary of
-// [Int: String], where int is the index of the commandData in commandDataArray,
-// and String is the toString() representation for a commandData.
+// [String: String], where key is the index of the commandData in commandDataArray,
+// and value is the toString() representation for a commandData.
 // We also squeeze in the jumpMappings information:
 // for a jump-related command, we append its jumpTargetIndex to the end of its toString after "_".
 // e.g. "jump_2" implies that its jumpTarget is at index 2.
 extension CommandDataListInfo {
 
     static func fromSnapshot(snapshot: FIRDataSnapshot) -> CommandDataListInfo? {
-        guard let snapDict = snapshot.value as? [Int: String] else {
+        guard let snapDict = snapshot.value as? [String: String] else {
             assertionFailure("Loading failed.")
             return nil
         }
@@ -30,28 +30,29 @@ extension CommandDataListInfo {
         return dictWithJumpMappingsInfo() as AnyObject
     }
 
-    private func dictWithJumpMappingsInfo() -> [Int: String] {
+    private func dictWithJumpMappingsInfo() -> [String: String] {
         var dict = commandDataArrayAsDict()
         for (jumpParentIndex, jumpTargetIndex) in jumpMappings {
-            guard let jumpStr = dict[jumpParentIndex] else {
+            let jumpParentIndexStr = String(jumpParentIndex)
+            guard let jumpStr = dict[jumpParentIndexStr] else {
                 fatalError("Jump indexes not stored properly!")
             }
             let appendedJumpStr = jumpStr + "_" + String(jumpTargetIndex)
-            dict[jumpParentIndex] = appendedJumpStr
+            dict[jumpParentIndexStr] = appendedJumpStr
         }
         return dict
     }
 
-    private func commandDataArrayAsDict() -> [Int: String] {
-        var dict: [Int: String] = [:]
+    private func commandDataArrayAsDict() -> [String: String] {
+        var dict: [String: String] = [:]
         for (index, commandData) in commandDataArray.enumerated() {
-            dict[index] = commandData.toString()
+            dict[String(index)] = commandData.toString()
         }
         return dict
     }
 
     // I have no idea if this works
-    private static func commandDataListInfoFromDict(dict: [Int: String]) -> CommandDataListInfo {
+    private static func commandDataListInfoFromDict(dict: [String: String]) -> CommandDataListInfo {
         var stringArr: [String] = []
         var commandData: [CommandData] = []
         var jumpMappings: [Int: Int] = [:]

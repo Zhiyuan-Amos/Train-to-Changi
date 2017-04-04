@@ -31,6 +31,7 @@
 		A719C9851E9275C900BA7178 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A719C9841E9275C800BA7178 /* GoogleService-Info.plist */; };
 		A719C9861E9275C900BA7178 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A719C9841E9275C800BA7178 /* GoogleService-Info.plist */; };
 		A73956831E927E3B007B9886 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73956821E927E3B007B9886 /* LoginViewController.swift */; };
+		A771A4B51E93F0750029DAE1 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A771A4B41E93F0750029DAE1 /* StorageManager.swift */; };
 		A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */; };
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
@@ -108,6 +109,7 @@
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		A719C9841E9275C800BA7178 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A73956821E927E3B007B9886 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A771A4B41E93F0750029DAE1 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListInfo.swift; sourceTree = "<group>"; };
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				76745B721E88598D0039A771 /* ViewController */,
+				A771A4B31E93F05F0029DAE1 /* Storage */,
 				76745B711E8859890039A771 /* View */,
 				76745B701E88590A0039A771 /* InterfaceBuilder */,
 				3B6D98551E8904DF0026872B /* Helpers */,
@@ -318,6 +321,14 @@
 				D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A771A4B31E93F05F0029DAE1 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				A771A4B41E93F0750029DAE1 /* StorageManager.swift */,
+			);
+			name = Storage;
 			sourceTree = "<group>";
 		};
 		A7A10D041E86A6C20040DA21 /* TrainToChangiTests */ = {
@@ -659,6 +670,7 @@
 				76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
+				A771A4B51E93F0750029DAE1 /* StorageManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */,
 				A7A8FB201E93C7980008E3D6 /* DataService.swift in Sources */,

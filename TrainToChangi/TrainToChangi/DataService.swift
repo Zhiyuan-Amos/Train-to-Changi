@@ -28,12 +28,13 @@ class DataService {
     }
 
     func saveUser(uid: String) {
-        let profile: Dictionary<String, AnyObject> = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
+        let profile: [String: AnyObject] = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
         usersRef.child(uid).child(profileKey).setValue(profile)
     }
 
     func saveUserAddedCommands(uid: String, saveName: String, commandDataListInfo: AnyObject) {
+        let data: [String: AnyObject] = [saveName: commandDataListInfo]
         let ref = usersRef.child(uid).child(commandDataListInfoKey).child(saveName)
-        ref.setValue(commandDataListInfo)
+        ref.setValue(data)
     }
 }
