@@ -40,6 +40,7 @@
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		A7A8FB201E93C7980008E3D6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB1F1E93C7980008E3D6 /* DataService.swift */; };
 		A7A8FB221E93CA290008E3D6 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB211E93CA290008E3D6 /* AuthService.swift */; };
+		A7A8FB241E93D4300008E3D6 /* CommandDataListInfo+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB231E93D4300008E3D6 /* CommandDataListInfo+.swift */; };
 		A7D163471E90C55E0073EC46 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163461E90C55E0073EC46 /* Storage.swift */; };
 		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
 		BCE534D000279DEF6C5C359F /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
@@ -121,6 +122,7 @@
 		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
 		A7A8FB1F1E93C7980008E3D6 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		A7A8FB211E93CA290008E3D6 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		A7A8FB231E93D4300008E3D6 /* CommandDataListInfo+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CommandDataListInfo+.swift"; sourceTree = "<group>"; };
 		A7D163461E90C55E0073EC46 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				D744CA641E7A387F004CCABD /* Level.swift */,
 				A7A10CEB1E865AD10040DA21 /* LevelManager.swift */,
 				A7A10CE91E865AD10040DA21 /* CommandDataList.swift */,
+				A7A8FB231E93D4300008E3D6 /* CommandDataListInfo+.swift */,
 				A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */,
 				3B1680521E77D6F7002286F6 /* RunState.swift */,
 				3B1680501E778A2D002286F6 /* LevelState.swift */,
@@ -683,6 +686,7 @@
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
+				A7A8FB241E93D4300008E3D6 /* CommandDataListInfo+.swift in Sources */,
 				A7D163471E90C55E0073EC46 /* Storage.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
 				A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */,

@@ -15,6 +15,10 @@ class AuthService {
         return _instance
     }
 
+    var currentUserID: String? {
+        return FIRAuth.auth()?.currentUser?.uid
+    }
+
     func login(credential: FIRAuthCredential) {
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
             if let error = error {

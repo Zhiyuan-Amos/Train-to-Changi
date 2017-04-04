@@ -9,9 +9,11 @@
 import FirebaseDatabase
 
 class DataService {
+
     private static let _instance = DataService()
     private let usersKey = "users"
     private let profileKey = "profile"
+    private let commandDataListInfoKey = "commandDataListInfo"
 
     static var instance: DataService {
         return _instance
@@ -21,15 +23,21 @@ class DataService {
         return FIRDatabase.database().reference()
     }
 
-//    var currentUserRef: FIRDatabaseReference {
-//        let userID = UserDefaults.standard.value(forKey: "uid") as! String
-//
-//        let currentUser = mainRef.child(FIR_CHILD_USERS).child(userID)
-//        return currentUser
-//    }
+    var usersRef: FIRDatabaseReference {
+        return mainRef.child(usersKey)
+    }
+
+    var userAddedCommandsRef: FIRDatabaseReference {
+        return usersRef.child(FIR.commandDataListInfoKey)
+    }
 
     func saveUser(uid: String) {
         let profile: Dictionary<String, AnyObject> = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
-        mainRef.child(usersKey).child(uid).child(profileKey).setValue(profile)
+        usersRef.child(uid).child(profileKey).setValue(profile)
+    }
+
+    func saveUserAddedCommands(uid: String, saveName: String, commandDataListInfo: AnyObject) {
+        let ref = usersRef.child(uid).child(commandDataListInfoKey).child(saveName)
+        ref.setValue(commandDataListInfo)
     }
 }
