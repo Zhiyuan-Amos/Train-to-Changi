@@ -38,6 +38,8 @@
 		A7A10CF01E865AD10040DA21 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEC1E865AD10040DA21 /* UserData.swift */; };
 		A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */; };
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
+		A7A8FB201E93C7980008E3D6 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB1F1E93C7980008E3D6 /* DataService.swift */; };
+		A7A8FB221E93CA290008E3D6 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A8FB211E93CA290008E3D6 /* AuthService.swift */; };
 		A7D163471E90C55E0073EC46 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163461E90C55E0073EC46 /* Storage.swift */; };
 		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
 		BCE534D000279DEF6C5C359F /* Pods_TrainToChangiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */; };
@@ -117,6 +119,8 @@
 		A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainToChangiTests.swift; sourceTree = "<group>"; };
 		A7A10D071E86A6C20040DA21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
+		A7A8FB1F1E93C7980008E3D6 /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		A7A8FB211E93CA290008E3D6 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		A7D163461E90C55E0073EC46 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
@@ -347,6 +351,15 @@
 			name = ModelTests;
 			sourceTree = "<group>";
 		};
+		A7A8FB1E1E93C78A0008E3D6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A7A8FB1F1E93C7980008E3D6 /* DataService.swift */,
+				A7A8FB211E93CA290008E3D6 /* AuthService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		A7D163481E90CC860073EC46 /* Levels */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +392,7 @@
 		D76FA8251E76ADC400CCCFBE /* TrainToChangi */ = {
 			isa = PBXGroup;
 			children = (
+				A7A8FB1E1E93C78A0008E3D6 /* Services */,
 				A7D163481E90CC860073EC46 /* Levels */,
 				3BD7EF911E811DB50029EA57 /* Storage */,
 				3B16804D1E778785002286F6 /* UI */,
@@ -661,6 +675,7 @@
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */,
+				A7A8FB201E93C7980008E3D6 /* DataService.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
@@ -679,6 +694,7 @@
 				3B04A7D41E8BE13C00B317ED /* EditorViewControllerExtensions.swift in Sources */,
 				22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */,
 				22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */,
+				A7A8FB221E93CA290008E3D6 /* AuthService.swift in Sources */,
 				22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */,
 				22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */,
 			);

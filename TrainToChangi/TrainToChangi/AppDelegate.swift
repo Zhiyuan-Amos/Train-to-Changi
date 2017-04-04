@@ -55,8 +55,6 @@ extension AppDelegate: GIDSignInDelegate {
         GIDSignIn.sharedInstance().delegate = self
     }
 
-    // MARK - GIDSignInDelegate protocol
-
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
 
         if let error = error {
@@ -72,28 +70,8 @@ extension AppDelegate: GIDSignInDelegate {
         let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                           accessToken: authentication.accessToken)
 
-        FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
-            if let error = error {
-                return
-            }
-            //User signed into firebase
-            //Add user into database
-            //            self.databaseRef = FIRDatabase.database().reference()
-            //
-            //            self.databaseRef.child("user_profiles").child(user!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            //
-            //                let snapshot = snapshot.value as? NSDictionary
-            //                if snapshot == nil {
-            //                    self.databaseRef.child("user_profiles").child(user!.uid).child("name").setValue(user?.displayName)
-            //                    self.databaseRef.child("user_profiles").child(user!.uid).child("email").setValue(user?.email)
-            //                }
-            //
-            //                 Segue
-            //                let mainStoryboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
-            //
-            //                self.window?.rootViewController?.performSegue(withIdentifier: "HomeViewSegue", sender: nil)
-            //            })
-        })
+        AuthService.instance.login(credential: credential)
+        // Segue away.
     }
 
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
@@ -105,12 +83,12 @@ extension AppDelegate: GIDSignInDelegate {
                                                  sourceApplication: sourceApplication,
                                                  annotation: annotation)
 
-        @available(iOS 9.0, *)
-        func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
             -> Bool {
-                return GIDSignIn.sharedInstance().handle(url,
-                                                         sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-                                                         annotation: [:])
+            return GIDSignIn.sharedInstance().handle(url,
+                                sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                    annotation: [:])
         }
     }
 }
