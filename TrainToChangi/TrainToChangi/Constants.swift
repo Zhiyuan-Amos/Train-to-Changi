@@ -103,6 +103,7 @@ struct Constants {
         static let cancelUpdateCommandIndexEvent = Notification.Name(rawValue: "cancelUpdateCommandIndexEvent")
         static let userSelectedIndexEvent = Notification.Name(rawValue: "userSelectedIndexEvent")
         static let endOfCommandExecution = Notification.Name(rawValue: "endOfCommandExecution")
+        static let toggleSpeechEvent = Notification.Name(rawValue: "toggleSpeechEvent")
     }
 
     struct SegueIds {

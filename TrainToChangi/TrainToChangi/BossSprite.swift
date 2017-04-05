@@ -20,6 +20,9 @@ class BossSprite: SKSpriteNode {
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("Hello")
+        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.toggleSpeechEvent,
+                                                     object: self.index, userInfo: nil))
     }
 }
+
+

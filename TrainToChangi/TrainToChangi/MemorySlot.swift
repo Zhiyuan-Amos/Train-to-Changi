@@ -73,7 +73,7 @@ extension MemorySlot {
     }
 
     @objc fileprivate func handleCancelUpdateCommandIndex(notification: Notification) {
-        guard let index = notification.object as? Int else {
+        guard let _ = notification.object as? Int else {
             fatalError("[GameScene:handleUpdateCommandIndex] notification object should be Int")
         }
 

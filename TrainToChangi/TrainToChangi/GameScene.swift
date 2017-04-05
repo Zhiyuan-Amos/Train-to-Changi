@@ -69,6 +69,10 @@ extension GameScene {
                               size: CGSize(width: 50, height: 100))
         jedi.position = CGPoint(x: 300, y: 700)
         addChild(jedi)
+
+        let speech = SpeechBubbleSprite(text: "HELLOOOOOOOOOOOO", size: CGSize(width: 250, height: 150))
+        speech.position = CGPoint(x: 350, y: 580)
+        addChild(speech)
     }
 
     // Dynamic elements include `player` position, `player` value,
@@ -217,6 +221,10 @@ extension GameScene {
         let y = (forInbox ? inbox.position.y : outbox.position.y) + Constants.Payload.imageOffsetY
 
         return CGPoint(x: x, y: y)
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("YESH")
     }
 }
 
