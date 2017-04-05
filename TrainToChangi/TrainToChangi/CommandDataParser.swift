@@ -12,7 +12,7 @@ class CommandDataParser {
     }
 
     // Parses CommandData to Command.
-    func parse(commandData: CommandData) -> Command? {
+    func parse(commandData: CommandData) -> Command {
         switch commandData {
         case .inbox:
             return InboxCommand(model: model)
@@ -30,7 +30,7 @@ class CommandDataParser {
         case .jump:
             return JumpCommand(iterator: iterator)
         case .jumpTarget:
-            return nil
+            return JumpTarget()
         }
     }
 

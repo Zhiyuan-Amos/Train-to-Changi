@@ -414,10 +414,6 @@ class CommandDataListIterator {
         currentNode = currentNode?.next
     }
 
-    func previous() {
-        currentNode = currentNode?.previous
-    }
-
     func jump() {
         guard let current = currentNode as? JumpListNode else {
             preconditionFailure("Cannot jump on a non-jump command")

@@ -105,7 +105,7 @@ extension LineNumberViewController {
         serialQueue.async {
             self.semaphore.wait()
             if self.model.runState == .running(isAnimating: true)
-                || self.model.runState == .stepping {
+                || self.model.runState == .stepping(isAnimating: true) {
                 self.semaphore.wait()
             }
 
@@ -113,11 +113,6 @@ extension LineNumberViewController {
                 self.updateProgramCounterCoordinates(notification: notification)
             }
         }
-    }
-
-    private func busyWait() {
-        while self.model.runState == .running(isAnimating: true)
-            || self.model.runState == .stepping {}
     }
 
     private func setUpProgramCounter() {

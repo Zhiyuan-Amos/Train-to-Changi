@@ -15,6 +15,9 @@ class GameLogic {
 
     // Reverts the state of the model by one command execution backward.
     func stepBack(_ command: Command) {
+        if model.runState == .stepping(isAnimating: false) {
+            model.runState = .paused
+        }
         command.undo()
     }
 
@@ -31,17 +34,18 @@ class GameLogic {
         }
 
         // Commands with animations will automatically toggle `model.runState`
-        // from `.stepping` to `.paused`. However, `.jump` and `.jumpTarget` does not have
-        // animation, thus we have to manually toggle it back to `.paused`.
-        if (commandData == .jump || commandData == .jumpTarget) && model.runState == .stepping {
-            model.runState = .paused
+        // from `.stepping(isAnimating: true)` to `.paused` after animation ends. 
+        // However, `.jump` and `.jumpTarget` does not have animation, thus we have to 
+        // manually toggle it back to `.paused`.
+        if model.runState == .stepping(isAnimating: false) {
+            if commandData == .jump || commandData == .jumpTarget {
+                model.runState = .paused
+            } else {
+                model.runState = .stepping(isAnimating: true)
+            }
         }
 
-        // Only `.jumpTarget` returns nil as it isn't a command.
-        guard let command = parser.parse(commandData: commandData) else {
-            return nil
-        }
-
+        let command = parser.parse(commandData: commandData)
         let commandResult = command.execute()
         updater.updateRunState(commandResult: commandResult)
         if model.runState == .won {
