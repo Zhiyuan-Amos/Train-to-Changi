@@ -52,13 +52,7 @@ class ControlPanelViewController: UIViewController {
         }
     }
 
-    //TODO: GameScene need to support
     @IBAction func stopButtonPressed(_ sender: UIButton) {
-        //TODO: Temporary method to load levels.
-        // Comment out first since no reference to storage here
-//        model = ModelManager(leveIndex: 0,
-//                             levelData: LevelDataHelper.levelData(levelIndex: 0))
-//        logic = LogicManager(model: model)
         model.runState = .paused
         postResetSceneNotification()
     }
@@ -71,7 +65,6 @@ class ControlPanelViewController: UIViewController {
         }
         postResetSceneNotification(levelState: model.levelState)
         model.runState = .paused
-        print(model.levelState) // debug
     }
 
     // Executes the next command. If game is already playing, sets `model.runState`
@@ -83,7 +76,6 @@ class ControlPanelViewController: UIViewController {
         if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
             logic.stepForward()
         }
-        print(model.levelState) // debug
     }
 
     @IBAction func playButtonPressed(_ sender: UIButton) {

@@ -48,6 +48,8 @@ class GameScene: SKScene {
     fileprivate var memoryLayout: Memory.Layout?
 
     fileprivate var backgroundTileMap: SKTileMapNode!
+
+    fileprivate var isUpdatingCommandIndex = false
 }
 
 // MARK: - Init
@@ -160,6 +162,13 @@ extension GameScene {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleResetScene(notification:)),
             name: Constants.NotificationNames.resetGameScene, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleUpdateCommandIndex(notification:)),
+            name: Constants.NotificationNames.updateCommandIndexEvent, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleCancelUpdateCommandIndex(notification:)),
+            name: Constants.NotificationNames.cancelUpdateCommandIndexEvent, object: nil)
     }
 
     private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
@@ -169,8 +178,10 @@ extension GameScene {
                 fatalError("[GameScene:initMemory] " +
                     "Number of memory values differ from the layout specified. Check level data.")
             }
+            let node = MemorySlot(index: index, layout: layout)
+            addChild(node)
+            memoryNodes.append(node)
 
-            addChild(MemorySlot(index: index, layout: layout))
         }
     }
 
@@ -207,6 +218,35 @@ extension GameScene {
 
         return CGPoint(x: x, y: y)
     }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+
+        let location = touch.location(in: self)
+        guard let targetMemNode = nodes(at: location).first as? MemorySlot,
+              isUpdatingCommandIndex else {
+            return
+        }
+
+        for memNode in memoryNodes {
+            memNode.texture = SKTexture(imageNamed: "memory")
+        }
+
+        targetMemNode.texture = SKTexture(imageNamed: "memory-select")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Constants.UI.userSelectedIndexNotificationDelay),
+                                      execute: {
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.userSelectedIndexEvent,
+                                                         object: targetMemNode.index, userInfo: nil))
+            for memNode in self.memoryNodes {
+                memNode.texture = SKTexture(imageNamed: "memory")
+            }
+            self.isUpdatingCommandIndex = false
+        })
+
+    }
 }
 
 // MARK: - Touch
@@ -225,7 +265,7 @@ extension GameScene: GameVCTouchDelegate {
         }
 
         // calculate distance between `point` and each memory center, return the one with the min distance
-        let distancesToPoint: [CGFloat] = memoryNodes.map{ $0.position.distance(to: userTouchedPoint) }
+        let distancesToPoint: [CGFloat] = memoryNodes.map { $0.position.distance(to: userTouchedPoint) }
         return distancesToPoint.index(of: distancesToPoint.min()!)
     }
 }
@@ -260,6 +300,30 @@ extension GameScene {
             rePresentDynamicElements(levelState: levelState)
         } else {
             rePresentDynamicElements()
+        }
+    }
+
+    @objc fileprivate func handleUpdateCommandIndex(notification: Notification) {
+        guard let index = notification.object as? Int else {
+            fatalError("[GameScene:handleUpdateCommandIndex] notification object should be Int")
+        }
+        if !isUpdatingCommandIndex {
+            isUpdatingCommandIndex = true
+            let memNode = memoryNodes[index]
+            memNode.texture = SKTexture(imageNamed: "memory-select")
+        }
+
+    }
+
+    @objc fileprivate func handleCancelUpdateCommandIndex(notification: Notification) {
+        guard let index = notification.object as? Int else {
+            fatalError("[GameScene:handleUpdateCommandIndex] notification object should be Int")
+        }
+
+        if isUpdatingCommandIndex {
+            isUpdatingCommandIndex = false
+            let memNode = memoryNodes[index]
+            memNode.texture = SKTexture(imageNamed: "memory")
         }
     }
 }
