@@ -89,6 +89,9 @@
                             <constraint firstItem="626-si-ZTN" firstAttribute="leading" secondItem="IWA-yB-w3z" secondAttribute="leading" id="vTA-Pe-aj4"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="trainUIImage" destination="pir-D3-pGS" id="rru-u9-rPA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
@@ -103,7 +106,7 @@
                         <viewControllerLayoutGuide type="bottom" id="LfF-f7-BUP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Tkd-9Y-ReJ">
-                        <rect key="frame" x="0.0" y="0.0" width="282" height="673"/>
+                        <rect key="frame" x="0.0" y="0.0" width="424" height="673"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jft-9R-iCA" userLabel="Level Description">
@@ -157,7 +160,7 @@
                         <viewControllerLayoutGuide type="bottom" id="eB4-6w-9cs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mzH-iT-Njn">
-                        <rect key="frame" x="0.0" y="0.0" width="282" height="96"/>
+                        <rect key="frame" x="0.0" y="0.0" width="424" height="96"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iYw-YL-YlW">
@@ -238,7 +241,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oSJ-Cl-MNP">
-                                <rect key="frame" x="0.0" y="0.0" width="161" height="527"/>
+                                <rect key="frame" x="0.0" y="0.0" width="424" height="527"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yWl-5s-tbk">
                                     <size key="itemSize" width="150" height="41"/>

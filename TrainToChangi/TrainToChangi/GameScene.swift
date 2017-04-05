@@ -65,7 +65,8 @@ extension GameScene {
         initNotification()
         initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
 
-        let jedi = BossSprite(texture: nil, color: UIColor.white, size: CGSize(width: 30, height: 100))
+        let jedi = BossSprite(texture: SKTexture(imageNamed: "jedi_01"), color: UIColor.white,
+                              size: CGSize(width: 50, height: 100))
         jedi.position = CGPoint(x: 300, y: 700)
         addChild(jedi)
     }

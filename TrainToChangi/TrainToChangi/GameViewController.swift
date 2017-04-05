@@ -15,6 +15,8 @@ protocol GameVCTouchDelegate: class {
 
 class GameViewController: UIViewController {
 
+    @IBOutlet weak var trainUIImage: UIImageView!
+
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var storage: Storage!
@@ -32,7 +34,8 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         registerObservers()
         presentGameScene()
-        AudioPlayer.sharedInstance.playBackgroundMusic()
+        animateTrain()
+        // AudioPlayer.sharedInstance.playBackgroundMusic()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -50,6 +53,17 @@ class GameViewController: UIViewController {
         dismiss(animated: true, completion: {
             AudioPlayer.sharedInstance.stopBackgroundMusic()
         })
+    }
+
+    private func animateTrain() {
+        var trainFrames = [UIImage]()
+        for index in 0...7 {
+            let frame = UIImage(named: "train_vert\(index)")!
+            trainFrames.append(frame)
+        }
+        trainUIImage.animationImages = trainFrames
+        trainUIImage.animationDuration = 1.5
+        trainUIImage.startAnimating()
     }
 
     /// Use GameScene to move/animate the game objects

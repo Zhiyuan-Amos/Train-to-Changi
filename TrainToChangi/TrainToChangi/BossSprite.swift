@@ -12,18 +12,7 @@ class BossSprite: SKSpriteNode {
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
-
-        var jediFrames = [SKTexture]()
-        let jediAtlas = SKTextureAtlas(named: "jedi")
-        for index in 1...4 {
-            let textureName = "jedi_0\(index)"
-            jediFrames.append(jediAtlas.textureNamed(textureName))
-        }
-
-        self.name = "Jedi"
         self.isUserInteractionEnabled = true
-        let action = SKAction.repeatForever(SKAction.animate(with: jediFrames, timePerFrame: 0.5))
-        self.run(action)
     }
     
     required init?(coder aDecoder: NSCoder) {
