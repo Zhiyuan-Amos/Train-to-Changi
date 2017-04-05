@@ -23,6 +23,7 @@ class EditorViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadCommandDataList()
         connectDataSourceAndDelegate()
 
         setUpLevelDescription()
@@ -42,6 +43,21 @@ class EditorViewController: UIViewController {
     }
 
     // MARK: - Setup
+    private func loadCommandDataList() {
+        guard let userID = AuthService.instance.currentUserID else {
+            fatalError("Must be logged in")
+        }
+        let ref = DataService.instance.usersRef.child(userID).child("commandDataListInfo").child("default")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let commandDataListInfo = CommandDataListInfo.fromSnapshot(snapshot: snapshot) {
+                self.model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
+            }
+            self.currentCommandsView.reloadData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+
     private func connectDataSourceAndDelegate() {
         currentCommandsView.dataSource = self
         currentCommandsView.delegate = self

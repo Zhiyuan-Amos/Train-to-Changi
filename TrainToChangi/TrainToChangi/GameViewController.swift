@@ -106,8 +106,7 @@ extension GameViewController: MapViewControllerDelegate {
         }
         let levelIndex = indexOfStation(name: name)
         model = ModelManager(levelIndex: levelIndex,
-                             levelData: Levels.levelData[levelIndex],
-                             commandDataListInfo: nil)
+                             levelData: Levels.levelData[levelIndex])
         logic = LogicManager(model: model)
     }
 

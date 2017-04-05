@@ -19,11 +19,10 @@ import FirebaseDatabase
 extension CommandDataListInfo {
 
     static func fromSnapshot(snapshot: FIRDataSnapshot) -> CommandDataListInfo? {
-        guard let snapDict = snapshot.value as? [String: String] else {
-            assertionFailure("Loading failed.")
+        guard let array = snapshot.value as? [String] else {
             return nil
         }
-        return commandDataListInfoFromDict(dict: snapDict)
+        return commandDataListInfoFromArray(array: array)
     }
 
     func toAnyObject() -> AnyObject {
@@ -51,18 +50,11 @@ extension CommandDataListInfo {
         return dict
     }
 
-    // I have no idea if this works
-    private static func commandDataListInfoFromDict(dict: [String: String]) -> CommandDataListInfo {
-        var stringArr: [String] = []
+    private static func commandDataListInfoFromArray(array: [String]) -> CommandDataListInfo {
         var commandData: [CommandData] = []
         var jumpMappings: [Int: Int] = [:]
 
-        let sortedKeysArray = dict.sorted(by: { $0.0 < $1.0 })
-        for (_, value) in sortedKeysArray {
-            stringArr.append(value)
-        }
-
-        for (index, commandString) in stringArr.enumerated() {
+        for (index, commandString) in array.enumerated() {
             let commandArr = commandString.characters.split{$0 == "_"}.map(String.init)
             switch commandArr[0] {
             case "inbox":

@@ -24,6 +24,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Speed up loading in EditorVC by preloading
+        preloadCommandDataList()
+
         // load .sks file
         guard let scene = GKScene(fileNamed: "MapScene") else {
             assertionFailure("Did you rename the .sks file?")
@@ -53,6 +56,18 @@ class MapViewController: UIViewController {
             return
         }
     }
+
+    // Speed up connection when loading in EditorVC.
+    private func preloadCommandDataList() {
+        guard let userID = AuthService.instance.currentUserID else {
+            fatalError("Must be logged in")
+        }
+        let ref = DataService.instance.usersRef.child(userID).child("commandDataListInfo")
+        ref.observeSingleEvent(of: .value, with: { _ in
+        }) { _ in
+        }
+    }
+
 
     override var shouldAutorotate: Bool {
         return true

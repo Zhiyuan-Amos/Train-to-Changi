@@ -52,6 +52,8 @@ protocol Model: class {
     // Reinitialises Model play state.
     func resetPlayState()
 
+    func loadCommandDataListInfo(commandDataListInfo: CommandDataListInfo)
+
     func getCommandDataListInfo() -> CommandDataListInfo
 
     // MARK - API for Logic.

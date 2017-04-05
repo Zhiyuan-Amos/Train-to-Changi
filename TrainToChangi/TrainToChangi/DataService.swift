@@ -34,7 +34,8 @@ class DataService {
 
     func saveUserAddedCommands(uid: String, saveName: String, commandDataListInfo: AnyObject) {
         let data: [String: AnyObject] = [saveName: commandDataListInfo]
-        let ref = usersRef.child(uid).child(commandDataListInfoKey).child(saveName)
+        let ref = usersRef.child(uid).child(commandDataListInfoKey)
         ref.setValue(data)
     }
+
 }
