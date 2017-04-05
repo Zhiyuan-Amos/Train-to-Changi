@@ -11,14 +11,11 @@
 		22DC75774D88B666E05504A2 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7B36D1FFE9AF4BD45996 /* Memory.swift */; };
 		22DC77801B64633600E0D12F /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22DC7A7B3B1E8394B0C46B8B /* Tiles.sks */; };
 		22DC79205746F0CFA782DB18 /* MemorySlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7A5AE59C9E90DD4EC46E /* MemorySlot.swift */; };
-		22DC7A179D5E450DC80FFFDC /* (null) in Sources */ = {isa = PBXBuildFile; };
 		22DC7C04F77564EE9AB11646 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22DC718F326908892AA30899 /* LaunchScreen.storyboard */; };
 		22DC7CA044C5138FBBB4CBE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22DC7C38A00C20DF8E002FEE /* Main.storyboard */; settings = {ASSET_TAGS = (bu, ); }; };
-		22DC7D66372DC4E7228650F9 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		22DC7DED22DD82B940526501 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7F77134FE67A3061C9CC /* MapViewController.swift */; };
 		22DC7E7854E44CDD4911D730 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC71ABD989136378CEAF90 /* Payload.swift */; };
 		22DC7ED806E5191FAC5E6160 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC77C5F418604BA6587B7B /* GameScene.swift */; };
-		3B04A7D41E8BE13C00B317ED /* (null) in Sources */ = {isa = PBXBuildFile; };
 		3B10D8491E9272C300EFCDAC /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10D8481E9272C300EFCDAC /* ArrowView.swift */; };
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
@@ -647,10 +644,6 @@
 				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
-				3B04A7D41E8BE13C00B317ED /* (null) in Sources */,
-				3B04A7D41E8BE13C00B317ED /* (null) in Sources */,
-				22DC7D66372DC4E7228650F9 /* (null) in Sources */,
-				22DC7A179D5E450DC80FFFDC /* (null) in Sources */,
 				22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */,
 				76B9BD381E94ECD00052B428 /* CollectionViewControllersExtensions.swift in Sources */,
 				22DC7ED806E5191FAC5E6160 /* GameScene.swift in Sources */,
