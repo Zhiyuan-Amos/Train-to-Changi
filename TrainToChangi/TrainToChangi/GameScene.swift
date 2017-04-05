@@ -26,10 +26,16 @@ enum WalkDestination {
 }
 
 class GameScene: SKScene {
-    // when `isAnimating` == true, command must wait for animation to finish before executing next command
-    fileprivate(set) var isAnimating = false
+    fileprivate var hasPaused = false // Reflects the run state, not the scene state
+
+    fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
     fileprivate let player = SKSpriteNode(imageNamed: "player")
+    fileprivate var playerPreviousPositions = Stack<CGPoint>()
+    fileprivate var playerPickupPosition: CGPoint {
+        return CGPoint(x: player.position.x,
+                       y: player.position.y - Constants.Player.pickupOffsetY)
+    }
 
     fileprivate let inbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
     fileprivate let outbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
@@ -51,12 +57,42 @@ extension GameScene {
 
     // Called by so that Scene knows data of current Level
     func initLevelState(_ level: Level) {
+        self.level = level
         initBackground()
         initPlayer()
         initInbox(values: level.initialState.inputs)
         initOutbox()
         initNotification()
         initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
+    }
+
+    // Dynamic elements include `player` position, `player` value,
+    // `payload`s on the inbox and outbox belt and on memory.
+    // This method is called when scene is changed abruptly, by buttons "Stop", "Step backward".
+    // Pass `levelState` to specify the locations of each sprite. If it's nil then re init from start.
+    // Static elements are not refreshed again.
+    func rePresentDynamicElements(levelState: LevelState? = nil) {
+        inboxNodes.forEach { inboxNode in inboxNode.removeFromParent() }
+        inboxNodes.removeAll()
+        outboxNodes.forEach { outboxNode in outboxNode.removeFromParent() }
+        outboxNodes.removeAll()
+        memoryNodes.forEach { memoryNode in memoryNode.removeFromParent() }
+        memoryNodes.removeAll()
+        player.removeAllChildren()
+        if let levelState = levelState { // game in .stepping state
+            initConveyorNodes(inboxValues: levelState.inputs, outboxValues: levelState.outputs)
+            guard let memoryLayout = memoryLayout else {
+                // `memoryLayout` should already be initialized, else this func is called wrongly
+                assertionFailure("Can't re-presenting scene with intermediate state when scene is not initialized")
+                return
+            }
+            initMemory(from: levelState.memoryValues, layout: memoryLayout)
+            let position = playerPreviousPositions.pop()
+            setPlayerAttributes(position: position, payloadValue: levelState.personValue)
+        } else { // game start from the beginning
+            initConveyorNodes(inboxValues: level.initialState.inputs)
+            setPlayerAttributes()
+        }
     }
 
     private func initBackground() {
@@ -69,7 +105,7 @@ extension GameScene {
         }
         guard let bgTile = tileSet.tileGroups.first(
             where: {$0.name == Constants.Background.tileGroup}) else {
-            fatalError("Grey Tiles definition not found")
+                fatalError("Grey Tiles definition not found")
         }
 
         backgroundTileMap = SKTileMapNode(tileSet: tileSet, columns: columns, rows: rows,
@@ -79,17 +115,37 @@ extension GameScene {
     }
 
     private func initPlayer() {
-        player.size = Constants.Player.size
-        player.position = Constants.Player.position
-        player.zPosition = Constants.Player.zPosition
+        setPlayerAttributes()
         addChild(player)
+    }
+
+    private func setPlayerAttributes(position: CGPoint? = nil, payloadValue: Int? = nil) {
+        // - If position is nil, payloadValue must be nil as well. This is to set Player at the start of the game.
+        // - When position is set, payloadValue should also be set (however payloadValue may be nil as the player
+        //   may not hold anything).
+        guard (position != nil) || (payloadValue == nil) else {
+            assertionFailure("Can't specify payload value without specifying position")
+            return
+        }
+        player.size = Constants.Player.size
+        if let position = position {
+            player.position = position
+            if let payloadValue = payloadValue {
+                holdingNode = Payload(position: playerPickupPosition, value: payloadValue)
+                addChild(holdingNode)
+                holdingNode.move(toParent: player)
+            }
+        } else {
+            player.position = Constants.Player.position
+        }
+        player.zPosition = Constants.Player.zPosition
     }
 
     private func initInbox(values: [Int]) {
         inbox.size = Constants.Inbox.size
         inbox.position = Constants.Inbox.position
         addChild(inbox)
-        initInboxNodes(from: values)
+        initConveyorNodes(inboxValues: values)
     }
 
     private func initOutbox() {
@@ -101,9 +157,11 @@ extension GameScene {
 
     private func initNotification() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(catchNotification(notification:)),
+            self, selector: #selector(handleMovePerson(notification:)),
             name: Constants.NotificationNames.movePersonInScene, object: nil)
-
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleResetScene(notification:)),
+            name: Constants.NotificationNames.resetGameScene, object: nil)
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleUpdateCommandIndex(notification:)),
             name: Constants.NotificationNames.updateCommandIndexEvent, object: nil)
@@ -118,7 +176,7 @@ extension GameScene {
         for (index, _) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 fatalError("[GameScene:initMemory] " +
-                               "Number of memory values differ from the layout specified. Check level data.")
+                    "Number of memory values differ from the layout specified. Check level data.")
             }
             let node = MemorySlot(index: index, layout: layout)
             addChild(node)
@@ -127,22 +185,38 @@ extension GameScene {
         }
     }
 
-    private func initInboxNodes(from inboxValues: [Int]) {
+    private func initConveyorNodes(inboxValues: [Int], outboxValues: [Int]? = nil) {
         inboxNodes = []
+
         for (index, value) in inboxValues.enumerated() {
-            let payload = Payload(position: calculateInboxBoxPosition(index: index), value: value)
+            let position = calculatePayloadPositionOnConveyor(index: index, forInbox: true)
+            let payload = Payload(position: position, value: value)
             inboxNodes.append(payload)
+            self.addChild(payload)
+        }
+
+        guard let outboxValues = outboxValues else { return }
+
+        outboxNodes = []
+
+        for (index, value) in outboxValues.enumerated() {
+            let position = calculatePayloadPositionOnConveyor(index: index, forInbox: false)
+            let payload = Payload(position: position, value: value)
+            outboxNodes.append(payload)
             self.addChild(payload)
         }
     }
 
-    private func calculateInboxBoxPosition(index: Int) -> CGPoint {
-        let startingX = inbox.position.x - inbox.size.width / 2 + Constants.Payload.size.width / 2
-            + Constants.Inbox.imagePadding
+    private func calculatePayloadPositionOnConveyor(index: Int, forInbox: Bool) -> CGPoint {
+        let startingX = forInbox ? Constants.Inbox.payloadStartingX : Constants.Outbox.entryPosition.x
 
-        let offsetX = CGFloat(index) * (Constants.Payload.size.width + Constants.Inbox.imagePadding)
+        let imagePadding = forInbox ? Constants.Inbox.imagePadding : Constants.Outbox.imagePadding
+        let offsetX = CGFloat(index) * (Constants.Payload.size.width + imagePadding)
 
-        return CGPoint(x: startingX + offsetX, y: inbox.position.y + Constants.Payload.imageOffsetY)
+        let x = forInbox ? startingX + offsetX : startingX - offsetX
+        let y = (forInbox ? inbox.position.y : outbox.position.y) + Constants.Payload.imageOffsetY
+
+        return CGPoint(x: x, y: y)
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -201,23 +275,32 @@ extension GameScene {
 
     // Receive notification to control the game scene. Responds accordingly.
     // notification must contains `userInfo` with "destination" defined
-    @objc fileprivate func catchNotification(notification: Notification) {
-        guard let userInfo = notification.userInfo else {
-            fatalError("[GameScene:catchNotification] Notification has no userInfo")
+    @objc fileprivate func handleMovePerson(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let destination = userInfo["destination"] as? WalkDestination else {
+            fatalError("[GameScene:handleMovePerson] Notification not set up properly")
         }
 
-        guard let destination = userInfo["destination"] as? WalkDestination else {
-            fatalError("[GameScene:catchNotification] userInfo should contain destination")
-        }
-
+        hasPaused = false
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationBegan,
                                                      object: nil, userInfo: nil))
         move(to: destination)
         //TODO: animation duration cannot be hardcoded
         DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            // this check is necessary or after 2 sec the notification will be posted when it shouldn't
+            guard !self.hasPaused else { return }
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
         })
+    }
+
+    @objc fileprivate func handleResetScene(notification: Notification) {
+        removeAllAnimations()
+        if let levelState = notification.object as? LevelState {
+            rePresentDynamicElements(levelState: levelState)
+        } else {
+            rePresentDynamicElements()
+        }
     }
 
     @objc fileprivate func handleUpdateCommandIndex(notification: Notification) {
@@ -248,6 +331,14 @@ extension GameScene {
 // MARK: - Animations
 extension GameScene {
 
+    fileprivate func removeAllAnimations() {
+        hasPaused = true
+        player.removeAllActions()
+        inboxNodes.forEach { inboxNode in inboxNode.removeAllActions() }
+        outboxNodes.forEach { outboxNode in outboxNode.removeAllActions() }
+        memoryNodes.forEach { memoryNode in memoryNode.removeAllActions() }
+    }
+
     // Move the player to a WalkDestination
     fileprivate func move(to destination: WalkDestination) {
         switch destination {
@@ -261,6 +352,7 @@ extension GameScene {
     }
 
     private func animateGoToInbox() {
+        playerPreviousPositions.push(player.position)
         // 1. walk to inbox
         let moveAction = SKAction.move(to: WalkDestination.inbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
@@ -272,9 +364,11 @@ extension GameScene {
 
             // 3. meantime inbox items move left
             self.player.run(stepAside, completion: {
-                _ = self.inboxNodes.map { node in self.moveConveyorBelt(node) }
-                let inboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
-                    timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
+                self.inboxNodes.forEach { node in self.moveConveyorBelt(node) }
+                let inboxAnimation = SKAction.repeat(
+                    SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                                     timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
+                                     resize: false, restore: true),
                     count: Constants.Animation.conveyorBeltAnimationCount)
                 self.inbox.run(inboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
             })
@@ -285,6 +379,7 @@ extension GameScene {
         guard index > 0 && index < memoryNodes.count else {
             fatalError("[GameScene:animateGoToMemory] Trying to access memory out of bound")
         }
+        playerPreviousPositions.push(player.position)
         let moveAction = SKAction.move(to: layout.locations[index],
                                        duration: Constants.Animation.moveToMemoryDuration)
         player.run(moveAction, completion: {
@@ -301,14 +396,17 @@ extension GameScene {
     }
 
     private func animateGoToOutbox() {
+        playerPreviousPositions.push(player.position)
         // 1. walk to outbox
         let moveAction = SKAction.move(to: WalkDestination.outbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
         player.run(moveAction, completion: {
             // 2. then, outbox items move left
-            _ = self.outboxNodes.map { node in self.moveConveyorBelt(node) }
-            let outboxAnimation = SKAction.repeat(SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
-                timePerFrame: Constants.Animation.conveyorBeltTimePerFrame, resize: false, restore: true),
+            self.outboxNodes.forEach { node in self.moveConveyorBelt(node) }
+            let outboxAnimation = SKAction.repeat(
+                SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                                 timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
+                                 resize: false, restore: true),
                 count: Constants.Animation.conveyorBeltAnimationCount)
             self.outbox.run(outboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
         })
