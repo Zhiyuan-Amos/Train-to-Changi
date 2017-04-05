@@ -6,6 +6,9 @@ protocol Model: class {
 
     // MARK - Variables accessed by other components.
 
+    // The state of the level during runtime.
+    var levelState: LevelState { get }
+
     // The gameplay run state.
     var runState: RunState { get set }
 

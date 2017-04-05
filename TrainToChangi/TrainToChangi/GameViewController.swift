@@ -8,7 +8,6 @@
 
 import UIKit
 import SpriteKit
-import FirebaseAuth
 
 protocol GameVCTouchDelegate: class {
     func memoryIndex(at: CGPoint) -> Int?
@@ -16,7 +15,6 @@ protocol GameVCTouchDelegate: class {
 
 class GameViewController: UIViewController {
 
-    // VC is currently first responder, to be changed when we add other views.
     fileprivate var model: Model!
     fileprivate var logic: Logic!
 
@@ -25,36 +23,22 @@ class GameViewController: UIViewController {
         registerObservers()
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         // Makes sure that user is logged in.
-        guard FIRAuth.auth()?.currentUser != nil else {
+        guard AuthService.instance.currentUserID != nil else {
             // show login viewcontroller
             performSegue(withIdentifier: "login", sender: nil)
             return
         }
     }
 
-    // Updates `model.runState` to `.running(isAnimating: true).
-    @objc fileprivate func handleAnimationBegin(notification: Notification) {
-        model.runState = .running(isAnimating: true)
-    }
-
-    // Updates `model.runState` accordingly depending on what is the current
-    // `model.runState`.
-    @objc fileprivate func handleAnimationEnd(notification: Notification) {
-        if model.runState == .running(isAnimating: true) {
-            model.runState = .running(isAnimating: false)
-        } else if model.runState == .stepping {
-            model.runState = .paused
-        }
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerObservers()
         presentGameScene()
         AudioPlayer.sharedInstance.playBackgroundMusic()
     }
@@ -77,7 +61,7 @@ class GameViewController: UIViewController {
     }
 
     /// Use GameScene to move/animate the game objects
-    func presentGameScene() {
+    private func presentGameScene() {
         let scene = GameScene(size: view.bounds.size)
         guard let skView = view as? SKView else {
             assertionFailure("View should be a SpriteKit View!")
@@ -88,7 +72,12 @@ class GameViewController: UIViewController {
         scene.initLevelState(model.currentLevel)
     }
 
-    private func registerObservers() {
+
+}
+
+// MARK -- Event Handling
+extension GameViewController {
+    fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleAnimationBegin(notification:)),
             name: Constants.NotificationNames.animationBegan, object: nil)
@@ -118,5 +107,20 @@ extension GameViewController: MapViewControllerDelegate {
             }
         }
         preconditionFailure("StationName does not exist!")
+    }
+
+    // Updates `model.runState` to `.running(isAnimating: true).
+    @objc fileprivate func handleAnimationBegin(notification: Notification) {
+        model.runState = .running(isAnimating: true)
+    }
+
+    // Updates `model.runState` accordingly depending on what is the current
+    // `model.runState`.
+    @objc fileprivate func handleAnimationEnd(notification: Notification) {
+        if model.runState == .running(isAnimating: true) {
+            model.runState = .running(isAnimating: false)
+        } else if model.runState == .stepping {
+            model.runState = .paused
+        }
     }
 }

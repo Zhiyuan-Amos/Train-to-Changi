@@ -17,6 +17,7 @@ struct Constants {
         static let size = CGSize(width: 80, height: 80)
         static let position = CGPoint(x: ViewDimensions.width * 0.2, y: ViewDimensions.height / 2)
         static let zPosition = CGFloat(10)
+        static let pickupOffsetY = CGFloat(-50)
     }
 
     struct Inbox {
@@ -26,6 +27,7 @@ struct Constants {
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x - size.width / 2, y: position.y - size.height / 2)
         static let imagePadding: CGFloat = 10
+        static let payloadStartingX = position.x - size.width / 2 + Payload.size.width / 2 + imagePadding
     }
 
     struct Outbox {
@@ -88,6 +90,14 @@ struct Constants {
         static let animationBegan = Notification.Name(rawValue: "animationBegan")
         static let animationEnded = Notification.Name(rawValue: "animationEnded")
         static let runStateUpdated = Notification.Name(rawValue: "runStateUpdated")
+        static let resetGameScene = Notification.Name(rawValue: "resetGameScene")
+        static let userAddCommandEvent = Notification.Name(rawValue: "userAddCommandEvent")
+        static let userDeleteCommandEvent = Notification.Name(rawValue: "userDeleteCommandEvent")
+        static let userResetCommandEvent = Notification.Name(rawValue: "userResetCommandEvent")
+        static let userScrollEvent = Notification.Name(rawValue: "userScrollEvent")
+        static let updateCommandIndexEvent = Notification.Name(rawValue: "updateCommandIndexEvent")
+        static let cancelUpdateCommandIndexEvent = Notification.Name(rawValue: "cancelUpdateCommandIndexEvent")
+        static let userSelectedIndexEvent = Notification.Name(rawValue: "userSelectedIndexEvent")
     }
 
     struct SegueIds {
@@ -98,30 +108,39 @@ struct Constants {
     // swiftlint:disable type_name
     struct UI {
         static let commandButtonInitialOffsetY: CGFloat = 20
-        static let commandButtonOffsetY: CGFloat = 40
-        static let commandButtonHeight: CGFloat = 50
+        static let commandButtonOffsetY: CGFloat = 30
+        static let commandButtonHeight: CGFloat = 40
 
-        static let commandButtonWidthShort: CGFloat = 60
-        static let commandButtonWidthMid: CGFloat = 80
-        static let commandButtonWidthLong: CGFloat = 100
+        static let commandButtonWidthShort: CGFloat = 40
+        static let commandButtonWidthMid: CGFloat = 60
+        static let commandButtonWidthLong: CGFloat = 80
         static let commandIndexWidth: CGFloat = 20
 
-        static let collectionViewCellIdentifier = "CommandCell"
+        static let dragDropCollectionViewCellIdentifier = "CommandCell"
+        static let lineNumberCollectionViewCellIdentifier = "LineNumberCell"
 
         static let numberOfSectionsInCollectionView = 1
 
         static let topEdgeInset: CGFloat = 10
-        static let rightEdgeInset: CGFloat = 30
+        static let rightEdgeInset: CGFloat = 10
 
         static let minimumLineSpacingForSection: CGFloat = 0
         static let minimumInteritemSpacingForSection: CGFloat = 0
 
-        static let collectionCellWidth: CGFloat = 160
+        static let collectionCellWidth: CGFloat = 100
         static let collectionCellHeight: CGFloat = 40
 
-        static let arrowWidth: CGFloat = 30
+
 
         static let programCounterOffsetX: CGFloat = 5
+
+        static let userSelectedIndexNotificationDelay = 200
+
+        struct arrowView {
+            static let originX: CGFloat = 5
+            static let originY: CGFloat = 5
+            static let arrowWidth: CGFloat = 30
+        }
     }
 
     struct Logic {
@@ -165,9 +184,9 @@ struct Constants {
             static let inbox = CommandData.inbox
             static let outbox = CommandData.outbox
             static let jump = CommandData.jump
-            static let add = CommandData.add(memoryIndex: nil)
-            static let copyTo = CommandData.copyTo(memoryIndex: nil)
-            static let copyFrom = CommandData.copyFrom(memoryIndex: nil)
+            static let add = CommandData.add(memoryIndex: 0)
+            static let copyTo = CommandData.copyTo(memoryIndex: 0)
+            static let copyFrom = CommandData.copyFrom(memoryIndex: 0)
         }
     }
 }
