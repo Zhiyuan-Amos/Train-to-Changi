@@ -41,7 +41,7 @@ class GameScene: SKScene {
     fileprivate let outbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
 
     fileprivate var inboxNodes = [SKSpriteNode]()
-    fileprivate var memoryNodes = [SKSpriteNode]()
+    fileprivate var memoryNodes = [MemorySlot]()
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
 
@@ -64,6 +64,10 @@ extension GameScene {
         initOutbox()
         initNotification()
         initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
+
+        let jedi = BossSprite(texture: nil, color: UIColor.white, size: CGSize(width: 30, height: 100))
+        jedi.position = CGPoint(x: 300, y: 700)
+        addChild(jedi)
     }
 
     // Dynamic elements include `player` position, `player` value,
@@ -159,16 +163,11 @@ extension GameScene {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleMovePerson(notification:)),
             name: Constants.NotificationNames.movePersonInScene, object: nil)
+
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleResetScene(notification:)),
             name: Constants.NotificationNames.resetGameScene, object: nil)
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleUpdateCommandIndex(notification:)),
-            name: Constants.NotificationNames.updateCommandIndexEvent, object: nil)
 
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleCancelUpdateCommandIndex(notification:)),
-            name: Constants.NotificationNames.cancelUpdateCommandIndexEvent, object: nil)
     }
 
     private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
@@ -217,35 +216,6 @@ extension GameScene {
         let y = (forInbox ? inbox.position.y : outbox.position.y) + Constants.Payload.imageOffsetY
 
         return CGPoint(x: x, y: y)
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
-        }
-
-        let location = touch.location(in: self)
-        guard let targetMemNode = nodes(at: location).first as? MemorySlot,
-              isUpdatingCommandIndex else {
-            return
-        }
-
-        for memNode in memoryNodes {
-            memNode.texture = SKTexture(imageNamed: "memory")
-        }
-
-        targetMemNode.texture = SKTexture(imageNamed: "memory-select")
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Constants.UI.userSelectedIndexNotificationDelay),
-                                      execute: {
-            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.userSelectedIndexEvent,
-                                                         object: targetMemNode.index, userInfo: nil))
-            for memNode in self.memoryNodes {
-                memNode.texture = SKTexture(imageNamed: "memory")
-            }
-            self.isUpdatingCommandIndex = false
-        })
-
     }
 }
 
@@ -300,30 +270,6 @@ extension GameScene {
             rePresentDynamicElements(levelState: levelState)
         } else {
             rePresentDynamicElements()
-        }
-    }
-
-    @objc fileprivate func handleUpdateCommandIndex(notification: Notification) {
-        guard let index = notification.object as? Int else {
-            fatalError("[GameScene:handleUpdateCommandIndex] notification object should be Int")
-        }
-        if !isUpdatingCommandIndex {
-            isUpdatingCommandIndex = true
-            let memNode = memoryNodes[index]
-            memNode.texture = SKTexture(imageNamed: "memory-select")
-        }
-
-    }
-
-    @objc fileprivate func handleCancelUpdateCommandIndex(notification: Notification) {
-        guard let index = notification.object as? Int else {
-            fatalError("[GameScene:handleUpdateCommandIndex] notification object should be Int")
-        }
-
-        if isUpdatingCommandIndex {
-            isUpdatingCommandIndex = false
-            let memNode = memoryNodes[index]
-            memNode.texture = SKTexture(imageNamed: "memory")
         }
     }
 }
@@ -473,5 +419,4 @@ extension GameScene {
         holdingNode.run(SKAction.move(to: Constants.Outbox.entryPosition,
                                       duration: Constants.Animation.holdingToOutboxDuration))
     }
-
 }
