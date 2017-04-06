@@ -17,6 +17,7 @@
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
+		3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */; };
 		3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D984F1E88FCD70026872B /* EditorViewController.swift */; };
 		3B6D98521E88FE970026872B /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98511E88FE970026872B /* ControlPanelViewController.swift */; };
 		3B6D98541E8904500026872B /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98531E8904500026872B /* AnimationHelper.swift */; };
@@ -96,6 +97,7 @@
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
+		3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGameViewController.swift; sourceTree = "<group>"; };
 		3B6D984F1E88FCD70026872B /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		3B6D98511E88FE970026872B /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		3B6D98531E8904500026872B /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
@@ -244,7 +246,7 @@
 			children = (
 				3B78A68A1E90CD1100A652D9 /* Sprites */,
 				3B78A6881E90CCC100A652D9 /* Scene */,
-				76745B721E88598D0039A771 /* ViewController */,
+				76745B721E88598D0039A771 /* ViewControllers */,
 				76745B711E8859890039A771 /* View */,
 				76745B701E88590A0039A771 /* InterfaceBuilder */,
 				3B6D98551E8904DF0026872B /* Helpers */,
@@ -333,7 +335,7 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		76745B721E88598D0039A771 /* ViewController */ = {
+		76745B721E88598D0039A771 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				3B78A6911E91554F00A652D9 /* Extensions */,
@@ -343,8 +345,9 @@
 				3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */,
 				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
 				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
+				3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */,
 			);
-			name = ViewController;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		9B63AE3251D6DD16A6115493 /* Frameworks */ = {
@@ -625,6 +628,7 @@
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
+				3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */,
 				A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */,
 				3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,

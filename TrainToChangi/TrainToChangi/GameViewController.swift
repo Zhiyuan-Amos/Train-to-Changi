@@ -35,7 +35,7 @@ class GameViewController: UIViewController {
         registerObservers()
         presentGameScene()
         animateTrain()
-        // AudioPlayer.sharedInstance.playBackgroundMusic()
+        AudioPlayer.sharedInstance.playBackgroundMusic()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -64,6 +64,27 @@ class GameViewController: UIViewController {
         trainUIImage.animationImages = trainFrames
         trainUIImage.animationDuration = 1.5
         trainUIImage.startAnimating()
+    }
+
+    fileprivate func animateTrainWhenGameWon() {
+        var trainFrames = [UIImage]()
+
+        trainFrames.append(UIImage(named: "train_vert0")!)
+        trainFrames.append(UIImage(named: "train_vert8")!)
+
+        trainUIImage.stopAnimating()
+        trainUIImage.animationImages = trainFrames
+        trainUIImage.animationDuration = 0.5
+        trainUIImage.animationRepeatCount = 3
+        trainUIImage.startAnimating()
+    }
+
+    fileprivate func displayEndGameScreen() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "EndGameViewController")
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        self.present(controller, animated: true, completion: nil)
     }
 
     /// Use GameScene to move/animate the game objects
@@ -130,6 +151,11 @@ extension GameViewController: MapViewControllerDelegate {
             model.runState = .running(isAnimating: false)
         } else if model.runState == .stepping(isAnimating: true) {
             model.runState = .paused
+        } else if model.runState == .won {
+            animateTrainWhenGameWon()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+                self.displayEndGameScreen()
+            })
         }
     }
 }
