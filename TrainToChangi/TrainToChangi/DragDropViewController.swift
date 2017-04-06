@@ -321,12 +321,7 @@ extension DragDropViewController {
         case .running, .won, .stepping:
             resetButton.isEnabled = false
             currentCommandsView.isUserInteractionEnabled = false
-        //TODO: update this to restart level when reset / current
-        // commands view is touched in these game states
-        case .paused, .lost:
-            resetButton.isEnabled = false
-            currentCommandsView.isUserInteractionEnabled = false
-        case .start:
+        case .paused, .lost, .start:
             resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
         }

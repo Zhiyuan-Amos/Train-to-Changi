@@ -70,6 +70,14 @@ class EditorViewController: UIViewController {
         NotificationCenter.default.post(name: Constants.NotificationNames.userAddCommandEvent,
                                         object: command,
                                         userInfo: nil)
+
+        switch model.runState {
+        case .paused, .lost:
+            break
+            //TODO: reset game state. EditorVC, ControlPanelVC, DragDropVC
+        default:
+            break
+        }
     }
 }
 
@@ -88,11 +96,9 @@ extension EditorViewController {
             availableCommandsView.isUserInteractionEnabled = false
             availableCommandsView.isHidden = true
         case .paused, .lost:
-            currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isHidden = true
         case .start:
-            currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isHidden = false
         }
