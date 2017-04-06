@@ -182,7 +182,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="playButtonPressed:" destination="KBR-OJ-fFv" eventType="touchUpInside" id="MOK-zA-1Ut"/>
+                                            <action selector="playPauseButtonPressed:" destination="KBR-OJ-fFv" eventType="touchUpInside" id="wIm-3y-2Y7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -200,7 +200,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="playButton" destination="s7J-KX-aRt" id="Qba-gU-V4M"/>
+                        <outlet property="playPauseButton" destination="s7J-KX-aRt" id="FaS-fE-OTZ"/>
                         <outlet property="stepBackButton" destination="agn-4v-A72" id="bnS-WE-UVk"/>
                         <outlet property="stepForwardButton" destination="ODL-16-rW8" id="owa-C9-yYl"/>
                         <outlet property="stopButton" destination="z2T-qC-EX0" id="5mQ-Un-fJx"/>

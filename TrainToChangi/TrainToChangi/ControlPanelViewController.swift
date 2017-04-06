@@ -15,7 +15,7 @@ class ControlPanelViewController: UIViewController {
 
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var stepBackButton: UIButton!
-    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var stepForwardButton: UIButton!
 
     override func viewDidLoad() {
@@ -24,10 +24,10 @@ class ControlPanelViewController: UIViewController {
 
     // Updates whether the buttons are enabled.
     private func updateButtons(stopButtonIsEnabled: Bool, stepBackButtonIsEnabled: Bool,
-                               playButtonIsEnabled: Bool, stepForwardButtonIsEnabled: Bool) {
+                               playPauseButtonIsEnabled: Bool, stepForwardButtonIsEnabled: Bool) {
         stopButton.isEnabled = stopButtonIsEnabled
         stepBackButton.isEnabled = stepBackButtonIsEnabled
-        playButton.isEnabled = playButtonIsEnabled
+        playPauseButton.isEnabled = playPauseButtonIsEnabled
         stepForwardButton.isEnabled = stepForwardButtonIsEnabled
     }
 
@@ -36,23 +36,29 @@ class ControlPanelViewController: UIViewController {
         switch model.runState {
         case .running:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
-                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: true)
+                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+            playPauseButton.setImage(UIImage(named: "pausebutton"), for: .normal)
         case .paused:
             let stepBackButtonIsEnabled = !logic.canUndo
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
-                          playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
         case .lost:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
-                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
         case .won:
             updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
-                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
         case .stepping:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: false,
-                          playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
         case .start:
             updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
-                          playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
         }
     }
 
@@ -91,10 +97,18 @@ class ControlPanelViewController: UIViewController {
             logic.stepForward()
         }
     }
-
-    @IBAction func playButtonPressed(_ sender: UIButton) {
-        model.runState = .running(isAnimating: false)
-        logic.run()
+    // if .running then make it pausebutton. as long as not running, make it play button.
+    @IBAction func playPauseButtonPressed(_ sender: UIButton) {
+        if playPauseButton.currentImage == UIImage(named: "playbutton") {
+            model.runState = .running(isAnimating: false)
+            logic.run()
+        } else if playPauseButton.currentImage == UIImage(named: "pausebutton") {
+            if model.runState == .running(isAnimating: false) {
+                model.runState = .stepping(isAnimating: false)
+            } else if model.runState == .running(isAnimating: true) {
+                model.runState = .stepping(isAnimating: true)
+            }
+        }
     }
 
     private func registerObservers() {
