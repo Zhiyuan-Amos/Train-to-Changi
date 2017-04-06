@@ -38,7 +38,7 @@ class ControlPanelViewController: UIViewController {
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
                           playButtonIsEnabled: false, stepForwardButtonIsEnabled: true)
         case .paused:
-            let stepBackButtonIsEnabled = logic.canUndo ? false : true
+            let stepBackButtonIsEnabled = !logic.canUndo
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
                           playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
         case .lost:

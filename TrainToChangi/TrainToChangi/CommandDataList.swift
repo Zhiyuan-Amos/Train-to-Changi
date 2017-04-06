@@ -383,10 +383,7 @@ class CommandDataListIterator {
                 return
             }
 
-            index != nil ? NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
-                                                           object: nil, userInfo: ["index": index!]) :
-                            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
-                                                            object: nil, userInfo: nil)
+            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter, object: nil, userInfo: index != nil ? ["index": index!] : nil)
         }
     }
 
