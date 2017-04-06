@@ -18,8 +18,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
 
         GIDSignIn.sharedInstance().uiDelegate = self
-//        GIDSignIn.sharedInstance().signIn()
-        // Configure the sign-in button look/feel
+        if AuthService.instance.currentUserID != nil {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 
 }

@@ -30,4 +30,5 @@ class AuthService {
             DataService.instance.saveUser(uid: user!.uid)
         })
     }
+
 }
