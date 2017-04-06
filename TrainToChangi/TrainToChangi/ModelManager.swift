@@ -42,7 +42,7 @@ class ModelManager: Model {
             }
 
             let notification = Notification(name: Constants.NotificationNames.runStateUpdated,
-                                            object: nil, userInfo: nil)
+                                            object: newState, userInfo: nil)
             NotificationCenter.default.post(notification)
         }
     }

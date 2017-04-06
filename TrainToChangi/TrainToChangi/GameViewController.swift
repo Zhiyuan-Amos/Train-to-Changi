@@ -9,11 +9,9 @@
 import UIKit
 import SpriteKit
 
-protocol GameVCTouchDelegate: class {
-    func memoryIndex(at: CGPoint) -> Int?
-}
-
 class GameViewController: UIViewController {
+
+    @IBOutlet weak var trainUIImage: UIImageView!
 
     fileprivate var model: Model!
     fileprivate var logic: Logic!
@@ -40,6 +38,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         registerObservers()
         presentGameScene()
+        animateTrain()
         AudioPlayer.sharedInstance.playBackgroundMusic()
     }
 
@@ -60,16 +59,42 @@ class GameViewController: UIViewController {
         })
     }
 
+    private func animateTrain() {
+        var trainFrames = [UIImage]()
+        for index in 0...Constants.UI.trainView.numTrainFrames {
+            let frame = UIImage(named: "train_vert\(index)")!
+            trainFrames.append(frame)
+        }
+        trainUIImage.animationImages = trainFrames
+        trainUIImage.animationDuration = 1.5
+        trainUIImage.startAnimating()
+    }
+
+    fileprivate func animateTrainWhenGameWon() {
+        trainUIImage.stopAnimating()
+        trainUIImage.animationImages = Constants.UI.trainView.gameWonTrainFrames
+        trainUIImage.animationDuration = Constants.UI.trainView.gameWonTrainAnimationDuration
+        trainUIImage.animationRepeatCount = Constants.UI.trainView.gameWonTrainAnimationRepeatCount
+        trainUIImage.startAnimating()
+    }
+
+    fileprivate func displayEndGameScreen() {
+        let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: Constants.UI.endGameViewControllerIdentifier)
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        self.present(controller, animated: true, completion: nil)
+    }
+
     /// Use GameScene to move/animate the game objects
     private func presentGameScene() {
-        let scene = GameScene(size: view.bounds.size)
+        let scene = GameScene(model.currentLevel, size: view.bounds.size)
         guard let skView = view as? SKView else {
             assertionFailure("View should be a SpriteKit View!")
             return
         }
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
-        scene.initLevelState(model.currentLevel)
     }
 }
 
@@ -123,6 +148,11 @@ extension GameViewController: MapViewControllerDelegate {
             model.runState = .running(isAnimating: false)
         } else if model.runState == .stepping(isAnimating: true) {
             model.runState = .paused
+        } else if model.runState == .won {
+            animateTrainWhenGameWon()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay), execute: {
+                self.displayEndGameScreen()
+            })
         }
     }
 }

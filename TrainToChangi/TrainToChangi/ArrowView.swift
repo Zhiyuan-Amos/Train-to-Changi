@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO - refactor magic numbers
 @IBDesignable class ArrowView: UIView {
 
     override init(frame: CGRect) {
