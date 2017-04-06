@@ -19,7 +19,7 @@ class ModelManager: Model {
         // State machine
         set(newState) {
             switch runState {
-            case .running, .paused:
+            case .running, .paused, .start:
                 levelState.runState = newState
             case .won:
                 // when game is won, user should not be allowed to set the `runState`
@@ -27,7 +27,7 @@ class ModelManager: Model {
                 break
             case .lost:
                 switch newState {
-                case .paused:
+                case .paused, .stepping(isAnimating: false):
                     levelState.runState = newState
                 default:
                     break
@@ -50,7 +50,7 @@ class ModelManager: Model {
         get {
             return levelState.numSteps
         }
-        set(newValue) {
+        set {
             levelState.numSteps = newValue
         }
     }
