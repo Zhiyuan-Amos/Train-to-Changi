@@ -54,6 +54,9 @@ extension AppDelegate: GIDSignInDelegate {
 
         AuthService.instance.login(credential: credential)
         // Segue away.
+//        let mainStoryboard: UIStoryboard = UIStoryboard(name:"Main", bundle: nil)
+//
+//        self.window?.rootViewController?.performSegue(withIdentifier: "HomeViewSegue", sender: nil)
     }
 
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
