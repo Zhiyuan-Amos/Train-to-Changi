@@ -55,6 +55,7 @@ class DragDropViewController: UIViewController {
                 self.model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
             }
             self.currentCommandsView.reloadData()
+            self.renderJumpArrows()
         }) { (error) in
             print(error.localizedDescription)
         }
