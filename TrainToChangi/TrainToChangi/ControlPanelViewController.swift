@@ -69,30 +69,25 @@ class ControlPanelViewController: UIViewController {
     // Undo the previous command. If game is already playing, sets `model.runState`
     // to `.stepping` and stops after current command execution.
     @IBAction func stepBackButtonPressed(_ sender: UIButton) {
-        //TODO: buggy here.
-        DispatchQueue.global(qos: .background).async {
-            while self.model.runState == .running(isAnimating: false) {}
-
-            DispatchQueue.main.async {
-                if self.model.runState == .running(isAnimating: true) {
-                    self.model.runState = .stepping(isAnimating: true)
-                } else {
-                    self.model.runState = .stepping(isAnimating: false)
-                    self.logic.stepBack()
-                }
-            }
+        if model.runState == .running(isAnimating: false) {
+            model.runState = .stepping(isAnimating: false)
+        } else if model.runState == .running(isAnimating: true) {
+            model.runState = .stepping(isAnimating: true)
+        } else {
+            logic.stepBack()
+            model.runState = .paused
         }
     }
 
     // Executes the next command. If game is already playing, sets `model.runState`
     // to `.stepping` and stops after current command execution.
     @IBAction func stepForwardButtonPressed(_ sender: UIButton) {
-        let currentRunState = model.runState
-        model.runState = currentRunState == .running(isAnimating: true) ?
-            .stepping(isAnimating: true) : .stepping(isAnimating: false)
-
-        //TODO: buggy here
-        if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
+        if model.runState == .running(isAnimating: false) {
+            model.runState = .stepping(isAnimating: false)
+        } else if model.runState == .running(isAnimating: true) {
+            model.runState = .stepping(isAnimating: true)
+        } else {
+            model.runState = .stepping(isAnimating: false)
             logic.stepForward()
         }
     }
