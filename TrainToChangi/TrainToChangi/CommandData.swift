@@ -22,10 +22,19 @@ enum CommandData {
         case .outbox:
             return "outbox"
         case .copyFrom(let index):
+            if let index = index {
+                return "copyFrom_\(index)"
+            }
             return "copyFrom_\(index)"
         case .copyTo(let index):
+            if let index = index {
+                return "copyTo_\(index)"
+            }
             return "copyTo_\(index)"
         case .add(let index):
+            if let index = index {
+                return "add_\(index)"
+            }
             return "add_\(index)"
         case .jump:
             return "jump"
