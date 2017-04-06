@@ -15,30 +15,27 @@ class CommandCell: UICollectionViewCell {
 
     func setImageAndIndex(commandType: CommandData) {
         let imagePath = commandType.toFilePath() + ".png"
+
         switch commandType {
         case .add(let index):
             setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    indexImageName: "mathindex.png",
                                     width: Constants.UI.commandButtonWidthShort)
 
         case .copyFrom(let index), .copyTo(let index):
             setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    indexImageName: "copyindex.png",
                                     width: Constants.UI.commandButtonWidthLong)
 
         case .inbox, .outbox, .jump(_), .jumpTarget:
             setCommandImageAndIndex(imageName: imagePath, index: nil,
-                                    indexImageName: nil, width: Constants.UI.commandButtonWidthMid)
+                                    width: Constants.UI.commandButtonWidthMid)
         }
     }
 
-    private func setCommandImageAndIndex(imageName: String, index: Int?,
-                                         indexImageName: String?, width: CGFloat) {
+    private func setCommandImageAndIndex(imageName: String, index: Int?, width: CGFloat) {
 
         commandImage.image = UIImage(named: imageName)
 
-        if let indexImageName = indexImageName,
-           let index = index {
+        if let index = index {
             commandIndex.text = "\(index)"
             commandIndex.isHidden = false
         } else {

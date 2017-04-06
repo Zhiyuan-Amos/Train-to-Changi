@@ -70,6 +70,10 @@ class MapViewController: UIViewController {
             assertionFailure("Segue has a name unaccounted for")
         }
     }
+
+    @IBAction func cancelFromEndGameScreen(segue: UIStoryboardSegue) {
+        AudioPlayer.sharedInstance.stopBackgroundMusic()
+    }
 }
 
 extension MapViewController: MapSceneDelegate {
