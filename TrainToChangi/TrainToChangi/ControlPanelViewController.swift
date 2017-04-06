@@ -10,16 +10,32 @@ import UIKit
 
 class ControlPanelViewController: UIViewController {
 
+
     var model: Model!
     var logic: Logic!
-
+    
+    @IBOutlet weak var speedSlider: UISlider!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var stepBackButton: UIButton!
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var stepForwardButton: UIButton!
 
+    @IBAction func sliderShifted(_ sender: UISlider) {
+        
+    }
+
     override func viewDidLoad() {
+        initSlider()
         registerObservers()
+    }
+
+    private func initSlider() {
+        speedSlider.minimumTrackTintColor = UIColor.init(red: 0.501, green: 0.796,
+                                                         blue: 0.768, alpha: 1)
+        speedSlider.thumbTintColor = UIColor.init(red: 0, green: 0.588,
+                                                  blue: 0.533, alpha: 1)
+        speedSlider.maximumTrackTintColor = UIColor.init(red: 0, green: 0.301,
+                                                         blue: 0.251, alpha: 1)
     }
 
     // Updates whether the buttons are enabled.

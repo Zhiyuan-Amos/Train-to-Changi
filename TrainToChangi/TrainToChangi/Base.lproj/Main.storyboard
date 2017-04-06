@@ -101,7 +101,7 @@
                                     <action selector="exitButtonPressed:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Lrn-6G-t5d"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="train_vert" translatesAutoresizingMaskIntoConstraints="NO" id="pir-D3-pGS">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="train_vert0" translatesAutoresizingMaskIntoConstraints="NO" id="pir-D3-pGS">
                                 <rect key="frame" x="0.0" y="0.0" width="176" height="691"/>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -162,7 +162,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jft-9R-iCA" userLabel="Level Description">
                                 <rect key="frame" x="76" y="20" width="206" height="126"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -182,9 +182,9 @@
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d08-m5-x39" userLabel="Commands">
-                                <rect key="frame" x="0.0" y="139" width="77" height="7"/>
+                                <rect key="frame" x="-1" y="143" width="77" height="7"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.60000002379999995" green="0.40000000600000002" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -261,14 +261,25 @@
                                             <action selector="stepForwardButtonPressed:" destination="KBR-OJ-fFv" eventType="touchUpInside" id="Yyq-XJ-1tO"/>
                                         </connections>
                                     </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" minimumValueImage="minspeed" maximumValueImage="maxspeed" translatesAutoresizingMaskIntoConstraints="NO" id="IY1-ui-eIi">
+                                        <rect key="frame" x="19" y="66" width="245" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="minimumTrackTintColor" red="0.58823529411764708" green="0.80392156862745101" blue="0.76862745098039209" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" red="0.0" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" red="0.0" green="0.77647058823529413" blue="0.53151328890931371" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="sliderShifted:" destination="KBR-OJ-fFv" eventType="valueChanged" id="7sR-X3-6q1"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
-                                <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.60000002384185791" green="0.40000000596046448" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="playPauseButton" destination="s7J-KX-aRt" id="FaS-fE-OTZ"/>
+                        <outlet property="speedSlider" destination="IY1-ui-eIi" id="llO-3v-h8e"/>
                         <outlet property="stepBackButton" destination="agn-4v-A72" id="bnS-WE-UVk"/>
                         <outlet property="stepForwardButton" destination="ODL-16-rW8" id="owa-C9-yYl"/>
                         <outlet property="stopButton" destination="z2T-qC-EX0" id="5mQ-Un-fJx"/>
@@ -438,12 +449,14 @@
     <resources>
         <image name="clipboard" width="675" height="920"/>
         <image name="exit" width="176" height="87"/>
+        <image name="maxspeed" width="48" height="29"/>
+        <image name="minspeed" width="23" height="29"/>
         <image name="playbutton" width="188" height="187"/>
         <image name="program-counter" width="150" height="151"/>
         <image name="reset" width="537" height="536"/>
         <image name="stepback" width="188" height="186"/>
         <image name="stepforward" width="188" height="187"/>
         <image name="stopbutton" width="188" height="187"/>
-        <image name="train_vert" width="16" height="16"/>
+        <image name="train_vert0" width="353" height="952"/>
     </resources>
 </document>

@@ -238,27 +238,6 @@ extension GameScene {
     }
 }
 
-// MARK: - Touch
-extension GameScene: GameVCTouchDelegate {
-
-    // Accepts a CGPoint and returns the index of memory if the touch is inside the memory grid.
-    // Returns nil if `userTouchedPoint` is outside the grid.
-    func memoryIndex(at userTouchedPoint: CGPoint) -> Int? {
-        guard let centers = memoryLayout?.locations else {
-            fatalError("[GameScene:memoryIndex] memoryLayout has not been initialized")
-        }
-
-        // there have to be at least one memory location to detect
-        guard centers.count > 0 else {
-            return nil
-        }
-
-        // calculate distance between `point` and each memory center, return the one with the min distance
-        let distancesToPoint: [CGFloat] = memoryNodes.map { $0.position.distance(to: userTouchedPoint) }
-        return distancesToPoint.index(of: distancesToPoint.min()!)
-    }
-}
-
 // MARK: - Notification
 extension GameScene {
 

@@ -9,10 +9,6 @@
 import UIKit
 import SpriteKit
 
-protocol GameVCTouchDelegate: class {
-    func memoryIndex(at: CGPoint) -> Int?
-}
-
 class GameViewController: UIViewController {
 
     @IBOutlet weak var trainUIImage: UIImageView!
