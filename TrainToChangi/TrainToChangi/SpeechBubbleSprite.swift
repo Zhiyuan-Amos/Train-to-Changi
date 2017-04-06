@@ -14,12 +14,13 @@ class SpeechBubbleSprite: SKSpriteNode {
 
     init(text: String, size: CGSize) {
         label = SKLabelNode(text: text)
-        label.fontName = "HelveticaNeue-Bold"
-        label.fontSize = 12
-        label.position = CGPoint(x: 0, y: 0)
-        label.fontColor = UIColor.black
+        label.fontName = Constants.SpeechBubble.fontName
+        label.fontSize = Constants.SpeechBubble.fontSize
+        label.fontColor = Constants.SpeechBubble.fontColor
+        label.position = CGPoint.zero
 
-        super.init(texture: SKTexture(imageNamed: "speech"), color: UIColor.white, size: size)
+
+        super.init(texture: Constants.SpeechBubble.texture, color: UIColor.white, size: size)
         self.isUserInteractionEnabled = true
         self.isHidden = true
         self.addChild(label)

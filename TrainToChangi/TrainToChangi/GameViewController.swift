@@ -57,7 +57,7 @@ class GameViewController: UIViewController {
 
     private func animateTrain() {
         var trainFrames = [UIImage]()
-        for index in 0...7 {
+        for index in 0...Constants.UI.trainView.numTrainFrames {
             let frame = UIImage(named: "train_vert\(index)")!
             trainFrames.append(frame)
         }
@@ -67,21 +67,16 @@ class GameViewController: UIViewController {
     }
 
     fileprivate func animateTrainWhenGameWon() {
-        var trainFrames = [UIImage]()
-
-        trainFrames.append(UIImage(named: "train_vert0")!)
-        trainFrames.append(UIImage(named: "train_vert8")!)
-
         trainUIImage.stopAnimating()
-        trainUIImage.animationImages = trainFrames
-        trainUIImage.animationDuration = 0.5
-        trainUIImage.animationRepeatCount = 3
+        trainUIImage.animationImages = Constants.UI.trainView.gameWonTrainFrames
+        trainUIImage.animationDuration = Constants.UI.trainView.gameWonTrainAnimationDuration
+        trainUIImage.animationRepeatCount = Constants.UI.trainView.gameWonTrainAnimationRepeatCount
         trainUIImage.startAnimating()
     }
 
     fileprivate func displayEndGameScreen() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "EndGameViewController")
+        let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: Constants.UI.endGameViewControllerIdentifier)
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         self.present(controller, animated: true, completion: nil)
@@ -153,7 +148,7 @@ extension GameViewController: MapViewControllerDelegate {
             model.runState = .paused
         } else if model.runState == .won {
             animateTrainWhenGameWon()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay), execute: {
                 self.displayEndGameScreen()
             })
         }

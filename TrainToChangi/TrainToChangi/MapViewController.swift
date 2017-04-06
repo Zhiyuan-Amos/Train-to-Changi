@@ -72,6 +72,7 @@ class MapViewController: UIViewController {
     }
 
     @IBAction func cancelFromEndGameScreen(segue: UIStoryboardSegue) {
+        AudioPlayer.sharedInstance.stopBackgroundMusic()
     }
 }
 

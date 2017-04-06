@@ -54,7 +54,7 @@ class GameScene: SKScene {
     init(_ level: Level, size: CGSize) {
         self.level = level
 
-        jedi = JediSprite(texture: SKTexture(imageNamed: "jedi_01"),
+        jedi = JediSprite(texture: Constants.Jedi.texture,
                           color: UIColor.white,
                           size: CGSize(width: Constants.Jedi.width, height: Constants.Jedi.height))
         jedi.position = CGPoint(x: Constants.Jedi.positionX, y: Constants.Jedi.positionY)

@@ -54,6 +54,8 @@ struct Constants {
         static let labelOffsetY: CGFloat = -20
         static let fontColor = UIColor.darkGray
         static let size = CGSize(width: 60, height: 60)
+        static let memoryTexture = SKTexture(imageNamed: "memory")
+        static let memorySelectTexture = SKTexture(imageNamed: "memory-select")
     }
 
     struct Payload {
@@ -78,6 +80,8 @@ struct Constants {
         static let width = 50
         static let positionX = 300
         static let positionY = 700
+
+        static let texture = SKTexture(imageNamed: "jedi_01")
     }
 
     struct SpeechBubble {
@@ -85,6 +89,12 @@ struct Constants {
         static let width = 250
         static let positionX = 350
         static let positionY = 580
+
+        static let fontName = "HelveticaNeue-Bold"
+        static let fontSize: CGFloat = 14
+        static let fontColor = UIColor.black
+
+        static let texture = SKTexture(imageNamed: "speech")
     }
 
     struct Map {
@@ -128,6 +138,9 @@ struct Constants {
 
     // swiftlint:disable type_name
     struct UI {
+        static let mainStoryboardIdentifier = "Main"
+        static let endGameViewControllerIdentifier = "EndGameViewController"
+
         static let commandButtonInitialOffsetY: CGFloat = 20
         static let commandButtonOffsetY: CGFloat = 30
         static let commandButtonHeight: CGFloat = 40
@@ -154,12 +167,23 @@ struct Constants {
         static let programCounterOffsetX: CGFloat = 5
 
         static let userSelectedIndexNotificationDelay = 200
+        static let endGameScreenDisplayDelay = 2
 
         struct arrowView {
             static let originX: CGFloat = 5
             static let originY: CGFloat = 5
             static let arrowWidth: CGFloat = 30
         }
+
+        struct trainView {
+            static let numTrainFrames = 7
+            static let trainAnimationDuration = 1.5
+
+            static let gameWonTrainFrames = [UIImage(named: "train_vert0")!, UIImage(named: "train_vert8")!]
+            static let gameWonTrainAnimationDuration = 0.5
+            static let gameWonTrainAnimationRepeatCount = 3
+        }
+
     }
 
     struct Time {

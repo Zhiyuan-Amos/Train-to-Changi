@@ -16,7 +16,7 @@ class MemorySlot: SKSpriteNode {
         self.index = index
         self.layout = layout
 
-        let texture = SKTexture(imageNamed: "memory")
+        let texture = Constants.Memory.memoryTexture
         // this initializer is the only designated one
         super.init(texture: texture, color: UIColor.clear, size: Constants.Memory.size)
         self.name = "memory \(index)"
@@ -68,7 +68,7 @@ extension MemorySlot {
 
         isUpdatingCommandIndex = true
         if self.index == index {
-            self.texture = SKTexture(imageNamed: "memory-select")
+            self.texture = Constants.Memory.memorySelectTexture
         }
     }
 
@@ -78,6 +78,6 @@ extension MemorySlot {
         }
 
         isUpdatingCommandIndex = false
-        self.texture = SKTexture(imageNamed: "memory")
+        self.texture = Constants.Memory.memoryTexture
     }
 }
