@@ -24,7 +24,7 @@
 		3B78A68C1E9124CF00A652D9 /* DragDropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */; };
 		3B78A68E1E91545700A652D9 /* LineNumberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B78A68D1E91545700A652D9 /* LineNumberCell.swift */; };
 		3B78A6931E915A1E00A652D9 /* LineNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */; };
-		3BC852BF1E94833B0098042A /* BossSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC852BE1E94833B0098042A /* BossSprite.swift */; };
+		3BC852BF1E94833B0098042A /* JediSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC852BE1E94833B0098042A /* JediSprite.swift */; };
 		3BD7EF9C1E812F790029EA57 /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9B1E812F790029EA57 /* Levels.plist */; };
 		3BD7EF9E1E8146350029EA57 /* SavedLevel.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */; };
 		76745B6D1E8855870039A771 /* MapScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76745B6C1E8855870039A771 /* MapScene.sks */; };
@@ -103,7 +103,7 @@
 		3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragDropViewController.swift; sourceTree = "<group>"; };
 		3B78A68D1E91545700A652D9 /* LineNumberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberCell.swift; sourceTree = "<group>"; };
 		3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberViewController.swift; sourceTree = "<group>"; };
-		3BC852BE1E94833B0098042A /* BossSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BossSprite.swift; sourceTree = "<group>"; };
+		3BC852BE1E94833B0098042A /* JediSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JediSprite.swift; sourceTree = "<group>"; };
 		3BD7EF9B1E812F790029EA57 /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		3BD7EF9D1E8146350029EA57 /* SavedLevel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SavedLevel.plist; sourceTree = "<group>"; };
 		643F58446F16E7D83958F6FB /* Pods-TrainToChangiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -277,7 +277,7 @@
 				22DC750125724E9BA28BA9EB /* Memory.swift */,
 				22DC76E79326E3E327A4B086 /* MemorySlot.swift */,
 				22DC7A12469B8258C38128E2 /* Payload.swift */,
-				3BC852BE1E94833B0098042A /* BossSprite.swift */,
+				3BC852BE1E94833B0098042A /* JediSprite.swift */,
 				3B05F91E1E94FFBF009B4F5F /* SpeechBubbleSprite.swift */,
 			);
 			name = Sprites;
@@ -631,7 +631,7 @@
 				3B10D8491E9272C300EFCDAC /* ArrowView.swift in Sources */,
 				3B78A68E1E91545700A652D9 /* LineNumberCell.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
-				3BC852BF1E94833B0098042A /* BossSprite.swift in Sources */,
+				3BC852BF1E94833B0098042A /* JediSprite.swift in Sources */,
 				A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */,
 				76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,

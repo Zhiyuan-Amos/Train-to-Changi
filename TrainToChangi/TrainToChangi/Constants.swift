@@ -68,7 +68,23 @@ struct Constants {
         // Rotate a random value from 0 degrees to 5 degrees
         static var rotationAngle: CGFloat {
             return CGFloat((.pi / 36) * drand48())
+
+
         }
+    }
+
+    struct Jedi {
+        static let height = 100
+        static let width = 50
+        static let positionX = 300
+        static let positionY = 700
+    }
+
+    struct SpeechBubble {
+        static let height = 150
+        static let width = 250
+        static let positionX = 350
+        static let positionY = 580
     }
 
     struct Map {

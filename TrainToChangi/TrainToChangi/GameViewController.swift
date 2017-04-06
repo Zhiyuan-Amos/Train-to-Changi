@@ -68,14 +68,13 @@ class GameViewController: UIViewController {
 
     /// Use GameScene to move/animate the game objects
     private func presentGameScene() {
-        let scene = GameScene(size: view.bounds.size)
+        let scene = GameScene(model.currentLevel, size: view.bounds.size)
         guard let skView = view as? SKView else {
             assertionFailure("View should be a SpriteKit View!")
             return
         }
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
-        scene.initLevelState(model.currentLevel)
     }
 }
 

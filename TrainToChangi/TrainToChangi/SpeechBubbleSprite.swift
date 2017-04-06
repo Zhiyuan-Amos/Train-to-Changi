@@ -10,22 +10,21 @@ import SpriteKit
 
 class SpeechBubbleSprite: SKSpriteNode {
 
-    var text: String
+    fileprivate var label: SKLabelNode
 
     init(text: String, size: CGSize) {
-        self.text = text
-        super.init(texture: SKTexture(imageNamed: "speech"), color: UIColor.white, size: size)
-        self.isUserInteractionEnabled = true
-
-        let label = SKLabelNode(text: text)
+        label = SKLabelNode(text: text)
         label.fontName = "HelveticaNeue-Bold"
         label.fontSize = 12
         label.position = CGPoint(x: 0, y: 0)
         label.fontColor = UIColor.black
+
+        super.init(texture: SKTexture(imageNamed: "speech"), color: UIColor.white, size: size)
+        self.isUserInteractionEnabled = true
+        self.isHidden = true
         self.addChild(label)
 
         registerObservers()
-        self.isHidden = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -40,9 +39,27 @@ extension SpeechBubbleSprite {
             self, selector: #selector(handleToggleSpeech(notification:)),
             name: Constants.NotificationNames.toggleSpeechEvent, object: nil)
 
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleRunStateUpdate(notification:)),
+            name: Constants.NotificationNames.runStateUpdated, object: nil)
+
     }
 
     @objc fileprivate func handleToggleSpeech(notification: Notification) {
         self.isHidden = !self.isHidden
+    }
+
+    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
+        guard let newState = notification.object as? RunState else {
+            return
+        }
+
+        switch newState {
+        case .lost:
+            self.label.text = "The output is incorrect!"
+            self.isHidden = false
+        default:
+            break
+        }
     }
 }

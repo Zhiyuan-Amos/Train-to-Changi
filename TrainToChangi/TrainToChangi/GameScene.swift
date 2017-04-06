@@ -44,20 +44,31 @@ class GameScene: SKScene {
     fileprivate var memoryNodes = [MemorySlot]()
     fileprivate var outboxNodes = [SKSpriteNode]()
     fileprivate var holdingNode = SKSpriteNode()
+    fileprivate var jedi: JediSprite
+    fileprivate var speechBubble: SpeechBubbleSprite
 
     fileprivate var memoryLayout: Memory.Layout?
 
     fileprivate var backgroundTileMap: SKTileMapNode!
 
-    fileprivate var isUpdatingCommandIndex = false
-}
-
-// MARK: - Init
-extension GameScene {
-
-    // Called by so that Scene knows data of current Level
-    func initLevelState(_ level: Level) {
+    init(_ level: Level, size: CGSize) {
         self.level = level
+
+        jedi = JediSprite(texture: SKTexture(imageNamed: "jedi_01"),
+                          color: UIColor.white,
+                          size: CGSize(width: Constants.Jedi.width, height: Constants.Jedi.height))
+        jedi.position = CGPoint(x: Constants.Jedi.positionX, y: Constants.Jedi.positionY)
+
+        speechBubble = SpeechBubbleSprite(text: "",
+                                          size: CGSize(width: Constants.SpeechBubble.width,
+                                                       height: Constants.SpeechBubble.height))
+        speechBubble.position = CGPoint(x: Constants.SpeechBubble.positionX,
+                                        y: Constants.SpeechBubble.positionY)
+
+        super.init(size: size)
+    }
+
+    override func didMove(to view: SKView) {
         initBackground()
         initPlayer()
         initInbox(values: level.initialState.inputs)
@@ -65,15 +76,17 @@ extension GameScene {
         initNotification()
         initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
 
-        let jedi = BossSprite(texture: SKTexture(imageNamed: "jedi_01"), color: UIColor.white,
-                              size: CGSize(width: 50, height: 100))
-        jedi.position = CGPoint(x: 300, y: 700)
         addChild(jedi)
-
-        let speech = SpeechBubbleSprite(text: "HELLOOOOOOOOOOOO", size: CGSize(width: 250, height: 150))
-        speech.position = CGPoint(x: 350, y: 580)
-        addChild(speech)
+        addChild(speechBubble)
     }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Init
+extension GameScene {
 
     // Dynamic elements include `player` position, `player` value,
     // `payload`s on the inbox and outbox belt and on memory.
@@ -102,9 +115,10 @@ extension GameScene {
             initConveyorNodes(inboxValues: level.initialState.inputs)
             setPlayerAttributes()
         }
+        speechBubble.isHidden = true
     }
 
-    private func initBackground() {
+    fileprivate func initBackground() {
         let rows = Constants.Background.rows
         let columns = Constants.Background.columns
         let size = Constants.Background.size
@@ -123,12 +137,12 @@ extension GameScene {
         addChild(backgroundTileMap)
     }
 
-    private func initPlayer() {
+    fileprivate func initPlayer() {
         setPlayerAttributes()
         addChild(player)
     }
 
-    private func setPlayerAttributes(position: CGPoint? = nil, payloadValue: Int? = nil) {
+    fileprivate func setPlayerAttributes(position: CGPoint? = nil, payloadValue: Int? = nil) {
         // - If position is nil, payloadValue must be nil as well. This is to set Player at the start of the game.
         // - When position is set, payloadValue should also be set (however payloadValue may be nil as the player
         //   may not hold anything).
@@ -150,21 +164,21 @@ extension GameScene {
         player.zPosition = Constants.Player.zPosition
     }
 
-    private func initInbox(values: [Int]) {
+    fileprivate func initInbox(values: [Int]) {
         inbox.size = Constants.Inbox.size
         inbox.position = Constants.Inbox.position
         addChild(inbox)
         initConveyorNodes(inboxValues: values)
     }
 
-    private func initOutbox() {
+    fileprivate func initOutbox() {
         outbox.size = Constants.Outbox.size
         outbox.position = Constants.Outbox.position
 
         addChild(outbox)
     }
 
-    private func initNotification() {
+    fileprivate func initNotification() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleMovePerson(notification:)),
             name: Constants.NotificationNames.movePersonInScene, object: nil)
@@ -175,7 +189,7 @@ extension GameScene {
 
     }
 
-    private func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
+    fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
         self.memoryLayout = layout
         for (index, _) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
@@ -189,7 +203,7 @@ extension GameScene {
         }
     }
 
-    private func initConveyorNodes(inboxValues: [Int], outboxValues: [Int]? = nil) {
+    fileprivate func initConveyorNodes(inboxValues: [Int], outboxValues: [Int]? = nil) {
         inboxNodes = []
 
         for (index, value) in inboxValues.enumerated() {
@@ -211,7 +225,7 @@ extension GameScene {
         }
     }
 
-    private func calculatePayloadPositionOnConveyor(index: Int, forInbox: Bool) -> CGPoint {
+    fileprivate func calculatePayloadPositionOnConveyor(index: Int, forInbox: Bool) -> CGPoint {
         let startingX = forInbox ? Constants.Inbox.payloadStartingX : Constants.Outbox.entryPosition.x
 
         let imagePadding = forInbox ? Constants.Inbox.imagePadding : Constants.Outbox.imagePadding
@@ -221,10 +235,6 @@ extension GameScene {
         let y = (forInbox ? inbox.position.y : outbox.position.y) + Constants.Payload.imageOffsetY
 
         return CGPoint(x: x, y: y)
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("YESH")
     }
 }
 
