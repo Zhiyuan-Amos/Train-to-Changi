@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kMw-hA-jzt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kMw-hA-jzt">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,6 +11,31 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="cDe-Ts-9gp">
+            <objects>
+                <viewController id="guL-lo-28h" customClass="LoginViewController" customModule="TrainToChangi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vnl-8l-Vka"/>
+                        <viewControllerLayoutGuide type="bottom" id="hIq-nj-Fe7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Gw1-d6-xoz">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jmz-a5-E9m" customClass="GIDSignInButton">
+                                <rect key="frame" x="392" y="320" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S8X-Zy-GsN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1281" y="-165"/>
+        </scene>
         <!--Map View Controller-->
         <scene sceneID="NqG-I3-A5o">
             <objects>
@@ -26,6 +51,7 @@
                     </view>
                     <connections>
                         <segue destination="BV1-FR-VrT" kind="presentation" identifier="startLevel" id="xck-NJ-49F"/>
+                        <segue destination="guL-lo-28h" kind="show" identifier="login" action="showDetailViewController:sender:" id="Ptc-Vv-dYA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUd-ed-Rq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -168,14 +194,14 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="efd-43-PUg">
-                                <rect key="frame" x="121" y="146" width="161.5" height="527"/>
+                                <rect key="frame" x="121" y="146" width="161" height="527"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="aDd-11-puc" kind="embed" id="8sD-it-hfG"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e0O-q7-0jc">
-                                <rect key="frame" x="76" y="146" width="49.5" height="527"/>
+                                <rect key="frame" x="76" y="146" width="49" height="527"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
                                     <segue destination="a4a-Cn-2Dm" kind="embed" id="frc-fb-wKe"/>
@@ -298,7 +324,7 @@
                         <viewControllerLayoutGuide type="bottom" id="t6f-aF-HWB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="c7c-0x-l4c">
-                        <rect key="frame" x="0.0" y="0.0" width="161.5" height="527"/>
+                        <rect key="frame" x="0.0" y="0.0" width="161" height="527"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oSJ-Cl-MNP">
@@ -382,7 +408,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ZDX-kA-DYD"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mV8-yF-vbt">
-                        <rect key="frame" x="0.0" y="0.0" width="49.5" height="527"/>
+                        <rect key="frame" x="0.0" y="0.0" width="49" height="527"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y5E-eB-rMe">

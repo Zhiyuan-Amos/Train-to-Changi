@@ -60,15 +60,15 @@ class ModelManager: Model {
 
     private var levelIndex: Int
 
-    init(levelIndex: Int, levelData: LevelData, commandDataListInfo: CommandDataListInfo?) {
-        if let commandDataListInfo = commandDataListInfo {
-            _userEnteredCommands = CommandDataLinkedList(commandDataListInfo: commandDataListInfo)
-        } else {
-            _userEnteredCommands = CommandDataLinkedList()
-        }
+    init(levelIndex: Int, levelData: LevelData) {
+        _userEnteredCommands = CommandDataLinkedList()
         self.levelIndex = levelIndex
         levelManager = LevelManager(levelData: levelData)
         levelState = levelManager.level.initialState
+    }
+
+    func loadCommandDataListInfo(commandDataListInfo: CommandDataListInfo) {
+        _userEnteredCommands = CommandDataLinkedList(commandDataListInfo: commandDataListInfo)
     }
 
     var currentInputs: [Int] {
