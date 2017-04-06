@@ -66,6 +66,7 @@
 		D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D51E7796C300DE5774 /* CopyToCommand.swift */; };
 		D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267DC1E77A01D00DE5774 /* Stack.swift */; };
 		D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267E01E77ABEB00DE5774 /* Model.swift */; };
+		D7C22B551E9523A200A55324 /* JumpTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C22B541E9523A200A55324 /* JumpTarget.swift */; };
 		D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */; };
 		D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D49CD81E86A7A700135605 /* AudioPlayer.swift */; };
 		D7E0E74A1E84B78500237705 /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7E0E7491E84B78500237705 /* Tiles.sks */; };
@@ -149,6 +150,7 @@
 		D7A267D51E7796C300DE5774 /* CopyToCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToCommand.swift; sourceTree = "<group>"; };
 		D7A267DC1E77A01D00DE5774 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		D7A267E01E77ABEB00DE5774 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		D7C22B541E9523A200A55324 /* JumpTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpTarget.swift; sourceTree = "<group>"; };
 		D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataParser.swift; sourceTree = "<group>"; };
 		D7D49CD81E86A7A700135605 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		D7E0E7491E84B78500237705 /* Tiles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tiles.sks; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				D7A267D51E7796C300DE5774 /* CopyToCommand.swift */,
 				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
 				D7983CE11E76D9A400E650ED /* JumpCommand.swift */,
+				D7C22B541E9523A200A55324 /* JumpTarget.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -637,6 +640,7 @@
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
+				D7C22B551E9523A200A55324 /* JumpTarget.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A7D163471E90C55E0073EC46 /* Storage.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,

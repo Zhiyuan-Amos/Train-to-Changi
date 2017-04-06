@@ -8,6 +8,8 @@
 
 protocol Logic {
 
+    var canUndo: Bool { get }
+
     func run()
 
     func stepForward()

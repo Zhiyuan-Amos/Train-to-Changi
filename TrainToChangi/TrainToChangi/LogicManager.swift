@@ -7,7 +7,11 @@ class LogicManager: Logic {
     unowned private let model: Model
     private let gameLogic: GameLogic
     private var iterator: CommandDataListIterator!
-    fileprivate var executedCommands: Stack<Command>
+    fileprivate(set) var executedCommands: Stack<(Int, Command)>
+
+    var canUndo: Bool {
+        return executedCommands.isEmpty
+    }
 
     init(model: Model) {
         self.model = model
@@ -26,7 +30,7 @@ class LogicManager: Logic {
                 binarySemaphore.wait()
 
                 while self.model.runState != .running(isAnimating: false) {
-                    usleep(Constants.Logic.oneMillisecond)
+                    usleep(Constants.Time.oneMillisecond)
                 }
 
                 // execution of command must be done on main thread to allow the update
@@ -41,12 +45,20 @@ class LogicManager: Logic {
 
     // Reverts the state of the model by one command execution backward.
     func stepBack() {
-        guard let command = executedCommands.pop() else {
+        guard let (index, command) = executedCommands.pop() else {
             fatalError("User should not be allowed to undo")
         }
 
         gameLogic.stepBack(command)
-        iterator.previous()
+        iterator.moveIterator(to: index)
+
+        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
+                                                     object: nil, userInfo: nil))
+
+        if !(command is JumpTarget || command is JumpCommand) {
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.resetGameScene,
+                                                         object: model.levelState, userInfo: nil))
+        }
     }
 
     // Executes the next command.
@@ -56,11 +68,22 @@ class LogicManager: Logic {
             gameLogic.parser = CommandDataParser(model: model, iterator: iterator)
         }
 
-        guard let executedCommand = gameLogic.stepForward(commandData: iterator.next()) else {
-            return
+        let commandData = iterator.current
+        guard let currentIndex = iterator.index else {
+            fatalError("Iterator not configured rightly.")
+        }
+        if let executedCommand = gameLogic.stepForward(commandData: commandData) {
+            executedCommands.push(currentIndex, executedCommand)
         }
 
-        executedCommands.push(executedCommand)
+        // If the command executed is JumpCommand, then there's no need to further
+        // move the iterator to the next position
+        if commandData != .jump {
+            iterator.next()
+        }
+
+        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
+                                                     object: nil, userInfo: nil))
     }
 }
 

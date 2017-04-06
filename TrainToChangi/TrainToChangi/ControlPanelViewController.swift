@@ -38,7 +38,8 @@ class ControlPanelViewController: UIViewController {
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
                           playButtonIsEnabled: false, stepForwardButtonIsEnabled: true)
         case .paused:
-            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
+            let stepBackButtonIsEnabled = !logic.canUndo
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
                           playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
         case .lost:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
@@ -49,30 +50,48 @@ class ControlPanelViewController: UIViewController {
         case .stepping:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: false,
                           playButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+        case .start:
+            updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
+                          playButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
         }
     }
 
     @IBAction func stopButtonPressed(_ sender: UIButton) {
-        model.runState = .paused
+        //TODO: Temporary method to load levels.
+        // Comment out first since no reference to storage here
+//        model = ModelManager(leveIndex: 0,
+//                             levelData: LevelDataHelper.levelData(levelIndex: 0))
+//        logic = LogicManager(model: model)
+        model.runState = .start
         postResetSceneNotification()
     }
 
     // Undo the previous command. If game is already playing, sets `model.runState`
-    // to `.paused` and stops after current command execution.
+    // to `.stepping` and stops after current command execution.
     @IBAction func stepBackButtonPressed(_ sender: UIButton) {
-        if model.runState != .running(isAnimating: false) && model.runState != .running(isAnimating: true) {
-            logic.stepBack()
+        //TODO: buggy here.
+        DispatchQueue.global(qos: .background).async {
+            while self.model.runState == .running(isAnimating: false) {}
+
+            DispatchQueue.main.async {
+                if self.model.runState == .running(isAnimating: true) {
+                    self.model.runState = .stepping(isAnimating: true)
+                } else {
+                    self.model.runState = .stepping(isAnimating: false)
+                    self.logic.stepBack()
+                }
+            }
         }
-        postResetSceneNotification(levelState: model.levelState)
-        model.runState = .paused
     }
 
     // Executes the next command. If game is already playing, sets `model.runState`
-    // to `.paused` and stops after current command execution.
+    // to `.stepping` and stops after current command execution.
     @IBAction func stepForwardButtonPressed(_ sender: UIButton) {
         let currentRunState = model.runState
-        model.runState = .stepping
+        model.runState = currentRunState == .running(isAnimating: true) ?
+            .stepping(isAnimating: true) : .stepping(isAnimating: false)
 
+        //TODO: buggy here
         if currentRunState != .running(isAnimating: false) && currentRunState != .running(isAnimating: true) {
             logic.stepForward()
         }

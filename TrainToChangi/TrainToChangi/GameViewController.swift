@@ -63,8 +63,6 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         scene.initLevelState(model.currentLevel)
     }
-
-
 }
 
 // MARK -- Event Handling
@@ -105,7 +103,11 @@ extension GameViewController: MapViewControllerDelegate {
 
     // Updates `model.runState` to `.running(isAnimating: true).
     @objc fileprivate func handleAnimationBegin(notification: Notification) {
-        model.runState = .running(isAnimating: true)
+        if model.runState == .running(isAnimating: false) {
+            model.runState = .running(isAnimating: true)
+        } else if model.runState == .stepping(isAnimating: false) {
+            model.runState = .stepping(isAnimating: true)
+        }
     }
 
     // Updates `model.runState` accordingly depending on what is the current
@@ -113,7 +115,7 @@ extension GameViewController: MapViewControllerDelegate {
     @objc fileprivate func handleAnimationEnd(notification: Notification) {
         if model.runState == .running(isAnimating: true) {
             model.runState = .running(isAnimating: false)
-        } else if model.runState == .stepping {
+        } else if model.runState == .stepping(isAnimating: true) {
             model.runState = .paused
         }
     }

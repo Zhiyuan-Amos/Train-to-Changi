@@ -82,6 +82,10 @@ struct Constants {
         static let stationNames = ["KentRidgeStation", "CityHallStation", "ChangiStation"]
     }
 
+    struct Concurrency {
+        static let serialQueue = "serialQueue"
+    }
+
     struct NotificationNames {
         static let moveProgramCounter = Notification.Name(rawValue: "moveProgramCounter")
         static let commandDataListUpdate = Notification.Name(rawValue: "commandDataListUpdate")
@@ -98,6 +102,7 @@ struct Constants {
         static let updateCommandIndexEvent = Notification.Name(rawValue: "updateCommandIndexEvent")
         static let cancelUpdateCommandIndexEvent = Notification.Name(rawValue: "cancelUpdateCommandIndexEvent")
         static let userSelectedIndexEvent = Notification.Name(rawValue: "userSelectedIndexEvent")
+        static let endOfCommandExecution = Notification.Name(rawValue: "endOfCommandExecution")
     }
 
     struct SegueIds {
@@ -129,8 +134,6 @@ struct Constants {
         static let collectionCellWidth: CGFloat = 100
         static let collectionCellHeight: CGFloat = 40
 
-
-
         static let programCounterOffsetX: CGFloat = 5
 
         static let userSelectedIndexNotificationDelay = 200
@@ -142,7 +145,7 @@ struct Constants {
         }
     }
 
-    struct Logic {
+    struct Time {
         static let oneMillisecond: UInt32 = 100000
     }
 
