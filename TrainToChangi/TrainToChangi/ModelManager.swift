@@ -27,7 +27,7 @@ class ModelManager: Model {
                 break
             case .lost:
                 switch newState {
-                case .paused:
+                case .paused, .stepping(isAnimating: false):
                     levelState.runState = newState
                 default:
                     break

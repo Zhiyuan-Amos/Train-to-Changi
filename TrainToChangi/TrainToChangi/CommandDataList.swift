@@ -377,12 +377,6 @@ class CommandDataListIterator {
 
     private var currentNode: CommandDataListNode? {
         didSet {
-            // If current is nil, iterator.next() will cause current to be nil again.
-            // In this situation, the programCounter should not move.
-            guard oldValue != nil || currentNode != nil else {
-                return
-            }
-
             NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter, object: nil, userInfo: index != nil ? ["index": index!] : nil)
         }
     }
