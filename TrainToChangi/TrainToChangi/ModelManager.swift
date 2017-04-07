@@ -139,6 +139,10 @@ class ModelManager: Model {
     }
 
     func dequeueValueFromInbox() -> Int? {
+        guard !levelState.inputs.isEmpty else {
+            return nil
+        }
+
         let dequeuedValue = levelState.inputs.removeFirst()
         postMoveNotification(destination: .inbox)
         return dequeuedValue
