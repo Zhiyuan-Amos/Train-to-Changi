@@ -14,6 +14,7 @@ class DragDropViewController: UIViewController {
     fileprivate typealias Animator = AnimationHelper
 
     var model: Model!
+    weak var resetGameDelegate: ResetGameDelegate!
     fileprivate var jumpArrows = [ArrowView]()
     fileprivate var updatingCellIndexPath: IndexPath?
 
@@ -37,6 +38,7 @@ class DragDropViewController: UIViewController {
         NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
                                         object: nil,
                                         userInfo: nil)
+        resetGameDelegate.tryResetGame()
     }
 
     // MARK -- Setup
@@ -117,6 +119,7 @@ extension DragDropViewController {
             }
 
         }
+        resetGameDelegate.tryResetGame()
     }
 
     private func updateCellIndex(cell: UICollectionViewCell, index: Int) {
@@ -144,6 +147,7 @@ extension DragDropViewController {
 
         Animator.swipeDeleteAnimation(cell: cell, indexPath: indexPath,
                                              deleteFunction: deleteCommand)
+        resetGameDelegate.tryResetGame()
 
     }
 
@@ -188,6 +192,7 @@ extension DragDropViewController {
             cell.alpha = 0.0
             Animator.dragEndedAnimation(cell: cell)
         }
+        resetGameDelegate.tryResetGame()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

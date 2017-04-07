@@ -70,8 +70,6 @@ struct Constants {
         // Rotate a random value from 0 degrees to 5 degrees
         static var rotationAngle: CGFloat {
             return CGFloat((.pi / 36) * drand48())
-
-
         }
     }
 

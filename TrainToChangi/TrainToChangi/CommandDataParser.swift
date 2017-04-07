@@ -3,8 +3,8 @@
 //
 
 class CommandDataParser {
-    private let model: Model
-    private let iterator: CommandDataListIterator
+    private unowned let model: Model
+    private unowned let iterator: CommandDataListIterator
 
     init(model: Model, iterator: CommandDataListIterator) {
         self.model = model

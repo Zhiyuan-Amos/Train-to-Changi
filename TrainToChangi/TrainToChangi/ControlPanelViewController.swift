@@ -10,10 +10,10 @@ import UIKit
 
 class ControlPanelViewController: UIViewController {
 
-
     var model: Model!
     var logic: Logic!
-    
+    weak var resetGameDelegate: ResetGameDelegate!
+
     @IBOutlet weak var speedSlider: UISlider!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var stepBackButton: UIButton!
@@ -21,7 +21,7 @@ class ControlPanelViewController: UIViewController {
     @IBOutlet weak var stepForwardButton: UIButton!
 
     @IBAction func sliderShifted(_ sender: UISlider) {
-        
+
     }
 
     override func viewDidLoad() {
@@ -79,13 +79,16 @@ class ControlPanelViewController: UIViewController {
     }
 
     @IBAction func stopButtonPressed(_ sender: UIButton) {
-        //TODO: Temporary method to load levels.
-        // Comment out first since no reference to storage here
-//        model = ModelManager(leveIndex: 0,
-//                             levelData: LevelDataHelper.levelData(levelIndex: 0))
-//        logic = LogicManager(model: model)
-        model.runState = .start
-        postResetSceneNotification()
+        if model.runState == .running(isAnimating: true)
+            || model.runState == .stepping(isAnimating: true) {
+            NotificationCenter.default.post(Notification(
+                name: Constants.NotificationNames.animationEnded,
+                object: nil, userInfo: nil))
+
+            resetGameDelegate.resetGame(isAnimating: true)
+        } else {
+            resetGameDelegate.resetGame(isAnimating: false)
+        }
     }
 
     // Undo the previous command. If game is already playing, sets `model.runState`
@@ -131,13 +134,5 @@ class ControlPanelViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
-    }
-
-    // Omit parameter to reset the scene to the beginning.
-    // Pass `levelState` to set to intermediate state.
-    private func postResetSceneNotification(levelState: LevelState? = nil) {
-        let notification = Notification(name: Constants.NotificationNames.resetGameScene,
-                                        object: levelState, userInfo: nil)
-        NotificationCenter.default.post(notification)
     }
 }

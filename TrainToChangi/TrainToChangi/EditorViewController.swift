@@ -12,6 +12,7 @@ import Foundation
 class EditorViewController: UIViewController {
 
     var model: Model!
+    var resetGameDelegate: ResetGameDelegate!
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!
@@ -28,6 +29,7 @@ class EditorViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let embeddedVC = segue.destination as? DragDropViewController {
             embeddedVC.model = self.model
+            embeddedVC.resetGameDelegate = resetGameDelegate
         }
         if let embeddedVC = segue.destination as? LineNumberViewController {
             embeddedVC.model = self.model
@@ -70,14 +72,6 @@ class EditorViewController: UIViewController {
         NotificationCenter.default.post(name: Constants.NotificationNames.userAddCommandEvent,
                                         object: command,
                                         userInfo: nil)
-
-        switch model.runState {
-        case .paused, .lost:
-            break
-            //TODO: reset game state. EditorVC, ControlPanelVC, DragDropVC
-        default:
-            break
-        }
     }
 }
 

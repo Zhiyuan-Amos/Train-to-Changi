@@ -19,7 +19,6 @@ class SpeechBubbleSprite: SKSpriteNode {
         label.fontColor = Constants.SpeechBubble.fontColor
         label.position = CGPoint.zero
 
-
         super.init(texture: Constants.SpeechBubble.texture, color: UIColor.white, size: size)
         self.isUserInteractionEnabled = true
         self.isHidden = true

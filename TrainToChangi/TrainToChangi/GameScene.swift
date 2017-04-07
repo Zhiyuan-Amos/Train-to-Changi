@@ -26,7 +26,8 @@ enum WalkDestination {
 }
 
 class GameScene: SKScene {
-    fileprivate var hasPaused = false // Reflects the run state, not the scene state
+    // works like a semaphore, except it doesn't pause the thread when value == 0
+    fileprivate var suspendDispatch = 0
 
     fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
@@ -186,7 +187,6 @@ extension GameScene {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleResetScene(notification:)),
             name: Constants.NotificationNames.resetGameScene, object: nil)
-
     }
 
     fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
@@ -249,20 +249,30 @@ extension GameScene {
             fatalError("[GameScene:handleMovePerson] Notification not set up properly")
         }
 
-        hasPaused = false
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationBegan,
                                                      object: nil, userInfo: nil))
         move(to: destination)
         //TODO: animation duration cannot be hardcoded
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            // this check is necessary or after 2 sec the notification will be posted when it shouldn't
-            guard !self.hasPaused else { return }
-            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
-                                                         object: nil, userInfo: nil))
+        let serialQueue = DispatchQueue(label: Constants.Concurrency.serialQueue)
+
+        serialQueue.asyncAfter(deadline: .now() + 2, execute: {
+            DispatchQueue.main.sync {
+                guard self.suspendDispatch == 0 else {
+                    self.suspendDispatch -= 1
+                    return
+                }
+
+                NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                             object: nil, userInfo: nil))
+            }
         })
     }
 
     @objc fileprivate func handleResetScene(notification: Notification) {
+        if notification.userInfo?["isAnimating"] as? Bool == true {
+            suspendDispatch += 1
+        }
+
         removeAllAnimations()
         if let levelState = notification.object as? LevelState {
             rePresentDynamicElements(levelState: levelState)
@@ -276,7 +286,6 @@ extension GameScene {
 extension GameScene {
 
     fileprivate func removeAllAnimations() {
-        hasPaused = true
         player.removeAllActions()
         inboxNodes.forEach { inboxNode in inboxNode.removeAllActions() }
         outboxNodes.forEach { outboxNode in outboxNode.removeAllActions() }

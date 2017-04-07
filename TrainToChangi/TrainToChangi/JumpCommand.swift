@@ -3,7 +3,7 @@
 //
 
 class JumpCommand: Command {
-    private let iterator: CommandDataListIterator
+    private unowned let iterator: CommandDataListIterator
 
     init(iterator: CommandDataListIterator) {
         self.iterator = iterator

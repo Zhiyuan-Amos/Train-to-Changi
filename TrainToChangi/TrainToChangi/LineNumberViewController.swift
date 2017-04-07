@@ -103,12 +103,14 @@ extension LineNumberViewController {
         let serialQueue = DispatchQueue(label: Constants.Concurrency.serialQueue)
 
         serialQueue.async {
+            print("queuing to update PC")
             self.semaphore.wait()
             if self.model.runState == .running(isAnimating: true)
                 || self.model.runState == .stepping(isAnimating: true) {
+                print("sleeping zzz")
                 self.semaphore.wait()
             }
-
+            print("not animating or woken up")
             DispatchQueue.main.sync {
                 self.updateProgramCounterCoordinates(notification: notification)
             }
@@ -138,10 +140,12 @@ extension LineNumberViewController {
     }
 
     @objc fileprivate func handleAnimationEnd(notification: Notification) {
+        print("animationEnded")
         semaphore.signal()
     }
 
     @objc fileprivate func handleEndOfCommandExecution(notification: Notification) {
+        print("executionEnded")
         semaphore.signal()
     }
 
