@@ -12,7 +12,7 @@ import Foundation
 class EditorViewController: UIViewController {
 
     var model: Model!
-    var resetGameDelegate: ResetGameDelegate!
+    weak var resetGameDelegate: ResetGameDelegate!
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!

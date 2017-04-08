@@ -128,6 +128,7 @@ struct Constants {
         static let userSelectedIndexEvent = Notification.Name(rawValue: "userSelectedIndexEvent")
         static let endOfCommandExecution = Notification.Name(rawValue: "endOfCommandExecution")
         static let toggleSpeechEvent = Notification.Name(rawValue: "toggleSpeechEvent")
+        static let sliderShifted = Notification.Name(rawValue: "sliderShifted")
     }
 
     struct SegueIds {
@@ -190,29 +191,32 @@ struct Constants {
     }
 
     struct Animation {
-        static let moveToConveyorBeltDuration = 2.0
-        static let moveToMemoryDuration = 1.0
+        static let moveToConveyorBeltDuration = 0.67
+        static let moveToMemoryDuration = 0.33
 
         static let moveConveyorBeltVector = CGVector(dx: -Payload.size.width - Inbox.imagePadding, dy: 0)
         static let moveConveyorBeltDuration = 0.7
 
         static let afterInboxStepVector = CGVector(dx: 0, dy: -60)
-        static let afterInboxStepDuration = 0.5
+        static let afterInboxStepDuration = 0.17
 
-        static let holdingToOutboxDuration = 1.0
+        static let holdingToOutboxDuration = 0.33
 
-        static let discardHoldingValueDuration = 0.5
-        static let holdingValueToMemoryDuration = 0.5
+        static let discardHoldingValueDuration = 0.17
+        static let holdingValueToMemoryDuration = 0.17
 
         static let programCounterMovementDuration = 0.1
 
         static let conveyorBeltFrames = [SKTexture(imageNamed: "conveyor-belt-1"),
                                          SKTexture(imageNamed: "conveyor-belt-2"),
                                          SKTexture(imageNamed: "conveyor-belt-3")]
-        static let conveyorBeltTimePerFrame = 0.05
+        static let conveyorBeltTimePerFrame = 0.017
         static let conveyorBeltAnimationCount = 4
         static let inboxAnimationKey = "inboxMoving"
         static let outboxAnimationKey = "outboxMoving"
+
+        static let defaultSpeed: CGFloat = 0.33
+        static let speedRange: CGFloat = 1 - defaultSpeed
     }
 
     struct Audio {

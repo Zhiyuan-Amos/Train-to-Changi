@@ -21,7 +21,9 @@ class ControlPanelViewController: UIViewController {
     @IBOutlet weak var stepForwardButton: UIButton!
 
     @IBAction func sliderShifted(_ sender: UISlider) {
-
+        NotificationCenter.default.post(Notification(
+            name: Constants.NotificationNames.sliderShifted,
+            object: nil, userInfo: ["sliderValue": sender.value]))
     }
 
     override func viewDidLoad() {
@@ -30,6 +32,7 @@ class ControlPanelViewController: UIViewController {
     }
 
     private func initSlider() {
+        speedSlider.value = 0.0
         speedSlider.minimumTrackTintColor = UIColor.init(red: 0.501, green: 0.796,
                                                          blue: 0.768, alpha: 1)
         speedSlider.thumbTintColor = UIColor.init(red: 0, green: 0.588,
