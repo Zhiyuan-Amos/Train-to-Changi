@@ -78,6 +78,7 @@
 		D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */; };
 		D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D49CD81E86A7A700135605 /* AudioPlayer.swift */; };
 		D7E0E74A1E84B78500237705 /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = D7E0E7491E84B78500237705 /* Tiles.sks */; };
+		D7F7ECAD1E97AB8200520941 /* ResetGameDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,7 @@
 		D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataParser.swift; sourceTree = "<group>"; };
 		D7D49CD81E86A7A700135605 /* AudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		D7E0E7491E84B78500237705 /* Tiles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tiles.sks; sourceTree = "<group>"; };
+		D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetGameDelegate.swift; sourceTree = "<group>"; };
 		D98EFC6425D995706C76BD89 /* Pods_TrainToChangiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrainToChangiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE4ACA4D67B2ADA36C1AF96F /* Pods-TrainToChangi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -300,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */,
+				D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				3B6D98541E8904500026872B /* AnimationHelper.swift in Sources */,
 				D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,
+				D7F7ECAD1E97AB8200520941 /* ResetGameDelegate.swift in Sources */,
 				A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */,
 				3B16804B1E778773002286F6 /* ModelManager.swift in Sources */,
 				A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */,

@@ -26,7 +26,8 @@ enum WalkDestination {
 }
 
 class GameScene: SKScene {
-    fileprivate var hasPaused = false // Reflects the run state, not the scene state
+    // works like a semaphore, except it doesn't pause the thread when value == 0
+    fileprivate var suspendDispatch = 0
 
     fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
@@ -75,6 +76,7 @@ class GameScene: SKScene {
         initOutbox()
         initNotification()
         initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
+        initSpeed()
 
         addChild(jedi)
         addChild(speechBubble)
@@ -101,7 +103,7 @@ extension GameScene {
         memoryNodes.forEach { memoryNode in memoryNode.removeFromParent() }
         memoryNodes.removeAll()
         player.removeAllChildren()
-        if let levelState = levelState { // game in .stepping state
+        if let levelState = levelState { // stepBack button pressed
             initConveyorNodes(inboxValues: levelState.inputs, outboxValues: levelState.outputs)
             guard let memoryLayout = memoryLayout else {
                 // `memoryLayout` should already be initialized, else this func is called wrongly
@@ -111,8 +113,9 @@ extension GameScene {
             initMemory(from: levelState.memoryValues, layout: memoryLayout)
             let position = playerPreviousPositions.pop()
             setPlayerAttributes(position: position, payloadValue: levelState.personValue)
-        } else { // game start from the beginning
+        } else { // stop button pressed
             initConveyorNodes(inboxValues: level.initialState.inputs)
+            initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
             setPlayerAttributes()
         }
         speechBubble.isHidden = true
@@ -187,6 +190,9 @@ extension GameScene {
             self, selector: #selector(handleResetScene(notification:)),
             name: Constants.NotificationNames.resetGameScene, object: nil)
 
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(updateNodesSpeed(notification:)),
+            name: Constants.NotificationNames.sliderShifted, object: nil)
     }
 
     fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
@@ -236,6 +242,15 @@ extension GameScene {
 
         return CGPoint(x: x, y: y)
     }
+
+    fileprivate func initSpeed() {
+        let defaultSpeed = Constants.Animation.defaultSpeed
+        player.speed = defaultSpeed
+        inbox.speed = defaultSpeed
+        outbox.speed = defaultSpeed
+        inboxNodes.forEach({ inboxNode in inboxNode.speed = defaultSpeed })
+        outboxNodes.forEach({ outboxNode in outboxNode.speed = defaultSpeed })
+    }
 }
 
 // MARK: - Notification
@@ -249,20 +264,16 @@ extension GameScene {
             fatalError("[GameScene:handleMovePerson] Notification not set up properly")
         }
 
-        hasPaused = false
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationBegan,
                                                      object: nil, userInfo: nil))
         move(to: destination)
-        //TODO: animation duration cannot be hardcoded
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-            // this check is necessary or after 2 sec the notification will be posted when it shouldn't
-            guard !self.hasPaused else { return }
-            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
-                                                         object: nil, userInfo: nil))
-        })
     }
 
     @objc fileprivate func handleResetScene(notification: Notification) {
+        if notification.userInfo?["isAnimating"] as? Bool == true {
+            suspendDispatch += 1
+        }
+
         removeAllAnimations()
         if let levelState = notification.object as? LevelState {
             rePresentDynamicElements(levelState: levelState)
@@ -270,13 +281,26 @@ extension GameScene {
             rePresentDynamicElements()
         }
     }
+
+    @objc fileprivate func updateNodesSpeed(notification: Notification) {
+        guard let sliderValue = notification.userInfo?["sliderValue"] as? Float else {
+            fatalError("Notification sender is not configured properly")
+        }
+        let resultantSpeed = CGFloat(sliderValue) * Constants.Animation.speedRange +
+            Constants.Animation.defaultSpeed
+
+        player.speed = resultantSpeed
+        inbox.speed = resultantSpeed
+        outbox.speed = resultantSpeed
+        inboxNodes.forEach({ inboxNode in inboxNode.speed = resultantSpeed })
+        outboxNodes.forEach({ outboxNode in outboxNode.speed = resultantSpeed })
+    }
 }
 
 // MARK: - Animations
 extension GameScene {
 
     fileprivate func removeAllAnimations() {
-        hasPaused = true
         player.removeAllActions()
         inboxNodes.forEach { inboxNode in inboxNode.removeAllActions() }
         outboxNodes.forEach { outboxNode in outboxNode.removeAllActions() }
@@ -315,6 +339,8 @@ extension GameScene {
                                      resize: false, restore: true),
                     count: Constants.Animation.conveyorBeltAnimationCount)
                 self.inbox.run(inboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
+                NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                             object: nil, userInfo: nil))
             })
         })
     }
@@ -345,15 +371,19 @@ extension GameScene {
         let moveAction = SKAction.move(to: WalkDestination.outbox.point,
                                        duration: Constants.Animation.moveToConveyorBeltDuration)
         player.run(moveAction, completion: {
-            // 2. then, outbox items move left
-            self.outboxNodes.forEach { node in self.moveConveyorBelt(node) }
-            let outboxAnimation = SKAction.repeat(
-                SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
-                                 timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
-                                 resize: false, restore: true),
-                count: Constants.Animation.conveyorBeltAnimationCount)
-            self.outbox.run(outboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                         object: nil, userInfo: nil))
         })
+
+        // 2. concurrently, outbox items move left
+        self.outboxNodes.forEach { node in self.moveConveyorBelt(node) }
+        let outboxAnimation = SKAction.repeat(
+            SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                             timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
+                             resize: false, restore: true),
+            count: Constants.Animation.conveyorBeltAnimationCount)
+        self.outbox.run(outboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
+
         let wait = SKAction.wait(forDuration: Constants.Animation.moveToConveyorBeltDuration)
         player.run(wait, completion: {
             // 3. wait for outbox movements finish, put on outbox

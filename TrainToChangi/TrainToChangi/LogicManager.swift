@@ -18,7 +18,7 @@ class LogicManager: Logic {
         self.model = model
         self.executedCommands = Stack()
         self.gameLogic = GameLogic(model: model)
-        gameLogic.gameLogicDelegate = self
+        self.gameLogic.gameLogicDelegate = self
     }
 
     // Executes the list of commands that user has selected.
@@ -77,12 +77,13 @@ class LogicManager: Logic {
 
     // Executes the next command.
     func stepForward() {
+        print("")
         createIteratorIfNil()
 
         // as we only store the current index after execution of command, jumpCommand
         // will alter the index, thus we have to store the value of the previous index
         let currentIndex = iterator.index
-
+        print(currentIndex)
         guard let executedCommand = gameLogic.stepForward(commandData: iterator.current) else {
             return
         }
@@ -107,6 +108,11 @@ class LogicManager: Logic {
 
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
                                                      object: nil, userInfo: nil))
+    }
+
+    func resetPlayState() {
+        executedCommands = Stack()
+        iterator = nil
     }
 
     private func createIteratorIfNil() {

@@ -14,7 +14,7 @@ class JediSprite: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
         self.isUserInteractionEnabled = true
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -24,5 +24,3 @@ class JediSprite: SKSpriteNode {
                                                      object: self.index, userInfo: nil))
     }
 }
-
-

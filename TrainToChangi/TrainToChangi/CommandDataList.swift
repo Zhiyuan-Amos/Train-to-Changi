@@ -373,11 +373,12 @@ extension CommandDataLinkedList {
 
 //TODO: Rename
 class CommandDataListIterator {
-    private var commandDataLinkedList: CommandDataLinkedList
+    private unowned var commandDataLinkedList: CommandDataLinkedList
 
     private var currentNode: CommandDataListNode? {
         didSet {
-            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter, object: nil, userInfo: index != nil ? ["index": index!] : nil)
+            NotificationCenter.default.post(name: Constants.NotificationNames.moveProgramCounter,
+                                            object: nil, userInfo: ["index": index])
         }
     }
 

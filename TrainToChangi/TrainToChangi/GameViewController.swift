@@ -9,7 +9,7 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, ResetGameDelegate {
 
     @IBOutlet weak var trainUIImage: UIImageView!
 
@@ -45,11 +45,13 @@ class GameViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let embeddedVC = segue.destination as? EditorViewController {
             embeddedVC.model = self.model
+            embeddedVC.resetGameDelegate = self
         }
 
         if let embeddedVC = segue.destination as? ControlPanelViewController {
             embeddedVC.model = self.model
             embeddedVC.logic = self.logic
+            embeddedVC.resetGameDelegate = self
         }
     }
 
@@ -84,6 +86,25 @@ class GameViewController: UIViewController {
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         self.present(controller, animated: true, completion: nil)
+    }
+
+    func tryResetGame() {
+        switch model.runState {
+        case .paused, .lost:
+            resetGame(isAnimating: false)
+        default:
+            break
+        }
+    }
+
+    func resetGame(isAnimating: Bool) {
+        model.resetPlayState()
+        model.runState = .start // explicit assignment to trigger didSet
+        logic.resetPlayState()
+
+        NotificationCenter.default.post(Notification(
+            name: Constants.NotificationNames.resetGameScene,
+            object: nil, userInfo: ["isAnimating": isAnimating]))
     }
 
     /// Use GameScene to move/animate the game objects
@@ -124,12 +145,11 @@ extension GameViewController: MapViewControllerDelegate {
 
     private func indexOfStation(name: String) -> Int {
         let levelNames = Constants.StationNames.stationNames
-        for (index, levelName) in levelNames.enumerated() {
-            if levelName == name {
-                return index
-            }
+        guard let index = levelNames.index(where: { $0 == name }) else {
+            preconditionFailure("StationName does not exist!")
         }
-        preconditionFailure("StationName does not exist!")
+
+        return index
     }
 
     // Updates `model.runState` to `.running(isAnimating: true).

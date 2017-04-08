@@ -12,6 +12,7 @@ import Foundation
 class EditorViewController: UIViewController {
 
     var model: Model!
+    weak var resetGameDelegate: ResetGameDelegate!
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!
@@ -28,6 +29,7 @@ class EditorViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let embeddedVC = segue.destination as? DragDropViewController {
             embeddedVC.model = self.model
+            embeddedVC.resetGameDelegate = resetGameDelegate
         }
         if let embeddedVC = segue.destination as? LineNumberViewController {
             embeddedVC.model = self.model
@@ -88,11 +90,9 @@ extension EditorViewController {
             availableCommandsView.isUserInteractionEnabled = false
             availableCommandsView.isHidden = true
         case .paused, .lost:
-            currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isHidden = true
         case .start:
-            currentCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
             availableCommandsView.isHidden = false
         }

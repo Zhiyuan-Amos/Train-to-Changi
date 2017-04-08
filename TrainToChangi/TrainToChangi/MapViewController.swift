@@ -66,7 +66,6 @@ class MapViewController: UIViewController {
         }
     }
 
-
     override var shouldAutorotate: Bool {
         return true
     }

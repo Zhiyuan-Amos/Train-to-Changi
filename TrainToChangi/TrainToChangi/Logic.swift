@@ -16,4 +16,5 @@ protocol Logic {
 
     func stepBack()
 
+    func resetPlayState()
 }
