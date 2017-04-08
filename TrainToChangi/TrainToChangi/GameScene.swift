@@ -394,19 +394,15 @@ extension GameScene {
     // Player when at the location of a memory location, discards holding value, picks up box from memory
     // player should already move to necessary memory location
     private func getValueFromMemory(at index: Int) {
-        guard let memory = memoryNodes[index] else {
+        guard let memory = memoryNodes[index]?.makeCopy() else {
             fatalError("memory at \(index) should not be nil")
         }
-        let throwPersonValue = SKAction.fadeOut(withDuration: Constants.Animation.discardHoldingValueDuration)
-        let removeFromParent = SKAction.removeFromParent()
 
-        holdingNode.run(SKAction.sequence([throwPersonValue, removeFromParent]), completion: {
-            self.player.removeAllChildren()
-            memory.move(toParent: self.player)
-            self.holdingNode = memory
-            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
-                                                         object: nil, userInfo: nil))
-        })
+        self.player.removeAllChildren()
+        memory.move(toParent: self.player)
+        self.holdingNode = memory
+        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                     object: nil, userInfo: nil))
     }
 
     // Player when at the location of a memory location, drops a duplicate of his holding value to memory
