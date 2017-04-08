@@ -41,10 +41,11 @@ class GameScene: SKScene {
     fileprivate let inbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
     fileprivate let outbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
 
-    fileprivate var inboxNodes = [SKSpriteNode]()
-    fileprivate var memoryNodes = [MemorySlot]()
-    fileprivate var outboxNodes = [SKSpriteNode]()
-    fileprivate var holdingNode = SKSpriteNode()
+    fileprivate var inboxNodes = [Payload]()
+    fileprivate var memoryNodes = [Int:Payload]()
+    fileprivate var memorySlots = [MemorySlot]()
+    fileprivate var outboxNodes = [Payload]()
+    fileprivate var holdingNode: Payload!
     fileprivate var jedi: JediSprite
     fileprivate var speechBubble: SpeechBubbleSprite
 
@@ -100,7 +101,7 @@ extension GameScene {
         inboxNodes.removeAll()
         outboxNodes.forEach { outboxNode in outboxNode.removeFromParent() }
         outboxNodes.removeAll()
-        memoryNodes.forEach { memoryNode in memoryNode.removeFromParent() }
+        memoryNodes.forEach { $1.removeFromParent() }
         memoryNodes.removeAll()
         player.removeAllChildren()
         if let levelState = levelState { // stepBack button pressed
@@ -204,8 +205,7 @@ extension GameScene {
             }
             let node = MemorySlot(index: index, layout: layout)
             addChild(node)
-            memoryNodes.append(node)
-
+            memorySlots.append(node)
         }
     }
 
@@ -304,7 +304,7 @@ extension GameScene {
         player.removeAllActions()
         inboxNodes.forEach { inboxNode in inboxNode.removeAllActions() }
         outboxNodes.forEach { outboxNode in outboxNode.removeAllActions() }
-        memoryNodes.forEach { memoryNode in memoryNode.removeAllActions() }
+        memoryNodes.forEach { $1.removeAllActions() }
     }
 
     // Move the player to a WalkDestination
@@ -346,11 +346,11 @@ extension GameScene {
     }
 
     private func animateGoToMemory(_ layout: Memory.Layout, _ index: Int, _ action: Memory.Action) {
-        guard index > 0 && index < memoryNodes.count else {
+        guard index >= 0 && index < layout.locations.count else {
             fatalError("[GameScene:animateGoToMemory] Trying to access memory out of bound")
         }
         playerPreviousPositions.push(player.position)
-        let moveAction = SKAction.move(to: layout.locations[index],
+        let moveAction = SKAction.move(to: layout.locations[index] + Constants.Animation.moveToMemoryOffsetVector,
                                        duration: Constants.Animation.moveToMemoryDuration)
         player.run(moveAction, completion: {
             // player already moved to memory location, perform memory actions
@@ -394,32 +394,39 @@ extension GameScene {
     // Player when at the location of a memory location, discards holding value, picks up box from memory
     // player should already move to necessary memory location
     private func getValueFromMemory(at index: Int) {
-        let memory = memoryNodes[index]
+        guard let memory = memoryNodes[index] else {
+            fatalError("memory at \(index) should not be nil")
+        }
         let throwPersonValue = SKAction.fadeOut(withDuration: Constants.Animation.discardHoldingValueDuration)
         let removeFromParent = SKAction.removeFromParent()
 
         holdingNode.run(SKAction.sequence([throwPersonValue, removeFromParent]), completion: {
             memory.move(toParent: self.player)
+            self.holdingNode = memory
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                         object: nil, userInfo: nil))
         })
     }
 
     // Player when at the location of a memory location, drops a duplicate of his holding value to memory
     // player should already move to necessary memory location
     private func putValueToMemory(to index: Int) {
-        guard let copyOfHoldingValue = holdingNode.copy() as? SKSpriteNode else {
-            fatalError("[GameScene:putDownToMemory] Can't make a copy of holding value")
-        }
+        let position = memorySlots[index].position
 
-        let position = memoryNodes[index].position
-
+        let copyOfHoldingValue = holdingNode.makeCopy()
         copyOfHoldingValue.move(toParent: scene!)
+        memoryNodes[index] = copyOfHoldingValue
+
         let dropHoldingValue = SKAction.move(to: position, duration: Constants.Animation.holdingValueToMemoryDuration)
-        copyOfHoldingValue.run(dropHoldingValue)
+        copyOfHoldingValue.run(dropHoldingValue, completion: {
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                         object: nil, userInfo: nil))
+        })
     }
 
     // Do animations for command like "add 0", add value in memory to the person value
     private func computeWithMemory(_ index: Int, expected: Int) {
-        guard let payloadOnMemory = memoryNodes[index].childNode(withName: Constants.Payload.labelName)
+        guard let payloadOnMemory = memoryNodes[index]?.childNode(withName: Constants.Payload.labelName)
               as? SKLabelNode else {
             fatalError("[GameScene:computeWithMemory] Unable to find payload's label")
         }

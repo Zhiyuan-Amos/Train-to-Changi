@@ -200,6 +200,8 @@ struct Constants {
         static let afterInboxStepVector = CGVector(dx: 0, dy: -60)
         static let afterInboxStepDuration = 0.17
 
+        static let moveToMemoryOffsetVector = CGVector(dx: 0, dy: 60)
+
         static let holdingToOutboxDuration = 0.33
 
         static let discardHoldingValueDuration = 0.17
