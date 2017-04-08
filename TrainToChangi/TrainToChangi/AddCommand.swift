@@ -20,7 +20,7 @@ class AddCommand: Command {
 
         prevValueOnPerson = personValue
 
-        guard let memoryValue = model.getValueFromMemory(at: memoryIndex) else {
+        guard let memoryValue = model.getValueFromMemory(at: memoryIndex, forUndo: false) else {
             return CommandResult(errorMessage: .emptyMemoryLocation)
         }
 

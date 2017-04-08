@@ -175,13 +175,12 @@ class ModelManager: Model {
             layout: currentLevel.memoryLayout, index: index, action: .put))
     }
 
-    func getValueFromMemory(at index: Int) -> Int? {
-        let value = levelState.memoryValues[index]
-        if value != nil {
+    func getValueFromMemory(at index: Int, forUndo: Bool) -> Int? {
+        if !forUndo {
             postMoveNotification(destination: .memory(
                 layout: currentLevel.memoryLayout, index: index, action: .get))
         }
-        return value
+        return levelState.memoryValues[index]
     }
 
     // MARK - Private helpers

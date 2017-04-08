@@ -85,7 +85,7 @@ protocol Model: class {
 
     // Returns the value that is stored in the memory located at `index`
     // If the memory location is empty, returns nil.
-    func getValueFromMemory(at index: Int) -> Int?
+    func getValueFromMemory(at index: Int, forUndo: Bool) -> Int?
 
     // Put `value` into memory located at `index`.
     func putValueIntoMemory(_ value: Int?, at index: Int)

@@ -401,6 +401,7 @@ extension GameScene {
         let removeFromParent = SKAction.removeFromParent()
 
         holdingNode.run(SKAction.sequence([throwPersonValue, removeFromParent]), completion: {
+            self.player.removeAllChildren()
             memory.move(toParent: self.player)
             self.holdingNode = memory
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
@@ -443,6 +444,7 @@ extension GameScene {
         guard !self.inboxNodes.isEmpty else {
             return
         }
+        player.removeAllChildren()
         // remove from inbox queue and attach to player
         holdingNode = self.inboxNodes.removeFirst()
         holdingNode.move(toParent: player)
