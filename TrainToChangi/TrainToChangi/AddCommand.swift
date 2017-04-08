@@ -3,6 +3,8 @@
 // at the memory at `memoryIndex` with the value that he is currently holding on.
 //
 
+import Foundation
+
 class AddCommand: Command {
     private let model: Model
     private let memoryIndex: Int
@@ -25,6 +27,7 @@ class AddCommand: Command {
         }
 
         model.updateValueOnPerson(to: personValue + memoryValue)
+        postMoveNotification(expected: personValue + memoryValue)
 
         return CommandResult()
     }
@@ -35,5 +38,13 @@ class AddCommand: Command {
         }
 
         model.updateValueOnPerson(to: value)
+    }
+
+    private func postMoveNotification(expected: Int) {
+        let notification = Notification(
+            name: Constants.NotificationNames.movePersonInScene, object: nil,
+            userInfo: ["destination": WalkDestination.memory(
+                layout: model.currentLevel.memoryLayout, index: memoryIndex, action: .compute(expected: expected))])
+        NotificationCenter.default.post(notification)
     }
 }

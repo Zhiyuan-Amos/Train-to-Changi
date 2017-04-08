@@ -423,11 +423,7 @@ extension GameScene {
 
     // Do animations for command like "add 0", add value in memory to the person value
     private func computeWithMemory(_ index: Int, expected: Int) {
-        guard let payloadOnMemory = memoryNodes[index]?.childNode(withName: Constants.Payload.labelName)
-              as? SKLabelNode else {
-            fatalError("[GameScene:computeWithMemory] Unable to find payload's label")
-        }
-        payloadOnMemory.text = String(expected)
+        holdingNode.setLabel(to: expected)
     }
 
     private func moveConveyorBelt(_ node: SKSpriteNode) {

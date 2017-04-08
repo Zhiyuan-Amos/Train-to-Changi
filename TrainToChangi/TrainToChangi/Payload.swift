@@ -36,4 +36,11 @@ class Payload: SKSpriteNode {
     func makeCopy() -> Payload {
         return Payload(position: self.position, value: self.value)
     }
+
+    func setLabel(to value: Int) {
+        guard let label = self.childNode(withName: Constants.Payload.labelName) as? SKLabelNode else {
+            fatalError("Can't get label of payload")
+        }
+        label.text = String(value)
+    }
 }
