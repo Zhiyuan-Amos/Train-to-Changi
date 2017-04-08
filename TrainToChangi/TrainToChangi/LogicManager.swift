@@ -87,6 +87,9 @@ class LogicManager: Logic {
         guard let executedCommand = gameLogic.stepForward(commandData: iterator.current) else {
             return
         }
+        if case .lost = model.runState {
+            return
+        }
 
         executedCommands.push(currentIndex!, executedCommand)
 
