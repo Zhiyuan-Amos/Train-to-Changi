@@ -198,7 +198,7 @@ extension GameScene {
 
     fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
         self.memoryLayout = layout
-        for (index, _) in memoryValues.enumerated() {
+        for (index, value) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 fatalError("[GameScene:initMemory] " +
                     "Number of memory values differ from the layout specified. Check level data.")
@@ -206,6 +206,11 @@ extension GameScene {
             let node = MemorySlot(index: index, layout: layout)
             addChild(node)
             memorySlots.append(node)
+
+            guard let value = value else { continue }
+            let memorySprite = Payload(position: layout.locations[index], value: value)
+            addChild(memorySprite)
+            memoryNodes[index] = memorySprite
         }
     }
 
@@ -349,7 +354,9 @@ extension GameScene {
         guard index >= 0 && index < layout.locations.count else {
             fatalError("[GameScene:animateGoToMemory] Trying to access memory out of bound")
         }
-        playerPreviousPositions.push(player.position)
+        if player.position != playerPreviousPositions.top! {
+            playerPreviousPositions.push(player.position)
+        }
         let moveAction = SKAction.move(to: layout.locations[index] + Constants.Animation.moveToMemoryOffsetVector,
                                        duration: Constants.Animation.moveToMemoryDuration)
         player.run(moveAction, completion: {
