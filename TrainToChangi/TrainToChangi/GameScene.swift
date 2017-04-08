@@ -103,7 +103,7 @@ extension GameScene {
         memoryNodes.forEach { memoryNode in memoryNode.removeFromParent() }
         memoryNodes.removeAll()
         player.removeAllChildren()
-        if let levelState = levelState { // game in .stepping state
+        if let levelState = levelState { // stepBack button pressed
             initConveyorNodes(inboxValues: levelState.inputs, outboxValues: levelState.outputs)
             guard let memoryLayout = memoryLayout else {
                 // `memoryLayout` should already be initialized, else this func is called wrongly
@@ -113,8 +113,9 @@ extension GameScene {
             initMemory(from: levelState.memoryValues, layout: memoryLayout)
             let position = playerPreviousPositions.pop()
             setPlayerAttributes(position: position, payloadValue: levelState.personValue)
-        } else { // game start from the beginning
+        } else { // stop button pressed
             initConveyorNodes(inboxValues: level.initialState.inputs)
+            initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
             setPlayerAttributes()
         }
         speechBubble.isHidden = true
