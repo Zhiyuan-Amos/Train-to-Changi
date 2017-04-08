@@ -34,6 +34,9 @@ class CommandCell: UICollectionViewCell {
     private func setCommandImageAndIndex(imageName: String, index: Int?, width: CGFloat) {
 
         commandImage.image = UIImage(named: imageName)
+        //TODO: Desmond, I added this line which I supposed you missed out since
+        // width was unused previous. but it's still buggy.
+        //commandImage.frame.size.width = width
 
         if let index = index {
             commandIndex.text = "\(index)"

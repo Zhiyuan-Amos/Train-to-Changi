@@ -22,7 +22,7 @@ struct Constants {
 
     struct Inbox {
         static let size = CGSize(width: 420, height: 60)
-        static let position = CGPoint(x: 575,
+        static let position = CGPoint(x: 540,
                                       y: ViewDimensions.height - size.height / 2 - 40)
         static let color = UIColor.black
         static let goto = CGPoint(x: position.x - size.width / 2, y: position.y - size.height / 2)
@@ -46,6 +46,21 @@ struct Constants {
         static let size = CGSize(width: 64, height: 64)
         static let tileSet = "Ground Tiles"
         static let tileGroup = "Grey Tiles"
+
+        static let levelDescriptionBackgroundColor = UIColor(rgb: 0xF1EBCA)
+
+        static let availableCommandsGradientStartColor = UIColor(rgb: 0x97793F).cgColor
+        static let availableCommandsGradientEndColor = UIColor(rgb: 0xC8AF7E).cgColor
+
+        static let editorGradientStartColor = UIColor(rgb: 0xCFBAA0).cgColor
+        static let editorGradientEndColor = UIColor(rgb: 0xDEC8AB).cgColor
+
+        static let leftToRightGradientPoints = ["startPoint": CGPoint(x: 0.0, y: 0.5),
+                                                "endPoint": CGPoint(x: 1.0, y: 0.5)]
+
+        static let controlPanelGradientStartColor = UIColor(rgb: 0x383838).cgColor
+        static let controlPanelGradientEndColor = UIColor(rgb: 0x636363).cgColor
+
     }
 
     struct Memory {
@@ -76,7 +91,7 @@ struct Constants {
     struct Jedi {
         static let height = 100
         static let width = 50
-        static let positionX = 300
+        static let positionX = 265
         static let positionY = 700
 
         static let texture = SKTexture(imageNamed: "jedi_01")
@@ -143,7 +158,6 @@ struct Constants {
 
         static let commandButtonInitialOffsetY: CGFloat = 20
         static let commandButtonOffsetY: CGFloat = 30
-        static let commandButtonHeight: CGFloat = 40
 
         static let commandButtonWidthShort: CGFloat = 40
         static let commandButtonWidthMid: CGFloat = 60
@@ -164,10 +178,27 @@ struct Constants {
         static let collectionCellWidth: CGFloat = 100
         static let collectionCellHeight: CGFloat = 40
 
-        static let programCounterOffsetX: CGFloat = 5
+        static let programCounterOffsetX: CGFloat = 10
 
         static let userSelectedIndexNotificationDelay = 200
         static let endGameScreenDisplayDelay = 2
+
+        struct Slider {
+            static let minimumTrackTintColor = UIColor(rgb: 0xE7FFB3)
+            static let thumbTintColor = UIColor(rgb: 0xBFF34F)
+            static let maximumTrackTintColor = UIColor(rgb: 0x8EBC29)
+        }
+
+        struct LineNumber {
+            static let font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+            static let textColor = UIColor(rgb: 0x595959)
+        }
+
+        struct LevelDescription {
+            static let font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+            static let textColor = UIColor(rgb: 0x595959)
+            static let insets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        }
 
         struct arrowView {
             static let originX: CGFloat = 5

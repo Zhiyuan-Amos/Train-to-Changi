@@ -31,14 +31,23 @@ class ControlPanelViewController: UIViewController {
         registerObservers()
     }
 
+    override func viewDidLayoutSubviews() {
+        setBackgroundGradient()
+    }
+
+    private func setBackgroundGradient() {
+        let gradient = CAGradientLayer()
+        gradient.frame = view.bounds
+        gradient.colors = [Constants.Background.controlPanelGradientStartColor,
+                           Constants.Background.controlPanelGradientEndColor]
+        view.layer.insertSublayer(gradient, at: 0)
+    }
+
     private func initSlider() {
         speedSlider.value = 0.0
-        speedSlider.minimumTrackTintColor = UIColor.init(red: 0.501, green: 0.796,
-                                                         blue: 0.768, alpha: 1)
-        speedSlider.thumbTintColor = UIColor.init(red: 0, green: 0.588,
-                                                  blue: 0.533, alpha: 1)
-        speedSlider.maximumTrackTintColor = UIColor.init(red: 0, green: 0.301,
-                                                         blue: 0.251, alpha: 1)
+        speedSlider.minimumTrackTintColor = Constants.UI.Slider.minimumTrackTintColor
+        speedSlider.thumbTintColor = Constants.UI.Slider.thumbTintColor
+        speedSlider.maximumTrackTintColor = Constants.UI.Slider.maximumTrackTintColor
     }
 
     // Updates whether the buttons are enabled.

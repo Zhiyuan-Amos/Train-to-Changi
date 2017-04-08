@@ -16,14 +16,31 @@ class EditorViewController: UIViewController {
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var levelDescriptionTextView: UITextView!
-    @IBOutlet weak var currentCommandsView: UIView!
     @IBOutlet weak var lineNumberView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpLevelDescription()
-        loadAvailableCommands()
         registerObservers()
+    }
+
+    override func viewDidLayoutSubviews() {
+        loadAvailableCommands()
+        setBackgroundColor()
+    }
+
+    private func setBackgroundColor() {
+        levelDescriptionTextView.backgroundColor =
+            Constants.Background.levelDescriptionBackgroundColor
+
+        let gradient = CAGradientLayer()
+        gradient.startPoint = Constants.Background.leftToRightGradientPoints["endPoint"]!
+        gradient.endPoint = Constants.Background.leftToRightGradientPoints["startPoint"]!
+
+        gradient.frame = availableCommandsView.bounds
+        gradient.colors = [Constants.Background.availableCommandsGradientStartColor,
+                           Constants.Background.availableCommandsGradientEndColor]
+        availableCommandsView.layer.insertSublayer(gradient, at: 0)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -40,6 +57,9 @@ class EditorViewController: UIViewController {
     private func setUpLevelDescription() {
         levelDescriptionTextView.text = model.currentLevel.levelDescriptor
         levelDescriptionTextView.isScrollEnabled = true
+        levelDescriptionTextView.font = Constants.UI.LevelDescription.font
+        levelDescriptionTextView.textColor = Constants.UI.LevelDescription.textColor
+        levelDescriptionTextView.textContainerInset = Constants.UI.LevelDescription.insets
     }
 
     // Load the available commands from model for the current level
@@ -47,6 +67,8 @@ class EditorViewController: UIViewController {
         let initialCommandPosition = availableCommandsView.frame.origin
         availableCommandsView.frame.size.height = 0
 
+        //TODO: Change `Constants.UI.commandButtonOffsetY` back to
+        // `Constants.UI.collectionCellHeight` after images have been cropped tightly.
         for (commandTag, command) in model.currentLevel.availableCommands.enumerated() {
             let currentCommandPositionY = initialCommandPosition.y +
                 CGFloat(commandTag) * Constants.UI.commandButtonOffsetY

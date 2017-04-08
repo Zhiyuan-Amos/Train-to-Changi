@@ -39,18 +39,6 @@ class UIEntityDrawer {
         return commandButton
     }
 
-    static func generateCommandUIImageView(for commandType: CommandData, position: CGPoint) -> UIImageView {
-        let size = CGSize(width: getCommandButtonWidth(commandType),
-                          height: Constants.UI.commandButtonHeight)
-        let frame = CGRect(origin: position, size: size)
-        let imagePath = commandType.toFilePath() + ".png"
-
-        let commandImageView = UIImageView(frame: frame)
-        commandImageView.image = UIImage(named: imagePath)
-
-        return commandImageView
-    }
-
     static func getCommandButtonWidth(_ commandType: CommandData) -> CGFloat {
         switch commandType {
             case .add(_), .jumpTarget:

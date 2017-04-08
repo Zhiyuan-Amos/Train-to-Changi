@@ -30,6 +30,21 @@ class DragDropViewController: UIViewController {
         renderJumpArrows()
     }
 
+    override func viewDidLayoutSubviews() {
+        setBackgroundGradient()
+    }
+
+    private func setBackgroundGradient() {
+        let gradient = CAGradientLayer()
+        gradient.startPoint = Constants.Background.leftToRightGradientPoints["startPoint"]!
+        gradient.endPoint = Constants.Background.leftToRightGradientPoints["endPoint"]!
+
+        gradient.frame = view.bounds
+        gradient.colors = [Constants.Background.editorGradientStartColor,
+                           Constants.Background.editorGradientEndColor]
+        view.layer.insertSublayer(gradient, at: 0)
+    }
+
     @IBAction func resetButtonPressed(_ sender: Any) {
         model.clearAllCommands()
         removeAllJumpArrows()

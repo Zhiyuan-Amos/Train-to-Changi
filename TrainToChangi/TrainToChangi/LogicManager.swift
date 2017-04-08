@@ -77,13 +77,11 @@ class LogicManager: Logic {
 
     // Executes the next command.
     func stepForward() {
-        print("")
         createIteratorIfNil()
 
         // as we only store the current index after execution of command, jumpCommand
         // will alter the index, thus we have to store the value of the previous index
         let currentIndex = iterator.index
-        print(currentIndex)
         guard let executedCommand = gameLogic.stepForward(commandData: iterator.current) else {
             return
         }
