@@ -87,6 +87,7 @@ struct Constants {
         static let width = 250
         static let positionX = 350
         static let positionY = 580
+        static let zPosition = CGFloat(50)
 
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 14

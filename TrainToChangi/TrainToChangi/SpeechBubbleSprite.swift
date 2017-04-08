@@ -22,7 +22,7 @@ class SpeechBubbleSprite: SKSpriteNode {
         super.init(texture: Constants.SpeechBubble.texture, color: UIColor.white, size: size)
         self.isUserInteractionEnabled = true
         self.isHidden = true
-        self.zPosition = 50
+        self.zPosition = Constants.SpeechBubble.zPosition
         self.addChild(label)
         label.zPosition = zPosition
 

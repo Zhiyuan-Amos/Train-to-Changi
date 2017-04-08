@@ -42,7 +42,7 @@ class GameScene: SKScene {
     fileprivate let outbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
 
     fileprivate var inboxNodes = [Payload]()
-    fileprivate var memoryNodes = [Int:Payload]()
+    fileprivate var memoryNodes = [Int: Payload]()
     fileprivate var memorySlots = [MemorySlot]()
     fileprivate var outboxNodes = [Payload]()
     fileprivate var holdingNode: Payload!
@@ -97,9 +97,9 @@ extension GameScene {
     // Pass `levelState` to specify the locations of each sprite. If it's nil then re init from start.
     // Static elements are not refreshed again.
     func rePresentDynamicElements(levelState: LevelState? = nil) {
-        inboxNodes.forEach { inboxNode in inboxNode.removeFromParent() }
+        inboxNodes.forEach { $0.removeFromParent() }
         inboxNodes.removeAll()
-        outboxNodes.forEach { outboxNode in outboxNode.removeFromParent() }
+        outboxNodes.forEach { $0.removeFromParent() }
         outboxNodes.removeAll()
         memoryNodes.forEach { $1.removeFromParent() }
         memoryNodes.removeAll()
@@ -253,8 +253,8 @@ extension GameScene {
         player.speed = defaultSpeed
         inbox.speed = defaultSpeed
         outbox.speed = defaultSpeed
-        inboxNodes.forEach({ inboxNode in inboxNode.speed = defaultSpeed })
-        outboxNodes.forEach({ outboxNode in outboxNode.speed = defaultSpeed })
+        inboxNodes.forEach({ $0.speed = defaultSpeed })
+        outboxNodes.forEach({ $0.speed = defaultSpeed })
     }
 }
 
@@ -297,8 +297,8 @@ extension GameScene {
         player.speed = resultantSpeed
         inbox.speed = resultantSpeed
         outbox.speed = resultantSpeed
-        inboxNodes.forEach({ inboxNode in inboxNode.speed = resultantSpeed })
-        outboxNodes.forEach({ outboxNode in outboxNode.speed = resultantSpeed })
+        inboxNodes.forEach({ $0.speed = resultantSpeed })
+        outboxNodes.forEach({ $0.speed = resultantSpeed })
     }
 }
 
@@ -307,8 +307,8 @@ extension GameScene {
 
     fileprivate func removeAllAnimations() {
         player.removeAllActions()
-        inboxNodes.forEach { inboxNode in inboxNode.removeAllActions() }
-        outboxNodes.forEach { outboxNode in outboxNode.removeAllActions() }
+        inboxNodes.forEach { $0.removeAllActions() }
+        outboxNodes.forEach { $0.removeAllActions() }
         memoryNodes.forEach { $1.removeAllActions() }
     }
 
@@ -337,7 +337,7 @@ extension GameScene {
 
             // 3. meantime inbox items move left
             self.player.run(stepAside, completion: {
-                self.inboxNodes.forEach { node in self.moveConveyorBelt(node) }
+                self.inboxNodes.forEach { self.moveConveyorBelt($0) }
                 let inboxAnimation = SKAction.repeat(
                     SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
                                      timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
@@ -383,7 +383,7 @@ extension GameScene {
         })
 
         // 2. concurrently, outbox items move left
-        self.outboxNodes.forEach { node in self.moveConveyorBelt(node) }
+        self.outboxNodes.forEach { self.moveConveyorBelt($0) }
         let outboxAnimation = SKAction.repeat(
             SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
                              timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
