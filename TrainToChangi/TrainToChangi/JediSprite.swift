@@ -29,8 +29,4 @@ class JediSprite: SKSpriteNode {
         let animation = SKAction.repeatForever(SKAction.animate(with: animationTextures, timePerFrame: 0.1))
         self.run(animation)
     }
-
-    func stopAnimation() {
-        self.stopAnimation()
-    }
 }

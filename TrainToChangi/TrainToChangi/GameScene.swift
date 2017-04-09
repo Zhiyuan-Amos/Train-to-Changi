@@ -309,7 +309,7 @@ extension GameScene {
         inboxNodes.forEach { inboxNode in inboxNode.removeAllActions() }
         outboxNodes.forEach { outboxNode in outboxNode.removeAllActions() }
         memoryNodes.forEach { memoryNode in memoryNode.removeAllActions() }
-        jedi.stopAnimation()
+        jedi.removeAllActions()
     }
 
     // Move the player to a WalkDestination
