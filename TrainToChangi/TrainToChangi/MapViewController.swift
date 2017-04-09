@@ -86,7 +86,13 @@ class MapViewController: UIViewController {
                 break
             }
             gameVC.initLevel(name: levelName)
-        case Constants.SegueIds.login?: break
+
+        case "cancelFromLevelSelectionWithSegue"?:
+            guard let _ = segue.destination as? LandingViewController else {
+                assertionFailure("Segue should point to LandingViewController")
+                break
+            }
+            
         default:
             assertionFailure("Segue has a name unaccounted for")
         }
