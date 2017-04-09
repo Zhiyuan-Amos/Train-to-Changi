@@ -1,3 +1,4 @@
+// Represents the execution state of the Game Scene.
 enum RunState {
     case start
     case running(isAnimating: Bool)
