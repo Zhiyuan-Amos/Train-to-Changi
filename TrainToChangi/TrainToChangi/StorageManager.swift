@@ -32,6 +32,7 @@ class StorageManager {
         }
 
         DataService.instance.saveUserAddedCommands(uid: userID,
+                                                   levelIndex: levelIndex,
                                                    saveName: "default",
                                                    commandDataListInfo: commandDataListInfo.toAnyObject())
     }

@@ -32,9 +32,12 @@ class DataService {
         usersRef.child(uid).child(profileKey).setValue(profile)
     }
 
-    func saveUserAddedCommands(uid: String, saveName: String, commandDataListInfo: AnyObject) {
+    func saveUserAddedCommands(uid: String,
+                               levelIndex: Int,
+                               saveName: String,
+                               commandDataListInfo: AnyObject) {
         let data: [String: AnyObject] = [saveName: commandDataListInfo]
-        let ref = usersRef.child(uid).child(commandDataListInfoKey)
+        let ref = usersRef.child(uid).child(commandDataListInfoKey).child(String(levelIndex))
         ref.setValue(data)
     }
 
