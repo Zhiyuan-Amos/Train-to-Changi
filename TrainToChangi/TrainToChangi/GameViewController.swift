@@ -15,6 +15,7 @@ class GameViewController: UIViewController, ResetGameDelegate {
 
     fileprivate var model: Model!
     fileprivate var logic: Logic!
+    fileprivate var scene: GameScene!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -109,7 +110,7 @@ class GameViewController: UIViewController, ResetGameDelegate {
 
     /// Use GameScene to move/animate the game objects
     private func presentGameScene() {
-        let scene = GameScene(model.currentLevel, size: view.bounds.size)
+        scene = GameScene(model.currentLevel, size: view.bounds.size)
         guard let skView = view as? SKView else {
             assertionFailure("View should be a SpriteKit View!")
             return
@@ -170,6 +171,7 @@ extension GameViewController: MapViewControllerDelegate {
             model.runState = .paused
         } else if model.runState == .won {
             animateTrainWhenGameWon()
+            scene.playJediGameWonAnimation()
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay), execute: {
                 self.displayEndGameScreen()
             })
