@@ -14,7 +14,7 @@ class CopyToCommand: Command {
     }
 
     func execute() -> CommandResult {
-        prevValueOnMemory = model.getValueFromMemory(at: memoryIndex, forUndo: true)
+        prevValueOnMemory = model.getValueFromMemory(at: memoryIndex)
 
         guard let value = model.getValueOnPerson() else {
             return CommandResult(errorMessage: .emptyPersonValue)
