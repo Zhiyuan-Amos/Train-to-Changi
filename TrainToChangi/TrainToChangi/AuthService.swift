@@ -15,7 +15,7 @@ class AuthService {
         return _instance
     }
 
-    var currentUserID: String? {
+    var currentUserId: String? {
         return FIRAuth.auth()?.currentUser?.uid
     }
 
@@ -27,7 +27,11 @@ class AuthService {
             }
             // User signed into firebase
             // Add user into database
-            DataService.instance.saveUser(uid: user!.uid)
+            guard let user = user else {
+                assertionFailure("No error, user must be signed in!")
+                return
+            }
+            DataService.instance.saveUser(userId: user.uid)
         })
     }
 

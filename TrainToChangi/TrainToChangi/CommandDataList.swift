@@ -165,7 +165,7 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     func asListInfo() -> CommandDataListInfo {
-        return CommandDataListInfo(array: toArray(), jumpMappings: getJumpMappings())
+        return CommandDataListInfo(commandDataArray: toArray(), jumpMappings: getJumpMappings())
     }
 
     // MARK - Private helpers

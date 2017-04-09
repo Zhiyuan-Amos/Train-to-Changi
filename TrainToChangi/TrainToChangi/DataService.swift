@@ -8,6 +8,10 @@
 
 import FirebaseDatabase
 
+protocol DataServiceLoadLevelDelegate: class {
+    func load(commandDataListInfo: CommandDataListInfo)
+}
+
 class DataService {
 
     private static let _instance = DataService()
@@ -27,15 +31,45 @@ class DataService {
         return mainRef.child(usersKey)
     }
 
-    func saveUser(uid: String) {
+    func saveUser(userId: String) {
         let profile: [String: AnyObject] = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
-        usersRef.child(uid).child(profileKey).setValue(profile)
+        usersRef.child(userId)
+                .child(profileKey)
+                .setValue(profile)
     }
 
-    func saveUserAddedCommands(uid: String, saveName: String, commandDataListInfo: AnyObject) {
+    func saveUserAddedCommands(userId: String,
+                               levelIndex: Int,
+                               saveName: String,
+                               commandDataListInfo: AnyObject) {
         let data: [String: AnyObject] = [saveName: commandDataListInfo]
-        let ref = usersRef.child(uid).child(commandDataListInfoKey)
+        let ref = usersRef.child(userId)
+                          .child(commandDataListInfoKey)
+                          .child(String(levelIndex))
         ref.setValue(data)
     }
 
+    func preloadUserAddedCommands(userId: String) {
+        let ref = DataService.instance.usersRef.child(userId).child(commandDataListInfoKey)
+        ref.observeSingleEvent(of: .value, with: { _ in }) { _ in }
+    }
+
+    func loadUserAddedCommands(userId: String,
+                               levelIndex: Int,
+                               saveName: String,
+                               loadLevelDelegate: DataServiceLoadLevelDelegate) {
+        let ref = usersRef.child(userId)
+                          .child(commandDataListInfoKey)
+                          .child(String(levelIndex))
+                          .child(saveName)
+
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let commandDataListInfo = CommandDataListInfo.fromSnapshot(snapshot: snapshot) {
+                loadLevelDelegate.load(commandDataListInfo: commandDataListInfo)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
+    }
 }

@@ -58,11 +58,11 @@ class ModelManager: Model {
     private var levelManager: LevelManager
     private var _userEnteredCommands: CommandDataList
 
-    private var levelIndex: Int
+    let currentLevelIndex: Int
 
     init(levelIndex: Int, levelData: LevelData) {
         _userEnteredCommands = CommandDataLinkedList()
-        self.levelIndex = levelIndex
+        currentLevelIndex = levelIndex
         levelManager = LevelManager(levelData: levelData)
         levelState = levelManager.level.initialState
     }
@@ -182,7 +182,7 @@ class ModelManager: Model {
     private func postCommandDataListUpdateNotification() {
         let notification = Notification(name: Constants.NotificationNames.commandDataListUpdate,
                                         object: nil,
-                                        userInfo: ["levelIndex": levelIndex,
+                                        userInfo: ["levelIndex": currentLevelIndex,
                                                    "commandDataListInfo": userEnteredCommandsAsListInfo])
         NotificationCenter.default.post(notification)
     }
