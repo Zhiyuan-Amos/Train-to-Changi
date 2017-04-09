@@ -49,6 +49,11 @@ class DataService {
         ref.setValue(data)
     }
 
+    func preloadUserAddedCommands(userId: String) {
+        let ref = DataService.instance.usersRef.child(userId).child(commandDataListInfoKey)
+        ref.observeSingleEvent(of: .value, with: { _ in }) { _ in }
+    }
+
     func loadUserAddedCommands(userId: String,
                                levelIndex: Int,
                                saveName: String,

@@ -23,11 +23,10 @@ class LandingViewController: UIViewController {
 
     // Speed up connection when loading in EditorVC.
     private func preloadCommandDataList() {
-        guard let userID = AuthService.instance.currentUserId else {
+        guard let userId = AuthService.instance.currentUserId else {
             return
         }
-        let ref = DataService.instance.usersRef.child(userID).child("commandDataListInfo")
-        ref.observeSingleEvent(of: .value, with: { _ in }) { _ in }
+        DataService.instance.preloadUserAddedCommands(userId: userId)
     }
 
     @IBAction func cancelFromLevelSelection(segue: UIStoryboardSegue) {

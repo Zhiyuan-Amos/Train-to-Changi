@@ -13,5 +13,5 @@ class ApplicationManager {
 
     init() {
     }
-    
+
 }
