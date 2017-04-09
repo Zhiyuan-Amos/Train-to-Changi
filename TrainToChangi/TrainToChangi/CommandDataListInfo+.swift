@@ -76,7 +76,7 @@ extension CommandDataListInfo {
                 fatalError("Should never happen, undefined enum.")
             }
         }
-        return CommandDataListInfo(array: commandData, jumpMappings: jumpMappings)
+        return CommandDataListInfo(commandDataArray: commandData, jumpMappings: jumpMappings)
     }
 
 }

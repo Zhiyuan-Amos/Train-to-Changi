@@ -1,4 +1,4 @@
-// Stores the stuff that changes during Level execution
+// Contains fields that changes during Level execution.
 struct LevelState {
     var inputs: [Int]
     var memoryValues: [Int?]

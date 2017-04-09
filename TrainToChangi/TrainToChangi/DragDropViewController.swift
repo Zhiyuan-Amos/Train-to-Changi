@@ -48,19 +48,13 @@ class DragDropViewController: UIViewController {
     }
 
     private func loadCommandDataList() {
-        guard let userID = AuthService.instance.currentUserID else {
+        guard let userId = AuthService.instance.currentUserId else {
             fatalError("Must be logged in")
         }
-        let ref = DataService.instance.usersRef.child(userID).child("commandDataListInfo").child("default")
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            if let commandDataListInfo = CommandDataListInfo.fromSnapshot(snapshot: snapshot) {
-                self.model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
-            }
-            self.currentCommandsView.reloadData()
-            self.renderJumpArrows()
-        }) { (error) in
-            print(error.localizedDescription)
-        }
+        DataService.instance.loadUserAddedCommands(userId: userId,
+                                                   levelIndex: model.currentLevelIndex,
+                                                   saveName: "default",
+                                                   loadLevelDelegate: self)
     }
 
     fileprivate func deleteCommand(indexPath: IndexPath) {
@@ -70,6 +64,14 @@ class DragDropViewController: UIViewController {
         NotificationCenter.default.post(name: Constants.NotificationNames.userDeleteCommandEvent,
                                         object: nil,
                                         userInfo: nil)
+    }
+}
+
+extension DragDropViewController: DataServiceLoadLevelDelegate {
+    func load(commandDataListInfo: CommandDataListInfo) {
+        model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
+        currentCommandsView.reloadData()
+        renderJumpArrows()
     }
 }
 

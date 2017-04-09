@@ -23,4 +23,10 @@ class JediSprite: SKSpriteNode {
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.toggleSpeechEvent,
                                                      object: self.index, userInfo: nil))
     }
+    
+    func playGameWonAnimation() {
+        let animationTextures = [SKTexture(imageNamed: "jedi_01"), SKTexture(imageNamed: "jedi_05")]
+        let animation = SKAction.repeatForever(SKAction.animate(with: animationTextures, timePerFrame: 0.1))
+        self.run(animation)
+    }
 }

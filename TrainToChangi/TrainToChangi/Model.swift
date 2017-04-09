@@ -30,6 +30,8 @@ protocol Model: class {
     // The current level loaded in Model.
     var currentLevel: Level { get }
 
+    var currentLevelIndex: Int { get }
+
     // MARK - API for GameViewController.
 
     // Appends the command to userEnteredCommands.

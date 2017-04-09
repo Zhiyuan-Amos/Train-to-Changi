@@ -18,6 +18,7 @@
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */; };
+		3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */; };
 		3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D984F1E88FCD70026872B /* EditorViewController.swift */; };
 		3B6D98521E88FE970026872B /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98511E88FE970026872B /* ControlPanelViewController.swift */; };
 		3B6D98541E8904500026872B /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D98531E8904500026872B /* AnimationHelper.swift */; };
@@ -46,6 +47,10 @@
 		A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEB1E865AD10040DA21 /* LevelManager.swift */; };
 		A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */; };
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
+		A7AB9DDF1E9A45CA00989F58 /* AchievementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */; };
+		A7AB9DE11E9A45DA00989F58 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* Achievements.swift */; };
+		A7AB9DE31E9A469E00989F58 /* DefaultFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* DefaultFirebaseSaver.swift */; };
+		A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */; };
 		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
 		BC0162FF8448453D3B94C649 /* Pods_TrainToChangi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */; };
 		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
@@ -54,7 +59,6 @@
 		D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA501E7959F9004CCABD /* RunStateUpdater.swift */; };
 		D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA541E79715C004CCABD /* ExecutionError.swift */; };
 		D744CA661E7A387F004CCABD /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA641E7A387F004CCABD /* Level.swift */; };
-		D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744CA681E7A38D7004CCABD /* StorageManager.swift */; };
 		D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4251E76BA9000ED2A1B /* Command.swift */; };
 		D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC4271E76C3A500ED2A1B /* AddCommand.swift */; };
 		D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75BC42B1E76C55600ED2A1B /* LogicManager.swift */; };
@@ -104,6 +108,7 @@
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
 		3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGameViewController.swift; sourceTree = "<group>"; };
+		3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		3B6D984F1E88FCD70026872B /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		3B6D98511E88FE970026872B /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		3B6D98531E8904500026872B /* AnimationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
@@ -135,6 +140,10 @@
 		A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainToChangiTests.swift; sourceTree = "<group>"; };
 		A7A10D071E86A6C20040DA21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
+		A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsManager.swift; sourceTree = "<group>"; };
+		A7AB9DE01E9A45DA00989F58 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
+		A7AB9DE21E9A469E00989F58 /* DefaultFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFirebaseSaver.swift; sourceTree = "<group>"; };
+		A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
 		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
@@ -143,7 +152,6 @@
 		D744CA501E7959F9004CCABD /* RunStateUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunStateUpdater.swift; sourceTree = "<group>"; };
 		D744CA541E79715C004CCABD /* ExecutionError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		D744CA641E7A387F004CCABD /* Level.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
-		D744CA681E7A38D7004CCABD /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D75BC4251E76BA9000ED2A1B /* Command.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
 		D75BC4271E76C3A500ED2A1B /* AddCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCommand.swift; sourceTree = "<group>"; };
 		D75BC42B1E76C55600ED2A1B /* LogicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogicManager.swift; sourceTree = "<group>"; };
@@ -228,13 +236,10 @@
 		3B1680451E7784B3002286F6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A701923F1E9517520058D7CD /* CommandDataListInfo+.swift */,
-				D744CA641E7A387F004CCABD /* Level.swift */,
+				A7AB9DDA1E9A437700989F58 /* CommandDataListADT */,
+				A7AB9DDD1E9A43DC00989F58 /* States */,
 				A7A10CEB1E865AD10040DA21 /* LevelManager.swift */,
-				A7A10CE91E865AD10040DA21 /* CommandDataList.swift */,
-				A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */,
-				3B1680521E77D6F7002286F6 /* RunState.swift */,
-				3B1680501E778A2D002286F6 /* LevelState.swift */,
+				D744CA641E7A387F004CCABD /* Level.swift */,
 				3B16804A1E778773002286F6 /* ModelManager.swift */,
 				D7A267E01E77ABEB00DE5774 /* Model.swift */,
 			);
@@ -307,14 +312,6 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
-		3BD7EF911E811DB50029EA57 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				D744CA681E7A38D7004CCABD /* StorageManager.swift */,
-			);
-			name = Storage;
-			sourceTree = "<group>";
-		};
 		4AF3A78D82E761EB3D5635BA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +356,7 @@
 				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
 				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
 				3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */,
+				3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -399,13 +397,45 @@
 			name = ModelTests;
 			sourceTree = "<group>";
 		};
-		A7D163481E90CC860073EC46 /* Levels */ = {
+		A7AB9DD91E9A432000989F58 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
+				A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */,
+				A7AB9DE01E9A45DA00989F58 /* Achievements.swift */,
+				A7AB9DE21E9A469E00989F58 /* DefaultFirebaseSaver.swift */,
+				A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */,
+				A7D163481E90CC860073EC46 /* GameLevels */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		A7AB9DDA1E9A437700989F58 /* CommandDataListADT */ = {
+			isa = PBXGroup;
+			children = (
+				A7A10CE91E865AD10040DA21 /* CommandDataList.swift */,
+				A701923F1E9517520058D7CD /* CommandDataListInfo+.swift */,
+				A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */,
+			);
+			name = CommandDataListADT;
+			sourceTree = "<group>";
+		};
+		A7AB9DDD1E9A43DC00989F58 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				3B1680501E778A2D002286F6 /* LevelState.swift */,
+				3B1680521E77D6F7002286F6 /* RunState.swift */,
+			);
+			name = States;
+			sourceTree = "<group>";
+		};
+		A7D163481E90CC860073EC46 /* GameLevels */ = {
 			isa = PBXGroup;
 			children = (
 				A7D163491E90CC9D0073EC46 /* Levels.swift */,
 				A7A10CEA1E865AD10040DA21 /* LevelData.swift */,
 			);
-			name = Levels;
+			name = GameLevels;
 			sourceTree = "<group>";
 		};
 		D76FA81A1E76ADC400CCCFBE = {
@@ -432,13 +462,11 @@
 			isa = PBXGroup;
 			children = (
 				A701923D1E9517260058D7CD /* Services */,
-				A7D163481E90CC860073EC46 /* Levels */,
-				3BD7EF911E811DB50029EA57 /* Storage */,
+				A7AB9DD91E9A432000989F58 /* Application */,
 				3B16804D1E778785002286F6 /* UI */,
 				3B16804C1E778779002286F6 /* Logic */,
 				3B1680451E7784B3002286F6 /* Model */,
 				3B1680421E778484002286F6 /* Commons */,
-				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
 				D76FA8331E76ADC400CCCFBE /* Assets.xcassets */,
 				D76FA8381E76ADC400CCCFBE /* Info.plist */,
 				3BD7EF9B1E812F790029EA57 /* Levels.plist */,
@@ -709,6 +737,8 @@
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				3B10D8491E9272C300EFCDAC /* ArrowView.swift in Sources */,
 				3B78A68E1E91545700A652D9 /* LineNumberCell.swift in Sources */,
+				A7AB9DE31E9A469E00989F58 /* DefaultFirebaseSaver.swift in Sources */,
+				A7AB9DDF1E9A45CA00989F58 /* AchievementsManager.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
 				3BC852BF1E94833B0098042A /* JediSprite.swift in Sources */,
 				A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */,
@@ -717,6 +747,7 @@
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
 				76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
+				3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */,
@@ -726,14 +757,15 @@
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				A70192441E9517520058D7CD /* CommandDataListInfo+.swift in Sources */,
+				A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */,
 				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
 				D7C22B551E9523A200A55324 /* JumpTarget.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
 				3B05F91F1E94FFBF009B4F5F /* SpeechBubbleSprite.swift in Sources */,
+				A7AB9DE11E9A45DA00989F58 /* Achievements.swift in Sources */,
 				76745B741E885A030039A771 /* MapViewController.swift in Sources */,
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
-				D744CA691E7A38D7004CCABD /* StorageManager.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 				A70192451E9517520058D7CD /* DataService.swift in Sources */,

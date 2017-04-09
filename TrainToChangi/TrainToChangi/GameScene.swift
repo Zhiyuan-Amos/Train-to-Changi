@@ -302,11 +302,16 @@ extension GameScene {
 // MARK: - Animations
 extension GameScene {
 
+    func playJediGameWonAnimation() {
+        self.jedi.playGameWonAnimation()
+    }
+
     fileprivate func removeAllAnimations() {
         player.removeAllActions()
         inboxNodes.forEach { $0.removeAllActions() }
         outboxNodes.forEach { $0.removeAllActions() }
         memoryNodes.forEach { $1.removeAllActions() }
+        jedi.removeAllActions()
     }
 
     // Move the player to a WalkDestination
