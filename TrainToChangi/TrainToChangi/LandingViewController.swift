@@ -7,8 +7,30 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LandingViewController: UIViewController {
+
+    override func viewDidAppear(_ animated: Bool) {
+        // Makes sure that user is logged in.
+        guard FIRAuth.auth()?.currentUser != nil else {
+            // show login viewcontroller
+            performSegue(withIdentifier: "login", sender: nil)
+            return
+        }
+        preloadCommandDataList()
+    }
+
+    // Speed up connection when loading in EditorVC.
+    private func preloadCommandDataList() {
+        guard let userID = AuthService.instance.currentUserID else {
+            return
+        }
+        let ref = DataService.instance.usersRef.child(userID).child("commandDataListInfo")
+        ref.observeSingleEvent(of: .value, with: { _ in
+        }) { _ in
+        }
+    }
 
     @IBAction func cancelFromLevelSelection(segue: UIStoryboardSegue) {
     }
