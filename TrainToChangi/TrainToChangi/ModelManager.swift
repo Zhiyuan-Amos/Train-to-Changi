@@ -144,7 +144,6 @@ class ModelManager: Model {
         }
 
         let dequeuedValue = levelState.inputs.removeFirst()
-        postMoveNotification(destination: .inbox)
         return dequeuedValue
     }
 
@@ -154,7 +153,6 @@ class ModelManager: Model {
 
     func appendValueIntoOutbox(_ value: Int) {
         levelState.outputs.append(value)
-        postMoveNotification(destination: .outbox)
     }
 
     func popValueFromOutbox() {
@@ -171,15 +169,9 @@ class ModelManager: Model {
 
     func putValueIntoMemory(_ value: Int?, at index: Int) {
         levelState.memoryValues[index] = value
-        postMoveNotification(destination: .memory(
-            layout: currentLevel.memoryLayout, index: index, action: .put))
     }
 
-    func getValueFromMemory(at index: Int, forUndo: Bool) -> Int? {
-        if !forUndo {
-            postMoveNotification(destination: .memory(
-                layout: currentLevel.memoryLayout, index: index, action: .get))
-        }
+    func getValueFromMemory(at index: Int) -> Int? {
         return levelState.memoryValues[index]
     }
 
@@ -190,13 +182,6 @@ class ModelManager: Model {
                                         object: nil,
                                         userInfo: ["levelIndex": levelIndex,
                                                    "commandDataListInfo": userEnteredCommandsAsListInfo])
-        NotificationCenter.default.post(notification)
-    }
-
-    private func postMoveNotification(destination: WalkDestination) {
-        let notification = Notification(name: Constants.NotificationNames.movePersonInScene,
-                                        object: nil,
-                                        userInfo: ["destination": destination])
         NotificationCenter.default.post(notification)
     }
 

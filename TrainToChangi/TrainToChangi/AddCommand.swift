@@ -7,7 +7,7 @@ import Foundation
 
 class AddCommand: Command {
     private let model: Model
-    private let memoryIndex: Int
+    fileprivate let memoryIndex: Int
     private var prevValueOnPerson: Int?
 
     init(model: Model, memoryIndex: Int) {
@@ -22,12 +22,11 @@ class AddCommand: Command {
 
         prevValueOnPerson = personValue
 
-        guard let memoryValue = model.getValueFromMemory(at: memoryIndex, forUndo: false) else {
+        guard let memoryValue = model.getValueFromMemory(at: memoryIndex) else {
             return CommandResult(errorMessage: .emptyMemoryLocation)
         }
 
         model.updateValueOnPerson(to: personValue + memoryValue)
-        postMoveNotification(expected: personValue + memoryValue)
 
         return CommandResult()
     }
@@ -40,11 +39,10 @@ class AddCommand: Command {
         model.updateValueOnPerson(to: value)
     }
 
-    private func postMoveNotification(expected: Int) {
-        let notification = Notification(
-            name: Constants.NotificationNames.movePersonInScene, object: nil,
-            userInfo: ["destination": WalkDestination.memory(
-                layout: model.currentLevel.memoryLayout, index: memoryIndex, action: .compute(expected: expected))])
-        NotificationCenter.default.post(notification)
+}
+
+extension AddCommand: MemoryCommand {
+    var index: Int {
+        return memoryIndex
     }
 }

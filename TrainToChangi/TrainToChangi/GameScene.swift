@@ -115,6 +115,7 @@ extension GameScene {
             let position = playerPreviousPositions.pop()
             setPlayerAttributes(position: position, payloadValue: levelState.personValue)
         } else { // stop button pressed
+            playerPreviousPositions = Stack<CGPoint>()
             initConveyorNodes(inboxValues: level.initialState.inputs)
             initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
             setPlayerAttributes()
