@@ -24,45 +24,104 @@ class UIEntityDrawer {
         cellSnapshot.layer.shadowOpacity = 0.4
         return cellSnapshot
     }
+}
 
-    static func generateCommandUIButton(for commandType: CommandData,
-                                        position: CGPoint, tag: Int) -> UIButton {
-        let size = CGSize(width: getCommandButtonWidth(commandType),
-                          height: Constants.UI.collectionCellHeight)
-        let frame = CGRect(origin: position, size: size)
-        let imagePath = commandType.toFilePath() + ".png"
+// MARK: - Command Drawing Helper Functions
+extension UIEntityDrawer {
 
-        let commandButton = UIButton(frame: frame)
-        commandButton.setBackgroundImage(UIImage(named: imagePath), for: UIControlState.normal)
-        commandButton.tag = tag
-
-        return commandButton
+    static func drawButton(title: String, backgroundColor: UIColor, width: CGFloat,
+                           origin: CGPoint, interactive: Bool) -> UIButton {
+        let button = UIButton()
+        button.setTitle(title, for: UIControlState.normal)
+        button.setTitleColor(UIColor.black, for: UIControlState.normal)
+        button.backgroundColor = backgroundColor
+        button.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
+        button.frame.origin = origin
+        button.frame.size.width = width
+        button.frame.size.height = Constants.UI.collectionCellHeight
+        button.layer.cornerRadius = 5.0
+        button.isUserInteractionEnabled = interactive
+        return button
     }
 
-    static func getCommandButtonWidth(_ commandType: CommandData) -> CGFloat {
-        switch commandType {
-            case .add(_), .jumpTarget:
-                return Constants.UI.commandButtonWidthShort
-            case .inbox, .outbox, .jump:
-                return Constants.UI.commandButtonWidthMid
-            case .copyTo(_), .copyFrom(_):
-                return Constants.UI.commandButtonWidthLong
+    static func drawMemoryIndex(index: Int, backgroundColor: UIColor, origin: CGPoint) -> UILabel {
+        let memoryIndexLabel = UILabel()
+        memoryIndexLabel.text = "\(index)"
+        memoryIndexLabel.textColor = UIColor.black
+        memoryIndexLabel.font = UIFont(name: "Futura-Bold", size: 14)
+        memoryIndexLabel.backgroundColor = backgroundColor
+        memoryIndexLabel.frame.origin = origin
+        memoryIndexLabel.frame.size.width = 50
+        memoryIndexLabel.frame.size.height = Constants.UI.collectionCellHeight
+        memoryIndexLabel.clipsToBounds = true
+        memoryIndexLabel.layer.cornerRadius = 15.0
+        memoryIndexLabel.textAlignment = .center
+        memoryIndexLabel.isUserInteractionEnabled = false
+        return memoryIndexLabel
+    }
+
+    static func drawCommandMemoryIndex(command: CommandData, origin: CGPoint) -> UILabel? {
+        switch command {
+        case .copyFrom(let index), .copyTo(let index):
+            return drawMemoryIndex(index: index, backgroundColor: UIColor(red: 239, green: 83, blue: 80),
+                                   origin: origin)
+        case .add(let index):
+            return drawMemoryIndex(index: index, backgroundColor:  UIColor(red: 255, green: 224, blue: 178),
+                                   origin: origin)
+        default:
+            return nil
         }
     }
 
-    // MARK: - Jump Arrow Drawing Helper Functions
+    static func drawCommandButton(command: CommandData, origin: CGPoint,
+                                  interactive: Bool) -> UIButton {
+        switch command {
+        case .inbox:
+            return drawButton(title: "inbox", backgroundColor: UIColor(red: 165, green: 214, blue: 167),
+                              width: Constants.UI.commandButtonWidthMid,
+                              origin: origin, interactive: interactive)
+        case .outbox:
+            return drawButton(title: "outbox", backgroundColor: UIColor(red: 165, green: 214, blue: 167),
+                              width: Constants.UI.commandButtonWidthMid,
+                              origin: origin, interactive: interactive)
+        case .copyFrom:
+            return drawButton(title: "copyfrom", backgroundColor: UIColor(red: 239, green: 83, blue: 80),
+                              width: Constants.UI.commandButtonWidthLong,
+                              origin: origin, interactive: interactive)
+        case .copyTo:
+            return drawButton(title: "copyto", backgroundColor: UIColor(red: 239, green: 83, blue: 80),
+                              width: Constants.UI.commandButtonWidthMid,
+                              origin: origin, interactive: interactive)
+        case .jump:
+            return drawButton(title: "jump", backgroundColor: UIColor(red: 130, green: 177, blue: 255),
+                              width: Constants.UI.commandButtonWidthShort,
+                              origin: origin, interactive: interactive)
+        case .jumpTarget:
+            return drawButton(title: "", backgroundColor: UIColor(red: 130, green: 177, blue: 255),
+                              width: Constants.UI.commandButtonWidthShort,
+                              origin: origin, interactive: interactive)
+        case .add:
+            return drawButton(title: "add", backgroundColor:  UIColor(red: 255, green: 224, blue: 178),
+                              width: Constants.UI.commandButtonWidthShort,
+                              origin: origin, interactive: interactive)
+        }
+    }
+}
+
+// MARK: - Jump Arrow Drawing Helper Functions
+extension UIEntityDrawer {
     static func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath,
                               reversed: Bool, arrowWidthIndex: Int) -> ArrowView {
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / 10.0))
+        let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / 5.0))
 
         return reversed ? generateReverseArrowView(origin: origin, height: height, width: width)
                         : generateArrowView(origin: origin, height: height, width: width)
     }
 
     static func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
-        return CGPoint(Constants.UI.collectionCellWidth,
+        return CGPoint(Constants.UI.dragDropCollectionCellWidth,
                        getMidYOfCell(at: indexPath))
     }
 

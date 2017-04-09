@@ -17,6 +17,7 @@
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
+		3B5D5A481E9A91F9001BC438 /* LevelDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */; };
 		3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */; };
 		3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */; };
 		3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D984F1E88FCD70026872B /* EditorViewController.swift */; };
@@ -108,6 +109,7 @@
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
+		3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDescriptionViewController.swift; sourceTree = "<group>"; };
 		3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGameViewController.swift; sourceTree = "<group>"; };
 		3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		3B6D984F1E88FCD70026872B /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
@@ -351,15 +353,16 @@
 			isa = PBXGroup;
 			children = (
 				3B78A6911E91554F00A652D9 /* Extensions */,
-				76745B731E885A030039A771 /* MapViewController.swift */,
-				A70192421E9517520058D7CD /* LoginViewController.swift */,
-				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
-				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
-				3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */,
-				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
 				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
+				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
+				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
 				3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */,
 				3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */,
+				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
+				A70192421E9517520058D7CD /* LoginViewController.swift */,
+				3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */,
+				3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */,
+				76745B731E885A030039A771 /* MapViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -729,6 +732,7 @@
 				3B78A68C1E9124CF00A652D9 /* DragDropViewController.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
 				3B78A6931E915A1E00A652D9 /* LineNumberViewController.swift in Sources */,
+				3B5D5A481E9A91F9001BC438 /* LevelDescriptionViewController.swift in Sources */,
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
 				3B6D98591E89129C0026872B /* UIEntityDrawer.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,

@@ -156,12 +156,16 @@ struct Constants {
         static let mainStoryboardIdentifier = "Main"
         static let endGameViewControllerIdentifier = "EndGameViewController"
 
-        static let commandButtonInitialOffsetY: CGFloat = 20
-        static let commandButtonOffsetY: CGFloat = 30
+        static let dragDropCollectionCellWidth: CGFloat = 180
+        static let lineNumberCollectionCellWidth: CGFloat = 40
+        static let collectionCellHeight: CGFloat = 40
 
-        static let commandButtonWidthShort: CGFloat = 40
-        static let commandButtonWidthMid: CGFloat = 60
-        static let commandButtonWidthLong: CGFloat = 80
+        static let commandButtonInitialOffsetY: CGFloat = 20
+        static let commandButtonOffsetY: CGFloat = collectionCellHeight + 10
+
+        static let commandButtonWidthShort: CGFloat = 60
+        static let commandButtonWidthMid: CGFloat = 80
+        static let commandButtonWidthLong: CGFloat = 100
         static let commandIndexWidth: CGFloat = 20
 
         static let dragDropCollectionViewCellIdentifier = "CommandCell"
@@ -172,11 +176,8 @@ struct Constants {
         static let topEdgeInset: CGFloat = 10
         static let rightEdgeInset: CGFloat = 10
 
-        static let minimumLineSpacingForSection: CGFloat = 0
+        static let minimumLineSpacingForSection: CGFloat = 10
         static let minimumInteritemSpacingForSection: CGFloat = 0
-
-        static let collectionCellWidth: CGFloat = 100
-        static let collectionCellHeight: CGFloat = 40
 
         static let programCounterOffsetX: CGFloat = 10
 

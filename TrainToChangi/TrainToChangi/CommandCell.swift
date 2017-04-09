@@ -10,41 +10,26 @@ import UIKit
 
 class CommandCell: UICollectionViewCell {
 
-    @IBOutlet weak var commandImage: UIImageView!
-    @IBOutlet weak var commandIndex: UILabel!
+    private typealias Drawer = UIEntityDrawer
 
-    func setImageAndIndex(commandType: CommandData) {
-        let imagePath = commandType.toFilePath() + ".png"
-
-        switch commandType {
-        case .add(let index):
-            setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    width: Constants.UI.commandButtonWidthShort)
-
-        case .copyFrom(let index), .copyTo(let index):
-            setCommandImageAndIndex(imageName: imagePath, index: index,
-                                    width: Constants.UI.commandButtonWidthLong)
-
-        case .inbox, .outbox, .jump(_), .jumpTarget:
-            setCommandImageAndIndex(imageName: imagePath, index: nil,
-                                    width: Constants.UI.commandButtonWidthMid)
+    func setup(command: CommandData) {
+        for view in self.subviews {
+            view.removeFromSuperview()
         }
-    }
 
-    private func setCommandImageAndIndex(imageName: String, index: Int?, width: CGFloat) {
+        let buttonOrigin = CGPoint(x: 10, y: 0)
+        let button = Drawer.drawCommandButton(command: command, origin: buttonOrigin,
+                                              interactive: false)
+        button.frame = self.convert(button.frame, to: self)
+        self.addSubview(button)
 
-        commandImage.image = UIImage(named: imageName)
-        //TODO: Desmond, I added this line which I supposed you missed out since
-        // width was unused previous. but it's still buggy.
-        //commandImage.frame.size.width = width
-
-        if let index = index {
-            commandIndex.text = "\(index)"
-            commandIndex.isHidden = false
-        } else {
-            commandIndex.isHidden = true
+        let labelOrigin = CGPoint(x: button.frame.width + 20, y: 0)
+        guard let label = Drawer.drawCommandMemoryIndex(command: command, origin: labelOrigin) else {
+            return
         }
-        commandIndex.isUserInteractionEnabled = false
+
+        label.frame = self.convert(label.frame, to: self)
+        self.addSubview(label)
     }
 
 }

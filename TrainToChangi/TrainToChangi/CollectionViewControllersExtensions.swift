@@ -27,7 +27,7 @@ extension DragDropViewController: UICollectionViewDataSource {
         }
 
         let command = model.userEnteredCommands[indexPath.item]
-        cell.setImageAndIndex(commandType: command)
+        cell.setup(command: command)
         return cell
     }
 
@@ -42,6 +42,13 @@ extension DragDropViewController: UICollectionViewDelegateFlowLayout {
                                      left: 0, bottom: 0,
                                      right: Constants.UI.rightEdgeInset)
         return edgeInset
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: Constants.UI.dragDropCollectionCellWidth,
+                      height: Constants.UI.collectionCellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView,
@@ -92,6 +99,13 @@ extension LineNumberViewController: UICollectionViewDelegateFlowLayout {
                                      left: 0, bottom: 0,
                                      right: 0)
         return edgeInset
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: Constants.UI.lineNumberCollectionCellWidth,
+                      height: Constants.UI.collectionCellHeight)
     }
 
     func collectionView(_ collectionView: UICollectionView,
