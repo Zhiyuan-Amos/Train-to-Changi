@@ -8,6 +8,10 @@
 
 import FirebaseDatabase
 
+protocol DataServiceLoadLevelDelegate: class {
+    func load(commandDataListInfo: CommandDataListInfo)
+}
+
 class DataService {
 
     private static let _instance = DataService()
@@ -45,13 +49,22 @@ class DataService {
         ref.setValue(data)
     }
 
-    func getUserAddedCommandsSavedRef(userId: String,
-                                      levelIndex: Int,
-                                      saveName: String) -> FIRDatabaseReference {
-        return usersRef.child(userId)
-                       .child(commandDataListInfoKey)
-                       .child(String(levelIndex))
-                       .child(saveName)
-    }
+    func loadUserAddedCommands(userId: String,
+                               levelIndex: Int,
+                               saveName: String,
+                               loadLevelDelegate: DataServiceLoadLevelDelegate) {
+        let ref = usersRef.child(userId)
+                          .child(commandDataListInfoKey)
+                          .child(String(levelIndex))
+                          .child(saveName)
 
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let commandDataListInfo = CommandDataListInfo.fromSnapshot(snapshot: snapshot) {
+                loadLevelDelegate.load(commandDataListInfo: commandDataListInfo)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
+    }
 }

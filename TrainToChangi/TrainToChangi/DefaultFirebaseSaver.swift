@@ -6,6 +6,8 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
+import Foundation
+
 // Automatically saves user's entered commands for each level under the "default"
 // saved level name, to allow user's entered commands to be persisted
 // even without manual saving.
