@@ -18,9 +18,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
 
         GIDSignIn.sharedInstance().uiDelegate = self
-        if AuthService.instance.currentUserID != nil {
-            self.dismiss(animated: true, completion: nil)
-        }
     }
 
 }

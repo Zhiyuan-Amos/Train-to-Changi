@@ -27,11 +27,11 @@ class StorageManager {
                 fatalError("Not sent properly.")
         }
 
-        guard let userID = AuthService.instance.currentUserID else {
+        guard let userId = AuthService.instance.currentUserId else {
             fatalError("User not logged in.")
         }
 
-        DataService.instance.saveUserAddedCommands(uid: userID,
+        DataService.instance.saveUserAddedCommands(userId: userId,
                                                    levelIndex: levelIndex,
                                                    saveName: "default",
                                                    commandDataListInfo: commandDataListInfo.toAnyObject())

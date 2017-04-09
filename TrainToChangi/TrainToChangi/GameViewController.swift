@@ -28,7 +28,7 @@ class GameViewController: UIViewController, ResetGameDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         // Makes sure that user is logged in.
-        guard AuthService.instance.currentUserID != nil else {
+        guard AuthService.instance.currentUserId != nil else {
             // show login viewcontroller
             performSegue(withIdentifier: "login", sender: nil)
             return

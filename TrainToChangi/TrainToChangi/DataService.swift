@@ -27,18 +27,31 @@ class DataService {
         return mainRef.child(usersKey)
     }
 
-    func saveUser(uid: String) {
+    func saveUser(userId: String) {
         let profile: [String: AnyObject] = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
-        usersRef.child(uid).child(profileKey).setValue(profile)
+        usersRef.child(userId)
+                .child(profileKey)
+                .setValue(profile)
     }
 
-    func saveUserAddedCommands(uid: String,
+    func saveUserAddedCommands(userId: String,
                                levelIndex: Int,
                                saveName: String,
                                commandDataListInfo: AnyObject) {
         let data: [String: AnyObject] = [saveName: commandDataListInfo]
-        let ref = usersRef.child(uid).child(commandDataListInfoKey).child(String(levelIndex))
+        let ref = usersRef.child(userId)
+                          .child(commandDataListInfoKey)
+                          .child(String(levelIndex))
         ref.setValue(data)
+    }
+
+    func getUserAddedCommandsSavedRef(userId: String,
+                                      levelIndex: Int,
+                                      saveName: String) -> FIRDatabaseReference {
+        return usersRef.child(userId)
+                       .child(commandDataListInfoKey)
+                       .child(String(levelIndex))
+                       .child(saveName)
     }
 
 }

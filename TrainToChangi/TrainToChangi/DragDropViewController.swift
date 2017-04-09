@@ -48,10 +48,10 @@ class DragDropViewController: UIViewController {
     }
 
     private func loadCommandDataList() {
-        guard let userID = AuthService.instance.currentUserID else {
+        guard let userId = AuthService.instance.currentUserId else {
             fatalError("Must be logged in")
         }
-        let ref = DataService.instance.usersRef.child(userID).child("commandDataListInfo").child(String(model.currentLevelIndex)).child("default")
+        let ref = DataService.instance.getUserAddedCommandsSavedRef(userId: userId, levelIndex: model.currentLevelIndex, saveName: "default")
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             if let commandDataListInfo = CommandDataListInfo.fromSnapshot(snapshot: snapshot) {
                 self.model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
