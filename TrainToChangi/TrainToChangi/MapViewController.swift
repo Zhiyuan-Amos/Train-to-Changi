@@ -21,6 +21,14 @@ protocol MapViewControllerDelegate: class {
 // Storyboard must be set to custom class "SKView".
 class MapViewController: UIViewController {
 
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,14 +72,6 @@ class MapViewController: UIViewController {
         ref.observeSingleEvent(of: .value, with: { _ in
         }) { _ in
         }
-    }
-
-    override var shouldAutorotate: Bool {
-        return true
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
