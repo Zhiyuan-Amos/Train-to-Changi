@@ -33,10 +33,6 @@ class GameScene: SKScene {
 
     fileprivate let player = SKSpriteNode(imageNamed: "player")
     fileprivate var playerPreviousPositions = Stack<CGPoint>()
-    fileprivate var playerPickupPosition: CGPoint {
-        return CGPoint(x: player.position.x,
-                       y: player.position.y - Constants.Player.pickupOffsetY)
-    }
 
     fileprivate let inbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
     fileprivate let outbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
@@ -159,9 +155,9 @@ extension GameScene {
         if let position = position {
             player.position = position
             if let payloadValue = payloadValue {
-                holdingNode = Payload(position: playerPickupPosition, value: payloadValue)
+                holdingNode = Payload(position: position, value: payloadValue)
                 addChild(holdingNode)
-                holdingNode.move(toParent: player)
+                bootstrapPayload(holdingNode)
             }
         } else {
             player.position = Constants.Player.position
@@ -327,27 +323,23 @@ extension GameScene {
 
     private func animateGoToInbox() {
         playerPreviousPositions.push(player.position)
-        // 1. walk to inbox
-        let moveAction = SKAction.move(to: WalkDestination.inbox.point,
-                                       duration: Constants.Animation.moveToConveyorBeltDuration)
-        player.run(moveAction, completion: {
-            self.grabFromInbox()
-            // 2. step aside after getting box
-            let stepAside = SKAction.move(by: Constants.Animation.afterInboxStepVector,
-                                          duration: Constants.Animation.afterInboxStepDuration)
 
-            // 3. meantime inbox items move left
-            self.player.run(stepAside, completion: {
-                self.inboxNodes.forEach { self.moveConveyorBelt($0) }
-                let inboxAnimation = SKAction.repeat(
-                    SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
-                                     timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
-                                     resize: false, restore: true),
-                    count: Constants.Animation.conveyorBeltAnimationCount)
-                self.inbox.run(inboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
-                NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
-                                                             object: nil, userInfo: nil))
-            })
+        let destination = WalkDestination.inbox.point
+        let rotate = SKAction.rotate(toAngle: player.position.absAngle(to: destination),
+                                     duration: Constants.Animation.rotatePlayerDuration, shortestUnitArc: true)
+        let move = SKAction.move(to: destination, duration: Constants.Animation.moveToConveyorBeltDuration)
+
+        player.run(SKAction.sequence([rotate, move]), completion: {
+            self.grabFromInbox()
+            self.inboxNodes.forEach { self.moveConveyorBelt($0) }
+            let inboxAnimation = SKAction.repeat(
+                SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                                 timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
+                                 resize: false, restore: true),
+                count: Constants.Animation.conveyorBeltAnimationCount)
+            self.inbox.run(inboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                         object: nil, userInfo: nil))
         })
     }
 
@@ -358,9 +350,13 @@ extension GameScene {
         if player.position != playerPreviousPositions.top! {
             playerPreviousPositions.push(player.position)
         }
-        let moveAction = SKAction.move(to: layout.locations[index] + Constants.Animation.moveToMemoryOffsetVector,
-                                       duration: Constants.Animation.moveToMemoryDuration)
-        player.run(moveAction, completion: {
+
+        let destination = layout.locations[index] + Constants.Animation.moveToMemoryOffsetVector
+        let rotate = SKAction.rotate(toAngle: player.position.absAngle(to: destination),
+                                     duration: Constants.Animation.rotatePlayerDuration, shortestUnitArc: true)
+        let move = SKAction.move(to: destination, duration: Constants.Animation.moveToMemoryDuration)
+
+        player.run(SKAction.sequence([rotate, move]), completion: {
             // player already moved to memory location, perform memory actions
             switch action {
             case .get:
@@ -375,15 +371,17 @@ extension GameScene {
 
     private func animateGoToOutbox() {
         playerPreviousPositions.push(player.position)
-        // 1. walk to outbox
-        let moveAction = SKAction.move(to: WalkDestination.outbox.point,
-                                       duration: Constants.Animation.moveToConveyorBeltDuration)
-        player.run(moveAction, completion: {
+
+        let destination = WalkDestination.outbox.point
+        let rotate = SKAction.rotate(toAngle: player.position.absAngle(to: destination),
+                                     duration: Constants.Animation.rotatePlayerDuration, shortestUnitArc: true)
+        let move = SKAction.move(to: destination, duration: Constants.Animation.moveToConveyorBeltDuration)
+
+        player.run(SKAction.sequence([rotate, move]), completion: {
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
         })
 
-        // 2. concurrently, outbox items move left
         self.outboxNodes.forEach { self.moveConveyorBelt($0) }
         let outboxAnimation = SKAction.repeat(
             SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
@@ -394,7 +392,6 @@ extension GameScene {
 
         let wait = SKAction.wait(forDuration: Constants.Animation.moveToConveyorBeltDuration)
         player.run(wait, completion: {
-            // 3. wait for outbox movements finish, put on outbox
             self.putToOutbox()
         })
     }
@@ -407,7 +404,7 @@ extension GameScene {
         }
 
         self.player.removeAllChildren()
-        memory.move(toParent: self.player)
+        bootstrapPayload(memory)
         self.holdingNode = memory
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                      object: nil, userInfo: nil))
@@ -447,7 +444,7 @@ extension GameScene {
         player.removeAllChildren()
         // remove from inbox queue and attach to player
         holdingNode = self.inboxNodes.removeFirst()
-        holdingNode.move(toParent: player)
+        bootstrapPayload(holdingNode)
     }
 
     private func putToOutbox() {
@@ -455,5 +452,15 @@ extension GameScene {
         holdingNode.move(toParent: scene!)
         holdingNode.run(SKAction.move(to: Constants.Outbox.entryPosition,
                                       duration: Constants.Animation.holdingToOutboxDuration))
+        holdingNode.zPosition = player.zPosition - 1
+    }
+
+    fileprivate func bootstrapPayload(_ payload: Payload) {
+        print("\(payload.position), \(player.position)")
+        payload.zPosition = player.zPosition + 1
+        payload.run(SKAction.move(to: player.position,
+                                  duration: Constants.Animation.payloadOnToPlayerDuration), completion: {
+            self.holdingNode.move(toParent: self.player)
+        })
     }
 }

@@ -205,8 +205,9 @@ struct Constants {
 
         static let holdingToOutboxDuration = 0.33
 
-        static let discardHoldingValueDuration = 0.17
         static let holdingValueToMemoryDuration = 0.17
+        static let payloadOnToPlayerDuration = 0.17
+        static let rotatePlayerDuration = 0.17
 
         static let programCounterMovementDuration = 0.1
 
