@@ -82,16 +82,17 @@ class LogicManager: Logic {
         // as we only store the current index after execution of command, jumpCommand
         // will alter the index, thus we have to store the value of the previous index
         let currentIndex = iterator.index
-        guard let executedCommand = gameLogic.stepForward(commandData: iterator.current) else {
-            return
-        }
+        let executedCommand = gameLogic.stepForward(commandData: iterator.current)
         if case .lost = model.runState {
             model.incrementNumLost()
             return
         }
         postSceneNotifications(executedCommand)
 
-        executedCommands.push(currentIndex!, executedCommand)
+        guard let index = currentIndex, let command = executedCommand else {
+            fatalError("Misconfiguration of iterator and game logic")
+        }
+        executedCommands.push(index, command)
 
         // If the command executed is JumpCommand , then there's no need to further
         // move the iterator to the next position since the execution has already moved

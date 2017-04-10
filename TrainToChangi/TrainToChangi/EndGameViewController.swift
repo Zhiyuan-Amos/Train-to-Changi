@@ -9,9 +9,9 @@
 import UIKit
 
 class EndGameViewController: UIViewController {
-    @IBOutlet weak var achievementTextView: UITextView!
+    @IBOutlet weak var achievementsTableView: UITableView!
     private var isHidden = true
-    private var textToAppend = String()
+    private(set) var achievements = [(String, String)]()
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -30,8 +30,7 @@ class EndGameViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        achievementTextView.isHidden = isHidden
-        achievementTextView.insertText(textToAppend)
+        achievementsTableView.isHidden = isHidden
     }
 
     @objc fileprivate func handleAchievementUnlocked(notification: Notification) {
@@ -40,6 +39,8 @@ class EndGameViewController: UIViewController {
         }
 
         isHidden = false
-        textToAppend += ("\n\(name.toAchivementName())")
+        let achievementName = name.toAchivementName()
+        let achievementImagePath = name.toImagePath()
+        achievements.append(achievementName, achievementImagePath)
     }
 }

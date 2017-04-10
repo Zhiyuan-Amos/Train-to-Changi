@@ -126,7 +126,9 @@ class ModelManager: Model {
     }
 
     func resetPlayState() {
+        let numLost = levelState.numLost
         levelState = levelManager.level.initialState
+        levelState.numLost = numLost
     }
 
     func getCommandDataListInfo() -> CommandDataListInfo {

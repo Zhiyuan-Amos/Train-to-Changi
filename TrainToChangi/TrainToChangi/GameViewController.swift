@@ -132,7 +132,7 @@ extension GameViewController {
             scene.playJediGameWonAnimation()
             let controller = self.initEndGameScreen()
             AchievementsManager.sharedInstance.updateAchievements(model: self.model)
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay), execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Duration.endGameScreenDisplayDelay), execute: {
                 self.present(controller, animated: true, completion: nil)
             })
         }

@@ -76,6 +76,8 @@
 		D76FA8321E76ADC400CCCFBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8301E76ADC400CCCFBE /* Main.storyboard */; settings = {ASSET_TAGS = (bu, ); }; };
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
+		D77D3EBD1E9B899C004E5AA9 /* AchievementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */; };
+		D77D3EBF1E9B91B7004E5AA9 /* TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D3EBE1E9B91B7004E5AA9 /* TableViewExtensions.swift */; };
 		D77D4B9D1E993ACC004A16F8 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */; };
 		D788BCDA1E9B1781003B92DA /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D788BCD91E9B1781003B92DA /* Achievement.swift */; };
 		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
@@ -179,6 +181,8 @@
 		D76FA8331E76ADC400CCCFBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D76FA8361E76ADC400CCCFBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D76FA8381E76ADC400CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementCell.swift; sourceTree = "<group>"; };
+		D77D3EBE1E9B91B7004E5AA9 /* TableViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewExtensions.swift; sourceTree = "<group>"; };
 		D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D788BCD91E9B1781003B92DA /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* JumpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpCommand.swift; sourceTree = "<group>"; };
@@ -325,6 +329,7 @@
 			children = (
 				3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */,
 				D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */,
+				D77D3EBE1E9B91B7004E5AA9 /* TableViewExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				A7357FAF1E9C92BF00348CD3 /* LoadProgramHeaderView.swift */,
 				A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */,
 				3B10D8481E9272C300EFCDAC /* ArrowView.swift */,
+				D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -786,6 +792,7 @@
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				A70192441E9517520058D7CD /* CommandDataListInfo+.swift in Sources */,
+				D77D3EBD1E9B899C004E5AA9 /* AchievementCell.swift in Sources */,
 				A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */,
 				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
 				D7C22B551E9523A200A55324 /* JumpTarget.swift in Sources */,
@@ -797,6 +804,7 @@
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
 				3B1E83A21E9B8813007E4670 /* LoadProgramViewController.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
+				D77D3EBF1E9B91B7004E5AA9 /* TableViewExtensions.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 				A70192451E9517520058D7CD /* DataService.swift in Sources */,
 				3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */,
