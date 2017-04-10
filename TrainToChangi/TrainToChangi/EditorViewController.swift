@@ -14,6 +14,8 @@ class EditorViewController: UIViewController {
     fileprivate typealias Drawer = UIEntityDrawer
 
     var model: Model!
+    @IBOutlet weak var descriptionButton: UIButton!
+    @IBOutlet weak var editorButton: UIButton!
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var lineNumberView: UIView!
@@ -37,12 +39,16 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func descriptionButtonPressed(_ sender: UIButton) {
+        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
+        editorButton.backgroundColor = nil
         descriptionView.isHidden = false
         lineNumberView.isHidden = true
         dragDropView.isHidden = true
     }
 
     @IBAction func editorButtonPressed(_ sender: UIButton) {
+        descriptionButton.backgroundColor = nil
+        editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
         descriptionView.isHidden = true
         lineNumberView.isHidden = false
         dragDropView.isHidden = false

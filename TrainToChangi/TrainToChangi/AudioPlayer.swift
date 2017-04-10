@@ -25,6 +25,19 @@ class AudioPlayer {
         }
     }
 
+    func toggleBackgroundMusic() {
+        if backgroundMusicPlayer.volume != 0.0 {
+            backgroundMusicPlayer.volume = 0.0
+        }
+        else {
+            backgroundMusicPlayer.volume = 0.3
+        }
+    }
+
+    func isMute() -> Bool {
+        return backgroundMusicPlayer.volume == 0.0
+    }
+
     func stopBackgroundMusic() {
         backgroundMusicPlayer.stop()
     }

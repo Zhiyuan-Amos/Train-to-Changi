@@ -191,12 +191,12 @@ struct Constants {
         }
 
         struct LineNumber {
-            static let font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+            static let font = UIFont(name: "Futura", size: 17)
             static let textColor = UIColor(rgb: 0x595959)
         }
 
         struct LevelDescription {
-            static let font = UIFont(name: "HelveticaNeue-Bold", size: 17)
+            static let font = UIFont(name: "Futura", size: 17)
             static let textColor = UIColor(rgb: 0x595959)
             static let insets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         }

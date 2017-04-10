@@ -11,25 +11,40 @@ import UIKit
 class LevelDescriptionViewController: UIViewController {
 
     var model: Model!
-    
+
     @IBOutlet weak var levelDescriptionTextView: UITextView!
-    
+    @IBOutlet weak var expectedOutputTextView: UITextView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackgroundColor()
         setUpLevelDescription()
+        setUpExpectedOutput()
     }
 
     private func setBackgroundColor() {
-        levelDescriptionTextView.backgroundColor =
+        view.backgroundColor =
             Constants.Background.levelDescriptionBackgroundColor
     }
-    // Initialise the height for level description
+
     private func setUpLevelDescription() {
         levelDescriptionTextView.text = model.currentLevel.levelDescriptor
         levelDescriptionTextView.isScrollEnabled = true
         levelDescriptionTextView.font = Constants.UI.LevelDescription.font
-        levelDescriptionTextView.textColor = Constants.UI.LevelDescription.textColor
-        levelDescriptionTextView.textContainerInset = Constants.UI.LevelDescription.insets
+        levelDescriptionTextView.textColor = UIColor.black
     }
+
+    private func setUpExpectedOutput() {
+        var outputString = ""
+        for output in model.expectedOutputs {
+            outputString += "\(output), "
+        }
+
+        expectedOutputTextView.text = outputString
+        expectedOutputTextView.isScrollEnabled = true
+        expectedOutputTextView.font = Constants.UI.LevelDescription.font
+        expectedOutputTextView.textColor = UIColor.black
+    }
+
+
 }

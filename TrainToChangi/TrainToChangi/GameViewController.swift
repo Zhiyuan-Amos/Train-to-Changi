@@ -12,15 +12,11 @@ import SpriteKit
 class GameViewController: UIViewController {
 
     @IBOutlet weak var trainUIImage: UIImageView!
+    @IBOutlet weak var musicButton: UIButton!
 
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var scene: GameScene!
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        registerObservers()
-    }
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -31,7 +27,7 @@ class GameViewController: UIViewController {
         registerObservers()
         presentGameScene()
         animateTrain()
-        // AudioPlayer.sharedInstance.playBackgroundMusic()
+        AudioPlayer.sharedInstance.playBackgroundMusic()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -42,6 +38,18 @@ class GameViewController: UIViewController {
         if let embeddedVC = segue.destination as? ControlPanelViewController {
             embeddedVC.model = self.model
             embeddedVC.logic = self.logic
+        }
+    }
+
+    @IBAction func musicButtonPressed(_ sender: UIButton) {
+        print("HELLO")
+        AudioPlayer.sharedInstance.toggleBackgroundMusic()
+        if AudioPlayer.sharedInstance.isMute() {
+            musicButton.setBackgroundImage(UIImage(named: "nomusic"),
+                                           for: UIControlState.normal)
+        } else {
+            musicButton.setBackgroundImage(UIImage(named: "music"),
+                                           for: UIControlState.normal)
         }
     }
 
