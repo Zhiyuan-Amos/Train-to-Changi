@@ -15,7 +15,7 @@ class InboxCommand: Command {
         prevValueOnPerson = model.getValueOnPerson()
 
         guard let value = model.dequeueValueFromInbox() else {
-            return CommandResult(errorMessage: .emptyInbox)
+            return CommandResult(errorMessage: .invalidOperation)
         }
 
         model.updateValueOnPerson(to: value)

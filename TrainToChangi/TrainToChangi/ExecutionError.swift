@@ -3,14 +3,8 @@
 //
 
 enum ExecutionError {
-    // Thrown when there are no inbox items remaining
-    case emptyInbox
-
-    // Thrown when person has no value
-    case emptyPersonValue
-
-    // Thrown when memory location to be accessed has no value
-    case emptyMemoryLocation
+    // Thrown when preconditions to commands are not met
+    case invalidOperation
 
     // Thrown when outbox value is wrong
     case wrongOutboxValue
