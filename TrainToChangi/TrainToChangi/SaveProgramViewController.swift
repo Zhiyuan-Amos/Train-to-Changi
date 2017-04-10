@@ -14,7 +14,7 @@ protocol SaveProgramDelegate {
 
 class SaveProgramViewController: UIViewController {
 
-    @IBOutlet private var textLabel: UILabel!
+    @IBOutlet private var textInput: UITextField!
     var saveProgramDelegate: SaveProgramDelegate?
 
     @IBAction func confirmButtonPressed(_ sender: UIButton) {
@@ -23,10 +23,11 @@ class SaveProgramViewController: UIViewController {
         }
 
         // TODO: validate entry
-        guard let saveName = textLabel.text else {
+        guard let saveName = textInput.text else {
             return
         }
 
+        print(saveName)
         saveProgramDelegate.saveProgram(saveName: saveName)
 
         dismiss(animated: true)

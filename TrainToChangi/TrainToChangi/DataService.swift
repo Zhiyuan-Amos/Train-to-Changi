@@ -60,11 +60,8 @@ class DataService {
                                saveName: String,
                                commandDataListInfo: CommandDataListInfo) {
         let commandDataListInfo = commandDataListInfo.toAnyObject()
-        let data: [String: AnyObject] = [saveName: commandDataListInfo]
-        let ref = usersRef.child(userId)
-                          .child(commandDataListInfoKey)
-                          .child(String(levelIndex))
-        ref.setValue(data)
+        let path = "\(userId)/\(commandDataListInfoKey)/\(levelIndex)/\(saveName)"
+        usersRef.child(path).setValue(commandDataListInfo)
     }
 
     // Eliminates the delay in loading user added commands by obtaining a reference

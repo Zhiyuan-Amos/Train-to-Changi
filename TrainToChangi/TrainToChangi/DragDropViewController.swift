@@ -59,7 +59,7 @@ class DragDropViewController: UIViewController {
     }
 
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        guard let saveProgramController = loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier) as? SaveProgramViewController else {
+        guard let saveProgramController = loadModalViewControllers(identifier: Constants.UI.saveProgramViewControllerIdentifier) as? SaveProgramViewController else {
             fatalError("Wrong controller loaded.")
         }
         saveProgramController.saveProgramDelegate = self
