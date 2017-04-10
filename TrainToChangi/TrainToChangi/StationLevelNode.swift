@@ -15,10 +15,9 @@ protocol StationLevelNodeDelegate: class {
 class StationLevelNode: SKSpriteNode {
     weak var delegate: StationLevelNodeDelegate?
 
-    init(_ node: SKNode, delegate: StationLevelNodeDelegate? = nil) {
+    init(_ node: SKSpriteNode, delegate: StationLevelNodeDelegate? = nil) {
         self.delegate = delegate
-        let texture = SKTexture(imageNamed: Constants.Map.stationImage)
-        super.init(texture: texture, color: .clear, size: Constants.Map.stationNodeSize)
+        super.init(texture: node.texture, color: node.color, size: node.size)
         self.name = node.name
         self.position = node.position
         self.isUserInteractionEnabled = true // Important. Else touch will not be detected

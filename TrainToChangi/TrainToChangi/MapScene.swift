@@ -31,9 +31,11 @@ class MapScene: SKScene {
         self.addChild(cam)
         cam.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
 
-        // replace empty placeholder SKNode with StationLevelNode nodes
+        // replace placeholder SKSpriteNode with StationLevelNode nodes
         enumerateChildNodes(withName: Constants.Map.stationNameRegex, using: { node, _ in
-            self.replace(node, with: StationLevelNode(node, delegate: self))
+            if let station = node as? SKSpriteNode {
+                self.replace(station, with: StationLevelNode(station, delegate: self))
+            }
         })
     }
 
@@ -50,8 +52,8 @@ class MapScene: SKScene {
         camera?.position.y -= location.y - previousLocation.y
     }
 
-    // replace empty SKNode with StationLevelNode
-    private func replace(_ node: SKNode, with stationLevelNode: StationLevelNode) {
+    // replace empty SKSpriteNode with StationLevelNode
+    private func replace(_ node: SKSpriteNode, with stationLevelNode: StationLevelNode) {
         node.removeFromParent()
         addChild(stationLevelNode)
     }

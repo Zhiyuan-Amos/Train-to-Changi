@@ -111,10 +111,8 @@ struct Constants {
     }
 
     struct Map {
-        static let stationImage = "station"
         // station nodes should be named in .sks file as SomethingStation, like KentRidgeStation
         static let stationNameRegex = "^\\w+Station$"
-        static let stationNodeSize = CGSize(width: 200, height: 200)
     }
 
     struct StationNames {
