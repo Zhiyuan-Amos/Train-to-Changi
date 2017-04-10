@@ -57,9 +57,16 @@ extension SpeechBubbleSprite {
         }
 
         switch newState {
-        case .lost:
-            self.label.text = "The output is incorrect!"
-            self.isHidden = false
+        case .lost(let error):
+            switch error {
+            case .invalidOperation:
+                label.text = "You are not allowed to \nexecute this command!"
+            case .wrongOutboxValue:
+                label.text = "The output is incorrect!"
+            case .incompleteOutboxValues:
+                label.text = "There should be more values!"
+            }
+            isHidden = false
         default:
             break
         }

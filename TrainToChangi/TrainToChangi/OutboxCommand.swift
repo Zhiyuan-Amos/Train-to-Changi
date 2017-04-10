@@ -13,7 +13,7 @@ class OutboxCommand: Command {
 
     func execute() -> CommandResult {
         guard let value = model.getValueOnPerson() else {
-            return CommandResult(errorMessage: .emptyPersonValue)
+            return CommandResult(errorMessage: .invalidOperation)
         }
 
         prevValueOnPerson = value
