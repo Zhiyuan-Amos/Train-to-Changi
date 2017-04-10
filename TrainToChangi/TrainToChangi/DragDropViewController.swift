@@ -235,19 +235,6 @@ extension DragDropViewController {
         }
     }
 
-    fileprivate func isJumpRelatedCommand(indexPath: IndexPath) -> Bool {
-        return model.userEnteredCommands[indexPath.item] == .jump
-            || model.userEnteredCommands[indexPath.item] == .jumpTarget
-    }
-
-    fileprivate func isJump(indexPath: IndexPath) -> Bool {
-        return model.userEnteredCommands[indexPath.item] == .jump
-    }
-
-    fileprivate func isJumpTarget(indexPath: IndexPath) -> Bool {
-        return model.userEnteredCommands[indexPath.item] == .jumpTarget
-    }
-
     fileprivate func isIndexedCommand(indexPath: IndexPath) -> Bool {
         switch model.userEnteredCommands[indexPath.item] {
         case .add(_), .copyFrom(_), .copyTo(_):

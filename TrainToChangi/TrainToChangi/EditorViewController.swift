@@ -26,6 +26,7 @@ class EditorViewController: UIViewController {
         super.viewDidLoad()
         setupAvailableCommandsView()
         registerObservers()
+        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
     }
 
     @IBAction func resetButtonPressed(_ sender: UIButton) {

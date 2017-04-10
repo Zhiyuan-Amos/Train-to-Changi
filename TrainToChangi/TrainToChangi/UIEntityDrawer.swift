@@ -112,6 +112,7 @@ extension UIEntityDrawer {
 extension UIEntityDrawer {
     static func drawJumpArrow(topIndexPath: IndexPath, bottomIndexPath: IndexPath,
                               reversed: Bool, arrowWidthIndex: Int) -> ArrowView {
+
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
         let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / 5.0))
@@ -121,14 +122,14 @@ extension UIEntityDrawer {
     }
 
     static func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
-        return CGPoint(Constants.UI.dragDropCollectionCellWidth,
+        return CGPoint(Constants.UI.commandButtonWidthLong + Constants.UI.commandIndexWidth,
                        getMidYOfCell(at: indexPath))
     }
 
     static func getMidYOfCell(at indexPath: IndexPath) -> CGFloat {
-        return Constants.UI.topEdgeInset
-            + (CGFloat(indexPath.item + 1) * Constants.UI.collectionCellHeight)
-            - (0.5 * Constants.UI.collectionCellHeight)
+        return (CGFloat(indexPath.item + 1)
+             * (Constants.UI.collectionCellHeight + Constants.UI.minimumLineSpacingForSection))
+             - (0.5 * Constants.UI.collectionCellHeight)
     }
 
     static func getHeightBetweenIndexPaths(_ indexPathOne: IndexPath,

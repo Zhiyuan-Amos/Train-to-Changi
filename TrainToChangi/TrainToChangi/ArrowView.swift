@@ -28,23 +28,27 @@ import UIKit
         let arrowHead = CGMutablePath()
         arrowHead.addLines(between: getArrowHeadPoints(point: point))
         let arrowHeadBezier = UIBezierPath(cgPath: arrowHead)
+        arrowHeadBezier.lineWidth = 2.5
         arrowHeadBezier.stroke()
 
         let arrowTail = CGMutablePath()
         arrowTail.addLines(between: getArrowTailPoints(point: point, width: self.frame.width * 0.5))
         let arrowTailBezier = UIBezierPath(cgPath: arrowTail)
+        arrowTailBezier.lineWidth = 2.5
         arrowTailBezier.stroke()
 
         let arrowVert = CGMutablePath()
         arrowVert.addLines(between: getVerticalLinePoints(point: point, length: self.frame.height - 10,
                                                           width: self.frame.width * 0.5))
         let arrowVertBezier = UIBezierPath(cgPath: arrowVert)
+        arrowVertBezier.lineWidth = 2.5
         arrowVertBezier.stroke()
 
         let arrowBot = CGMutablePath()
         arrowBot.addLines(between: getHorizontalLinePoints(point: point, length: self.frame.height - 10,
                                                            width: self.frame.width * 0.5))
         let arrowBotBezier = UIBezierPath(cgPath: arrowBot)
+        arrowBotBezier.lineWidth = 2.5
         arrowBotBezier.stroke()
 
     }
