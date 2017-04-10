@@ -130,20 +130,16 @@ class LogicManager: Logic {
             notifySceneToMove(to: .inbox)
         case is OutboxCommand:
             notifySceneToMove(to: .outbox)
-        case is CopyFromCommand:
-            if let command = command as? CopyFromCommand {
-                notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .get))
+        case let command as CopyFromCommand:
+            notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .get))
+        case let command as CopyToCommand:
+            notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .put))
+        case let command as AddCommand:
+            guard let expected = model.getValueOnPerson() else {
+                fatalError("Error in executing AddCommand")
             }
-        case is CopyToCommand:
-            if let command = command as? CopyToCommand {
-                notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .put))
-            }
-        case is AddCommand:
-            if let command = command as? AddCommand,
-               let expected = model.getValueOnPerson() {
-                notifySceneToMove(to: .memory(
-                    layout: layout, index: command.index, action: .compute(expected: expected)))
-            }
+            notifySceneToMove(to: .memory(
+                layout: layout, index: command.index, action: .compute(expected: expected)))
         default:
             break
         }

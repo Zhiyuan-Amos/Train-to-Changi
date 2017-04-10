@@ -335,12 +335,14 @@ extension GameScene {
     private func animateGoToInbox() {
         playerPreviousPositions.push(player.position)
 
+        // 1. rotate and move to inbox
         let destination = WalkDestination.inbox.point
         let rotate = SKAction.rotate(toAngle: player.position.absAngle(to: destination),
                                      duration: Constants.Animation.rotatePlayerDuration, shortestUnitArc: true)
         let move = SKAction.move(to: destination, duration: Constants.Animation.moveToConveyorBeltDuration)
 
         player.run(SKAction.sequence([rotate, move]), completion: {
+            // 2. take payload from inbox, inbox payloads move along the conveyor
             self.grabFromInbox()
             self.inboxNodes.forEach { self.moveConveyorBelt($0) }
             let inboxAnimation = SKAction.repeat(
@@ -410,13 +412,19 @@ extension GameScene {
     // Player when at the location of a memory location, discards holding value, picks up box from memory
     // player should already move to necessary memory location
     private func getValueFromMemory(at index: Int) {
-        guard let memory = memoryNodes[index]?.makeCopy() else {
+        guard let memory = memoryNodes[index] else {
             fatalError("memory at \(index) should not be nil")
         }
-        addChild(memory)
+
+        // make a copy of the sprite already on memory, add the copy to scene, remove the existing sprite
+        // and set holdingNode to the copy. Use `bootstrapPayload` to set the location of the copy and add
+        // it as child of player
+        let copy = memory.makeCopy()
+        addChild(copy)
+        removeChildren(in: [memory])
         self.player.removeAllChildren()
-        self.holdingNode = memory
-        bootstrapPayload(memory)
+        self.holdingNode = copy
+        bootstrapPayload(copy)
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                      object: nil, userInfo: nil))
     }
@@ -426,10 +434,15 @@ extension GameScene {
     private func putValueToMemory(to index: Int) {
         let position = memorySlots[index].position
 
+        // make a copy of the holdingNode, retain a ref to the memory already on `index` if there's any
+        // set the copy to memory, add to scene, remove the existing from scene if there's any
         let copyOfHoldingValue = holdingNode.makeCopy()
+        let existing = memoryNodes[index]
         memoryNodes[index] = copyOfHoldingValue
         addChild(copyOfHoldingValue)
+        existing?.removeFromParent()
 
+        // fixPosition because when shifting parent, the position gets reset
         let fixPosition = SKAction.move(to: player.position, duration: 0)
         let dropHoldingValue = SKAction.move(to: position, duration: Constants.Animation.holdingValueToMemoryDuration)
         copyOfHoldingValue.run(SKAction.sequence([fixPosition, dropHoldingValue]), completion: {
@@ -467,10 +480,13 @@ extension GameScene {
         holdingNode.zPosition = player.zPosition - 1
     }
 
+    // Move payload visually onto the player.
     fileprivate func bootstrapPayload(_ payload: Payload) {
         payload.zPosition = player.zPosition + 1
-        payload.run(SKAction.move(to: player.position,
-                                  duration: Constants.Animation.payloadOnToPlayerDuration), completion: {
+        payload.run(SKAction.move(to: player.position, duration: Constants.Animation.payloadOnToPlayerDuration), completion: {
+            // holdingNode can only be moved from scene to player here, after it has been shifted to player.position
+            // somehow the .makeCopy() method can't set the position of the sprite copy,
+            // so this manual update position is required
             self.holdingNode.move(toParent: self.player)
         })
     }
