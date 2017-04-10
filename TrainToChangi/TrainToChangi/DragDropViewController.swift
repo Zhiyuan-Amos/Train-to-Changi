@@ -55,17 +55,20 @@ class DragDropViewController: UIViewController {
     }
 
     @IBAction func loadButtonPressed(_ sender: UIButton) {
+        loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier)
     }
-    
 
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        loadModalViewControllers(identifier: Constants.UI.saveProgramViewControllerIdentifier)
+    }
+
+    private func loadModalViewControllers(identifier: String) {
         let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: Constants.UI.saveProgramViewControllerIdentifier)
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier)
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         self.present(controller, animated: true, completion: nil)
     }
-
 
 }
 
