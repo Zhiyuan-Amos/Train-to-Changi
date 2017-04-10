@@ -53,6 +53,20 @@ class DragDropViewController: UIViewController {
                                         object: nil,
                                         userInfo: nil)
     }
+
+    @IBAction func loadButtonPressed(_ sender: UIButton) {
+    }
+    
+
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: Constants.UI.saveProgramViewControllerIdentifier)
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        self.present(controller, animated: true, completion: nil)
+    }
+
+
 }
 
 extension DragDropViewController: DataServiceLoadLevelDelegate {
