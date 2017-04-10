@@ -39,10 +39,9 @@ class DragDropViewController: UIViewController {
         guard let userId = AuthService.instance.currentUserId else {
             fatalError("Must be logged in")
         }
-        DataService.instance.loadUserAddedCommands(userId: userId,
-                                                   levelIndex: model.currentLevelIndex,
-                                                   saveName: "default",
-                                                   loadLevelDelegate: self)
+        DataService.instance.loadAutoSavedUserAddedCommands(userId: userId,
+                                                            levelIndex: model.currentLevelIndex,
+                                                            loadLevelDelegate: self)
     }
 
     fileprivate func deleteCommand(indexPath: IndexPath) {
@@ -55,28 +54,49 @@ class DragDropViewController: UIViewController {
     }
 
     @IBAction func loadButtonPressed(_ sender: UIButton) {
-        loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier)
+        let loadProgramController = loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier)
+        self.present(loadProgramController, animated: true, completion: nil)
     }
 
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        loadModalViewControllers(identifier: Constants.UI.saveProgramViewControllerIdentifier)
+        guard let saveProgramController = loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier) as? SaveProgramViewController else {
+            fatalError("Wrong controller loaded.")
+        }
+        saveProgramController.saveProgramDelegate = self
+        self.present(saveProgramController, animated: true, completion: nil)
     }
 
-    private func loadModalViewControllers(identifier: String) {
+    private func loadModalViewControllers(identifier: String) -> UIViewController {
         let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: identifier)
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        self.present(controller, animated: true, completion: nil)
+        return controller
     }
 
 }
+
+// MARK - DataServiceLoadLevelDelegate
 
 extension DragDropViewController: DataServiceLoadLevelDelegate {
     func load(commandDataListInfo: CommandDataListInfo) {
         model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
         currentCommandsView.reloadData()
         renderJumpArrows()
+    }
+}
+
+// MARK - SaveProgramDelegate
+
+extension DragDropViewController: SaveProgramDelegate {
+    func saveProgram(saveName: String) {
+        guard let userId = AuthService.instance.currentUserId else {
+            fatalError("User must be logged in!")
+        }
+        DataService.instance.saveUserAddedCommands(userId: userId,
+                                                   levelIndex: model.currentLevelIndex,
+                                                   saveName: saveName,
+                                                   commandDataListInfo: model.getCommandDataListInfo())
     }
 }
 

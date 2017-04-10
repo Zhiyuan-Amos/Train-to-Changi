@@ -52,7 +52,7 @@
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		A7AB9DDF1E9A45CA00989F58 /* AchievementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */; };
 		A7AB9DE11E9A45DA00989F58 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* Achievements.swift */; };
-		A7AB9DE31E9A469E00989F58 /* DefaultFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* DefaultFirebaseSaver.swift */; };
+		A7AB9DE31E9A469E00989F58 /* AutomaticFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */; };
 		A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */; };
 		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
 		BC0162FF8448453D3B94C649 /* Pods_TrainToChangi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */; };
@@ -149,7 +149,7 @@
 		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
 		A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsManager.swift; sourceTree = "<group>"; };
 		A7AB9DE01E9A45DA00989F58 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
-		A7AB9DE21E9A469E00989F58 /* DefaultFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultFirebaseSaver.swift; sourceTree = "<group>"; };
+		A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomaticFirebaseSaver.swift; sourceTree = "<group>"; };
 		A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
@@ -415,7 +415,7 @@
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
 				A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */,
 				A7AB9DE01E9A45DA00989F58 /* Achievements.swift */,
-				A7AB9DE21E9A469E00989F58 /* DefaultFirebaseSaver.swift */,
+				A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */,
 				A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */,
 				A7D163481E90CC860073EC46 /* GameLevels */,
 			);
@@ -750,7 +750,7 @@
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				3B10D8491E9272C300EFCDAC /* ArrowView.swift in Sources */,
 				3B78A68E1E91545700A652D9 /* LineNumberCell.swift in Sources */,
-				A7AB9DE31E9A469E00989F58 /* DefaultFirebaseSaver.swift in Sources */,
+				A7AB9DE31E9A469E00989F58 /* AutomaticFirebaseSaver.swift in Sources */,
 				A7AB9DDF1E9A45CA00989F58 /* AchievementsManager.swift in Sources */,
 				A71209691E81888A0039B257 /* Logic.swift in Sources */,
 				3BC852BF1E94833B0098042A /* JediSprite.swift in Sources */,

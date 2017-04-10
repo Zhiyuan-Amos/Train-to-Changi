@@ -8,14 +8,30 @@
 
 import UIKit
 
+protocol SaveProgramDelegate {
+    func saveProgram(saveName: String)
+}
+
 class SaveProgramViewController: UIViewController {
 
+    @IBOutlet private var textLabel: UILabel!
+    var saveProgramDelegate: SaveProgramDelegate?
 
-    @IBAction func programNameEntered(_ sender: Any) {
-        //TODO -- save and dismiss view
+    @IBAction func confirmButtonPressed(_ sender: UIButton) {
+        guard let saveProgramDelegate = saveProgramDelegate else {
+            return
+        }
+
+        // TODO: validate entry
+        guard let saveName = textLabel.text else {
+            return
+        }
+
+        saveProgramDelegate.saveProgram(saveName: saveName)
+
         dismiss(animated: true)
     }
-    
+
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
         dismiss(animated: true)
     }
