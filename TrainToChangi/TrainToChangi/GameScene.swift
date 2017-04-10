@@ -41,7 +41,7 @@ class GameScene: SKScene {
     fileprivate var memoryNodes = [Int: Payload]()
     fileprivate var memorySlots = [MemorySlot]()
     fileprivate var outboxNodes = [Payload]()
-    fileprivate var holdingNode: Payload!
+    fileprivate var holdingNode: Payload?
     fileprivate var jedi: JediSprite
     fileprivate var speechBubble: SpeechBubbleSprite
 
@@ -158,17 +158,23 @@ extension GameScene {
             return
         }
         player.size = Constants.Player.size
-        if let position = position {
-            player.position = position
-            if let payloadValue = payloadValue {
-                holdingNode = Payload(position: position, value: payloadValue)
-                addChild(holdingNode)
-                bootstrapPayload(holdingNode)
-            }
-        } else {
-            player.position = Constants.Player.position
-        }
         player.zPosition = Constants.Player.zPosition
+
+        guard let position = position else {
+            player.position = Constants.Player.position
+            return
+        }
+
+        player.position = position
+
+        guard let payloadValue = payloadValue else {
+            return
+        }
+
+        let payload = Payload(position: position, value: payloadValue)
+        holdingNode = payload
+        addChild(payload)
+        bootstrapPayload(payload)
     }
 
     fileprivate func initInbox(values: [Int]) {
@@ -431,6 +437,10 @@ extension GameScene {
     // Player when at the location of a memory location, drops a duplicate of his holding value to memory
     // player should already move to necessary memory location
     private func putValueToMemory(to index: Int) {
+        guard let holdingNode = holdingNode else {
+            fatalError("holdingNode can't be nil to put onto memory")
+        }
+
         let position = memorySlots[index].position
 
         // make a copy of the holdingNode, retain a ref to the memory already on `index` if there's any
@@ -456,6 +466,10 @@ extension GameScene {
             fatalError("memory at \(index) should not be nil")
         }
 
+        guard let holdingNode = holdingNode else {
+            fatalError("holdingNode can't be nil to compute with memory")
+        }
+
         let copy = memory.makeCopy()
         addChild(copy)
         copy.zPosition = holdingNode.zPosition - 1
@@ -464,7 +478,7 @@ extension GameScene {
         let move = SKAction.move(to: player.position, duration: Constants.Animation.payloadOnToPlayerDuration)
 
         copy.run(SKAction.sequence([fixPosition, move]), completion: {
-            self.holdingNode.setLabel(to: expected)
+            holdingNode.setLabel(to: expected)
             self.removeChildren(in: [copy])
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
@@ -483,11 +497,15 @@ extension GameScene {
         }
         player.removeAllChildren()
         // remove from inbox queue and attach to player
-        holdingNode = self.inboxNodes.removeFirst()
-        bootstrapPayload(holdingNode)
+        let firstPayload = self.inboxNodes.removeFirst()
+        holdingNode = firstPayload
+        bootstrapPayload(firstPayload)
     }
 
     private func putToOutbox() {
+        guard let holdingNode = holdingNode else {
+            fatalError("holdingNode can't be nil to put to outbox")
+        }
         outboxNodes.append(holdingNode)
         holdingNode.move(toParent: scene!)
         holdingNode.run(SKAction.move(to: Constants.Outbox.entryPosition,
@@ -497,12 +515,15 @@ extension GameScene {
 
     // Move payload visually onto the player.
     fileprivate func bootstrapPayload(_ payload: Payload) {
+        guard let holdingNode = holdingNode else {
+            fatalError("holdingNode incorrectly configured")
+        }
         payload.zPosition = player.zPosition + 1
         payload.run(SKAction.move(to: player.position, duration: Constants.Animation.payloadOnToPlayerDuration), completion: {
             // holdingNode can only be moved from scene to player here, after it has been shifted to player.position
             // somehow the .makeCopy() method can't set the position of the sprite copy,
             // so this manual update position is required
-            self.holdingNode.move(toParent: self.player)
+            holdingNode.move(toParent: self.player)
         })
     }
 }
