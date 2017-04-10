@@ -13,6 +13,7 @@ class CommandCell: UICollectionViewCell {
     private typealias Drawer = UIEntityDrawer
 
     func setup(command: CommandData) {
+        // Without this the previous subviews will still be present
         for view in self.subviews {
             view.removeFromSuperview()
         }

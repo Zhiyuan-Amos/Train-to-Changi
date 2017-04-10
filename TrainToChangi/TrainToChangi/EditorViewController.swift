@@ -12,8 +12,9 @@ import Foundation
 class EditorViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
-
+    weak var resetGameDelegate: ResetGameDelegate!
     var model: Model!
+
     @IBOutlet weak var descriptionButton: UIButton!
     @IBOutlet weak var editorButton: UIButton!
 
@@ -67,6 +68,7 @@ class EditorViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let embeddedVC = segue.destination as? DragDropViewController {
             embeddedVC.model = self.model
+            embeddedVC.resetGameDelegate = resetGameDelegate
         }
         if let embeddedVC = segue.destination as? LineNumberViewController {
             embeddedVC.model = self.model

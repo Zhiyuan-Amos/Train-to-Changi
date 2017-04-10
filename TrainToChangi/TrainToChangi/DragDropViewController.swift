@@ -14,6 +14,8 @@ class DragDropViewController: UIViewController {
     fileprivate typealias Animator = AnimationHelper
 
     weak var model: Model!
+    weak var resetGameDelegate: ResetGameDelegate!
+
     fileprivate var jumpArrows = [ArrowView]()
     fileprivate var updatingCellIndexPath: IndexPath?
 
@@ -107,6 +109,7 @@ extension DragDropViewController {
             }
 
         }
+        resetGameDelegate.tryResetGame()
     }
 
     private func updateCellIndex(cell: UICollectionViewCell, index: Int) {
@@ -134,6 +137,7 @@ extension DragDropViewController {
 
         Animator.swipeDeleteAnimation(cell: cell, indexPath: indexPath,
                                              deleteFunction: deleteCommand)
+        resetGameDelegate.tryResetGame()
     }
 
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
@@ -177,6 +181,7 @@ extension DragDropViewController {
             cell.alpha = 0.0
             Animator.dragEndedAnimation(cell: cell)
         }
+        resetGameDelegate.tryResetGame()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

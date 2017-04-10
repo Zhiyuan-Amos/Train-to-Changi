@@ -33,6 +33,7 @@ class GameViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let embeddedVC = segue.destination as? EditorViewController {
             embeddedVC.model = self.model
+            embeddedVC.resetGameDelegate = self
         }
 
         if let embeddedVC = segue.destination as? ControlPanelViewController {
