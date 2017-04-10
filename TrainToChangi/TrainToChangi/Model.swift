@@ -87,6 +87,8 @@ protocol Model: class {
 
     // Returns the value that is stored in the memory located at `index`
     // If the memory location is empty, returns nil.
+    // @param forUndo: Indicates whether this method is called to get
+    //                 value in order to prepare for `undo()`
     func getValueFromMemory(at index: Int) -> Int?
 
     // Put `value` into memory located at `index`.

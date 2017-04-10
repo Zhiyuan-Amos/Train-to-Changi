@@ -102,6 +102,7 @@ struct Constants {
         static let width = 250
         static let positionX = 350
         static let positionY = 580
+        static let zPosition = CGFloat(50)
 
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 14
@@ -267,10 +268,13 @@ struct Constants {
         static let afterInboxStepVector = CGVector(dx: 0, dy: -60)
         static let afterInboxStepDuration = 0.17
 
+        static let moveToMemoryOffsetVector = CGVector(dx: 0, dy: 60)
+
         static let holdingToOutboxDuration = 0.33
 
-        static let discardHoldingValueDuration = 0.17
         static let holdingValueToMemoryDuration = 0.17
+        static let payloadOnToPlayerDuration = 0.17
+        static let rotatePlayerDuration = 0.17
 
         static let programCounterMovementDuration = 0.1
 

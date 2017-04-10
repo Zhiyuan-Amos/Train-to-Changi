@@ -3,9 +3,11 @@
 // at the memory at `memoryIndex` with the value that he is currently holding on.
 //
 
+import Foundation
+
 class AddCommand: Command {
     private let model: Model
-    private let memoryIndex: Int
+    fileprivate let memoryIndex: Int
     private var prevValueOnPerson: Int?
 
     init(model: Model, memoryIndex: Int) {
@@ -35,5 +37,12 @@ class AddCommand: Command {
         }
 
         model.updateValueOnPerson(to: value)
+    }
+
+}
+
+extension AddCommand: MemoryCommand {
+    var index: Int {
+        return memoryIndex
     }
 }

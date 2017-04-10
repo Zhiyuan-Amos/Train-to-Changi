@@ -18,4 +18,13 @@ extension CGPoint {
         let dy = y - another.y
         return sqrt(dx * dx + dy * dy)
     }
+
+    static func + (lhs: CGPoint, rhs: CGVector) -> CGPoint {
+        return CGPoint(x: lhs.x + rhs.dx, y: lhs.y + rhs.dy)
+    }
+
+    // absolute angle
+    func absAngle(to point: CGPoint) -> CGFloat {
+        return atan2(x - point.x, point.y - y)
+    }
 }

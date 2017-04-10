@@ -107,6 +107,7 @@ class LogicManager: Logic {
             model.runState = .paused
         }
 
+        postSceneNotifications(executedCommand)
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
                                                      object: nil, userInfo: nil))
     }
@@ -121,6 +122,34 @@ class LogicManager: Logic {
             iterator = model.makeCommandDataListIterator()
             gameLogic.parser = CommandDataParser(model: model, iterator: iterator)
         }
+    }
+
+    private func postSceneNotifications(_ command: Command) {
+        let layout = model.currentLevel.memoryLayout
+        switch command {
+        case is InboxCommand:
+            notifySceneToMove(to: .inbox)
+        case is OutboxCommand:
+            notifySceneToMove(to: .outbox)
+        case let command as CopyFromCommand:
+            notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .get))
+        case let command as CopyToCommand:
+            notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .put))
+        case let command as AddCommand:
+            guard let expected = model.getValueOnPerson() else {
+                fatalError("Error in executing AddCommand")
+            }
+            notifySceneToMove(to: .memory(
+                layout: layout, index: command.index, action: .compute(expected: expected)))
+        default:
+            break
+        }
+    }
+
+    private func notifySceneToMove(to dest: WalkDestination) {
+        NotificationCenter.default.post(Notification(
+            name: Constants.NotificationNames.movePersonInScene,
+            object: nil, userInfo: ["destination": dest]))
     }
 }
 

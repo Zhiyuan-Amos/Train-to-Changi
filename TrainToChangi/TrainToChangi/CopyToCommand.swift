@@ -5,7 +5,7 @@
 
 class CopyToCommand: Command {
     private let model: Model
-    private let memoryIndex: Int
+    fileprivate let memoryIndex: Int
     private var prevValueOnMemory: Int?
 
     init(model: Model, memoryIndex: Int) {
@@ -27,5 +27,11 @@ class CopyToCommand: Command {
 
     func undo() {
         model.putValueIntoMemory(prevValueOnMemory, at: memoryIndex)
+    }
+}
+
+extension CopyToCommand: MemoryCommand {
+    var index: Int {
+        return memoryIndex
     }
 }
