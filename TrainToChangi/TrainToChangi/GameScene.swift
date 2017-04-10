@@ -109,8 +109,14 @@ extension GameScene {
             }
             initMemory(from: levelState.memoryValues, layout: memoryLayout)
             let position = playerPreviousPositions.pop()
+            if let p1 = position, let p2 = playerPreviousPositions.top {
+                player.run(SKAction.rotate(toAngle: p2.absAngle(to: p1), duration: 0))
+            } else {
+                player.run(SKAction.rotate(toAngle: 0, duration: 0))
+            }
             setPlayerAttributes(position: position, payloadValue: levelState.personValue)
         } else { // stop button pressed
+            player.run(SKAction.rotate(toAngle: 0, duration: 0))
             playerPreviousPositions = Stack<CGPoint>()
             initConveyorNodes(inboxValues: level.initialState.inputs)
             initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
