@@ -14,7 +14,6 @@
         <!--Login View Controller-->
         <scene sceneID="cDe-Ts-9gp">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S8X-Zy-GsN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="guL-lo-28h" customClass="LoginViewController" customModule="TrainToChangi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Vnl-8l-Vka"/>
@@ -32,6 +31,7 @@
                         </subviews>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S8X-Zy-GsN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-411" y="-530"/>
         </scene>
@@ -274,6 +274,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JVU-Na-7va">
+                                <rect key="frame" x="120" y="0.0" width="263" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.87058823529999996" green="0.72156862749999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IXF-Fe-g6Z">
                                 <rect key="frame" x="120" y="0.0" width="65" height="62"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -306,11 +311,6 @@
                                     <action selector="resetButtonPressed:" destination="1JH-tH-YXE" eventType="touchUpInside" id="lY7-w5-mCa"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JVU-Na-7va">
-                                <rect key="frame" x="120" y="0.0" width="263" height="62"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.87058823529999996" green="0.72156862749999995" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
@@ -476,6 +476,16 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yc2-Dv-Z0C">
+                                <rect key="frame" x="181" y="6" width="14" height="13"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="loadprogram"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N1f-La-gcI">
+                                <rect key="frame" x="181" y="24" width="14" height="14"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="saveprogram"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -491,7 +501,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u6V-i4-hWH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="990" y="709"/>
+            <point key="canvasLocation" x="989.64843749999989" y="708.984375"/>
         </scene>
         <!--Line Number View Controller-->
         <scene sceneID="ETb-qS-fXG">
@@ -569,6 +579,10 @@
         <scene sceneID="Qu5-az-WhC">
             <objects>
                 <viewController id="3Z7-78-JhB" customClass="LevelDescriptionViewController" customModule="TrainToChangi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0bz-Wu-UFR"/>
+                        <viewControllerLayoutGuide type="bottom" id="piG-wQ-SaY"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0vl-Ku-c6j">
                         <rect key="frame" x="0.0" y="0.0" width="263" height="593"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -709,6 +723,7 @@
         <!--View Controller-->
         <scene sceneID="4vf-wU-Xxu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mgQ-c3-9jR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="0WS-54-i4N" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rsp-HB-Oek"/>
@@ -720,7 +735,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mgQ-c3-9jR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
@@ -731,17 +745,19 @@
         <image name="landingachieve" width="1716" height="383"/>
         <image name="landingplay" width="850" height="383"/>
         <image name="landingsettings" width="1463" height="383"/>
+        <image name="loadprogram" width="131" height="131"/>
         <image name="maxspeed" width="48" height="29"/>
         <image name="minspeed" width="23" height="29"/>
         <image name="music" width="153" height="154"/>
         <image name="playbutton" width="188" height="187"/>
         <image name="program-counter" width="150" height="151"/>
         <image name="reset" width="537" height="536"/>
+        <image name="saveprogram" width="125" height="125"/>
         <image name="stepback" width="188" height="186"/>
         <image name="stepforward" width="188" height="187"/>
         <image name="stopbutton" width="188" height="187"/>
-        <image name="title" width="1466" height="710"/>
         <image name="story" width="119" height="119"/>
+        <image name="title" width="1466" height="710"/>
         <image name="toggle" width="162" height="162"/>
         <image name="train_vert0" width="353" height="952"/>
     </resources>

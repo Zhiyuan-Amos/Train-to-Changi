@@ -38,11 +38,11 @@ class GameViewController: UIViewController {
         if let embeddedVC = segue.destination as? ControlPanelViewController {
             embeddedVC.model = self.model
             embeddedVC.logic = self.logic
+            embeddedVC.resetGameDelegate = self
         }
     }
 
     @IBAction func musicButtonPressed(_ sender: UIButton) {
-        print("HELLO")
         AudioPlayer.sharedInstance.toggleBackgroundMusic()
         if AudioPlayer.sharedInstance.isMute() {
             musicButton.setBackgroundImage(UIImage(named: "nomusic"),
@@ -156,31 +156,7 @@ extension GameViewController: MapViewControllerDelegate {
 }
 
 extension GameViewController: ResetGameDelegate {
-    func tryResetGame() {
-        switch model.runState {
-        case .paused, .lost:
-            resetGame(isAnimating: false)
-        default:
-            break
-        }
-    }
 
-<<<<<<< HEAD
-    // Updates `model.runState` accordingly depending on what is the current
-    // `model.runState`.
-    @objc fileprivate func handleAnimationEnd(notification: Notification) {
-        if model.runState == .running(isAnimating: true) {
-            model.runState = .running(isAnimating: false)
-        } else if model.runState == .stepping(isAnimating: true) {
-            model.runState = .paused
-        } else if model.runState == .won {
-            animateTrainWhenGameWon()
-            scene.playJediGameWonAnimation()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay), execute: {
-                self.displayEndGameScreen()
-            })
-        }
-=======
     func resetGame(isAnimating: Bool) {
         model.resetPlayState()
         model.runState = .start // explicit assignment to trigger didSet
@@ -189,7 +165,14 @@ extension GameViewController: ResetGameDelegate {
         NotificationCenter.default.post(Notification(
             name: Constants.NotificationNames.resetGameScene,
             object: nil, userInfo: ["isAnimating": isAnimating]))
->>>>>>> add color scheme for editor
     }
 
+    func tryResetGame() {
+        switch model.runState {
+        case .paused, .lost:
+            resetGame(isAnimating: false)
+        default:
+            break
+        }
+    }
 }

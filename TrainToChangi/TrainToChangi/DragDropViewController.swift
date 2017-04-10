@@ -17,7 +17,6 @@ class DragDropViewController: UIViewController {
     fileprivate var jumpArrows = [ArrowView]()
     fileprivate var updatingCellIndexPath: IndexPath?
 
-    @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var currentCommandsView: UICollectionView!
 
     override func viewDidLoad() {
@@ -302,10 +301,8 @@ extension DragDropViewController {
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
         case .running, .won, .stepping:
-            resetButton.isEnabled = false
             currentCommandsView.isUserInteractionEnabled = false
         case .paused, .lost, .start:
-            resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
         }
     }
