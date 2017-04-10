@@ -413,10 +413,10 @@ extension GameScene {
         guard let memory = memoryNodes[index]?.makeCopy() else {
             fatalError("memory at \(index) should not be nil")
         }
-
+        addChild(memory)
         self.player.removeAllChildren()
-        bootstrapPayload(memory)
         self.holdingNode = memory
+        bootstrapPayload(memory)
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                      object: nil, userInfo: nil))
     }
@@ -427,11 +427,12 @@ extension GameScene {
         let position = memorySlots[index].position
 
         let copyOfHoldingValue = holdingNode.makeCopy()
-        copyOfHoldingValue.move(toParent: scene!)
         memoryNodes[index] = copyOfHoldingValue
+        addChild(copyOfHoldingValue)
 
+        let fixPosition = SKAction.move(to: player.position, duration: 0)
         let dropHoldingValue = SKAction.move(to: position, duration: Constants.Animation.holdingValueToMemoryDuration)
-        copyOfHoldingValue.run(dropHoldingValue, completion: {
+        copyOfHoldingValue.run(SKAction.sequence([fixPosition, dropHoldingValue]), completion: {
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
         })
@@ -467,7 +468,6 @@ extension GameScene {
     }
 
     fileprivate func bootstrapPayload(_ payload: Payload) {
-        print("\(payload.position), \(player.position)")
         payload.zPosition = player.zPosition + 1
         payload.run(SKAction.move(to: player.position,
                                   duration: Constants.Animation.payloadOnToPlayerDuration), completion: {
