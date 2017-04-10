@@ -5,9 +5,9 @@
 enum CommandData {
     case inbox
     case outbox
-    case copyFrom(memoryIndex: Int?)
-    case copyTo(memoryIndex: Int?)
-    case add(memoryIndex: Int?)
+    case copyFrom(memoryIndex: Int)
+    case copyTo(memoryIndex: Int)
+    case add(memoryIndex: Int)
     case jump
     case jumpTarget
 
@@ -22,39 +22,11 @@ enum CommandData {
         case .outbox:
             return "outbox"
         case .copyFrom(let index):
-            if let index = index {
-                return "copyFrom_\(index)"
-            }
             return "copyFrom_\(index)"
         case .copyTo(let index):
-            if let index = index {
-                return "copyTo_\(index)"
-            }
             return "copyTo_\(index)"
         case .add(let index):
-            if let index = index {
-                return "add_\(index)"
-            }
             return "add_\(index)"
-        case .jump:
-            return "jump"
-        case .jumpTarget:
-            return "jumpTarget"
-        }
-    }
-
-    internal func toFilePath() -> String {
-        switch self {
-        case .inbox:
-            return "inbox"
-        case .outbox:
-            return "outbox"
-        case .copyFrom(let index):
-            return "copyFrom"
-        case .copyTo(let index):
-            return "copyTo"
-        case .add(let index):
-            return "add"
         case .jump:
             return "jump"
         case .jumpTarget:
@@ -71,11 +43,11 @@ enum CommandData {
         case "outbox":
             self = CommandData.outbox
         case "copyFrom":
-            self = CommandData.copyFrom(memoryIndex: Int(commandArr[1]))
+            self = CommandData.copyFrom(memoryIndex: Int(commandArr[1])!)
         case "copyTo":
-            self = CommandData.copyTo(memoryIndex: Int(commandArr[1]))
+            self = CommandData.copyTo(memoryIndex: Int(commandArr[1])!)
         case "add":
-            self =  CommandData.add(memoryIndex: Int(commandArr[1]))
+            self =  CommandData.add(memoryIndex: Int(commandArr[1])!)
         case "jump":
             self = CommandData.jump
         case "jumpTarget":

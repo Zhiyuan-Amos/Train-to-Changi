@@ -14,5 +14,8 @@ class LineNumberCell: UICollectionViewCell {
 
     func setLineNumberLabel(index: Int) {
         lineNumberLabel.text = "\(index)."
+        lineNumberLabel.font = Constants.UI.LineNumber.font
+        lineNumberLabel.textColor = Constants.UI.LineNumber.textColor
+        lineNumberLabel.textAlignment = NSTextAlignment.center
     }
 }

@@ -9,30 +9,17 @@
 import UIKit
 import SpriteKit
 
-class GameViewController: UIViewController, ResetGameDelegate {
+class GameViewController: UIViewController {
 
     @IBOutlet weak var trainUIImage: UIImageView!
+    @IBOutlet weak var musicButton: UIButton!
 
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var scene: GameScene!
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        registerObservers()
-    }
-
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        // Makes sure that user is logged in.
-        guard AuthService.instance.currentUserId != nil else {
-            // show login viewcontroller
-            performSegue(withIdentifier: "login", sender: nil)
-            return
-        }
     }
 
     override func viewDidLoad() {
@@ -53,6 +40,17 @@ class GameViewController: UIViewController, ResetGameDelegate {
             embeddedVC.model = self.model
             embeddedVC.logic = self.logic
             embeddedVC.resetGameDelegate = self
+        }
+    }
+
+    @IBAction func musicButtonPressed(_ sender: UIButton) {
+        AudioPlayer.sharedInstance.toggleBackgroundMusic()
+        if AudioPlayer.sharedInstance.isMute() {
+            musicButton.setBackgroundImage(UIImage(named: "nomusic"),
+                                           for: UIControlState.normal)
+        } else {
+            musicButton.setBackgroundImage(UIImage(named: "music"),
+                                           for: UIControlState.normal)
         }
     }
 
@@ -89,25 +87,6 @@ class GameViewController: UIViewController, ResetGameDelegate {
         self.present(controller, animated: true, completion: nil)
     }
 
-    func tryResetGame() {
-        switch model.runState {
-        case .paused, .lost:
-            resetGame(isAnimating: false)
-        default:
-            break
-        }
-    }
-
-    func resetGame(isAnimating: Bool) {
-        model.resetPlayState()
-        model.runState = .start // explicit assignment to trigger didSet
-        logic.resetPlayState()
-
-        NotificationCenter.default.post(Notification(
-            name: Constants.NotificationNames.resetGameScene,
-            object: nil, userInfo: ["isAnimating": isAnimating]))
-    }
-
     /// Use GameScene to move/animate the game objects
     private func presentGameScene() {
         scene = GameScene(model.currentLevel, size: view.bounds.size)
@@ -131,6 +110,29 @@ extension GameViewController {
             self, selector: #selector(handleAnimationEnd(notification:)),
             name: Constants.NotificationNames.animationEnded, object: nil)
     }
+
+    // Updates `model.runState` to `.running(isAnimating: true).
+    @objc fileprivate func handleAnimationBegin(notification: Notification) {
+        if model.runState == .running(isAnimating: false) {
+            model.runState = .running(isAnimating: true)
+        } else if model.runState == .stepping(isAnimating: false) {
+            model.runState = .stepping(isAnimating: true)
+        }
+    }
+
+    // Updates `model.runState` accordingly depending on what is the current
+    // `model.runState`.
+    @objc fileprivate func handleAnimationEnd(notification: Notification) {
+        if model.runState == .running(isAnimating: true) {
+            model.runState = .running(isAnimating: false)
+        } else if model.runState == .stepping(isAnimating: true) {
+            model.runState = .paused
+        } else if model.runState == .won {
+            animateTrainWhenGameWon()
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Duration.endGameScreenDisplayDelay),
+                                          execute: { self.displayEndGameScreen() })
+        }
+    }
 }
 
 extension GameViewController: MapViewControllerDelegate {
@@ -152,29 +154,26 @@ extension GameViewController: MapViewControllerDelegate {
 
         return index
     }
+}
 
-    // Updates `model.runState` to `.running(isAnimating: true).
-    @objc fileprivate func handleAnimationBegin(notification: Notification) {
-        if model.runState == .running(isAnimating: false) {
-            model.runState = .running(isAnimating: true)
-        } else if model.runState == .stepping(isAnimating: false) {
-            model.runState = .stepping(isAnimating: true)
-        }
+extension GameViewController: ResetGameDelegate {
+
+    func resetGame(isAnimating: Bool) {
+        model.resetPlayState()
+        model.runState = .start // explicit assignment to trigger didSet
+        logic.resetPlayState()
+
+        NotificationCenter.default.post(Notification(
+            name: Constants.NotificationNames.resetGameScene,
+            object: nil, userInfo: ["isAnimating": isAnimating]))
     }
 
-    // Updates `model.runState` accordingly depending on what is the current
-    // `model.runState`.
-    @objc fileprivate func handleAnimationEnd(notification: Notification) {
-        if model.runState == .running(isAnimating: true) {
-            model.runState = .running(isAnimating: false)
-        } else if model.runState == .stepping(isAnimating: true) {
-            model.runState = .paused
-        } else if model.runState == .won {
-            animateTrainWhenGameWon()
-            scene.playJediGameWonAnimation()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay), execute: {
-                self.displayEndGameScreen()
-            })
+    func tryResetGame() {
+        switch model.runState {
+        case .paused, .lost:
+            resetGame(isAnimating: false)
+        default:
+            break
         }
     }
 }

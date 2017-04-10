@@ -17,6 +17,7 @@
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
+		3B5D5A481E9A91F9001BC438 /* LevelDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */; };
 		3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */; };
 		3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */; };
 		3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6D984F1E88FCD70026872B /* EditorViewController.swift */; };
@@ -70,6 +71,7 @@
 		D76FA8321E76ADC400CCCFBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8301E76ADC400CCCFBE /* Main.storyboard */; settings = {ASSET_TAGS = (bu, ); }; };
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
+		D77D4B9D1E993ACC004A16F8 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */; };
 		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
 		D7983CE61E76E99C00E650ED /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE51E76E99C00E650ED /* Queue.swift */; };
 		D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D01E7796B800DE5774 /* CommandResult.swift */; };
@@ -107,6 +109,7 @@
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
+		3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDescriptionViewController.swift; sourceTree = "<group>"; };
 		3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGameViewController.swift; sourceTree = "<group>"; };
 		3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		3B6D984F1E88FCD70026872B /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +168,7 @@
 		D76FA8331E76ADC400CCCFBE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D76FA8361E76ADC400CCCFBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D76FA8381E76ADC400CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* JumpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpCommand.swift; sourceTree = "<group>"; };
 		D7983CE51E76E99C00E650ED /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		D7A267D01E7796B800DE5774 /* CommandResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandResult.swift; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 				D7A267DC1E77A01D00DE5774 /* Stack.swift */,
 				D7D49CD81E86A7A700135605 /* AudioPlayer.swift */,
 				22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */,
+				D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */,
 			);
 			name = Commons;
 			sourceTree = "<group>";
@@ -348,15 +353,16 @@
 			isa = PBXGroup;
 			children = (
 				3B78A6911E91554F00A652D9 /* Extensions */,
-				76745B731E885A030039A771 /* MapViewController.swift */,
-				A70192421E9517520058D7CD /* LoginViewController.swift */,
-				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
-				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
-				3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */,
-				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
 				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
+				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
+				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
 				3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */,
 				3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */,
+				D76FA82E1E76ADC400CCCFBE /* GameViewController.swift */,
+				A70192421E9517520058D7CD /* LoginViewController.swift */,
+				3B78A6921E915A1E00A652D9 /* LineNumberViewController.swift */,
+				3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */,
+				76745B731E885A030039A771 /* MapViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -726,6 +732,7 @@
 				3B78A68C1E9124CF00A652D9 /* DragDropViewController.swift in Sources */,
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
 				3B78A6931E915A1E00A652D9 /* LineNumberViewController.swift in Sources */,
+				3B5D5A481E9A91F9001BC438 /* LevelDescriptionViewController.swift in Sources */,
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
 				3B6D98591E89129C0026872B /* UIEntityDrawer.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
@@ -743,6 +750,7 @@
 				3BC852BF1E94833B0098042A /* JediSprite.swift in Sources */,
 				A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */,
 				76745B6F1E8857EC0039A771 /* MapScene.swift in Sources */,
+				D77D4B9D1E993ACC004A16F8 /* UIColor+.swift in Sources */,
 				D744CA551E79715C004CCABD /* ExecutionError.swift in Sources */,
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
 				76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */,

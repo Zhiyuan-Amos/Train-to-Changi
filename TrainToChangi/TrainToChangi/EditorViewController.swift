@@ -11,19 +11,58 @@ import Foundation
 
 class EditorViewController: UIViewController {
 
-    var model: Model!
+    fileprivate typealias Drawer = UIEntityDrawer
     weak var resetGameDelegate: ResetGameDelegate!
+    var model: Model!
+
+    @IBOutlet weak var descriptionButton: UIButton!
+    @IBOutlet weak var editorButton: UIButton!
 
     @IBOutlet weak var availableCommandsView: UIView!
-    @IBOutlet weak var levelDescriptionTextView: UITextView!
-    @IBOutlet weak var currentCommandsView: UIView!
     @IBOutlet weak var lineNumberView: UIView!
+    @IBOutlet weak var dragDropView: UIView!
+    @IBOutlet weak var descriptionView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpLevelDescription()
-        loadAvailableCommands()
+        setupAvailableCommandsView()
         registerObservers()
+        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
+    }
+
+    @IBAction func resetButtonPressed(_ sender: UIButton) {
+        NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
+                                        object: nil,
+                                        userInfo: nil)
+    }
+
+    @IBAction func toggleButtonPressed(_ sender: UIButton) {
+        let duration = Constants.UI.Duration.toggleAvailableCommandsDuration
+        if availableCommandsView.alpha == 0 {
+            UIView.animate(withDuration: duration, animations: { () -> Void in
+                self.availableCommandsView.alpha = 1.0
+            })
+        } else {
+            UIView.animate(withDuration: duration, animations: { () -> Void in
+                self.availableCommandsView.alpha = 0.0
+            })
+        }
+    }
+
+    @IBAction func descriptionButtonPressed(_ sender: UIButton) {
+        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
+        editorButton.backgroundColor = nil
+        descriptionView.isHidden = false
+        lineNumberView.isHidden = true
+        dragDropView.isHidden = true
+    }
+
+    @IBAction func editorButtonPressed(_ sender: UIButton) {
+        descriptionButton.backgroundColor = nil
+        editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
+        descriptionView.isHidden = true
+        lineNumberView.isHidden = false
+        dragDropView.isHidden = false
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -34,37 +73,36 @@ class EditorViewController: UIViewController {
         if let embeddedVC = segue.destination as? LineNumberViewController {
             embeddedVC.model = self.model
         }
-    }
-
-    // Initialise the height for level description
-    private func setUpLevelDescription() {
-        levelDescriptionTextView.text = model.currentLevel.levelDescriptor
-        levelDescriptionTextView.isScrollEnabled = true
-    }
-
-    // Load the available commands from model for the current level
-    func loadAvailableCommands() {
-        let initialCommandPosition = availableCommandsView.frame.origin
-        availableCommandsView.frame.size.height = 0
-
-        for (commandTag, command) in model.currentLevel.availableCommands.enumerated() {
-            let currentCommandPositionY = initialCommandPosition.y +
-                CGFloat(commandTag) * Constants.UI.commandButtonOffsetY
-
-            let buttonPosition = CGPoint(x: initialCommandPosition.x,
-                                         y: currentCommandPositionY)
-
-            let commandButton = UIEntityDrawer.generateCommandUIButton(for: command,
-                                                                       position: buttonPosition,
-                                                                       tag: commandTag)
-            commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
-            commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
-            availableCommandsView.frame.size.height += commandButton.frame.size.height
-            availableCommandsView.addSubview(commandButton)
+        if let embeddedVC = segue.destination as? LevelDescriptionViewController {
+            embeddedVC.model = self.model
         }
     }
 
-    // MARK: - Button Actions Func
+    // Load the available commands from model for the current level
+    func setupAvailableCommandsView() {
+        let initialY = availableCommandsView.frame.origin.y + Constants.UI.minimumLineSpacingForSection
+        let initialX = availableCommandsView.frame.origin.x +  Constants.UI.availableCommandsPaddingX
+        availableCommandsView.frame.size.height = 0
+
+        for (commandTag, command) in model.currentLevel.availableCommands.enumerated() {
+            let currentCommandPositionY = initialY + CGFloat(commandTag)
+                                        * Constants.UI.commandButtonOffsetY
+
+            let buttonOrigin = CGPoint(x: initialX,
+                                       y: currentCommandPositionY)
+
+            let commandButton = Drawer.drawCommandButton(command: command, origin: buttonOrigin,
+                                                                 interactive: true)
+            commandButton.tag = commandTag
+            commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
+            commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
+            availableCommandsView.frame.size.height += commandButton.frame.size.height + Constants.UI.minimumLineSpacingForSection
+            availableCommandsView.addSubview(commandButton)
+            
+        }
+        availableCommandsView.frame.size.height += Constants.UI.minimumLineSpacingForSection
+    }
+
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
@@ -88,13 +126,10 @@ extension EditorViewController {
         switch model.runState {
         case .running, .won, .stepping:
             availableCommandsView.isUserInteractionEnabled = false
-            availableCommandsView.isHidden = true
         case .paused, .lost:
             availableCommandsView.isUserInteractionEnabled = true
-            availableCommandsView.isHidden = true
         case .start:
             availableCommandsView.isUserInteractionEnabled = true
-            availableCommandsView.isHidden = false
         }
     }
 }

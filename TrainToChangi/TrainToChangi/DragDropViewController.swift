@@ -13,12 +13,12 @@ class DragDropViewController: UIViewController {
     fileprivate typealias Drawer = UIEntityDrawer
     fileprivate typealias Animator = AnimationHelper
 
-    var model: Model!
+    weak var model: Model!
     weak var resetGameDelegate: ResetGameDelegate!
+
     fileprivate var jumpArrows = [ArrowView]()
     fileprivate var updatingCellIndexPath: IndexPath?
 
-    @IBOutlet weak var resetButton: UIButton!
     @IBOutlet weak var currentCommandsView: UICollectionView!
 
     override func viewDidLoad() {
@@ -27,21 +27,9 @@ class DragDropViewController: UIViewController {
         connectDataSourceAndDelegate()
         addGestureRecognisers()
         registerObservers()
-        renderJumpArrows()
+        currentCommandsView.backgroundColor = Constants.UI.Colors.currentCommandsBackgroundColor
     }
 
-    @IBAction func resetButtonPressed(_ sender: Any) {
-        model.clearAllCommands()
-        removeAllJumpArrows()
-        currentCommandsView.reloadData()
-
-        NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
-                                        object: nil,
-                                        userInfo: nil)
-        resetGameDelegate.tryResetGame()
-    }
-
-    // MARK -- Setup
     private func connectDataSourceAndDelegate() {
         currentCommandsView.dataSource = self
         currentCommandsView.delegate = self
@@ -107,7 +95,7 @@ extension DragDropViewController {
             updatingCellIndexPath = indexPath
             switch indexCommand {
             case .add(let index), .copyTo(let index), .copyFrom(let index):
-                updateCellIndex(cell: cell, index: index!)
+                updateCellIndex(cell: cell, index: index)
             default:
                 break
             }
@@ -115,7 +103,7 @@ extension DragDropViewController {
             updatingCellIndexPath = nil
             switch indexCommand {
             case .add(let index), .copyTo(let index), .copyFrom(let index):
-                cancelUpdateCellIndex(cell: cell, index: index!)
+                cancelUpdateCellIndex(cell: cell, index: index)
             default:
                 break
             }
@@ -150,7 +138,6 @@ extension DragDropViewController {
         Animator.swipeDeleteAnimation(cell: cell, indexPath: indexPath,
                                              deleteFunction: deleteCommand)
         resetGameDelegate.tryResetGame()
-
     }
 
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
@@ -251,19 +238,6 @@ extension DragDropViewController {
         }
     }
 
-    fileprivate func isJumpRelatedCommand(indexPath: IndexPath) -> Bool {
-        return model.userEnteredCommands[indexPath.item] == .jump
-            || model.userEnteredCommands[indexPath.item] == .jumpTarget
-    }
-
-    fileprivate func isJump(indexPath: IndexPath) -> Bool {
-        return model.userEnteredCommands[indexPath.item] == .jump
-    }
-
-    fileprivate func isJumpTarget(indexPath: IndexPath) -> Bool {
-        return model.userEnteredCommands[indexPath.item] == .jumpTarget
-    }
-
     fileprivate func isIndexedCommand(indexPath: IndexPath) -> Bool {
         switch model.userEnteredCommands[indexPath.item] {
         case .add(_), .copyFrom(_), .copyTo(_):
@@ -291,6 +265,11 @@ extension DragDropViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleSelectedIndex(notification:)),
             name: Constants.NotificationNames.userSelectedIndexEvent,
+            object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleResetCommand(notification:)),
+            name: Constants.NotificationNames.userResetCommandEvent,
             object: nil)
     }
 
@@ -326,12 +305,16 @@ extension DragDropViewController {
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
         case .running, .won, .stepping:
-            resetButton.isEnabled = false
             currentCommandsView.isUserInteractionEnabled = false
         case .paused, .lost, .start:
-            resetButton.isEnabled = true
             currentCommandsView.isUserInteractionEnabled = true
         }
+    }
+
+    @objc private func handleResetCommand(notification: Notification) {
+        model.clearAllCommands()
+        removeAllJumpArrows()
+        currentCommandsView.reloadData()
     }
 
     @objc fileprivate func handleAddCommand(notification: Notification) {

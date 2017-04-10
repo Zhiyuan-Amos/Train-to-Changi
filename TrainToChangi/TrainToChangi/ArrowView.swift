@@ -25,35 +25,43 @@ import UIKit
         let point = CGPoint(Constants.UI.arrowView.originX,
                             Constants.UI.arrowView.originY)
 
+        let width = self.frame.width * Constants.UI.arrowView.arrowWidthPercentage
+        let length = self.frame.height - Constants.UI.arrowView.arrowHeightPadding
+
         let arrowHead = CGMutablePath()
         arrowHead.addLines(between: getArrowHeadPoints(point: point))
         let arrowHeadBezier = UIBezierPath(cgPath: arrowHead)
+        arrowHeadBezier.lineWidth = Constants.UI.arrowView.strokeWidth
         arrowHeadBezier.stroke()
 
         let arrowTail = CGMutablePath()
-        arrowTail.addLines(between: getArrowTailPoints(point: point, width: self.frame.width * 0.5))
+        arrowTail.addLines(between: getArrowTailPoints(point: point, width: width))
         let arrowTailBezier = UIBezierPath(cgPath: arrowTail)
+        arrowTailBezier.lineWidth = Constants.UI.arrowView.strokeWidth
         arrowTailBezier.stroke()
 
         let arrowVert = CGMutablePath()
-        arrowVert.addLines(between: getVerticalLinePoints(point: point, length: self.frame.height - 10,
-                                                          width: self.frame.width * 0.5))
+        arrowVert.addLines(between: getVerticalLinePoints(point: point, length: length,
+                                                          width: width))
         let arrowVertBezier = UIBezierPath(cgPath: arrowVert)
+        arrowVertBezier.lineWidth = Constants.UI.arrowView.strokeWidth
         arrowVertBezier.stroke()
 
         let arrowBot = CGMutablePath()
-        arrowBot.addLines(between: getHorizontalLinePoints(point: point, length: self.frame.height - 10,
-                                                           width: self.frame.width * 0.5))
+        arrowBot.addLines(between: getHorizontalLinePoints(point: point, length: length,
+                                                           width: width))
         let arrowBotBezier = UIBezierPath(cgPath: arrowBot)
+        arrowBotBezier.lineWidth = Constants.UI.arrowView.strokeWidth
         arrowBotBezier.stroke()
 
     }
 
     private func getArrowHeadPoints(point: CGPoint) -> [CGPoint] {
-        let topPoint = CGPoint(x: point.x + 5,
-                               y: point.y - 5)
-        let bottomPoint = CGPoint(x: point.x + 5,
-                                  y: point.y + 5)
+        let displacement = Constants.UI.arrowView.arrowHeadDisplacement
+        let topPoint = CGPoint(x: point.x + displacement,
+                               y: point.y - displacement)
+        let bottomPoint = CGPoint(x: point.x + displacement,
+                                  y: point.y + displacement)
 
         return [topPoint, point, bottomPoint]
     }

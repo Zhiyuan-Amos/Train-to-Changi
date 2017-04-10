@@ -33,12 +33,6 @@ class ControlPanelViewController: UIViewController {
 
     private func initSlider() {
         speedSlider.value = 0.0
-        speedSlider.minimumTrackTintColor = UIColor.init(red: 0.501, green: 0.796,
-                                                         blue: 0.768, alpha: 1)
-        speedSlider.thumbTintColor = UIColor.init(red: 0, green: 0.588,
-                                                  blue: 0.533, alpha: 1)
-        speedSlider.maximumTrackTintColor = UIColor.init(red: 0, green: 0.301,
-                                                         blue: 0.251, alpha: 1)
     }
 
     // Updates whether the buttons are enabled.

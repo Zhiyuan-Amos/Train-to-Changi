@@ -23,6 +23,21 @@ class LineNumberViewController: UIViewController {
         registerObservers()
     }
 
+    override func viewDidLayoutSubviews() {
+        setBackgroundGradient()
+    }
+
+    private func setBackgroundGradient() {
+        let gradient = CAGradientLayer()
+        gradient.startPoint = Constants.Background.leftToRightGradientPoints["startPoint"]!
+        gradient.endPoint = Constants.Background.leftToRightGradientPoints["endPoint"]!
+
+        gradient.frame = view.bounds
+        gradient.colors = [Constants.Background.editorGradientStartColor,
+                           Constants.Background.editorGradientEndColor]
+        view.layer.insertSublayer(gradient, at: 0)
+    }
+
     private func connectDataSourceAndDelegate() {
         lineNumberCollection.dataSource = self
         lineNumberCollection.delegate = self
@@ -103,14 +118,12 @@ extension LineNumberViewController {
         let serialQueue = DispatchQueue(label: Constants.Concurrency.serialQueue)
 
         serialQueue.async {
-            print("queuing to update PC")
             self.semaphore.wait()
             if self.model.runState == .running(isAnimating: true)
                 || self.model.runState == .stepping(isAnimating: true) {
-                print("sleeping zzz")
                 self.semaphore.wait()
             }
-            print("not animating or woken up")
+
             DispatchQueue.main.sync {
                 self.updateProgramCounterCoordinates(notification: notification)
             }
@@ -140,12 +153,10 @@ extension LineNumberViewController {
     }
 
     @objc fileprivate func handleAnimationEnd(notification: Notification) {
-        print("animationEnded")
         semaphore.signal()
     }
 
     @objc fileprivate func handleEndOfCommandExecution(notification: Notification) {
-        print("executionEnded")
         semaphore.signal()
     }
 
