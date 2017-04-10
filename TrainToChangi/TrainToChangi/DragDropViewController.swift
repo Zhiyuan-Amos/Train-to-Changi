@@ -25,8 +25,7 @@ class DragDropViewController: UIViewController {
         connectDataSourceAndDelegate()
         addGestureRecognisers()
         registerObservers()
-        currentCommandsView.backgroundColor = UIColor(red: 240, green: 235,
-                                                      blue: 205)
+        currentCommandsView.backgroundColor = Constants.UI.Colors.currentCommandsBackgroundColor
     }
 
     private func connectDataSourceAndDelegate() {

@@ -156,38 +156,66 @@ struct Constants {
         static let mainStoryboardIdentifier = "Main"
         static let endGameViewControllerIdentifier = "EndGameViewController"
 
+        static let dragDropCollectionViewCellIdentifier = "CommandCell"
+        static let lineNumberCollectionViewCellIdentifier = "LineNumberCell"
+
         static let dragDropCollectionCellWidth: CGFloat = 180
         static let lineNumberCollectionCellWidth: CGFloat = 40
         static let collectionCellHeight: CGFloat = 40
 
-        static let commandButtonInitialOffsetY: CGFloat = 20
-        static let commandButtonOffsetY: CGFloat = collectionCellHeight + 10
-
-        static let commandButtonWidthShort: CGFloat = 60
-        static let commandButtonWidthMid: CGFloat = 80
-        static let commandButtonWidthLong: CGFloat = 100
-        static let commandIndexWidth: CGFloat = 20
-
-        static let dragDropCollectionViewCellIdentifier = "CommandCell"
-        static let lineNumberCollectionViewCellIdentifier = "LineNumberCell"
-
-        static let numberOfSectionsInCollectionView = 1
-
         static let topEdgeInset: CGFloat = 10
         static let rightEdgeInset: CGFloat = 10
 
+        static let availableCommandsPaddingX: CGFloat = 10
+
+        static let numberOfSectionsInCollectionView = 1
         static let minimumLineSpacingForSection: CGFloat = 10
         static let minimumInteritemSpacingForSection: CGFloat = 0
 
+        static let commandButtonOffsetY: CGFloat = collectionCellHeight + 10
+
         static let programCounterOffsetX: CGFloat = 10
 
-        static let userSelectedIndexNotificationDelay = 200
-        static let endGameScreenDisplayDelay = 2
+        struct Snapshot {
+            static let cornerRadius: CGFloat = 0.0
+            static let shadowOffset = CGSize(width: -5.0, height: 0.0)
+            static let shadowRadius: CGFloat = 5.0
+            static let shadowOpacity: Float = 0.4
+        }
 
-        struct Slider {
-            static let minimumTrackTintColor = UIColor(rgb: 0xE7FFB3)
-            static let thumbTintColor = UIColor(rgb: 0xBFF34F)
-            static let maximumTrackTintColor = UIColor(rgb: 0x8EBC29)
+        struct Colors {
+            static let commandRed = UIColor(red: 239, green: 83, blue: 80)
+            static let commandOrange = UIColor(red: 255, green: 224, blue: 178)
+            static let commandBlue = UIColor(red: 130, green: 177, blue: 255)
+            static let commandGreen = UIColor(red: 165, green: 214, blue: 167)
+
+            static let currentCommandsBackgroundColor = UIColor(red: 240, green: 235,
+                                                                blue: 205)
+        }
+
+        struct CommandButton {
+            static let widthShort: CGFloat = 60
+            static let widthMid: CGFloat = 80
+            static let widthLong: CGFloat = 100
+
+            static let buttonTitleFont = UIFont(name: "Futura-Bold", size: 14)
+            static let cornerRadius: CGFloat = 5.0
+            static let commandCellLeftPadding: CGFloat = 10
+        }
+
+        struct CommandIndex {
+            static let indexLabelFont = UIFont(name: "Futura-Bold", size: 14)
+            static let indexLabelWidth: CGFloat = 50
+            static let cornerRadius: CGFloat = 15.0
+            static let commandCellLeftPadding: CGFloat = 20
+        }
+
+        struct Duration {
+            static let swipeAnimationDuration = 0.25
+            static let dragAnimationDuration = 0.25
+            static let toggleAvailableCommandsDuration = 0.25
+            static let userSelectedIndexNotificationDelay = 200
+            static let endGameScreenDisplayDelay = 2
         }
 
         struct LineNumber {
@@ -204,14 +232,21 @@ struct Constants {
         struct arrowView {
             static let originX: CGFloat = 5
             static let originY: CGFloat = 5
-            static let arrowWidth: CGFloat = 30
+            static let arrowWidth: CGFloat = 100
+            static let strokeWidth: CGFloat = 2.5
+            static let arrowIndexDivisor: Float = 20.0
+
+            static let arrowHeadDisplacement: CGFloat = 5
+            static let arrowWidthPercentage: CGFloat = 0.95
+            static let arrowHeightPadding: CGFloat = 10
         }
 
         struct trainView {
             static let numTrainFrames = 7
             static let trainAnimationDuration = 1.5
 
-            static let gameWonTrainFrames = [UIImage(named: "train_vert0")!, UIImage(named: "train_vert8")!]
+            static let gameWonTrainFrames = [UIImage(named: "train_vert0")!,
+                                             UIImage(named: "train_vert8")!]
             static let gameWonTrainAnimationDuration = 0.5
             static let gameWonTrainAnimationRepeatCount = 3
         }

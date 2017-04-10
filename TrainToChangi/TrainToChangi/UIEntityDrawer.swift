@@ -18,10 +18,10 @@ class UIEntityDrawer {
 
         let cellSnapshot: UIView = UIImageView(image: image)
         cellSnapshot.layer.masksToBounds = false
-        cellSnapshot.layer.cornerRadius = 0.0
-        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
-        cellSnapshot.layer.shadowRadius = 5.0
-        cellSnapshot.layer.shadowOpacity = 0.4
+        cellSnapshot.layer.cornerRadius = Constants.UI.Snapshot.cornerRadius
+        cellSnapshot.layer.shadowOffset = Constants.UI.Snapshot.shadowOffset
+        cellSnapshot.layer.shadowRadius = Constants.UI.Snapshot.shadowRadius
+        cellSnapshot.layer.shadowOpacity = Constants.UI.Snapshot.shadowOpacity
         return cellSnapshot
     }
 }
@@ -35,11 +35,11 @@ extension UIEntityDrawer {
         button.setTitle(title, for: UIControlState.normal)
         button.setTitleColor(UIColor.black, for: UIControlState.normal)
         button.backgroundColor = backgroundColor
-        button.titleLabel?.font = UIFont(name: "Futura-Bold", size: 14)
+        button.titleLabel?.font = Constants.UI.CommandButton.buttonTitleFont
         button.frame.origin = origin
         button.frame.size.width = width
         button.frame.size.height = Constants.UI.collectionCellHeight
-        button.layer.cornerRadius = 5.0
+        button.layer.cornerRadius = Constants.UI.CommandButton.cornerRadius
         button.isUserInteractionEnabled = interactive
         return button
     }
@@ -48,13 +48,13 @@ extension UIEntityDrawer {
         let memoryIndexLabel = UILabel()
         memoryIndexLabel.text = "\(index)"
         memoryIndexLabel.textColor = UIColor.black
-        memoryIndexLabel.font = UIFont(name: "Futura-Bold", size: 14)
+        memoryIndexLabel.font = Constants.UI.CommandIndex.indexLabelFont
         memoryIndexLabel.backgroundColor = backgroundColor
         memoryIndexLabel.frame.origin = origin
-        memoryIndexLabel.frame.size.width = 50
+        memoryIndexLabel.frame.size.width = Constants.UI.CommandIndex.indexLabelWidth
         memoryIndexLabel.frame.size.height = Constants.UI.collectionCellHeight
         memoryIndexLabel.clipsToBounds = true
-        memoryIndexLabel.layer.cornerRadius = 15.0
+        memoryIndexLabel.layer.cornerRadius = Constants.UI.CommandIndex.cornerRadius
         memoryIndexLabel.textAlignment = .center
         memoryIndexLabel.isUserInteractionEnabled = false
         return memoryIndexLabel
@@ -63,10 +63,10 @@ extension UIEntityDrawer {
     static func drawCommandMemoryIndex(command: CommandData, origin: CGPoint) -> UILabel? {
         switch command {
         case .copyFrom(let index), .copyTo(let index):
-            return drawMemoryIndex(index: index, backgroundColor: UIColor(red: 239, green: 83, blue: 80),
+            return drawMemoryIndex(index: index, backgroundColor: Constants.UI.Colors.commandRed,
                                    origin: origin)
         case .add(let index):
-            return drawMemoryIndex(index: index, backgroundColor:  UIColor(red: 255, green: 224, blue: 178),
+            return drawMemoryIndex(index: index, backgroundColor:  Constants.UI.Colors.commandOrange,
                                    origin: origin)
         default:
             return nil
@@ -77,32 +77,32 @@ extension UIEntityDrawer {
                                   interactive: Bool) -> UIButton {
         switch command {
         case .inbox:
-            return drawButton(title: "inbox", backgroundColor: UIColor(red: 165, green: 214, blue: 167),
-                              width: Constants.UI.commandButtonWidthMid,
+            return drawButton(title: "inbox", backgroundColor: Constants.UI.Colors.commandGreen,
+                              width: Constants.UI.CommandButton.widthMid,
                               origin: origin, interactive: interactive)
         case .outbox:
-            return drawButton(title: "outbox", backgroundColor: UIColor(red: 165, green: 214, blue: 167),
-                              width: Constants.UI.commandButtonWidthMid,
+            return drawButton(title: "outbox", backgroundColor: Constants.UI.Colors.commandGreen,
+                              width: Constants.UI.CommandButton.widthMid,
                               origin: origin, interactive: interactive)
         case .copyFrom:
-            return drawButton(title: "copyfrom", backgroundColor: UIColor(red: 239, green: 83, blue: 80),
-                              width: Constants.UI.commandButtonWidthLong,
+            return drawButton(title: "copyfrom", backgroundColor: Constants.UI.Colors.commandRed,
+                              width: Constants.UI.CommandButton.widthLong,
                               origin: origin, interactive: interactive)
         case .copyTo:
-            return drawButton(title: "copyto", backgroundColor: UIColor(red: 239, green: 83, blue: 80),
-                              width: Constants.UI.commandButtonWidthMid,
+            return drawButton(title: "copyto", backgroundColor: Constants.UI.Colors.commandRed,
+                              width: Constants.UI.CommandButton.widthMid,
                               origin: origin, interactive: interactive)
         case .jump:
-            return drawButton(title: "jump", backgroundColor: UIColor(red: 130, green: 177, blue: 255),
-                              width: Constants.UI.commandButtonWidthShort,
+            return drawButton(title: "jump", backgroundColor: Constants.UI.Colors.commandBlue,
+                              width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
         case .jumpTarget:
-            return drawButton(title: "", backgroundColor: UIColor(red: 130, green: 177, blue: 255),
-                              width: Constants.UI.commandButtonWidthShort,
+            return drawButton(title: "", backgroundColor: Constants.UI.Colors.commandBlue,
+                              width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
         case .add:
-            return drawButton(title: "add", backgroundColor:  UIColor(red: 255, green: 224, blue: 178),
-                              width: Constants.UI.commandButtonWidthShort,
+            return drawButton(title: "add", backgroundColor:  Constants.UI.Colors.commandOrange,
+                              width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
         }
     }
@@ -115,14 +115,14 @@ extension UIEntityDrawer {
 
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / 5.0))
+        let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / Constants.UI.arrowView.arrowIndexDivisor))
 
         return reversed ? generateReverseArrowView(origin: origin, height: height, width: width)
                         : generateArrowView(origin: origin, height: height, width: width)
     }
 
     static func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
-        return CGPoint(Constants.UI.commandButtonWidthLong + Constants.UI.commandIndexWidth,
+        return CGPoint(Constants.UI.CommandButton.widthShort,
                        getMidYOfCell(at: indexPath))
     }
 

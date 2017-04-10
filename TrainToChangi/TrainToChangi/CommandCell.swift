@@ -17,13 +17,13 @@ class CommandCell: UICollectionViewCell {
             view.removeFromSuperview()
         }
 
-        let buttonOrigin = CGPoint(x: 10, y: 0)
+        let buttonOrigin = CGPoint(x: Constants.UI.CommandButton.commandCellLeftPadding, y: 0)
         let button = Drawer.drawCommandButton(command: command, origin: buttonOrigin,
                                               interactive: false)
         button.frame = self.convert(button.frame, to: self)
         self.addSubview(button)
 
-        let labelOrigin = CGPoint(x: button.frame.width + 20, y: 0)
+        let labelOrigin = CGPoint(x: button.frame.width + Constants.UI.CommandIndex.commandCellLeftPadding, y: 0)
         guard let label = Drawer.drawCommandMemoryIndex(command: command, origin: labelOrigin) else {
             return
         }

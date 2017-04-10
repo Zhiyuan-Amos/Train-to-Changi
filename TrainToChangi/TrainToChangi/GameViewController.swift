@@ -128,7 +128,7 @@ extension GameViewController {
             model.runState = .paused
         } else if model.runState == .won {
             animateTrainWhenGameWon()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay),
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Duration.endGameScreenDisplayDelay),
                                           execute: { self.displayEndGameScreen() })
         }
     }

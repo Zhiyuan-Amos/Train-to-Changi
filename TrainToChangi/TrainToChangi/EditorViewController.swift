@@ -36,12 +36,13 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func toggleButtonPressed(_ sender: UIButton) {
+        let duration = Constants.UI.Duration.toggleAvailableCommandsDuration
         if availableCommandsView.alpha == 0 {
-            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+            UIView.animate(withDuration: duration, animations: { () -> Void in
                 self.availableCommandsView.alpha = 1.0
             })
         } else {
-            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+            UIView.animate(withDuration: duration, animations: { () -> Void in
                 self.availableCommandsView.alpha = 0.0
             })
         }
@@ -77,8 +78,8 @@ class EditorViewController: UIViewController {
 
     // Load the available commands from model for the current level
     func setupAvailableCommandsView() {
-        let initialY = availableCommandsView.frame.origin.y + 10
-        let initialX = availableCommandsView.frame.origin.x + 10
+        let initialY = availableCommandsView.frame.origin.y + Constants.UI.minimumLineSpacingForSection
+        let initialX = availableCommandsView.frame.origin.x +  Constants.UI.availableCommandsPaddingX
         availableCommandsView.frame.size.height = 0
 
         for (commandTag, command) in model.currentLevel.availableCommands.enumerated() {
@@ -93,11 +94,11 @@ class EditorViewController: UIViewController {
             commandButton.tag = commandTag
             commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
             commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
-            availableCommandsView.frame.size.height += commandButton.frame.size.height + 10
+            availableCommandsView.frame.size.height += commandButton.frame.size.height + Constants.UI.minimumLineSpacingForSection
             availableCommandsView.addSubview(commandButton)
             
         }
-        availableCommandsView.frame.size.height += 10
+        availableCommandsView.frame.size.height += Constants.UI.minimumLineSpacingForSection
     }
 
     @objc private func commandButtonPressed(sender: UIButton) {

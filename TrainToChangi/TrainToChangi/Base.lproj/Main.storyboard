@@ -78,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vvz-e4-LN7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1213" y="98"/>
+            <point key="canvasLocation" x="-1819" y="-27"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="NqG-I3-A5o">
@@ -110,7 +110,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LUd-ed-Rq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0hw-mh-o9A" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-584" y="853"/>
+            <point key="canvasLocation" x="-588" y="997"/>
         </scene>
         <!--End Game View Controller-->
         <scene sceneID="KfH-NB-crW">
@@ -719,23 +719,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3na-OL-Bdc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="791.89453125" y="1240.234375"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="4vf-wU-Xxu">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mgQ-c3-9jR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="0WS-54-i4N" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Rsp-HB-Oek"/>
-                        <viewControllerLayoutGuide type="bottom" id="R4u-Si-RgW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hRs-cn-hou">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-            </objects>
         </scene>
     </scenes>
     <resources>
