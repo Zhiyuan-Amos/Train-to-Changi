@@ -22,6 +22,17 @@ protocol MapSceneDelegate: class {
 class MapScene: SKScene {
     private var cam: SKCameraNode!
 
+    // The bound that the camera is allowed to move in.
+    // Hardcoded values because it's not possible to set a bound based on the .sks file.
+    // With this bound, when camera moves, check it's future position and drag it back if
+    // it will be out of bound.
+    private var bound: CGRect {
+        return CGRect (
+            x: anchorPoint.x - 50, y: anchorPoint.y - 200,
+            width: Constants.ViewDimensions.width * 1.5, height: Constants.ViewDimensions.height * 0.8
+        )
+    }
+
     weak var mapSceneDelegate: MapSceneDelegate?
 
     override func didMove(to view: SKView) {
@@ -45,17 +56,74 @@ class MapScene: SKScene {
             return
         }
 
+        guard let camera = camera else {
+            assertionFailure("camera was not set"); return
+        }
+
         let location = touch.location(in: self)
         let previousLocation = touch.previousLocation(in: self)
 
-        camera?.position.x -= location.x - previousLocation.x
-        camera?.position.y -= location.y - previousLocation.y
+        let camFuturePosition = CGPoint(
+            x: camera.position.x - location.x + previousLocation.x,
+            y: camera.position.y - location.y + previousLocation.y
+        )
+
+        if bound.contains(camFuturePosition) {
+            camera.position = camFuturePosition
+        } else {
+            camera.position = draggedBackPosition(from: camFuturePosition)
+        }
     }
 
     // replace empty SKSpriteNode with StationLevelNode
     private func replace(_ node: SKSpriteNode, with stationLevelNode: StationLevelNode) {
         node.removeFromParent()
         addChild(stationLevelNode)
+    }
+
+    // Set camera back if it is outside its cage
+    private func draggedBackPosition(from point: CGPoint) -> CGPoint {
+        /*
+         | 1 | 2 | 3 |
+         -------------
+         | 4 | x | 5 |
+         -------------
+         | 6 | 7 | 8 |
+
+         */
+        let offset = CGFloat(30)
+        let upperY = bound.maxY - offset
+        let lowerY = bound.minY + offset
+
+        if point.x < bound.minX {
+            let x = bound.minX + offset
+
+            if point.y > bound.maxY { // 1
+                return CGPoint(x: x, y: upperY)
+            } else if point.y < bound.minY { // 6
+                return CGPoint(x: x, y: lowerY)
+            } else { // 4
+                return CGPoint(x: x, y: point.y)
+            }
+
+        } else if point.x > bound.maxX {
+            let x = bound.maxX - offset
+
+            if point.y > bound.maxY { // 3
+                return CGPoint(x: x, y: upperY)
+            } else if point.y < bound.minY { // 8
+                return CGPoint(x: x, y: lowerY)
+            } else { // 5
+                return CGPoint(x: x, y: point.y)
+            }
+
+        } else {
+            if point.y > bound.maxY { // 2
+                return CGPoint(x: point.x, y: upperY)
+            } else { // 7
+                return CGPoint(x: point.x, y: lowerY)
+            }
+        }
     }
 }
 
