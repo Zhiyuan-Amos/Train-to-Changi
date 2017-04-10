@@ -421,7 +421,6 @@ extension GameScene {
         // it as child of player
         let copy = memory.makeCopy()
         addChild(copy)
-        removeChildren(in: [memory])
         self.player.removeAllChildren()
         self.holdingNode = copy
         bootstrapPayload(copy)
@@ -440,12 +439,12 @@ extension GameScene {
         let existing = memoryNodes[index]
         memoryNodes[index] = copyOfHoldingValue
         addChild(copyOfHoldingValue)
-        existing?.removeFromParent()
 
         // fixPosition because when shifting parent, the position gets reset
         let fixPosition = SKAction.move(to: player.position, duration: 0)
         let dropHoldingValue = SKAction.move(to: position, duration: Constants.Animation.holdingValueToMemoryDuration)
         copyOfHoldingValue.run(SKAction.sequence([fixPosition, dropHoldingValue]), completion: {
+            existing?.removeFromParent()
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
         })
@@ -453,7 +452,23 @@ extension GameScene {
 
     // Do animations for command like "add 0", add value in memory to the person value
     private func computeWithMemory(_ index: Int, expected: Int) {
-        holdingNode.setLabel(to: expected)
+        guard let memory = memoryNodes[index], let layout = memoryLayout else {
+            fatalError("memory at \(index) should not be nil")
+        }
+
+        let copy = memory.makeCopy()
+        addChild(copy)
+        copy.zPosition = holdingNode.zPosition - 1
+
+        let fixPosition = SKAction.move(to: layout.locations[index], duration: 0)
+        let move = SKAction.move(to: player.position, duration: Constants.Animation.payloadOnToPlayerDuration)
+
+        copy.run(SKAction.sequence([fixPosition, move]), completion: {
+            self.holdingNode.setLabel(to: expected)
+            self.removeChildren(in: [copy])
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                         object: nil, userInfo: nil))
+        })
     }
 
     private func moveConveyorBelt(_ node: SKSpriteNode) {
