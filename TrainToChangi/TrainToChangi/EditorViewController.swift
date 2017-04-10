@@ -17,6 +17,7 @@ class EditorViewController: UIViewController {
 
     @IBOutlet weak var descriptionButton: UIButton!
     @IBOutlet weak var editorButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var lineNumberView: UIView!
@@ -34,6 +35,7 @@ class EditorViewController: UIViewController {
         NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
                                         object: nil,
                                         userInfo: nil)
+        resetGameDelegate.tryResetGame()
     }
 
     @IBAction func toggleButtonPressed(_ sender: UIButton) {
@@ -125,10 +127,13 @@ extension EditorViewController {
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
         case .running, .won, .stepping:
+            resetButton.isEnabled = false
             availableCommandsView.isUserInteractionEnabled = false
         case .paused, .lost:
+            resetButton.isEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
         case .start:
+            resetButton.isEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
         }
     }
