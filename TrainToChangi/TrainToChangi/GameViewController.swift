@@ -79,12 +79,12 @@ class GameViewController: UIViewController {
         trainUIImage.startAnimating()
     }
 
-    fileprivate func displayEndGameScreen() {
+    fileprivate func initEndGameScreen() -> UIViewController {
         let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: Constants.UI.endGameViewControllerIdentifier)
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        self.present(controller, animated: true, completion: nil)
+        return controller
     }
 
     /// Use GameScene to move/animate the game objects
@@ -129,8 +129,12 @@ extension GameViewController {
             model.runState = .paused
         } else if model.runState == .won {
             animateTrainWhenGameWon()
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Duration.endGameScreenDisplayDelay),
-                                          execute: { self.displayEndGameScreen() })
+            scene.playJediGameWonAnimation()
+            let controller = self.initEndGameScreen()
+            AchievementsManager.sharedInstance.updateAchievements(model: self.model)
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.endGameScreenDisplayDelay), execute: {
+                self.present(controller, animated: true, completion: nil)
+            })
         }
     }
 }

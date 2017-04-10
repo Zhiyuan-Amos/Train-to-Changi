@@ -55,6 +55,7 @@
 		A7AB9DDF1E9A45CA00989F58 /* AchievementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */; };
 		A7AB9DE11E9A45DA00989F58 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* Achievements.swift */; };
 		A7AB9DE31E9A469E00989F58 /* AutomaticFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */; };
+		A7AB9DE11E9A45DA00989F58 /* AchievementsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */; };
 		A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */; };
 		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
 		BC0162FF8448453D3B94C649 /* Pods_TrainToChangi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */; };
@@ -76,6 +77,7 @@
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
 		D77D4B9D1E993ACC004A16F8 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */; };
+		D788BCDA1E9B1781003B92DA /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D788BCD91E9B1781003B92DA /* Achievement.swift */; };
 		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
 		D7983CE61E76E99C00E650ED /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE51E76E99C00E650ED /* Queue.swift */; };
 		D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A267D01E7796B800DE5774 /* CommandResult.swift */; };
@@ -154,6 +156,7 @@
 		A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsManager.swift; sourceTree = "<group>"; };
 		A7AB9DE01E9A45DA00989F58 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
 		A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomaticFirebaseSaver.swift; sourceTree = "<group>"; };
+		A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsEnum.swift; sourceTree = "<group>"; };
 		A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
@@ -177,6 +180,7 @@
 		D76FA8361E76ADC400CCCFBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D76FA8381E76ADC400CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		D788BCD91E9B1781003B92DA /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* JumpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpCommand.swift; sourceTree = "<group>"; };
 		D7983CE51E76E99C00E650ED /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		D7A267D01E7796B800DE5774 /* CommandResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandResult.swift; sourceTree = "<group>"; };
@@ -420,8 +424,9 @@
 			children = (
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
 				A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */,
-				A7AB9DE01E9A45DA00989F58 /* Achievements.swift */,
 				A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */,
+				D788BCD91E9B1781003B92DA /* Achievement.swift */,
+				A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */,
 				A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */,
 				A7D163481E90CC860073EC46 /* GameLevels */,
 			);
@@ -769,6 +774,7 @@
 				D75BC42E1E76C6D200ED2A1B /* InboxCommand.swift in Sources */,
 				76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
+				D788BCDA1E9B1781003B92DA /* Achievement.swift in Sources */,
 				3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
@@ -786,7 +792,7 @@
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
 				A712096C1E8189060039B257 /* CommandCell.swift in Sources */,
 				3B05F91F1E94FFBF009B4F5F /* SpeechBubbleSprite.swift in Sources */,
-				A7AB9DE11E9A45DA00989F58 /* Achievements.swift in Sources */,
+				A7AB9DE11E9A45DA00989F58 /* AchievementsEnum.swift in Sources */,
 				76745B741E885A030039A771 /* MapViewController.swift in Sources */,
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
 				3B1E83A21E9B8813007E4670 /* LoadProgramViewController.swift in Sources */,

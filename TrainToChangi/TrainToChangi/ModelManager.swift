@@ -176,6 +176,19 @@ class ModelManager: Model {
         return levelState.memoryValues[index]
     }
 
+    func incrementNumLost() {
+        levelState.numLost += 1
+    }
+
+    // API for Achievement
+    func getTimeElapsed() -> Double {
+        return levelState.timeElapsed
+    }
+
+    func getNumLost() -> Int {
+        return levelState.numLost
+    }
+
     // MARK - Private helpers
 
     private func postCommandDataListUpdateNotification() {

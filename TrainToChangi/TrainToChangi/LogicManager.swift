@@ -86,6 +86,7 @@ class LogicManager: Logic {
             return
         }
         if case .lost = model.runState {
+            model.incrementNumLost()
             return
         }
         postSceneNotifications(executedCommand)

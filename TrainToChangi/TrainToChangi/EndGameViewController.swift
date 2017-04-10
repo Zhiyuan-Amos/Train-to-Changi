@@ -9,6 +9,10 @@
 import UIKit
 
 class EndGameViewController: UIViewController {
+    @IBOutlet weak var achievementTextView: UITextView!
+    private var isHidden = true
+    private var textToAppend = String()
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -16,5 +20,26 @@ class EndGameViewController: UIViewController {
     @IBAction func returnButtonPressed(_ sender: UIButton) {
         dismiss(animated: false, completion: nil)
         presentingViewController!.dismiss(animated: true, completion: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleAchievementUnlocked(notification:)),
+            name: Constants.NotificationNames.achievementUnlocked, object: nil)
+    }
+
+    override func viewDidLoad() {
+        achievementTextView.isHidden = isHidden
+        achievementTextView.insertText(textToAppend)
+    }
+
+    @objc fileprivate func handleAchievementUnlocked(notification: Notification) {
+        guard let name = notification.userInfo?["name"] as? AchievementsEnum else {
+            fatalError("Misconfiguration of notification")
+        }
+
+        isHidden = false
+        textToAppend += ("\n\(name.toAchivementName())")
     }
 }
