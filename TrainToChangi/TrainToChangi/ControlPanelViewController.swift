@@ -57,7 +57,8 @@ class ControlPanelViewController: UIViewController {
                           playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
             playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
         case .lost:
-            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
+            let stepBackButtonIsEnabled = !logic.canUndo
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
                           playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
             playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
         case .won:
