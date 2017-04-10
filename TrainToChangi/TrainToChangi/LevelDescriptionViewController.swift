@@ -37,9 +37,8 @@ class LevelDescriptionViewController: UIViewController {
     private func setUpExpectedOutput() {
         var outputString = ""
         for output in model.expectedOutputs {
-            outputString += "\(output), "
+            outputString += "\(output) "
         }
-        outputString = outputString.characters.dropLast(2)
 
         expectedOutputTextView.text = outputString
         expectedOutputTextView.isScrollEnabled = true
