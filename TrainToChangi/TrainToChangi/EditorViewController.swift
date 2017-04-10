@@ -36,7 +36,15 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func toggleButtonPressed(_ sender: UIButton) {
-        availableCommandsView.isHidden = !availableCommandsView.isHidden
+        if availableCommandsView.alpha == 0 {
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                self.availableCommandsView.alpha = 1.0
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                self.availableCommandsView.alpha = 0.0
+            })
+        }
     }
 
     @IBAction func descriptionButtonPressed(_ sender: UIButton) {
@@ -66,7 +74,6 @@ class EditorViewController: UIViewController {
             embeddedVC.model = self.model
         }
     }
-
 
     // Load the available commands from model for the current level
     func setupAvailableCommandsView() {
