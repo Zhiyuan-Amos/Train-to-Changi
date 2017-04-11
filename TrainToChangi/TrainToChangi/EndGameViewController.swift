@@ -10,37 +10,25 @@ import UIKit
 
 class EndGameViewController: UIViewController {
     @IBOutlet weak var achievementsTableView: UITableView!
-    private var isHidden = true
-    private(set) var achievements = [(String, String)]()
+    private(set) var achievements = AchievementsManager.sharedInstance
 
     override var prefersStatusBarHidden: Bool {
         return true
     }
 
+    override func viewDidLoad() {
+        achievementsTableView.isHidden = achievements.currentLevelUnlockedAchievements.isEmpty
+
+        achievementsTableView.layoutIfNeeded()
+        achievementsTableView.frame.size.height =
+            min(achievementsTableView.contentSize.height, CGFloat(160))
+    }
+
     @IBAction func returnButtonPressed(_ sender: UIButton) {
+        NotificationCenter.default.post(name: Constants.NotificationNames.levelEnded,
+                                        object: nil, userInfo: nil)
+
         dismiss(animated: false, completion: nil)
         presentingViewController!.dismiss(animated: true, completion: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleAchievementUnlocked(notification:)),
-            name: Constants.NotificationNames.achievementUnlocked, object: nil)
-    }
-
-    override func viewDidLoad() {
-        achievementsTableView.isHidden = isHidden
-    }
-
-    @objc fileprivate func handleAchievementUnlocked(notification: Notification) {
-        guard let name = notification.userInfo?["name"] as? AchievementsEnum else {
-            fatalError("Misconfiguration of notification")
-        }
-
-        isHidden = false
-        let achievementName = name.toAchivementName()
-        let achievementImagePath = name.toImagePath()
-        achievements.append(achievementName, achievementImagePath)
     }
 }

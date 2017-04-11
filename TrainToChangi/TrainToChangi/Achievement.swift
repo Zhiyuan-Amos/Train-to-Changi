@@ -2,16 +2,7 @@ import Foundation
 
 class Achievement: NSObject, NSCoding {
     let name: AchievementsEnum
-    var isUnlocked: Bool {
-        willSet {
-            guard isUnlocked == false && newValue == true else {
-                fatalError("No other combinations of values should be allowed")
-            }
-
-            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.achievementUnlocked,
-                                                         object: nil, userInfo: ["name": name]))
-        }
-    }
+    var isUnlocked: Bool
 
     // stub
     init(name: AchievementsEnum, isUnlocked: Bool) {

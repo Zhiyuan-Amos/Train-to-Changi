@@ -12,13 +12,13 @@ extension EndGameViewController: UITableViewDataSource {
             fatalError("Cell not assigned the proper view subclass!")
         }
 
-        cell.setText(text: achievements[indexPath.item].0)
-        cell.setImage(image: UIImage(named: achievements[indexPath.item].1)!)
+        cell.setText(text: achievements.currentLevelUnlockedAchievements[indexPath.item].name.toAchievementName())
+        cell.setImage(image: UIImage(named: achievements.currentLevelUnlockedAchievements[indexPath.item].name.toImagePath())!)
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return achievements.count
+        return achievements.currentLevelUnlockedAchievements.count
     }
 }
 

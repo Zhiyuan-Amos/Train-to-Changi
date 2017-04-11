@@ -87,11 +87,10 @@ class LogicManager: Logic {
             model.incrementNumLost()
             return
         }
-        postSceneNotifications(executedCommand)
-
         guard let index = currentIndex, let command = executedCommand else {
             fatalError("Misconfiguration of iterator and game logic")
         }
+        postSceneNotifications(command)
         executedCommands.push(index, command)
 
         // If the command executed is JumpCommand , then there's no need to further

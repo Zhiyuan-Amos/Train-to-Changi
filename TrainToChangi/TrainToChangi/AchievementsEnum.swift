@@ -18,7 +18,7 @@ enum AchievementsEnum: String {
     static let allValues = [completeLevelByTenSeconds, completeLevelOne,
                             completeAllLevels, lostLevel, wonLevelOnFirstTry]
 
-    func toAchivementName() -> String {
+    func toAchievementName() -> String {
         switch self {
         case .completeLevelByTenSeconds:
             return "Fast Game: Complete Level By Ten Seconds"
