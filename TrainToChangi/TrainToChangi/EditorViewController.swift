@@ -59,7 +59,7 @@ class EditorViewController: UIViewController {
         dragDropView.isHidden = true
     }
 
-    @IBAction func editorButtonPressed(_ sender: UIButton) {
+    @IBAction func editorButtonPressed(_ sender: UIButton?) {
         descriptionButton.backgroundColor = nil
         editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
         descriptionView.isHidden = true
@@ -100,7 +100,7 @@ class EditorViewController: UIViewController {
             commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
             availableCommandsView.frame.size.height += commandButton.frame.size.height + Constants.UI.minimumLineSpacingForSection
             availableCommandsView.addSubview(commandButton)
-            
+
         }
         availableCommandsView.frame.size.height += Constants.UI.minimumLineSpacingForSection
     }
@@ -127,14 +127,21 @@ extension EditorViewController {
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
         case .running, .won, .stepping:
+            editorButtonPressed(nil)
             resetButton.isEnabled = false
+            descriptionButton.isEnabled = false
             availableCommandsView.isUserInteractionEnabled = false
+            availableCommandsView.isHidden = true
         case .paused, .lost:
             resetButton.isEnabled = true
+            descriptionButton.isEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isHidden = true
         case .start:
             resetButton.isEnabled = true
+            descriptionButton.isEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isHidden = false
         }
     }
 }
