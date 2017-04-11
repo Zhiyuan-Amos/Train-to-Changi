@@ -26,56 +26,6 @@ class ControlPanelViewController: UIViewController {
             object: nil, userInfo: ["sliderValue": sender.value]))
     }
 
-    override func viewDidLoad() {
-        initSlider()
-        registerObservers()
-    }
-
-    private func initSlider() {
-        speedSlider.value = 0.0
-    }
-
-    // Updates whether the buttons are enabled.
-    private func updateButtons(stopButtonIsEnabled: Bool, stepBackButtonIsEnabled: Bool,
-                               playPauseButtonIsEnabled: Bool, stepForwardButtonIsEnabled: Bool) {
-        stopButton.isEnabled = stopButtonIsEnabled
-        stepBackButton.isEnabled = stepBackButtonIsEnabled
-        playPauseButton.isEnabled = playPauseButtonIsEnabled
-        stepForwardButton.isEnabled = stepForwardButtonIsEnabled
-    }
-
-    // Updates whether the buttons are enabled depending on the `model.runState`.
-    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
-        switch model.runState {
-        case .running:
-            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
-                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
-            playPauseButton.setImage(UIImage(named: "pausebutton"), for: .normal)
-        case .paused:
-            let stepBackButtonIsEnabled = !logic.canUndo
-            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
-                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
-            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
-        case .lost:
-            let stepBackButtonIsEnabled = !logic.canUndo
-            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
-                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
-            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
-        case .won:
-            updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
-                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
-            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
-        case .stepping:
-            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: false,
-                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
-            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
-        case .start:
-            updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
-                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
-            playPauseButton.setImage(UIImage(named: "playbutton"), for: .normal)
-        }
-    }
-
     @IBAction func stopButtonPressed(_ sender: UIButton) {
         if model.runState == .running(isAnimating: true)
             || model.runState == .stepping(isAnimating: true) {
@@ -116,10 +66,10 @@ class ControlPanelViewController: UIViewController {
     }
     // if .running then make it pausebutton. as long as not running, make it play button.
     @IBAction func playPauseButtonPressed(_ sender: UIButton) {
-        if playPauseButton.currentImage == UIImage(named: "playbutton") {
+        if playPauseButton.currentImage == Constants.UI.ControlPanel.playButtonImage {
             model.runState = .running(isAnimating: false)
             logic.run()
-        } else if playPauseButton.currentImage == UIImage(named: "pausebutton") {
+        } else if playPauseButton.currentImage == Constants.UI.ControlPanel.pauseButtonImage {
             if model.runState == .running(isAnimating: false) {
                 model.runState = .stepping(isAnimating: false)
             } else if model.runState == .running(isAnimating: true) {
@@ -128,9 +78,64 @@ class ControlPanelViewController: UIViewController {
         }
     }
 
-    private func registerObservers() {
+    override func viewDidLoad() {
+        initSlider()
+        registerObservers()
+    }
+
+    private func initSlider() {
+        speedSlider.value = 0.0
+    }
+
+}
+
+// MARK -- Event Handling
+extension ControlPanelViewController {
+
+    fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
+    }
+
+    // Updates whether the buttons are enabled.
+    private func updateButtons(stopButtonIsEnabled: Bool, stepBackButtonIsEnabled: Bool,
+                               playPauseButtonIsEnabled: Bool, stepForwardButtonIsEnabled: Bool) {
+        stopButton.isEnabled = stopButtonIsEnabled
+        stepBackButton.isEnabled = stepBackButtonIsEnabled
+        playPauseButton.isEnabled = playPauseButtonIsEnabled
+        stepForwardButton.isEnabled = stepForwardButtonIsEnabled
+    }
+
+    // Updates whether the buttons are enabled depending on the `model.runState`.
+    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
+        switch model.runState {
+        case .running:
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
+                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+            playPauseButton.setImage(Constants.UI.ControlPanel.pauseButtonImage, for: .normal)
+        case .paused:
+            let stepBackButtonIsEnabled = !logic.canUndo
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
+                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+            playPauseButton.setImage(Constants.UI.ControlPanel.playButtonImage, for: .normal)
+        case .lost:
+            let stepBackButtonIsEnabled = !logic.canUndo
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: stepBackButtonIsEnabled,
+                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+            playPauseButton.setImage(Constants.UI.ControlPanel.playButtonImage, for: .normal)
+        case .won:
+            updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
+                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+            playPauseButton.setImage(Constants.UI.ControlPanel.playButtonImage, for: .normal)
+        case .stepping:
+            updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: false,
+                          playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+            playPauseButton.setImage(Constants.UI.ControlPanel.playButtonImage, for: .normal)
+        case .start:
+            updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
+                          playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
+            playPauseButton.setImage(Constants.UI.ControlPanel.playButtonImage, for: .normal)
+        }
     }
 }

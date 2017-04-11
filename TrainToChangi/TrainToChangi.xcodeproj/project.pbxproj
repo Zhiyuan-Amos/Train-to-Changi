@@ -22,6 +22,12 @@
 		3B1680511E778A2D002286F6 /* LevelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680501E778A2D002286F6 /* LevelState.swift */; };
 		3B1680531E77D6F7002286F6 /* RunState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1680521E77D6F7002286F6 /* RunState.swift */; };
 		3B1E83A21E9B8813007E4670 /* LoadProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1E83A11E9B8813007E4670 /* LoadProgramViewController.swift */; };
+		3B3B4E981E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */; };
+		3B3B4E9A1E9CEEB300DCF9E7 /* MapSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */; };
+		3B3B4E9C1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */; };
+		3B3B4E9E1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9D1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift */; };
+		3B3B4EA01E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */; };
+		3B3B4EA21E9CF69F00DCF9E7 /* SaveProgramDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */; };
 		3B5D5A481E9A91F9001BC438 /* LevelDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */; };
 		3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */; };
 		3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */; };
@@ -129,6 +135,12 @@
 		3B1680501E778A2D002286F6 /* LevelState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelState.swift; sourceTree = "<group>"; };
 		3B1680521E77D6F7002286F6 /* RunState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunState.swift; sourceTree = "<group>"; };
 		3B1E83A11E9B8813007E4670 /* LoadProgramViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadProgramViewController.swift; sourceTree = "<group>"; };
+		3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewControllerDelegate.swift; sourceTree = "<group>"; };
+		3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSceneDelegate.swift; sourceTree = "<group>"; };
+		3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationLevelNodeDelegate.swift; sourceTree = "<group>"; };
+		3B3B4E9D1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewCommandDelegate.swift; sourceTree = "<group>"; };
+		3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberUpdateDelegate.swift; sourceTree = "<group>"; };
+		3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveProgramDelegate.swift; sourceTree = "<group>"; };
 		3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDescriptionViewController.swift; sourceTree = "<group>"; };
 		3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGameViewController.swift; sourceTree = "<group>"; };
 		3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +312,7 @@
 		3B16804D1E778785002286F6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				3B3B4EA41E9CF7C100DCF9E7 /* Delegates */,
 				3B78A68A1E90CD1100A652D9 /* Sprites */,
 				3B78A6881E90CCC100A652D9 /* Scene */,
 				76745B721E88598D0039A771 /* ViewControllers */,
@@ -308,6 +321,20 @@
 				3B6D98551E8904DF0026872B /* Helpers */,
 			);
 			name = UI;
+			sourceTree = "<group>";
+		};
+		3B3B4EA41E9CF7C100DCF9E7 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */,
+				3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */,
+				3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */,
+				3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */,
+				3B3B4E9D1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift */,
+				3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */,
+				3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 		3B6D98551E8904DF0026872B /* Helpers */ = {
@@ -785,7 +812,9 @@
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
 				3B6D98591E89129C0026872B /* UIEntityDrawer.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,
+				3B3B4E981E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift in Sources */,
 				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
+				3B3B4E9A1E9CEEB300DCF9E7 /* MapSceneDelegate.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
 				3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */,
 				A7D1634A1E90CC9D0073EC46 /* GameLevelsData.swift in Sources */,
@@ -813,12 +842,14 @@
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */,
 				A7357FB01E9C92BF00348CD3 /* LoadProgramHeaderView.swift in Sources */,
+				3B3B4E9E1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
 				A70192441E9517520058D7CD /* CommandDataListInfo+.swift in Sources */,
 				D77D3EBD1E9B899C004E5AA9 /* AchievementCell.swift in Sources */,
 				A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */,
+				3B3B4EA21E9CF69F00DCF9E7 /* SaveProgramDelegate.swift in Sources */,
 				D7430DE91E88D9F900B84F14 /* GameLogic.swift in Sources */,
 				D7C22B551E9523A200A55324 /* JumpTarget.swift in Sources */,
 				D7A267D71E7796C300DE5774 /* CopyToCommand.swift in Sources */,
@@ -826,8 +857,10 @@
 				3B05F91F1E94FFBF009B4F5F /* SpeechBubbleSprite.swift in Sources */,
 				A7AB9DE11E9A45DA00989F58 /* AchievementsEnum.swift in Sources */,
 				76745B741E885A030039A771 /* MapViewController.swift in Sources */,
+				3B3B4E9C1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift in Sources */,
 				3B1680511E778A2D002286F6 /* LevelState.swift in Sources */,
 				3B1E83A21E9B8813007E4670 /* LoadProgramViewController.swift in Sources */,
+				3B3B4EA01E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
 				D77D3EBF1E9B91B7004E5AA9 /* TableViewExtensions.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,

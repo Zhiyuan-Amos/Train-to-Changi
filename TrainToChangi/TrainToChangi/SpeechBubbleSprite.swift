@@ -22,7 +22,7 @@ class SpeechBubbleSprite: SKSpriteNode {
     }
 
     fileprivate func addLabelNodes(longText: String) {
-        let textArr = longText.characters.split{$0 == " "}.map(String.init)
+        let textArr = longText.characters.split{ $0 == " " }.map(String.init)
 
         var text = ""
         var labelNodeIndex = 0
@@ -36,7 +36,7 @@ class SpeechBubbleSprite: SKSpriteNode {
                 labelNodeIndex += 1
             }
         }
-        if (text.characters.count > 1) {
+        if text.characters.count > 1 {
             self.addChild(makeLabelNode(text: text, labelNodeIndex: labelNodeIndex))
         }
     }
@@ -67,7 +67,7 @@ extension SpeechBubbleSprite {
 
     @objc fileprivate func handleToggleSpeech(notification: Notification) {
         self.removeAllChildren()
-        addLabelNodes(longText: "Siao liao lah. Train breakdown again.")
+        addLabelNodes(longText: Constants.SpeechBubble.speechDefault)
         self.isHidden = !self.isHidden
     }
 
@@ -81,13 +81,13 @@ extension SpeechBubbleSprite {
             switch error {
             case .invalidOperation:
                 self.removeAllChildren()
-                addLabelNodes(longText: "You are not allowed to execute this command!")
+                addLabelNodes(longText: Constants.SpeechBubble.speechInvalidOperation)
             case .wrongOutboxValue:
                 self.removeAllChildren()
-                addLabelNodes(longText: "The output is incorrect!")
+                addLabelNodes(longText: Constants.SpeechBubble.speechWrongOutput)
             case .incompleteOutboxValues:
                 self.removeAllChildren()
-                addLabelNodes(longText: "There should be more values!")
+                addLabelNodes(longText: Constants.SpeechBubble.speechIncompleteOutput)
             }
             isHidden = false
         default:

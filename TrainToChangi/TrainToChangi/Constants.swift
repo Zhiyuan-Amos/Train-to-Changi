@@ -110,10 +110,15 @@ struct Constants {
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 14
         static let fontColor = UIColor.black
-        static let labelHeight: CGFloat = 15;
+        static let labelHeight: CGFloat = 15
         static let maxCharactersInLine = 25
 
         static let texture = SKTexture(imageNamed: "speech")
+
+        static let speechDefault = "Siao liao lah. Train breakdown again."
+        static let speechInvalidOperation = "You are not allowed to execute this command!"
+        static let speechWrongOutput = "The output is incorrect!"
+        static let speechIncompleteOutput = "There should be more values!"
     }
 
     struct Map {
@@ -188,6 +193,17 @@ struct Constants {
 
         static let programCounterOffsetX: CGFloat = 10
 
+        struct Music {
+            static let noMusicImage = UIImage(named: "nomusic")
+            static let musicImage = UIImage(named: "music")
+        }
+
+        struct ControlPanel {
+            static let playButtonImage = UIImage(named: "playbutton")
+            static let pauseButtonImage = UIImage(named: "pausebutton")
+        }
+
+
         struct Snapshot {
             static let cornerRadius: CGFloat = 0.0
             static let shadowOffset = CGSize(width: -5.0, height: 0.0)
@@ -223,12 +239,10 @@ struct Constants {
             static let commandCellLeftPadding: CGFloat = 20
         }
 
-        struct Duration {
-            static let swipeAnimationDuration = 0.25
-            static let dragAnimationDuration = 0.25
-            static let toggleAvailableCommandsDuration = 0.25
+        struct Delay {
             static let userSelectedIndexNotificationDelay = 200
             static let endGameScreenDisplayDelay = 2
+            static let longPressDuration = 0.2
         }
 
         struct LineNumber {
@@ -270,6 +284,16 @@ struct Constants {
     }
 
     struct Animation {
+        static let titleAnimationDuration = 2.0
+        static let titleVerticalDisplacement: CGFloat = 15
+
+        static let landingTrainMotionDuration = 5.0
+        static let landingTrainHorizontalDisplacement: CGFloat = 1500.0
+
+        static let swipeAnimationDuration = 0.25
+        static let dragAnimationDuration = 0.25
+        static let toggleAvailableCommandsDuration = 0.25
+
         static let moveToConveyorBeltDuration = 0.33
         static let moveToMemoryDuration = 0.17
 
@@ -301,6 +325,8 @@ struct Constants {
 
         static let defaultSpeed: CGFloat = 0.33
         static let speedRange: CGFloat = 1 - defaultSpeed
+
+        static let gameTrainAnimationDuration = 1.5
     }
 
     struct Audio {

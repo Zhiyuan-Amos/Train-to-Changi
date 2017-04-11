@@ -65,31 +65,6 @@ class LineNumberViewController: UIViewController {
 extension LineNumberViewController {
     fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
-            self, selector: #selector(handleDeleteCommand(notification:)),
-            name: Constants.NotificationNames.userDeleteCommandEvent,
-            object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleAddCommand(notification:)),
-            name: Constants.NotificationNames.userAddCommandEvent,
-            object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleAddCommand(notification:)),
-            name: Constants.NotificationNames.userLoadCommandEvent,
-            object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleResetCommand(notification:)),
-            name: Constants.NotificationNames.userResetCommandEvent,
-            object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleScroll(notification:)),
-            name: Constants.NotificationNames.userScrollEvent,
-            object: nil)
-
-        NotificationCenter.default.addObserver(
             self, selector: #selector(handleProgramCounterUpdate(notification:)),
             name: Constants.NotificationNames.moveProgramCounter,
             object: nil)
@@ -105,37 +80,6 @@ extension LineNumberViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleAnimationEnd(notification:)),
             name: Constants.NotificationNames.animationEnded, object: nil)
-    }
-
-    @objc private func handleAddCommand(notification: Notification) {
-        lineNumberCollection.reloadData()
-
-        let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
-        lineNumberCollection.scrollToItem(at: lastIndexPath,
-                                          at: UICollectionViewScrollPosition.top,
-                                          animated: true)
-    }
-
-    @objc private func handleDeleteCommand(notification: Notification) {
-        lineNumberCollection.reloadData()
-    }
-
-    @objc private func handleLoadCommand(notification: Notification) {
-        lineNumberCollection.reloadData()
-    }
-
-    @objc private func handleResetCommand(notification: Notification) {
-        lineNumberCollection.reloadData()
-        programCounter.isHidden = true
-    }
-
-    @objc private func handleScroll(notification: Notification) {
-        guard let offset = notification.object as? CGPoint else {
-            fatalError("Scroll event object should be CGPoint")
-        }
-        var contentOffset = lineNumberCollection.contentOffset
-        contentOffset.y = offset.y
-        lineNumberCollection.setContentOffset(contentOffset, animated: false)
     }
 
     // Updates the position of the program counter image depending on which
@@ -184,5 +128,18 @@ extension LineNumberViewController {
         default:
             break
         }
+    }
+}
+
+extension LineNumberViewController: LineNumberUpdateDelegate {
+    func updateLineNumbers() {
+        lineNumberCollection.reloadData()
+        programCounter.isHidden = true
+    }
+
+    func scrollToCommand(offset: CGPoint) {
+        var contentOffset = lineNumberCollection.contentOffset
+        contentOffset.y = offset.y
+        lineNumberCollection.setContentOffset(contentOffset, animated: false)
     }
 }

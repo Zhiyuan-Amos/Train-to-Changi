@@ -18,6 +18,23 @@ class GameViewController: UIViewController {
     fileprivate var logic: Logic!
     fileprivate var scene: GameScene!
 
+    @IBAction func musicButtonPressed(_ sender: UIButton) {
+        AudioPlayer.sharedInstance.toggleBackgroundMusic()
+        if AudioPlayer.sharedInstance.isMute() {
+            musicButton.setBackgroundImage(Constants.UI.Music.noMusicImage,
+                                           for: UIControlState.normal)
+        } else {
+            musicButton.setBackgroundImage(Constants.UI.Music.musicImage,
+                                           for: UIControlState.normal)
+        }
+    }
+
+    @IBAction func exitButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: {
+            AudioPlayer.sharedInstance.stopBackgroundMusic()
+        })
+    }
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -43,23 +60,6 @@ class GameViewController: UIViewController {
         }
     }
 
-    @IBAction func musicButtonPressed(_ sender: UIButton) {
-        AudioPlayer.sharedInstance.toggleBackgroundMusic()
-        if AudioPlayer.sharedInstance.isMute() {
-            musicButton.setBackgroundImage(UIImage(named: "nomusic"),
-                                           for: UIControlState.normal)
-        } else {
-            musicButton.setBackgroundImage(UIImage(named: "music"),
-                                           for: UIControlState.normal)
-        }
-    }
-
-    @IBAction func exitButtonPressed(_ sender: UIButton) {
-        dismiss(animated: true, completion: {
-            AudioPlayer.sharedInstance.stopBackgroundMusic()
-        })
-    }
-
     private func animateTrain() {
         var trainFrames = [UIImage]()
         for index in 0...Constants.UI.trainView.numTrainFrames {
@@ -67,7 +67,7 @@ class GameViewController: UIViewController {
             trainFrames.append(frame)
         }
         trainUIImage.animationImages = trainFrames
-        trainUIImage.animationDuration = 1.5
+        trainUIImage.animationDuration = Constants.Animation.gameTrainAnimationDuration
         trainUIImage.startAnimating()
     }
 
@@ -129,9 +129,10 @@ extension GameViewController {
         } else if model.runState == .won {
             animateTrainWhenGameWon()
             scene.playJediGameWonAnimation()
+
             let controller = self.initEndGameScreen()
             AchievementsManager.sharedInstance.updateAchievements(model: self.model)
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Duration.endGameScreenDisplayDelay), execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Delay.endGameScreenDisplayDelay), execute: {
                 self.present(controller, animated: true, completion: nil)
             })
         }

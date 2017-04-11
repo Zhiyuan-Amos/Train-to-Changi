@@ -11,10 +11,6 @@ import SpriteKit
 import GameplayKit
 import FirebaseAuth
 
-protocol MapViewControllerDelegate: class {
-    func initLevel(name: String?)
-}
-
 // View controller of the level map.
 
 // Note that the view under MapViewControllerScene in 

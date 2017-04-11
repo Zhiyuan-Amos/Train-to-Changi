@@ -12,11 +12,15 @@ import Foundation
 class EditorViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
+
     weak var resetGameDelegate: ResetGameDelegate!
     weak var dataServiceLoadProgramDelegate: DataServiceLoadProgramDelegate!
     weak var saveProgramDelegate: SaveProgramDelegate!
-    
+    weak var addCommandDelegate: AddNewCommandDelegate!
+
     var model: Model!
+    private var dragDropVC: DragDropViewController?
+    private var lineNumberVC: LineNumberViewController?
 
     @IBOutlet weak var descriptionButton: UIButton!
     @IBOutlet weak var editorButton: UIButton!
@@ -34,6 +38,7 @@ class EditorViewController: UIViewController {
         resetGameDelegate.tryResetGame()
         presentEditorView()
     }
+
 
     @IBAction func loadButtonPressed(_ sender: UIButton) {
         let identifier = Constants.UI.loadProgramViewControllerIdentifier
@@ -56,11 +61,7 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func descriptionButtonPressed(_ sender: UIButton) {
-        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
-        editorButton.backgroundColor = nil
-        descriptionView.isHidden = false
-        lineNumberView.isHidden = true
-        dragDropView.isHidden = true
+        presentDescriptionView()
     }
 
     @IBAction func editorButtonPressed(_ sender: UIButton) {
@@ -80,18 +81,34 @@ class EditorViewController: UIViewController {
             saveProgramDelegate = embeddedVC
             embeddedVC.model = self.model
             embeddedVC.resetGameDelegate = resetGameDelegate
+            self.addCommandDelegate = embeddedVC
+            self.dragDropVC = embeddedVC
+
+            if lineNumberVC != nil {
+                embeddedVC.lineNumberUpdateDelegate = lineNumberVC
+            }
         }
         if let embeddedVC = segue.destination as? LineNumberViewController {
             embeddedVC.model = self.model
+            lineNumberVC = embeddedVC
+            dragDropVC?.lineNumberUpdateDelegate = embeddedVC
         }
         if let embeddedVC = segue.destination as? LevelDescriptionViewController {
             embeddedVC.model = self.model
         }
     }
 
+    private func presentDescriptionView() {
+        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
+        editorButton.backgroundColor = nil
+        descriptionView.isHidden = false
+        lineNumberView.isHidden = true
+        dragDropView.isHidden = true
+    }
+
     fileprivate func presentEditorView() {
-        descriptionButton.backgroundColor = nil
         editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
+        descriptionButton.backgroundColor = nil
         descriptionView.isHidden = true
         lineNumberView.isHidden = false
         dragDropView.isHidden = false
@@ -125,10 +142,7 @@ class EditorViewController: UIViewController {
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
-
-        NotificationCenter.default.post(name: Constants.NotificationNames.userAddCommandEvent,
-                                        object: command,
-                                        userInfo: nil)
+        addCommandDelegate.addNewCommand(command: command)
         presentEditorView()
     }
 
@@ -138,6 +152,7 @@ class EditorViewController: UIViewController {
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         return controller
+
     }
 }
 

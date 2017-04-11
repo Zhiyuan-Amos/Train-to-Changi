@@ -8,16 +8,24 @@
 
 import UIKit
 
+// Bundle class that encapsulates drag and drop information.
+class DragBundle {
+    var cellSnapshot: UIView?
+    var initialIndexPath: IndexPath?
+}
+
 class DragDropViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
     fileprivate typealias Animator = AnimationHelper
 
     weak var model: Model!
+    weak var lineNumberUpdateDelegate: LineNumberUpdateDelegate!
     weak var resetGameDelegate: ResetGameDelegate!
 
     fileprivate var jumpArrows = [ArrowView]()
     fileprivate var updatingCellIndexPath: IndexPath?
+    fileprivate var dragBundle = DragBundle()
 
     @IBOutlet weak var currentCommandsView: UICollectionView!
 
@@ -48,11 +56,8 @@ class DragDropViewController: UIViewController {
         _ = model.removeCommand(fromIndex: indexPath.item)
         currentCommandsView.reloadData()
         renderJumpArrows()
-        NotificationCenter.default.post(name: Constants.NotificationNames.userDeleteCommandEvent,
-                                        object: nil,
-                                        userInfo: nil)
+        lineNumberUpdateDelegate.updateLineNumbers()
     }
-
 }
 
 // MARK - DataServiceLoadProgramDelegate
@@ -61,13 +66,7 @@ extension DragDropViewController: DataServiceLoadProgramDelegate {
         model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
         currentCommandsView.reloadData()
         renderJumpArrows()
-        print("HELLO")
-        currentCommandsView.scrollToItem(at: IndexPath(item: 0, section: 0),
-                                         at: UICollectionViewScrollPosition.top,
-                                         animated: false)
-        NotificationCenter.default.post(name: Constants.NotificationNames.userLoadCommandEvent,
-                                        object: nil,
-                                        userInfo: nil)
+        lineNumberUpdateDelegate.updateLineNumbers()
     }
 }
 
@@ -89,7 +88,7 @@ extension DragDropViewController {
 
     fileprivate func addGestureRecognisers() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-        longPressGesture.minimumPressDuration = 0.2
+        longPressGesture.minimumPressDuration = Constants.UI.Delay.longPressDuration
         currentCommandsView.addGestureRecognizer(longPressGesture)
 
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
@@ -177,14 +176,13 @@ extension DragDropViewController {
             }
 
             initDragBundleAtGestureBegan(indexPath: indexPath, cell: cell)
-            currentCommandsView.addSubview(DragBundle.cellSnapshot!)
-            Animator.dragBeganAnimation(location: location, cell: cell)
+            currentCommandsView.addSubview(dragBundle.cellSnapshot!)
+            Animator.dragBeganAnimation(location: location, cell: cell, dragBundle: dragBundle)
 
         case .changed:
-            DragBundle.cellSnapshot?.center.y = location.y
+            dragBundle.cellSnapshot?.center.y = location.y
             guard let indexPath = currentCommandsView.indexPathForItem(at: location),
-                  let initialIndexPath = DragBundle.initialIndexPath,
-                  let _ = currentCommandsView.cellForItem(at: indexPath),
+                  let initialIndexPath = dragBundle.initialIndexPath,
                   indexPath !=  initialIndexPath else {
                     return
             }
@@ -192,32 +190,30 @@ extension DragDropViewController {
             model.moveCommand(fromIndex: initialIndexPath.item, toIndex: indexPath.item)
 
             renderJumpArrows()
-            DragBundle.initialIndexPath = indexPath
+            dragBundle.initialIndexPath = indexPath
 
         default:
-            guard let indexPath = DragBundle.initialIndexPath,
+            guard let indexPath = dragBundle.initialIndexPath,
                   let cell = currentCommandsView.cellForItem(at: indexPath) else {
                     break
             }
             cell.isHidden = false
             cell.alpha = 0.0
-            Animator.dragEndedAnimation(cell: cell)
+            Animator.dragEndedAnimation(cell: cell, dragBundle: dragBundle)
         }
         resetGameDelegate.tryResetGame()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = currentCommandsView.contentOffset
-        NotificationCenter.default.post(name: Constants.NotificationNames.userScrollEvent,
-                                        object: offset,
-                                        userInfo: nil)
+        lineNumberUpdateDelegate.scrollToCommand(offset: offset)
     }
 
     private func initDragBundleAtGestureBegan(indexPath: IndexPath, cell: UICollectionViewCell) {
-        DragBundle.initialIndexPath = indexPath
-        DragBundle.cellSnapshot = Drawer.snapshotOfCell(inputView: cell)
-        DragBundle.cellSnapshot?.center = cell.center
-        DragBundle.cellSnapshot?.alpha = 0.0
+        dragBundle.initialIndexPath = indexPath
+        dragBundle.cellSnapshot = Drawer.snapshotOfCell(inputView: cell)
+        dragBundle.cellSnapshot?.center = cell.center
+        dragBundle.cellSnapshot?.alpha = 0.0
     }
 }
 
@@ -277,11 +273,6 @@ extension DragDropViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated,
-            object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleAddCommand(notification:)),
-            name: Constants.NotificationNames.userAddCommandEvent,
             object: nil)
 
         NotificationCenter.default.addObserver(
@@ -356,13 +347,12 @@ extension DragDropViewController {
         model.clearAllCommands()
         removeAllJumpArrows()
         currentCommandsView.reloadData()
+        lineNumberUpdateDelegate.updateLineNumbers()
     }
+}
 
-    @objc fileprivate func handleAddCommand(notification: Notification) {
-        guard let command = notification.object as? CommandData else {
-            fatalError("Notification Data is not of type CommandData")
-        }
-
+extension DragDropViewController: AddNewCommandDelegate {
+    func addNewCommand(command: CommandData) {
         let penultimateIndexPath = IndexPath(item: model.userEnteredCommands.count - 2, section: 0)
         let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
 
@@ -375,10 +365,6 @@ extension DragDropViewController {
         currentCommandsView.scrollToItem(at: lastIndexPath,
                                          at: UICollectionViewScrollPosition.top,
                                          animated: true)
+        lineNumberUpdateDelegate.updateLineNumbers()
     }
-}
-
-class DragBundle {
-    static var cellSnapshot: UIView?
-    static var initialIndexPath: IndexPath?
 }
