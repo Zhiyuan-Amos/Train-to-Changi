@@ -560,7 +560,6 @@
                                     <color key="titleColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="cancelButtonPressed:" destination="nw3-HM-EM4" eventType="touchUpInside" id="p3O-Gf-D4M"/>
                                     <action selector="confirmButtonPressed:" destination="nw3-HM-EM4" eventType="touchUpInside" id="P0t-fC-PvW"/>
                                 </connections>
                             </button>

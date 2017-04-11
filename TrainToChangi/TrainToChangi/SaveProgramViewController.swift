@@ -19,20 +19,32 @@ class SaveProgramViewController: UIViewController {
 
     @IBAction func confirmButtonPressed(_ sender: UIButton) {
         guard let saveProgramDelegate = saveProgramDelegate else {
+            fatalError("Delegate not set up!")
             return
         }
 
-        // TODO: validate entry
-        guard let saveName = textInput.text else {
+        guard let saveName = textInput.text,
+            isUserInputSaveNameValid(userInput: saveName) else {
+            // UI show feedback to user that saving is not successful.
             return
         }
 
         saveProgramDelegate.saveProgram(saveName: saveName)
-
         dismiss(animated: true)
     }
 
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
         dismiss(animated: true)
+    }
+
+    // Checks if `userInput` for a level name is valid.
+    // A valid input is one that contains more than one
+    // non-whitespace character, and is within characterCountLimit.
+    private func isUserInputSaveNameValid(userInput: String) -> Bool {
+        let hasAtLeastOneNonWhitespaceCharacter =
+            userInput.trimmingCharacters(in: .whitespaces) != ""
+        let isWithinCharacterCountLimit =
+            userInput.characters.count <= 30
+        return hasAtLeastOneNonWhitespaceCharacter && isWithinCharacterCountLimit
     }
 }
