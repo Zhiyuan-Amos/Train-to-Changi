@@ -7,6 +7,7 @@
 //
 
 import FirebaseAuth
+import GoogleSignIn
 
 class AuthService {
     private static let _instance = AuthService()
@@ -32,6 +33,10 @@ class AuthService {
                 return
             }
             DataService.instance.saveUser(userId: user.uid)
+            guard let controller = GIDSignIn.sharedInstance().uiDelegate as? LoginViewController else {
+                fatalError("Controller not set up properly")
+            }
+            controller.dismiss(animated: true, completion: nil)
         })
     }
 

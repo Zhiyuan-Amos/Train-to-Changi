@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+import GoogleSignIn
 
 class LandingViewController: UIViewController {
 
@@ -27,6 +28,18 @@ class LandingViewController: UIViewController {
             return
         }
         DataService.instance.preloadUserAddedCommands(userId: userId)
+    }
+
+    @IBAction func signOutButtonPressed(_ sender: UIButton) {
+        do {
+            try FIRAuth.auth()?.signOut()
+            GIDSignIn.sharedInstance().signOut()
+
+            performSegue(withIdentifier: "login", sender: nil)
+            return
+        } catch let signOutError as NSError {
+            print ("Error signing out: \(signOutError)")
+        }
     }
 
     @IBAction func cancelFromLevelSelection(segue: UIStoryboardSegue) {
