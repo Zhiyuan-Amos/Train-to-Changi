@@ -36,10 +36,12 @@ class SpeechBubbleSprite: SKSpriteNode {
                 labelNodeIndex += 1
             }
         }
-        self.addChild(makeLabelNode(text: text, labelNodeIndex: labelNodeIndex))
+        if (token.characters.count > 1) {
+            self.addChild(makeLabelNode(text: text, labelNodeIndex: labelNodeIndex))
+        }
     }
 
-    fileprivate func makeLabelNode(text: String, labelNodeIndex: Int) -> SKLabelNode {
+    private func makeLabelNode(text: String, labelNodeIndex: Int) -> SKLabelNode {
         let label = SKLabelNode(text: text)
         label.fontName = Constants.SpeechBubble.fontName
         label.fontSize = Constants.SpeechBubble.fontSize
