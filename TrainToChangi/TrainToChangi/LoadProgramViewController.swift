@@ -11,14 +11,15 @@ import UIKit
 class LoadProgramViewController: UIViewController {
     @IBOutlet weak var programCollectionView: UICollectionView!
     fileprivate var savedProgramNames: [[String]] = []
+    var loadProgramDelegate: DataServiceLoadProgramDelegate?
 
     override func viewDidLoad() {
         programCollectionView.delegate = self
         programCollectionView.dataSource = self
         guard let userId = AuthService.instance.currentUserId else {
-            fatalError("bug")
+            fatalError("User must be logged in!")
         }
-        DataService.instance.loadUserAddedCommands(userId: userId, loadSavedProgramNamesDelegate: self)
+        DataService.instance.loadSavedProgramNames(userId: userId, loadSavedProgramNamesDelegate: self)
     }
 
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
@@ -64,7 +65,20 @@ extension LoadProgramViewController: UICollectionViewDataSource {
 
 extension LoadProgramViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Cell selected at \(indexPath)")
+        // load the appropriate thing, reloadData, dismiss view
+        let levelIndex = indexPath.section
+        let saveName = savedProgramNames[levelIndex][indexPath.row]
+        guard let userId = AuthService.instance.currentUserId else {
+            fatalError("User must be logged in!")
+        }
+        guard let loadProgramDelegate = loadProgramDelegate else {
+            fatalError("Delegate not set up!")
+        }
+        DataService.instance.loadSavedUserProgram(userId: userId,
+                                                  levelIndex: levelIndex,
+                                                  saveName: saveName,
+                                                  loadProgramDelegate: loadProgramDelegate)
+        dismiss(animated: true)
     }
 
     func collectionView(_ collectionView: UICollectionView,

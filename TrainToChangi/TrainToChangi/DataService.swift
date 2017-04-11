@@ -47,9 +47,9 @@ class DataService {
     // Called by AutomaticFirebaseSaver only, eliminates the need to have a saveName
     // that the user will never enter.
     // Also ensures that there is only one automatically saved program for each level.
-    func autoSaveUserAddedCommands(userId: String,
-                                   levelIndex: Int,
-                                   commandDataListInfo: CommandDataListInfo) {
+    func autoSaveUserProgram(userId: String,
+                             levelIndex: Int,
+                             commandDataListInfo: CommandDataListInfo) {
         let commandDataListInfo = commandDataListInfo.toAnyObject()
         let data: [String: AnyObject] = [autoSavedKey: commandDataListInfo]
         let ref = usersRef.child(userId)
@@ -59,10 +59,10 @@ class DataService {
     }
 
     // Called by SaveProgramViewController when the user saves a program.
-    func saveUserAddedCommands(userId: String,
-                               levelIndex: Int,
-                               saveName: String,
-                               commandDataListInfo: CommandDataListInfo) {
+    func saveUserProgram(userId: String,
+                         levelIndex: Int,
+                         saveName: String,
+                         commandDataListInfo: CommandDataListInfo) {
         let commandDataListInfo = commandDataListInfo.toAnyObject()
         let path = "\(userId)/\(commandDataListInfoKey)/\(levelIndex)/\(saveName)"
         usersRef.child(path).setValue(commandDataListInfo)
@@ -70,16 +70,16 @@ class DataService {
 
     // Eliminates the delay in loading user added commands by obtaining a reference
     // to the Firebase database prior.
-    func preloadUserAddedCommands(userId: String) {
+    func preloadUserPrograms(userId: String) {
         let ref = DataService.instance.usersRef.child(userId)
         ref.observeSingleEvent(of: .value, with: { _ in }) { _ in }
     }
 
     // Loads user added commands saved by AutomaticFirebaseSaver.
     // Called at the start of every level view.
-    func loadAutoSavedUserAddedCommands(userId: String,
-                                       levelIndex: Int,
-                                       loadProgramDelegate: DataServiceLoadProgramDelegate) {
+    func loadAutoSavedUserProgram(userId: String,
+                                  levelIndex: Int,
+                                  loadProgramDelegate: DataServiceLoadProgramDelegate) {
         let ref = usersRef.child(userId)
             .child(autoSavedCommandDataListInfoKey)
             .child(String(levelIndex))
@@ -95,10 +95,10 @@ class DataService {
     }
 
     // Loads user added commands saved by user through SaveProgramViewController.
-    func loadUserAddedCommands(userId: String,
-                               levelIndex: Int,
-                               saveName: String,
-                               loadProgramDelegate: DataServiceLoadProgramDelegate) {
+    func loadSavedUserProgram(userId: String,
+                              levelIndex: Int,
+                              saveName: String,
+                              loadProgramDelegate: DataServiceLoadProgramDelegate) {
         let ref = usersRef.child(userId)
                           .child(commandDataListInfoKey)
                           .child(String(levelIndex))
@@ -114,7 +114,7 @@ class DataService {
     }
 
     // Loads a String array of saveName for each levelIndex.
-    func loadUserAddedCommands(userId: String,
+    func loadSavedProgramNames(userId: String,
                                loadSavedProgramNamesDelegate: DataServiceLoadSavedProgramNamesDelegate) {
         let ref = usersRef.child(userId)
                           .child(commandDataListInfoKey)
@@ -129,7 +129,6 @@ class DataService {
                         userAddedCommandsArray.append(saveNameArray)
                     }
                 }
-                print(userAddedCommandsArray)
                 loadSavedProgramNamesDelegate.load(savedProgramNames: userAddedCommandsArray)
             }
         }) { (error) in

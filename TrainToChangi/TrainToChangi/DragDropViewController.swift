@@ -39,9 +39,9 @@ class DragDropViewController: UIViewController {
         guard let userId = AuthService.instance.currentUserId else {
             fatalError("Must be logged in")
         }
-        DataService.instance.loadAutoSavedUserAddedCommands(userId: userId,
-                                                            levelIndex: model.currentLevelIndex,
-                                                            loadProgramDelegate: self)
+        DataService.instance.loadAutoSavedUserProgram(userId: userId,
+                                                      levelIndex: model.currentLevelIndex,
+                                                      loadProgramDelegate: self)
     }
 
     fileprivate func deleteCommand(indexPath: IndexPath) {
@@ -54,7 +54,10 @@ class DragDropViewController: UIViewController {
     }
 
     @IBAction func loadButtonPressed(_ sender: UIButton) {
-        let loadProgramController = loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier)
+        guard let loadProgramController = loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier) as? LoadProgramViewController else {
+            fatalError("Wrong controller loaded.")
+        }
+        loadProgramController.loadProgramDelegate = self
         self.present(loadProgramController, animated: true, completion: nil)
     }
 
@@ -93,10 +96,10 @@ extension DragDropViewController: SaveProgramDelegate {
         guard let userId = AuthService.instance.currentUserId else {
             fatalError("User must be logged in!")
         }
-        DataService.instance.saveUserAddedCommands(userId: userId,
-                                                   levelIndex: model.currentLevelIndex,
-                                                   saveName: saveName,
-                                                   commandDataListInfo: model.getCommandDataListInfo())
+        DataService.instance.saveUserProgram(userId: userId,
+                                             levelIndex: model.currentLevelIndex,
+                                             saveName: saveName,
+                                             commandDataListInfo: model.getCommandDataListInfo())
     }
 }
 

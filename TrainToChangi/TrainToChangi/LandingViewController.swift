@@ -26,7 +26,7 @@ class LandingViewController: UIViewController {
         guard let userId = AuthService.instance.currentUserId else {
             return
         }
-        DataService.instance.preloadUserAddedCommands(userId: userId)
+        DataService.instance.preloadUserPrograms(userId: userId)
     }
 
     @IBAction func cancelFromLevelSelection(segue: UIStoryboardSegue) {

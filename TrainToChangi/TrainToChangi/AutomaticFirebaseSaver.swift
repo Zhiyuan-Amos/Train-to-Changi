@@ -33,9 +33,9 @@ class AutomaticFirebaseSaver {
             fatalError("User not logged in.")
         }
 
-        DataService.instance.autoSaveUserAddedCommands(userId: userId,
-                                                       levelIndex: levelIndex,
-                                                       commandDataListInfo: commandDataListInfo)
+        DataService.instance.autoSaveUserProgram(userId: userId,
+                                                 levelIndex: levelIndex,
+                                                 commandDataListInfo: commandDataListInfo)
     }
 
 }

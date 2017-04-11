@@ -69,6 +69,7 @@ class ModelManager: Model {
 
     func loadCommandDataListInfo(commandDataListInfo: CommandDataListInfo) {
         _userEnteredCommands = CommandDataLinkedList(commandDataListInfo: commandDataListInfo)
+        postCommandDataListUpdateNotification()
     }
 
     var currentInputs: [Int] {
