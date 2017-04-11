@@ -54,7 +54,8 @@ class DragDropViewController: UIViewController {
     }
 
     @IBAction func loadButtonPressed(_ sender: UIButton) {
-        guard let loadProgramController = loadModalViewControllers(identifier: Constants.UI.loadProgramViewControllerIdentifier) as? LoadProgramViewController else {
+        let identifier = Constants.UI.loadProgramViewControllerIdentifier
+        guard let loadProgramController = loadModalViewControllers(identifier: identifier) as? LoadProgramViewController else {
             fatalError("Wrong controller loaded.")
         }
         loadProgramController.loadProgramDelegate = self
@@ -62,7 +63,8 @@ class DragDropViewController: UIViewController {
     }
 
     @IBAction func saveButtonPressed(_ sender: UIButton) {
-        guard let saveProgramController = loadModalViewControllers(identifier: Constants.UI.saveProgramViewControllerIdentifier) as? SaveProgramViewController else {
+        let identifier = Constants.UI.saveProgramViewControllerIdentifier
+        guard let saveProgramController = loadModalViewControllers(identifier: identifier) as? SaveProgramViewController else {
             fatalError("Wrong controller loaded.")
         }
         saveProgramController.saveProgramDelegate = self
@@ -80,7 +82,6 @@ class DragDropViewController: UIViewController {
 }
 
 // MARK - DataServiceLoadProgramDelegate
-
 extension DragDropViewController: DataServiceLoadProgramDelegate {
     func load(commandDataListInfo: CommandDataListInfo) {
         model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
@@ -90,7 +91,6 @@ extension DragDropViewController: DataServiceLoadProgramDelegate {
 }
 
 // MARK - SaveProgramDelegate
-
 extension DragDropViewController: SaveProgramDelegate {
     func saveProgram(saveName: String) {
         guard let userId = AuthService.instance.currentUserId else {

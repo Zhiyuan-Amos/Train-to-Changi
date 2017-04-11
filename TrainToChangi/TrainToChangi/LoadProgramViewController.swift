@@ -9,13 +9,16 @@
 import UIKit
 
 class LoadProgramViewController: UIViewController {
+
     @IBOutlet weak var programCollectionView: UICollectionView!
+
     fileprivate var savedProgramNames: [[String]] = []
-    var loadProgramDelegate: DataServiceLoadProgramDelegate?
+    weak var loadProgramDelegate: DataServiceLoadProgramDelegate?
 
     override func viewDidLoad() {
         programCollectionView.delegate = self
         programCollectionView.dataSource = self
+
         guard let userId = AuthService.instance.currentUserId else {
             fatalError("User must be logged in!")
         }
@@ -26,8 +29,6 @@ class LoadProgramViewController: UIViewController {
         dismiss(animated: true)
     }
 
-    //TODO - on tap on collection cell, use delegate!!! Not notifications
-    // do not abuse notifications please
 }
 
 extension LoadProgramViewController: DataServiceLoadSavedProgramNamesDelegate {
@@ -38,7 +39,6 @@ extension LoadProgramViewController: DataServiceLoadSavedProgramNamesDelegate {
 }
 
 // MARK - Extension UICollectionViewDataSource
-
 extension LoadProgramViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return savedProgramNames.count
@@ -48,20 +48,25 @@ extension LoadProgramViewController: UICollectionViewDataSource {
         return savedProgramNames[section].count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("Cell dequeued")
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "programCell",
             for: indexPath as IndexPath) as? ProgramCell else {
                 fatalError("Cell not assigned the proper view subclass!")
         }
+
         let savedName = savedProgramNames[indexPath.section][indexPath.row]
         cell.setProgramCellLabel(programName: savedName)
         return cell
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerView", for: indexPath) as? LoadProgramHeaderView else {
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                           withReuseIdentifier: "headerView",
+                                                                           for: indexPath) as? LoadProgramHeaderView else {
             fatalError("Header View not assigned the proper view subclass!")
         }
         let labelText = Constants.StationNames.stationNames[indexPath.section]
@@ -71,7 +76,6 @@ extension LoadProgramViewController: UICollectionViewDataSource {
 }
 
 // MARK - Extension UICollectionViewDelegateFlowLayout
-
 extension LoadProgramViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // load the appropriate thing, reloadData, dismiss view
@@ -93,11 +97,7 @@ extension LoadProgramViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-        let edgeInset = UIEdgeInsets(top: 0,
-                                     left: 0,
-                                     bottom: 0,
-                                     right: 0)
-        return edgeInset
+        return UIEdgeInsets.zero
     }
 
     func collectionView(_ collectionView: UICollectionView,
