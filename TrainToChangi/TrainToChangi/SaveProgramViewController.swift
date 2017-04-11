@@ -17,6 +17,10 @@ class SaveProgramViewController: UIViewController {
     @IBOutlet private var textInput: UITextField!
     var saveProgramDelegate: SaveProgramDelegate?
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     @IBAction func confirmButtonPressed(_ sender: UIButton) {
         guard let saveProgramDelegate = saveProgramDelegate else {
             fatalError("Delegate not set up!")

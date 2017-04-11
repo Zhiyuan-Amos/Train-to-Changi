@@ -9,5 +9,12 @@
 import UIKit
 
 class EndGameViewController: UIViewController {
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
+    @IBAction func returnButtonPressed(_ sender: UIButton) {
+        dismiss(animated: false, completion: nil)
+        presentingViewController!.dismiss(animated: true, completion: nil)
+    }
 }
