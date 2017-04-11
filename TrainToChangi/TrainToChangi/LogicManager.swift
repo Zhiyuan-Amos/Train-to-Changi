@@ -88,6 +88,7 @@ class LogicManager: Logic {
         if case .lost = model.runState {
             return
         }
+        postSceneNotifications(executedCommand)
 
         executedCommands.push(currentIndex!, executedCommand)
 
@@ -107,7 +108,6 @@ class LogicManager: Logic {
             model.runState = .paused
         }
 
-        postSceneNotifications(executedCommand)
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
                                                      object: nil, userInfo: nil))
     }

@@ -17,6 +17,7 @@ class EditorViewController: UIViewController {
 
     @IBOutlet weak var descriptionButton: UIButton!
     @IBOutlet weak var editorButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
 
     @IBOutlet weak var availableCommandsView: UIView!
     @IBOutlet weak var lineNumberView: UIView!
@@ -34,6 +35,7 @@ class EditorViewController: UIViewController {
         NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
                                         object: nil,
                                         userInfo: nil)
+        resetGameDelegate.tryResetGame()
     }
 
     @IBAction func toggleButtonPressed(_ sender: UIButton) {
@@ -58,6 +60,10 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func editorButtonPressed(_ sender: UIButton) {
+        presentEditorView()
+    }
+
+    fileprivate func presentEditorView() {
         descriptionButton.backgroundColor = nil
         editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
         descriptionView.isHidden = true
@@ -98,7 +104,7 @@ class EditorViewController: UIViewController {
             commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
             availableCommandsView.frame.size.height += commandButton.frame.size.height + Constants.UI.minimumLineSpacingForSection
             availableCommandsView.addSubview(commandButton)
-            
+
         }
         availableCommandsView.frame.size.height += Constants.UI.minimumLineSpacingForSection
     }
@@ -125,11 +131,21 @@ extension EditorViewController {
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
         case .running, .won, .stepping:
+            presentEditorView()
+            resetButton.isEnabled = false
+            descriptionButton.isEnabled = false
             availableCommandsView.isUserInteractionEnabled = false
+            availableCommandsView.isHidden = true
         case .paused, .lost:
+            resetButton.isEnabled = true
+            descriptionButton.isEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isHidden = true
         case .start:
+            resetButton.isEnabled = true
+            descriptionButton.isEnabled = true
             availableCommandsView.isUserInteractionEnabled = true
+            availableCommandsView.isHidden = false
         }
     }
 }

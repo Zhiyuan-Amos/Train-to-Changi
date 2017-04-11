@@ -321,6 +321,7 @@
                         <outlet property="dragDropView" destination="efd-43-PUg" id="a9l-mZ-KNT"/>
                         <outlet property="editorButton" destination="NRL-50-J7W" id="xSp-Vs-Dp7"/>
                         <outlet property="lineNumberView" destination="e0O-q7-0jc" id="qp2-Zw-fsb"/>
+                        <outlet property="resetButton" destination="bST-gz-3uu" id="1Ak-Il-Sgn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FuK-8z-h2Q" userLabel="First Responder" sceneMemberID="firstResponder"/>

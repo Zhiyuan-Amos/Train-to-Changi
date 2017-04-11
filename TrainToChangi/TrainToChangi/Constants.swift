@@ -259,29 +259,31 @@ struct Constants {
     }
 
     struct Animation {
-        static let moveToConveyorBeltDuration = 0.67
-        static let moveToMemoryDuration = 0.33
+        static let moveToConveyorBeltDuration = 0.33
+        static let moveToMemoryDuration = 0.17
 
         static let moveConveyorBeltVector = CGVector(dx: -Payload.size.width - Inbox.imagePadding, dy: 0)
-        static let moveConveyorBeltDuration = 0.7
+        static let moveConveyorBeltDuration = 0.35
 
         static let afterInboxStepVector = CGVector(dx: 0, dy: -60)
-        static let afterInboxStepDuration = 0.17
+        static let afterInboxStepDuration = 0.08
 
         static let moveToMemoryOffsetVector = CGVector(dx: 0, dy: 60)
 
-        static let holdingToOutboxDuration = 0.33
-
-        static let holdingValueToMemoryDuration = 0.17
         static let payloadOnToPlayerDuration = 0.17
         static let rotatePlayerDuration = 0.17
+
+        static let holdingToOutboxDuration = 0.17
+
+        static let discardHoldingValueDuration = 0.08
+        static let holdingValueToMemoryDuration = 0.08
 
         static let programCounterMovementDuration = 0.1
 
         static let conveyorBeltFrames = [SKTexture(imageNamed: "conveyor-belt-1"),
                                          SKTexture(imageNamed: "conveyor-belt-2"),
                                          SKTexture(imageNamed: "conveyor-belt-3")]
-        static let conveyorBeltTimePerFrame = 0.017
+        static let conveyorBeltTimePerFrame = 0.008
         static let conveyorBeltAnimationCount = 4
         static let inboxAnimationKey = "inboxMoving"
         static let outboxAnimationKey = "outboxMoving"
