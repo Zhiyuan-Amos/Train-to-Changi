@@ -15,6 +15,10 @@ class LoadProgramViewController: UIViewController {
     fileprivate var savedProgramNames: [[String]] = []
     weak var loadProgramDelegate: DataServiceLoadProgramDelegate?
 
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
     override func viewDidLoad() {
         programCollectionView.delegate = self
         programCollectionView.dataSource = self

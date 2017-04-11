@@ -36,6 +36,7 @@ class EditorViewController: UIViewController {
                                         object: nil,
                                         userInfo: nil)
         resetGameDelegate.tryResetGame()
+        presentEditorView()
     }
 
     @IBAction func toggleButtonPressed(_ sender: UIButton) {
