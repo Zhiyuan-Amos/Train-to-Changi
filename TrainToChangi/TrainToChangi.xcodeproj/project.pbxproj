@@ -43,6 +43,7 @@
 		A70192471E9517520058D7CD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70192421E9517520058D7CD /* LoginViewController.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
+		A7357FB01E9C92BF00348CD3 /* LoadProgramHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7357FAF1E9C92BF00348CD3 /* LoadProgramHeaderView.swift */; };
 		A76693B81E9C3D3E00D2BB44 /* SaveProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */; };
 		A76693BA1E9C4E9A00D2BB44 /* ProgramCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */; };
 		A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */; };
@@ -139,6 +140,7 @@
 		A70192421E9517520058D7CD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
+		A7357FAF1E9C92BF00348CD3 /* LoadProgramHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadProgramHeaderView.swift; sourceTree = "<group>"; };
 		A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveProgramViewController.swift; sourceTree = "<group>"; };
 		A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramCell.swift; sourceTree = "<group>"; };
 		A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListInfo.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 			children = (
 				A712096A1E8189060039B257 /* CommandCell.swift */,
 				3B78A68D1E91545700A652D9 /* LineNumberCell.swift */,
+				A7357FAF1E9C92BF00348CD3 /* LoadProgramHeaderView.swift */,
 				A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */,
 				3B10D8481E9272C300EFCDAC /* ArrowView.swift */,
 			);
@@ -772,6 +775,7 @@
 				D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */,
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */,
+				A7357FB01E9C92BF00348CD3 /* LoadProgramHeaderView.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,

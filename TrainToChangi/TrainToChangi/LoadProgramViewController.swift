@@ -59,6 +59,15 @@ extension LoadProgramViewController: UICollectionViewDataSource {
         cell.setProgramCellLabel(programName: savedName)
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "headerView", for: indexPath) as? LoadProgramHeaderView else {
+            fatalError("Header View not assigned the proper view subclass!")
+        }
+        let labelText = Constants.StationNames.stationNames[indexPath.section]
+        header.setLoadProgramHeaderLabel(labelText: labelText)
+        return header
+    }
 }
 
 // MARK - Extension UICollectionViewDelegateFlowLayout
