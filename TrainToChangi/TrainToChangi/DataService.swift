@@ -24,6 +24,7 @@ class DataService {
     private let commandDataListInfoKey = "commandDataListInfo"
     private let autoSavedCommandDataListInfoKey = "autoSavedCommandDataListInfo"
     private let autoSavedKey = "autoSaved"
+    private let achievementsKey = "achievements"
 
     static var instance: DataService {
         return _instance
@@ -135,4 +136,13 @@ class DataService {
             print(error.localizedDescription)
         }
     }
+
+    // Saves unlocked achievement to database
+    func unlockAchievement(userId: String, achievementString: String) {
+        // Convert achievementString to anyObject
+        let data = [achievementString: true as AnyObject]
+        let path = "\(userId)/\(achievementsKey)"
+        usersRef.child(path).updateChildValues(data)
+    }
+
 }

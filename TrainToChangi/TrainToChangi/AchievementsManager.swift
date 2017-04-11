@@ -25,9 +25,16 @@ class AchievementsManager {
 
     // Call only when game is won.
     func updateAchievements(model: Model) {
+        guard let userId = AuthService.instance.currentUserId else {
+            fatalError("User must be logged in!")
+        }
         for achievement in achievements {
             if achievement.isUnlocked == false && isAchieved(model: model, achievement: achievement) {
                 achievement.isUnlocked = true
+                // Persist to Firebase the unlocking of this achievement
+                let achievementString = achievement.name.rawValue
+                DataService.instance.unlockAchievement(userId: userId,
+                                                       achievementString: achievementString)
                 currentLevelUnlockedAchievements.append(achievement)
             }
         }
