@@ -41,7 +41,7 @@ class DragDropViewController: UIViewController {
         }
         DataService.instance.loadAutoSavedUserAddedCommands(userId: userId,
                                                             levelIndex: model.currentLevelIndex,
-                                                            loadLevelDelegate: self)
+                                                            loadProgramDelegate: self)
     }
 
     fileprivate func deleteCommand(indexPath: IndexPath) {
@@ -76,9 +76,9 @@ class DragDropViewController: UIViewController {
 
 }
 
-// MARK - DataServiceLoadLevelDelegate
+// MARK - DataServiceLoadProgramDelegate
 
-extension DragDropViewController: DataServiceLoadLevelDelegate {
+extension DragDropViewController: DataServiceLoadProgramDelegate {
     func load(commandDataListInfo: CommandDataListInfo) {
         model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
         currentCommandsView.reloadData()

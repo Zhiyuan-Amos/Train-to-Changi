@@ -44,6 +44,7 @@
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
 		A76693B81E9C3D3E00D2BB44 /* SaveProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */; };
+		A76693BA1E9C4E9A00D2BB44 /* ProgramCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */; };
 		A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */; };
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
@@ -139,6 +140,7 @@
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
 		A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveProgramViewController.swift; sourceTree = "<group>"; };
+		A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramCell.swift; sourceTree = "<group>"; };
 		A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListInfo.swift; sourceTree = "<group>"; };
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 			children = (
 				A712096A1E8189060039B257 /* CommandCell.swift */,
 				3B78A68D1E91545700A652D9 /* LineNumberCell.swift */,
+				A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */,
 				3B10D8481E9272C300EFCDAC /* ArrowView.swift */,
 			);
 			name = View;
@@ -728,6 +731,7 @@
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				3B6D98521E88FE970026872B /* ControlPanelViewController.swift in Sources */,
 				A76693B81E9C3D3E00D2BB44 /* SaveProgramViewController.swift in Sources */,
+				A76693BA1E9C4E9A00D2BB44 /* ProgramCell.swift in Sources */,
 				3B6D98541E8904500026872B /* AnimationHelper.swift in Sources */,
 				D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */,
 				D76FA82D1E76ADC400CCCFBE /* GameScene.swift in Sources */,

@@ -8,8 +8,12 @@
 
 import FirebaseDatabase
 
-protocol DataServiceLoadLevelDelegate: class {
+protocol DataServiceLoadProgramDelegate: class {
     func load(commandDataListInfo: CommandDataListInfo)
+}
+
+protocol DataServiceLoadSavedProgramNamesDelegate: class {
+    func load(savedProgramNames: [[String]])
 }
 
 class DataService {
@@ -75,7 +79,7 @@ class DataService {
     // Called at the start of every level view.
     func loadAutoSavedUserAddedCommands(userId: String,
                                        levelIndex: Int,
-                                       loadLevelDelegate: DataServiceLoadLevelDelegate) {
+                                       loadProgramDelegate: DataServiceLoadProgramDelegate) {
         let ref = usersRef.child(userId)
             .child(autoSavedCommandDataListInfoKey)
             .child(String(levelIndex))
@@ -83,7 +87,7 @@ class DataService {
 
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             if let commandDataListInfo = CommandDataListInfo.fromSnapshot(snapshot: snapshot) {
-                loadLevelDelegate.load(commandDataListInfo: commandDataListInfo)
+                loadProgramDelegate.load(commandDataListInfo: commandDataListInfo)
             }
         }) { (error) in
             print(error.localizedDescription)
@@ -94,7 +98,7 @@ class DataService {
     func loadUserAddedCommands(userId: String,
                                levelIndex: Int,
                                saveName: String,
-                               loadLevelDelegate: DataServiceLoadLevelDelegate) {
+                               loadProgramDelegate: DataServiceLoadProgramDelegate) {
         let ref = usersRef.child(userId)
                           .child(commandDataListInfoKey)
                           .child(String(levelIndex))
@@ -102,11 +106,34 @@ class DataService {
 
         ref.observeSingleEvent(of: .value, with: { (snapshot) in
             if let commandDataListInfo = CommandDataListInfo.fromSnapshot(snapshot: snapshot) {
-                loadLevelDelegate.load(commandDataListInfo: commandDataListInfo)
+                loadProgramDelegate.load(commandDataListInfo: commandDataListInfo)
             }
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
 
+    // Loads a String array of saveName for each levelIndex.
+    func loadUserAddedCommands(userId: String,
+                               loadSavedProgramNamesDelegate: DataServiceLoadSavedProgramNamesDelegate) {
+        let ref = usersRef.child(userId)
+                          .child(commandDataListInfoKey)
+        var userAddedCommandsArray: [[String]] = []
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let arr = snapshot.value as? NSArray {
+                for element in arr {
+                    // levelIndex layer
+                    // saveName to CommandDataListInfo mapping here.
+                    if let dict = element as? [String: AnyObject] {
+                        let saveNameArray = Array(dict.keys)
+                        userAddedCommandsArray.append(saveNameArray)
+                    }
+                }
+                print(userAddedCommandsArray)
+                loadSavedProgramNamesDelegate.load(savedProgramNames: userAddedCommandsArray)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 }

@@ -27,7 +27,6 @@ class SaveProgramViewController: UIViewController {
             return
         }
 
-        print(saveName)
         saveProgramDelegate.saveProgram(saveName: saveName)
 
         dismiss(animated: true)
