@@ -59,7 +59,11 @@ class EditorViewController: UIViewController {
         dragDropView.isHidden = true
     }
 
-    @IBAction func editorButtonPressed(_ sender: UIButton?) {
+    @IBAction func editorButtonPressed(_ sender: UIButton) {
+        presentEditorView()
+    }
+
+    fileprivate func presentEditorView() {
         descriptionButton.backgroundColor = nil
         editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
         descriptionView.isHidden = true
@@ -127,7 +131,7 @@ extension EditorViewController {
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         switch model.runState {
         case .running, .won, .stepping:
-            editorButtonPressed(nil)
+            presentEditorView()
             resetButton.isEnabled = false
             descriptionButton.isEnabled = false
             availableCommandsView.isUserInteractionEnabled = false
