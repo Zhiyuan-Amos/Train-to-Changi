@@ -9,15 +9,11 @@ import Foundation
 
 class AchievementsManager {
     static let sharedInstance = AchievementsManager()
-    private var achievements: [Achievement] = [Achievement]()
+    fileprivate var achievements: [Achievement] = [Achievement]()
     private(set) var currentLevelUnlockedAchievements: [Achievement] = [Achievement]()
 
     // stub
     private init() {
-        for achievementEnum in AchievementsEnum.allValues {
-            achievements.append(Achievement(name: achievementEnum, isUnlocked: false))
-        }
-
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleLevelEnded(notification:)),
             name: Constants.NotificationNames.levelEnded, object: nil)
@@ -57,5 +53,16 @@ class AchievementsManager {
 
     @objc private func handleLevelEnded(notification: Notification) {
         currentLevelUnlockedAchievements.removeAll()
+    }
+}
+
+extension AchievementsManager: DataServiceLoadUnlockedAchievementsDelegate {
+    func load(unlockedAchievements: [String]) {
+        for achievementEnum in AchievementsEnum.allValues {
+            let isUnlocked = unlockedAchievements.contains(achievementEnum.rawValue)
+            print(achievementEnum.rawValue)
+            print(isUnlocked)
+            achievements.append(Achievement(name: achievementEnum, isUnlocked: isUnlocked))
+        }
     }
 }
