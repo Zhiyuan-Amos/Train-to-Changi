@@ -116,6 +116,8 @@ struct Constants {
     struct Map {
         // station nodes should be named in .sks file as SomethingStation, like KentRidgeStation
         static let stationNameRegex = "^\\w+Station$"
+        static let cameraBoundToViewRatio = CGFloat(0.6)
+        static let offsetDraggedBack = CGFloat(30)
     }
 
     struct StationNames {

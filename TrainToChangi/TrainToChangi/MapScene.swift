@@ -24,7 +24,7 @@ class MapScene: SKScene {
 
     // The bound that the camera is allowed to move in.
     private var bound: CGRect {
-        return calculateAccumulatedFrame().scale(0.6)
+        return calculateAccumulatedFrame().scale(Constants.Map.cameraBoundToViewRatio)
     }
 
     weak var mapSceneDelegate: MapSceneDelegate?
@@ -85,7 +85,7 @@ class MapScene: SKScene {
          | 6 | 7 | 8 |
 
          */
-        let offset = CGFloat(30)
+        let offset = CGFloat(Constants.Map.offsetDraggedBack)
         let upperY = bound.maxY - offset
         let lowerY = bound.minY + offset
 
