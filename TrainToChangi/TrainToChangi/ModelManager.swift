@@ -126,7 +126,9 @@ class ModelManager: Model {
     }
 
     func resetPlayState() {
+        let numLost = levelState.numLost
         levelState = levelManager.level.initialState
+        levelState.numLost = numLost
     }
 
     func getCommandDataListInfo() -> CommandDataListInfo {
@@ -174,6 +176,19 @@ class ModelManager: Model {
 
     func getValueFromMemory(at index: Int) -> Int? {
         return levelState.memoryValues[index]
+    }
+
+    func incrementNumLost() {
+        levelState.numLost += 1
+    }
+
+    // API for Achievement
+    func getTimeElapsed() -> Double {
+        return levelState.timeElapsed
+    }
+
+    func getNumLost() -> Int {
+        return levelState.numLost
     }
 
     // MARK - Private helpers

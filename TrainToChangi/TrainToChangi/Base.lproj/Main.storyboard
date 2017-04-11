@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -163,8 +164,54 @@
                                     <action selector="returnButtonPressed:" destination="zBU-r7-IHc" eventType="touchUpInside" id="lt4-Hz-Itd"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ueo-9d-vt8">
+                                <rect key="frame" x="295" y="405" width="444" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="achievement" id="h99-qz-c8V" customClass="AchievementCell" customModule="TrainToChangi" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="444" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h99-qz-c8V" id="txm-xr-qE5">
+                                            <rect key="frame" x="0.0" y="0.0" width="444" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hdd-Xg-IFQ" userLabel="Achievement Image">
+                                                    <rect key="frame" x="0.0" y="0.0" width="43.5" height="43.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="hdd-Xg-IFQ" secondAttribute="height" multiplier="1:1" id="RFf-aT-7I8"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iY3-Ao-nNY" userLabel="Achievement Label">
+                                                    <rect key="frame" x="53.5" y="8" width="382.5" height="27.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hdd-Xg-IFQ" firstAttribute="leading" secondItem="txm-xr-qE5" secondAttribute="leading" id="3EA-Uo-ojZ"/>
+                                                <constraint firstItem="hdd-Xg-IFQ" firstAttribute="top" secondItem="txm-xr-qE5" secondAttribute="top" id="C1R-5P-3QL"/>
+                                                <constraint firstItem="iY3-Ao-nNY" firstAttribute="leading" secondItem="hdd-Xg-IFQ" secondAttribute="trailing" constant="10" id="RQE-L4-XPs"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="iY3-Ao-nNY" secondAttribute="trailing" id="Swd-4o-dgp"/>
+                                                <constraint firstAttribute="bottom" secondItem="hdd-Xg-IFQ" secondAttribute="bottom" id="Wni-0F-YMC"/>
+                                                <constraint firstItem="iY3-Ao-nNY" firstAttribute="top" secondItem="txm-xr-qE5" secondAttribute="topMargin" id="X79-pf-zP4"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="iY3-Ao-nNY" secondAttribute="bottom" id="Xhm-TY-EZF"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="achievementImage" destination="hdd-Xg-IFQ" id="i20-to-Bv8"/>
+                                            <outlet property="achievementText" destination="iY3-Ao-nNY" id="puK-Ll-Avz"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="zBU-r7-IHc" id="nDO-Yk-vJo"/>
+                                    <outlet property="delegate" destination="zBU-r7-IHc" id="1PQ-Tv-kMb"/>
+                                </connections>
+                            </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Successfully powered the train!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DHk-kO-pyq">
-                                <rect key="frame" x="292" y="284" width="448" height="151"/>
+                                <rect key="frame" x="293" y="260" width="448" height="151"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="37"/>
                                 <color key="textColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -173,6 +220,9 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="achievementsTableView" destination="Ueo-9d-vt8" id="u9l-Z2-sUC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xA8-Kh-cfh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
