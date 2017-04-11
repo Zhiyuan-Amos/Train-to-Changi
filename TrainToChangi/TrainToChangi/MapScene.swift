@@ -23,14 +23,8 @@ class MapScene: SKScene {
     private var cam: SKCameraNode!
 
     // The bound that the camera is allowed to move in.
-    // Hardcoded values because it's not possible to set a bound based on the .sks file.
-    // With this bound, when camera moves, check it's future position and drag it back if
-    // it will be out of bound.
     private var bound: CGRect {
-        return CGRect (
-            x: anchorPoint.x - 50, y: anchorPoint.y - 200,
-            width: Constants.ViewDimensions.width * 1.5, height: Constants.ViewDimensions.height * 0.8
-        )
+        return calculateAccumulatedFrame().scale(0.6)
     }
 
     weak var mapSceneDelegate: MapSceneDelegate?
@@ -131,5 +125,16 @@ extension MapScene: StationLevelNodeDelegate {
     func didTouchStation(name: String?) {
         guard let name = name else { return }
         mapSceneDelegate?.didTouchStation(name: name)
+    }
+}
+
+fileprivate extension CGRect {
+    func scale(_ percentage: CGFloat) -> CGRect {
+        return CGRect(
+            x: origin.x + (size.width - size.width * percentage) / 2,
+            y: origin.y + (size.height - size.height * percentage) / 2,
+            width: size.width * percentage,
+            height: size.height * percentage
+        )
     }
 }
