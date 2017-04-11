@@ -107,6 +107,8 @@ struct Constants {
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 14
         static let fontColor = UIColor.black
+        static let labelHeight: CGFloat = 15;
+        static let maxCharactersInLine = 25
 
         static let texture = SKTexture(imageNamed: "speech")
     }

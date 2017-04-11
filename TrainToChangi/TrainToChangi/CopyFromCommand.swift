@@ -17,7 +17,7 @@ class CopyFromCommand: Command {
         prevValueOnPerson = model.getValueOnPerson()
 
         guard let value = model.getValueFromMemory(at: memoryIndex) else {
-            return CommandResult(errorMessage: .emptyMemoryLocation)
+            return CommandResult(errorMessage: .invalidOperation)
         }
 
         model.updateValueOnPerson(to: value)
