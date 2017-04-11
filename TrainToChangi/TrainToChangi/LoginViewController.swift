@@ -14,6 +14,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
 
+    @IBAction func guestSignInButtonPressed(_ sender: UIButton) {
+        AuthService.instance.loginAnonymously()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
