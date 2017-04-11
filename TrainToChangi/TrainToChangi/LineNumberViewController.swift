@@ -58,6 +58,11 @@ extension LineNumberViewController {
             object: nil)
 
         NotificationCenter.default.addObserver(
+            self, selector: #selector(handleAddCommand(notification:)),
+            name: Constants.NotificationNames.userLoadCommandEvent,
+            object: nil)
+
+        NotificationCenter.default.addObserver(
             self, selector: #selector(handleResetCommand(notification:)),
             name: Constants.NotificationNames.userResetCommandEvent,
             object: nil)
@@ -95,6 +100,10 @@ extension LineNumberViewController {
     }
 
     @objc private func handleDeleteCommand(notification: Notification) {
+        lineNumberCollection.reloadData()
+    }
+
+    @objc private func handleLoadCommand(notification: Notification) {
         lineNumberCollection.reloadData()
     }
 

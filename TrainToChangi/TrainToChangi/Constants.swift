@@ -138,6 +138,7 @@ struct Constants {
         static let runStateUpdated = Notification.Name(rawValue: "runStateUpdated")
         static let resetGameScene = Notification.Name(rawValue: "resetGameScene")
         static let userAddCommandEvent = Notification.Name(rawValue: "userAddCommandEvent")
+        static let userLoadCommandEvent = Notification.Name(rawValue: "userLoadCommandEvent")
         static let userDeleteCommandEvent = Notification.Name(rawValue: "userDeleteCommandEvent")
         static let userResetCommandEvent = Notification.Name(rawValue: "userResetCommandEvent")
         static let userScrollEvent = Notification.Name(rawValue: "userScrollEvent")

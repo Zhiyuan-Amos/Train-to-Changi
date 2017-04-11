@@ -36,7 +36,7 @@ class SpeechBubbleSprite: SKSpriteNode {
                 labelNodeIndex += 1
             }
         }
-        if (token.characters.count > 1) {
+        if (text.characters.count > 1) {
             self.addChild(makeLabelNode(text: text, labelNodeIndex: labelNodeIndex))
         }
     }

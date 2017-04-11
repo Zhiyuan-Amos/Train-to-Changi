@@ -87,6 +87,10 @@ extension DragDropViewController: DataServiceLoadProgramDelegate {
         model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
         currentCommandsView.reloadData()
         renderJumpArrows()
+
+        NotificationCenter.default.post(name: Constants.NotificationNames.userLoadCommandEvent,
+                                        object: nil,
+                                        userInfo: nil)
     }
 }
 
