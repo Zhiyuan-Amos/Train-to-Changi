@@ -10,27 +10,45 @@ import SpriteKit
 
 class SpeechBubbleSprite: SKSpriteNode {
 
-    fileprivate var label: SKLabelNode
-
     init(text: String, size: CGSize) {
-        label = SKLabelNode(text: text)
-        label.fontName = Constants.SpeechBubble.fontName
-        label.fontSize = Constants.SpeechBubble.fontSize
-        label.fontColor = Constants.SpeechBubble.fontColor
-        label.position = CGPoint.zero
-
         super.init(texture: Constants.SpeechBubble.texture, color: UIColor.white, size: size)
-        self.isUserInteractionEnabled = true
         self.isHidden = true
         self.zPosition = Constants.SpeechBubble.zPosition
-        self.addChild(label)
-        label.zPosition = zPosition
-
         registerObservers()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    fileprivate func addLabelNodes(longText: String) {
+        let textArr = longText.characters.split{$0 == " "}.map(String.init)
+
+        var text = ""
+        var labelNodeIndex = 0
+
+        for token in textArr {
+            if text.characters.count < Constants.SpeechBubble.maxCharactersInLine {
+                text += token + " "
+            } else {
+                self.addChild(makeLabelNode(text: text, labelNodeIndex: labelNodeIndex))
+                text = token + " "
+                labelNodeIndex += 1
+            }
+        }
+        if (text.characters.count > 1) {
+            self.addChild(makeLabelNode(text: text, labelNodeIndex: labelNodeIndex))
+        }
+    }
+
+    private func makeLabelNode(text: String, labelNodeIndex: Int) -> SKLabelNode {
+        let label = SKLabelNode(text: text)
+        label.fontName = Constants.SpeechBubble.fontName
+        label.fontSize = Constants.SpeechBubble.fontSize
+        label.fontColor = Constants.SpeechBubble.fontColor
+        label.position = CGPoint(x: 0, y: 0 - CGFloat(labelNodeIndex) * Constants.SpeechBubble.labelHeight)
+        label.zPosition = zPosition
+        return label
     }
 }
 
@@ -48,6 +66,8 @@ extension SpeechBubbleSprite {
     }
 
     @objc fileprivate func handleToggleSpeech(notification: Notification) {
+        self.removeAllChildren()
+        addLabelNodes(longText: "Siao liao lah. Train breakdown again.")
         self.isHidden = !self.isHidden
     }
 
@@ -57,9 +77,19 @@ extension SpeechBubbleSprite {
         }
 
         switch newState {
-        case .lost:
-            self.label.text = "The output is incorrect!"
-            self.isHidden = false
+        case .lost(let error):
+            switch error {
+            case .invalidOperation:
+                self.removeAllChildren()
+                addLabelNodes(longText: "You are not allowed to execute this command!")
+            case .wrongOutboxValue:
+                self.removeAllChildren()
+                addLabelNodes(longText: "The output is incorrect!")
+            case .incompleteOutboxValues:
+                self.removeAllChildren()
+                addLabelNodes(longText: "There should be more values!")
+            }
+            isHidden = false
         default:
             break
         }

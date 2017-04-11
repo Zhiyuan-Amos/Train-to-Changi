@@ -107,15 +107,17 @@ struct Constants {
         static let fontName = "HelveticaNeue-Bold"
         static let fontSize: CGFloat = 14
         static let fontColor = UIColor.black
+        static let labelHeight: CGFloat = 15;
+        static let maxCharactersInLine = 25
 
         static let texture = SKTexture(imageNamed: "speech")
     }
 
     struct Map {
-        static let stationImage = "station"
         // station nodes should be named in .sks file as SomethingStation, like KentRidgeStation
         static let stationNameRegex = "^\\w+Station$"
-        static let stationNodeSize = CGSize(width: 200, height: 200)
+        static let cameraBoundToViewRatio = CGFloat(0.6)
+        static let offsetDraggedBack = CGFloat(30)
     }
 
     struct StationNames {
@@ -136,6 +138,7 @@ struct Constants {
         static let runStateUpdated = Notification.Name(rawValue: "runStateUpdated")
         static let resetGameScene = Notification.Name(rawValue: "resetGameScene")
         static let userAddCommandEvent = Notification.Name(rawValue: "userAddCommandEvent")
+        static let userLoadCommandEvent = Notification.Name(rawValue: "userLoadCommandEvent")
         static let userDeleteCommandEvent = Notification.Name(rawValue: "userDeleteCommandEvent")
         static let userResetCommandEvent = Notification.Name(rawValue: "userResetCommandEvent")
         static let userScrollEvent = Notification.Name(rawValue: "userScrollEvent")
@@ -156,6 +159,8 @@ struct Constants {
     struct UI {
         static let mainStoryboardIdentifier = "Main"
         static let endGameViewControllerIdentifier = "EndGameViewController"
+        static let saveProgramViewControllerIdentifier = "SaveProgramViewController"
+        static let loadProgramViewControllerIdentifier = "LoadProgramViewController"
 
         static let dragDropCollectionViewCellIdentifier = "CommandCell"
         static let lineNumberCollectionViewCellIdentifier = "LineNumberCell"

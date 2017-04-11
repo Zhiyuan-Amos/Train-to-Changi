@@ -238,20 +238,22 @@ extension GameScene {
         outboxNodes = []
 
         for (index, value) in outboxValues.enumerated() {
-            let position = calculatePayloadPositionOnConveyor(index: index, forInbox: false)
+            let position = calculatePayloadPositionOnConveyor(index: index, forInbox: false, outboxValues.count)
             let payload = Payload(position: position, value: value)
             outboxNodes.append(payload)
             self.addChild(payload)
         }
     }
 
-    fileprivate func calculatePayloadPositionOnConveyor(index: Int, forInbox: Bool) -> CGPoint {
-        let startingX = forInbox ? Constants.Inbox.payloadStartingX : Constants.Outbox.entryPosition.x
+    fileprivate func calculatePayloadPositionOnConveyor(index: Int, forInbox: Bool, _ outboxCount: Int? = nil) -> CGPoint {
 
         let imagePadding = forInbox ? Constants.Inbox.imagePadding : Constants.Outbox.imagePadding
-        let offsetX = CGFloat(index) * (Constants.Payload.size.width + imagePadding)
+        let offsetX = (Constants.Payload.size.width + imagePadding)
+        let startingX = forInbox
+            ? Constants.Inbox.payloadStartingX
+            : Constants.Outbox.entryPosition.x - CGFloat(outboxCount! - 1) * offsetX
 
-        let x = forInbox ? startingX + offsetX : startingX - offsetX
+        let x = startingX + CGFloat(index) * offsetX
         let y = (forInbox ? inbox.position.y : outbox.position.y) + Constants.Payload.imageOffsetY
 
         return CGPoint(x: x, y: y)

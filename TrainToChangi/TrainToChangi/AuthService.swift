@@ -20,6 +20,7 @@ class AuthService {
         return FIRAuth.auth()?.currentUser?.uid
     }
 
+    // For Google Sign In only.
     func login(credential: FIRAuthCredential) {
         FIRAuth.auth()?.signIn(with: credential, completion: { (user, error) in
             if let error = error {

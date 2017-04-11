@@ -17,13 +17,13 @@ class AddCommand: Command {
 
     func execute() -> CommandResult {
         guard let personValue = model.getValueOnPerson() else {
-            return CommandResult(errorMessage: .emptyPersonValue)
+            return CommandResult(errorMessage: .invalidOperation)
         }
 
         prevValueOnPerson = personValue
 
         guard let memoryValue = model.getValueFromMemory(at: memoryIndex) else {
-            return CommandResult(errorMessage: .emptyMemoryLocation)
+            return CommandResult(errorMessage: .invalidOperation)
         }
 
         model.updateValueOnPerson(to: personValue + memoryValue)

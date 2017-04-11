@@ -8,10 +8,9 @@
 
 import Foundation
 
-// Automatically saves user's entered commands for each level under the "default"
-// saved level name, to allow user's entered commands to be persisted
-// even without manual saving.
-class DefaultFirebaseSaver {
+// Automatically saves user's entered commands for each level, each time that
+// commandDataList is updated by the user.
+class AutomaticFirebaseSaver {
 
     init() {
         initNotification()
@@ -34,10 +33,9 @@ class DefaultFirebaseSaver {
             fatalError("User not logged in.")
         }
 
-        DataService.instance.saveUserAddedCommands(userId: userId,
-                                                   levelIndex: levelIndex,
-                                                   saveName: "default",
-                                                   commandDataListInfo: commandDataListInfo.toAnyObject())
+        DataService.instance.autoSaveUserProgram(userId: userId,
+                                                 levelIndex: levelIndex,
+                                                 commandDataListInfo: commandDataListInfo)
     }
 
 }
