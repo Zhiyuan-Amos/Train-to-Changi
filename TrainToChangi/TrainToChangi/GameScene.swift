@@ -480,7 +480,7 @@ extension GameScene {
         let move = SKAction.move(to: player.position, duration: Constants.Animation.payloadOnToPlayerDuration)
 
         copy.run(SKAction.sequence([fixPosition, move]), completion: {
-            holdingNode.setLabel(to: expected)
+            holdingNode.setValue(to: expected)
             self.removeChildren(in: [copy])
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
