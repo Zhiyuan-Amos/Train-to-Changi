@@ -204,6 +204,7 @@ extension GameScene {
 
     fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout, valuesOnly: Bool) {
         self.memoryLayout = layout
+        self.memoryNodes.removeAll(keepingCapacity: true)
         for (index, value) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 fatalError("[GameScene:initMemory] " +
