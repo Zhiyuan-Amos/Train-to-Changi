@@ -13,6 +13,9 @@ class EditorViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
     weak var resetGameDelegate: ResetGameDelegate!
+    weak var dataServiceLoadProgramDelegate: DataServiceLoadProgramDelegate!
+    weak var saveProgramDelegate: SaveProgramDelegate!
+    
     var model: Model!
 
     @IBOutlet weak var descriptionButton: UIButton!
@@ -24,13 +27,6 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var dragDropView: UIView!
     @IBOutlet weak var descriptionView: UIView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupAvailableCommandsView()
-        registerObservers()
-        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
-    }
-
     @IBAction func resetButtonPressed(_ sender: UIButton) {
         NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
                                         object: nil,
@@ -39,17 +35,24 @@ class EditorViewController: UIViewController {
         presentEditorView()
     }
 
-    @IBAction func toggleButtonPressed(_ sender: UIButton) {
-        let duration = Constants.UI.Duration.toggleAvailableCommandsDuration
-        if availableCommandsView.alpha == 0 {
-            UIView.animate(withDuration: duration, animations: { () -> Void in
-                self.availableCommandsView.alpha = 1.0
-            })
-        } else {
-            UIView.animate(withDuration: duration, animations: { () -> Void in
-                self.availableCommandsView.alpha = 0.0
-            })
+    @IBAction func loadButtonPressed(_ sender: UIButton) {
+        let identifier = Constants.UI.loadProgramViewControllerIdentifier
+        guard let loadProgramController = loadModalViewControllers(identifier: identifier)
+            as? LoadProgramViewController else {
+                fatalError("Wrong controller loaded.")
         }
+        loadProgramController.loadProgramDelegate = dataServiceLoadProgramDelegate
+        self.present(loadProgramController, animated: true, completion: nil)
+    }
+
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        let identifier = Constants.UI.saveProgramViewControllerIdentifier
+        guard let saveProgramController = loadModalViewControllers(identifier: identifier)
+            as? SaveProgramViewController else {
+            fatalError("Wrong controller loaded.")
+        }
+        saveProgramController.saveProgramDelegate = saveProgramDelegate
+        self.present(saveProgramController, animated: true, completion: nil)
     }
 
     @IBAction func descriptionButtonPressed(_ sender: UIButton) {
@@ -64,16 +67,17 @@ class EditorViewController: UIViewController {
         presentEditorView()
     }
 
-    fileprivate func presentEditorView() {
-        descriptionButton.backgroundColor = nil
-        editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
-        descriptionView.isHidden = true
-        lineNumberView.isHidden = false
-        dragDropView.isHidden = false
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupAvailableCommandsView()
+        registerObservers()
+        descriptionButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let embeddedVC = segue.destination as? DragDropViewController {
+            dataServiceLoadProgramDelegate = embeddedVC
+            saveProgramDelegate = embeddedVC
             embeddedVC.model = self.model
             embeddedVC.resetGameDelegate = resetGameDelegate
         }
@@ -83,6 +87,14 @@ class EditorViewController: UIViewController {
         if let embeddedVC = segue.destination as? LevelDescriptionViewController {
             embeddedVC.model = self.model
         }
+    }
+
+    fileprivate func presentEditorView() {
+        descriptionButton.backgroundColor = nil
+        editorButton.backgroundColor = Constants.Background.levelDescriptionBackgroundColor
+        descriptionView.isHidden = true
+        lineNumberView.isHidden = false
+        dragDropView.isHidden = false
     }
 
     // Load the available commands from model for the current level
@@ -118,6 +130,14 @@ class EditorViewController: UIViewController {
                                         object: command,
                                         userInfo: nil)
         presentEditorView()
+    }
+
+    private func loadModalViewControllers(identifier: String) -> UIViewController {
+        let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier)
+        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        return controller
     }
 }
 

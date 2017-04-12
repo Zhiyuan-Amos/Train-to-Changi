@@ -8,14 +8,20 @@
 
 import UIKit
 
-protocol SaveProgramDelegate {
+protocol SaveProgramDelegate: class {
     func saveProgram(saveName: String)
 }
 
 class SaveProgramViewController: UIViewController {
 
     @IBOutlet private var textInput: UITextField!
-    var saveProgramDelegate: SaveProgramDelegate?
+    @IBOutlet weak var errorMessageLabel: UILabel!
+
+    weak var saveProgramDelegate: SaveProgramDelegate?
+
+    override func viewDidLoad() {
+        errorMessageLabel.isHidden = true;
+    }
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -24,12 +30,11 @@ class SaveProgramViewController: UIViewController {
     @IBAction func confirmButtonPressed(_ sender: UIButton) {
         guard let saveProgramDelegate = saveProgramDelegate else {
             fatalError("Delegate not set up!")
-            return
         }
 
         guard let saveName = textInput.text,
             isUserInputSaveNameValid(userInput: saveName) else {
-            // UI show feedback to user that saving is not successful.
+                errorMessageLabel.isHidden = false;
             return
         }
 
