@@ -67,8 +67,16 @@ extension CommandDataListInfo {
                 commandData.append(CommandData.copyTo(memoryIndex: Int(commandArr[1])!))
             case "add":
                 commandData.append(CommandData.add(memoryIndex: Int(commandArr[1])!))
+            case "sub":
+                commandData.append(CommandData.sub(memoryIndex: Int(commandArr[1])!))
             case "jump":
                 commandData.append(CommandData.jump)
+                jumpMappings[index] = Int(commandArr[1])
+            case "jumpIfZero":
+                commandData.append(CommandData.jumpIfZero)
+                jumpMappings[index] = Int(commandArr[1])
+            case "jumpIfNegative":
+                commandData.append(CommandData.jumpIfNegative)
                 jumpMappings[index] = Int(commandArr[1])
             case "jumpTarget":
                 commandData.append(CommandData.jumpTarget)

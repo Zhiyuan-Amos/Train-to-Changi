@@ -65,7 +65,7 @@ extension UIEntityDrawer {
         case .copyFrom(let index), .copyTo(let index):
             return drawMemoryIndex(index: index, backgroundColor: Constants.UI.Colors.commandRed,
                                    origin: origin)
-        case .add(let index):
+        case .add(let index), .sub(let index):
             return drawMemoryIndex(index: index, backgroundColor:  Constants.UI.Colors.commandOrange,
                                    origin: origin)
         default:
@@ -96,12 +96,24 @@ extension UIEntityDrawer {
             return drawButton(title: "jump", backgroundColor: Constants.UI.Colors.commandBlue,
                               width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
+        case .jumpIfZero:
+            return drawButton(title: "jumpifzero", backgroundColor: Constants.UI.Colors.commandBlue,
+                              width: Constants.UI.CommandButton.widthLongest,
+                              origin: origin, interactive: interactive)
+        case .jumpIfNegative:
+            return drawButton(title: "jumpifnegative", backgroundColor: Constants.UI.Colors.commandBlue,
+                              width: Constants.UI.CommandButton.widthLongest,
+                              origin: origin, interactive: interactive)
         case .jumpTarget:
             return drawButton(title: "", backgroundColor: Constants.UI.Colors.commandBlue,
                               width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
         case .add:
             return drawButton(title: "add", backgroundColor:  Constants.UI.Colors.commandOrange,
+                              width: Constants.UI.CommandButton.widthShort,
+                              origin: origin, interactive: interactive)
+        case .sub:
+            return drawButton(title: "sub", backgroundColor:  Constants.UI.Colors.commandOrange,
                               width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
         }

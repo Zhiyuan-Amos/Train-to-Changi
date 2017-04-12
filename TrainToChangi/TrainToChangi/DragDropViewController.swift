@@ -112,7 +112,7 @@ extension DragDropViewController {
         if updatingCellIndexPath == nil {
             updatingCellIndexPath = indexPath
             switch indexCommand {
-            case .add(let index), .copyTo(let index), .copyFrom(let index):
+            case .add(let index), .sub(let index), .copyTo(let index), .copyFrom(let index):
                 updateCellIndex(cell: cell, index: index)
             default:
                 break
@@ -120,7 +120,7 @@ extension DragDropViewController {
         } else if updatingCellIndexPath == indexPath {
             updatingCellIndexPath = nil
             switch indexCommand {
-            case .add(let index), .copyTo(let index), .copyFrom(let index):
+            case .add(let index), .sub(let index), .copyTo(let index), .copyFrom(let index):
                 cancelUpdateCellIndex(cell: cell, index: index)
             default:
                 break
@@ -259,7 +259,7 @@ extension DragDropViewController {
 
     fileprivate func isIndexedCommand(indexPath: IndexPath) -> Bool {
         switch model.userEnteredCommands[indexPath.item] {
-        case .add(_), .copyFrom(_), .copyTo(_):
+        case .add(_), .sub(_), .copyFrom(_), .copyTo(_):
             return true
         default:
             return false
@@ -312,6 +312,9 @@ extension DragDropViewController {
         case .add(_):
             model.insertCommand(commandEnum: CommandData.add(memoryIndex: index),
                                 atIndex: indexPath.item)
+        case .sub(_):
+            model.insertCommand(commandEnum: CommandData.sub(memoryIndex: index),
+                                atIndex: indexPath.item)
         default:
             break
         }
@@ -344,7 +347,7 @@ extension DragDropViewController {
         let penultimateIndexPath = IndexPath(item: model.userEnteredCommands.count - 2, section: 0)
         let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
 
-        if command == CommandData.jump {
+        if command.isJumpCommand {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
             renderJumpArrows()
         } else {

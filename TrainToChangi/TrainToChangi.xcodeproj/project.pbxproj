@@ -47,6 +47,9 @@
 		A76693B81E9C3D3E00D2BB44 /* SaveProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */; };
 		A76693BA1E9C4E9A00D2BB44 /* ProgramCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */; };
 		A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */; };
+		A77D49D11E9DDEAB00FC6696 /* SubCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D49D01E9DDEAB00FC6696 /* SubCommand.swift */; };
+		A77D49D31E9DDF1300FC6696 /* JumpIfZeroCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D49D21E9DDF1300FC6696 /* JumpIfZeroCommand.swift */; };
+		A77D49D51E9DDFDD00FC6696 /* JumpIfNegativeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77D49D41E9DDFDD00FC6696 /* JumpIfNegativeCommand.swift */; };
 		A7A10CED1E865AD10040DA21 /* CommandDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CE91E865AD10040DA21 /* CommandDataList.swift */; };
 		A7A10CEE1E865AD10040DA21 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEA1E865AD10040DA21 /* LevelData.swift */; };
 		A7A10CEF1E865AD10040DA21 /* LevelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10CEB1E865AD10040DA21 /* LevelManager.swift */; };
@@ -144,6 +147,9 @@
 		A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveProgramViewController.swift; sourceTree = "<group>"; };
 		A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramCell.swift; sourceTree = "<group>"; };
 		A77AAE9A1E8D341100261A3A /* CommandDataListInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListInfo.swift; sourceTree = "<group>"; };
+		A77D49D01E9DDEAB00FC6696 /* SubCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubCommand.swift; sourceTree = "<group>"; };
+		A77D49D21E9DDF1300FC6696 /* JumpIfZeroCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpIfZeroCommand.swift; sourceTree = "<group>"; };
+		A77D49D41E9DDFDD00FC6696 /* JumpIfNegativeCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpIfNegativeCommand.swift; sourceTree = "<group>"; };
 		A7A10CE91E865AD10040DA21 /* CommandDataList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataList.swift; sourceTree = "<group>"; };
 		A7A10CEA1E865AD10040DA21 /* LevelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
 		A7A10CEB1E865AD10040DA21 /* LevelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelManager.swift; sourceTree = "<group>"; };
@@ -233,6 +239,9 @@
 			children = (
 				D75BC4251E76BA9000ED2A1B /* Command.swift */,
 				D70CFCC21E7C279C00D28B86 /* CommandData.swift */,
+				A77D49D01E9DDEAB00FC6696 /* SubCommand.swift */,
+				A77D49D21E9DDF1300FC6696 /* JumpIfZeroCommand.swift */,
+				A77D49D41E9DDFDD00FC6696 /* JumpIfNegativeCommand.swift */,
 				D744CA541E79715C004CCABD /* ExecutionError.swift */,
 				D7A267D01E7796B800DE5774 /* CommandResult.swift */,
 				D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */,
@@ -733,6 +742,7 @@
 				A70192471E9517520058D7CD /* LoginViewController.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				3B6D98521E88FE970026872B /* ControlPanelViewController.swift in Sources */,
+				A77D49D51E9DDFDD00FC6696 /* JumpIfNegativeCommand.swift in Sources */,
 				A76693B81E9C3D3E00D2BB44 /* SaveProgramViewController.swift in Sources */,
 				A76693BA1E9C4E9A00D2BB44 /* ProgramCell.swift in Sources */,
 				3B6D98541E8904500026872B /* AnimationHelper.swift in Sources */,
@@ -770,6 +780,7 @@
 				76E0F66D1E88F9B40051325C /* StationLevelNode.swift in Sources */,
 				3B1680531E77D6F7002286F6 /* RunState.swift in Sources */,
 				3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */,
+				A77D49D31E9DDF1300FC6696 /* JumpIfZeroCommand.swift in Sources */,
 				D75BC42C1E76C55600ED2A1B /* LogicManager.swift in Sources */,
 				D76FA8271E76ADC400CCCFBE /* AppDelegate.swift in Sources */,
 				D7D49CD91E86A7A700135605 /* AudioPlayer.swift in Sources */,
@@ -796,6 +807,7 @@
 				3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */,
 				22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */,
 				22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */,
+				A77D49D11E9DDEAB00FC6696 /* SubCommand.swift in Sources */,
 				A70192431E9517520058D7CD /* AuthService.swift in Sources */,
 				22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */,
 				22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */,
