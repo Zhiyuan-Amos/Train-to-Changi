@@ -72,7 +72,7 @@ class GameScene: SKScene {
         initInbox(values: level.initialState.inputs)
         initOutbox()
         initNotification()
-        initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
+        initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout, valuesOnly: false)
         initSpeed()
 
         addChild(jedi)
@@ -104,7 +104,7 @@ extension GameScene {
                 assertionFailure("Can't re-presenting scene with intermediate state when scene is not initialized")
                 return
             }
-            initMemory(from: levelState.memoryValues, layout: memoryLayout)
+            initMemory(from: levelState.memoryValues, layout: memoryLayout, valuesOnly: true)
             let position = playerPreviousPositions.pop()
             if let p1 = position, let p2 = playerPreviousPositions.top {
                 player.run(SKAction.rotate(toAngle: p2.absAngle(to: p1), duration: 0))
@@ -116,7 +116,7 @@ extension GameScene {
             player.run(SKAction.rotate(toAngle: 0, duration: 0))
             playerPreviousPositions = Stack<CGPoint>()
             initConveyorNodes(inboxValues: level.initialState.inputs)
-            initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout)
+            initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout, valuesOnly: true)
             setPlayerAttributes()
         }
         speechBubble.isHidden = true
@@ -202,16 +202,19 @@ extension GameScene {
             name: Constants.NotificationNames.sliderShifted, object: nil)
     }
 
-    fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout) {
+    fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout, valuesOnly: Bool) {
         self.memoryLayout = layout
+        self.memoryNodes.removeAll(keepingCapacity: true)
         for (index, value) in memoryValues.enumerated() {
             guard layout.locations.count == memoryValues.count else {
                 fatalError("[GameScene:initMemory] " +
                     "Number of memory values differ from the layout specified. Check level data.")
             }
-            let node = MemorySlot(index: index, layout: layout)
-            addChild(node)
-            memorySlots.append(node)
+            if !valuesOnly {
+                let node = MemorySlot(index: index, layout: layout)
+                addChild(node)
+                memorySlots.append(node)
+            }
 
             guard let value = value else { continue }
             let memorySprite = Payload(position: layout.locations[index], value: value)
@@ -477,7 +480,7 @@ extension GameScene {
         let move = SKAction.move(to: player.position, duration: Constants.Animation.payloadOnToPlayerDuration)
 
         copy.run(SKAction.sequence([fixPosition, move]), completion: {
-            holdingNode.setLabel(to: expected)
+            holdingNode.setValue(to: expected)
             self.removeChildren(in: [copy])
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))

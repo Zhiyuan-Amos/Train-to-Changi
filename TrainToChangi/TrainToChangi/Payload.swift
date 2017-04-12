@@ -38,10 +38,11 @@ class Payload: SKSpriteNode {
         return Payload(position: self.position, value: self.value)
     }
 
-    func setLabel(to value: Int) {
+    func setValue(to value: Int) {
         guard let label = self.childNode(withName: Constants.Payload.labelName) as? SKLabelNode else {
             fatalError("Can't get label of payload")
         }
         label.text = String(value)
+        self.value = value
     }
 }
