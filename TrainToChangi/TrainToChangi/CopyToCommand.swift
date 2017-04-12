@@ -17,12 +17,12 @@ class CopyToCommand: Command {
         prevValueOnMemory = model.getValueFromMemory(at: memoryIndex)
 
         guard let value = model.getValueOnPerson() else {
-            return CommandResult(errorMessage: .invalidOperation)
+            return .failure(error: .invalidOperation)
         }
 
         model.putValueIntoMemory(value, at: memoryIndex)
 
-        return CommandResult()
+        return .success(isJump: false)
     }
 
     func undo() {

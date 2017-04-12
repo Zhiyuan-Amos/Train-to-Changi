@@ -4,7 +4,7 @@
 
 class JumpTarget: Command {
     func execute() -> CommandResult {
-        return CommandResult()
+        return .success(isJump: false)
     }
 
     func undo() {}

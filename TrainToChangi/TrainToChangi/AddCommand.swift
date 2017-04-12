@@ -17,18 +17,18 @@ class AddCommand: Command {
 
     func execute() -> CommandResult {
         guard let personValue = model.getValueOnPerson() else {
-            return CommandResult(errorMessage: .invalidOperation)
+            return .failure(error: .invalidOperation)
         }
 
         prevValueOnPerson = personValue
 
         guard let memoryValue = model.getValueFromMemory(at: memoryIndex) else {
-            return CommandResult(errorMessage: .invalidOperation)
+            return .failure(error: .invalidOperation)
         }
 
         model.updateValueOnPerson(to: personValue + memoryValue)
 
-        return CommandResult()
+        return .success(isJump: false)
     }
 
     func undo() {

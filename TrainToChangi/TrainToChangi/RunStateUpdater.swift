@@ -14,8 +14,8 @@ class RunStateUpdater {
     func updateRunState(commandResult: CommandResult) {
         if hasMetWinCondition() {
             model.runState = .won
-        } else if !commandResult.isSuccessful {
-            model.runState = .lost(error: commandResult.errorMessage!)
+        } else if case .failure(let error) = commandResult {
+            model.runState = .lost(error: error)
         } else if !isOutputValid() {
             model.runState = .lost(error: .wrongOutboxValue)
         }
