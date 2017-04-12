@@ -12,13 +12,6 @@ class AchievementsManager {
     fileprivate var achievements: [Achievement] = [Achievement]()
     private(set) var currentLevelUnlockedAchievements: [Achievement] = [Achievement]()
 
-    // stub
-    private init() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleLevelEnded(notification:)),
-            name: Constants.NotificationNames.levelEnded, object: nil)
-    }
-
     // Call only when game is won.
     func updateAchievements(model: Model) {
         guard let userId = AuthService.instance.currentUserId else {
@@ -36,6 +29,10 @@ class AchievementsManager {
         }
     }
 
+    func updateOnLevelEnded() {
+        currentLevelUnlockedAchievements.removeAll()
+    }
+
     private func isAchieved(model: Model, achievement: Achievement) -> Bool {
         switch achievement.name {
         case .completeLevelByTenSeconds:
@@ -49,10 +46,6 @@ class AchievementsManager {
         case .wonLevelOnFirstTry:
             return model.getNumLost() == 0
         }
-    }
-
-    @objc private func handleLevelEnded(notification: Notification) {
-        currentLevelUnlockedAchievements.removeAll()
     }
 }
 

@@ -25,9 +25,7 @@ class EndGameViewController: UIViewController {
     }
 
     @IBAction func returnButtonPressed(_ sender: UIButton) {
-        NotificationCenter.default.post(name: Constants.NotificationNames.levelEnded,
-                                        object: nil, userInfo: nil)
-
+        achievements.updateOnLevelEnded()
         dismiss(animated: false, completion: nil)
         presentingViewController!.dismiss(animated: true, completion: nil)
     }

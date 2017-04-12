@@ -149,7 +149,6 @@ struct Constants {
         static let toggleSpeechEvent = Notification.Name(rawValue: "toggleSpeechEvent")
         static let sliderShifted = Notification.Name(rawValue: "sliderShifted")
         static let achievementUnlocked = Notification.Name(rawValue: "achievementUnlocked")
-        static let levelEnded = Notification.Name(rawValue: "levelEnded")
     }
 
     struct SegueIds {
