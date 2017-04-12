@@ -13,11 +13,12 @@ class LineNumberViewController: UIViewController {
     var model: Model!
     let semaphore = DispatchSemaphore(value: 0)
 
-    @IBOutlet weak var programCounter: UIImageView!
+    var programCounter: UIImageView!
     @IBOutlet weak var lineNumberCollection: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupProgramCounter()
         connectDataSourceAndDelegate()
         lineNumberCollection.isScrollEnabled = false
         registerObservers()
@@ -41,6 +42,22 @@ class LineNumberViewController: UIViewController {
     private func connectDataSourceAndDelegate() {
         lineNumberCollection.dataSource = self
         lineNumberCollection.delegate = self
+    }
+
+    fileprivate func setupProgramCounter() {
+        programCounter = UIImageView(image: UIImage(named: "program-counter"))
+        programCounter.frame.origin.x = 0
+        programCounter.frame.origin.y = 0
+        programCounter.frame.size.height = Constants.UI.collectionCellHeight
+        programCounter.frame.size.width = 20
+        programCounter.isHidden = false
+        programCounter.frame = view.convert(programCounter.frame, to: lineNumberCollection)
+        lineNumberCollection.addSubview(programCounter)
+    }
+
+    fileprivate func resetProgramCounter() {
+        programCounter.frame.origin.x = 0
+        programCounter.frame.origin.y = 10
     }
 }
 
@@ -95,8 +112,8 @@ extension LineNumberViewController {
 
         let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
         lineNumberCollection.scrollToItem(at: lastIndexPath,
-                                         at: UICollectionViewScrollPosition.top,
-                                         animated: true)
+                                          at: UICollectionViewScrollPosition.top,
+                                          animated: true)
     }
 
     @objc private func handleDeleteCommand(notification: Notification) {
@@ -140,11 +157,9 @@ extension LineNumberViewController {
     }
 
     private func updateProgramCounterCoordinates(notification: Notification) {
-        if let index = notification.userInfo?["index"] as? Int,
-           let cell = lineNumberCollection.cellForItem(at: IndexPath(row: index, section: 0)) {
-           let cellYCoords = lineNumberCollection.convert(cell.frame.origin, to: self.view).y
+        if let _ = notification.userInfo?["index"] as? Int {
             UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
-                           animations: { self.programCounter.frame.origin.y = cellYCoords })
+                           animations: { self.programCounter.frame.origin.y += CGFloat(50) })
         }
     }
 
@@ -156,26 +171,15 @@ extension LineNumberViewController {
         semaphore.signal()
     }
 
-    private func setUpProgramCounter() {
-        let firstIndexPath = IndexPath(item: 0, section: 0)
-        if let cell = lineNumberCollection.cellForItem(at: firstIndexPath) {
-            var origin = lineNumberCollection.convert(cell.frame.origin, to: view)
-            origin.x -= (programCounter.frame.size.width + Constants.UI.programCounterOffsetX)
-            programCounter.frame.origin = origin
-        }
-    }
-
     // Updates the display of program counter depending on `runState`.
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         if programCounter.isHidden {
-            setUpProgramCounter()
+            resetProgramCounter()
             programCounter.isHidden = false
         }
 
         switch model.runState {
-        case .start:
-            programCounter.isHidden = true
-        case .lost:
+        case .start, .lost:
             programCounter.isHidden = true
         default:
             break
