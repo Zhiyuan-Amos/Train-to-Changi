@@ -68,13 +68,13 @@ extension LineNumberViewController {
             object: nil)
 
         NotificationCenter.default.addObserver(
-            self, selector: #selector(handleProgramCounterUpdate(notification:)),
-            name: Constants.NotificationNames.moveProgramCounter,
+            self, selector: #selector(handleScroll(notification:)),
+            name: Constants.NotificationNames.userScrollEvent,
             object: nil)
 
         NotificationCenter.default.addObserver(
-            self, selector: #selector(handleScroll(notification:)),
-            name: Constants.NotificationNames.userScrollEvent,
+            self, selector: #selector(handleProgramCounterUpdate(notification:)),
+            name: Constants.NotificationNames.moveProgramCounter,
             object: nil)
 
         NotificationCenter.default.addObserver(
@@ -139,25 +139,12 @@ extension LineNumberViewController {
         }
     }
 
-    private func setUpProgramCounter() {
-        let firstIndexPath = IndexPath(item: 0, section: 0)
-        if let cell = lineNumberCollection.cellForItem(at: firstIndexPath) {
-            var origin = lineNumberCollection.convert(cell.frame.origin, to: view)
-            origin.x -= (programCounter.frame.size.width + Constants.UI.programCounterOffsetX)
-            programCounter.frame.origin = origin
-        }
-    }
-
     private func updateProgramCounterCoordinates(notification: Notification) {
         if let index = notification.userInfo?["index"] as? Int,
-            let cell = lineNumberCollection.cellForItem(at:
-                IndexPath(row: index, section: 0)) {
-            let cellYCoords = lineNumberCollection.convert(cell.frame.origin, to: self.view).y
+           let cell = lineNumberCollection.cellForItem(at: IndexPath(row: index, section: 0)) {
+           let cellYCoords = lineNumberCollection.convert(cell.frame.origin, to: self.view).y
             UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
                            animations: { self.programCounter.frame.origin.y = cellYCoords })
-        } else {
-            UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
-                           animations: { self.programCounter.frame.origin.y += CGFloat(40) })
         }
     }
 
@@ -169,6 +156,15 @@ extension LineNumberViewController {
         semaphore.signal()
     }
 
+    private func setUpProgramCounter() {
+        let firstIndexPath = IndexPath(item: 0, section: 0)
+        if let cell = lineNumberCollection.cellForItem(at: firstIndexPath) {
+            var origin = lineNumberCollection.convert(cell.frame.origin, to: view)
+            origin.x -= (programCounter.frame.size.width + Constants.UI.programCounterOffsetX)
+            programCounter.frame.origin = origin
+        }
+    }
+
     // Updates the display of program counter depending on `runState`.
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         if programCounter.isHidden {
@@ -178,6 +174,8 @@ extension LineNumberViewController {
 
         switch model.runState {
         case .start:
+            programCounter.isHidden = true
+        case .lost:
             programCounter.isHidden = true
         default:
             break

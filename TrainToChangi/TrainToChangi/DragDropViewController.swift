@@ -61,7 +61,10 @@ extension DragDropViewController: DataServiceLoadProgramDelegate {
         model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
         currentCommandsView.reloadData()
         renderJumpArrows()
-
+        print("HELLO")
+        currentCommandsView.scrollToItem(at: IndexPath(item: 0, section: 0),
+                                         at: UICollectionViewScrollPosition.top,
+                                         animated: false)
         NotificationCenter.default.post(name: Constants.NotificationNames.userLoadCommandEvent,
                                         object: nil,
                                         userInfo: nil)
@@ -290,6 +293,19 @@ extension DragDropViewController {
             self, selector: #selector(handleResetCommand(notification:)),
             name: Constants.NotificationNames.userResetCommandEvent,
             object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleProgramCounterUpdate(notification:)),
+            name: Constants.NotificationNames.moveProgramCounter,
+            object: nil)
+    }
+
+    @objc fileprivate func handleProgramCounterUpdate(notification: Notification) {
+        if let index = notification.userInfo?["index"] as? Int {
+            currentCommandsView.scrollToItem(at: IndexPath(item: index, section: 0),
+                                             at: UICollectionViewScrollPosition.bottom,
+                                             animated: true)
+        }
     }
 
     @objc fileprivate func handleSelectedIndex(notification: Notification) {
@@ -329,6 +345,9 @@ extension DragDropViewController {
         case .running, .won, .stepping:
             currentCommandsView.isUserInteractionEnabled = false
         case .paused, .lost, .start:
+            currentCommandsView.scrollToItem(at: IndexPath(item: 0, section: 0),
+                                             at: UICollectionViewScrollPosition.bottom,
+                                             animated: true)
             currentCommandsView.isUserInteractionEnabled = true
         }
     }
