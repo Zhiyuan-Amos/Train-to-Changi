@@ -50,7 +50,7 @@ class LineNumberViewController: UIViewController {
         programCounter.frame.origin.y = 0
         programCounter.frame.size.height = Constants.UI.collectionCellHeight
         programCounter.frame.size.width = 20
-        programCounter.isHidden = false
+        programCounter.isHidden = true
         programCounter.frame = view.convert(programCounter.frame, to: lineNumberCollection)
         lineNumberCollection.addSubview(programCounter)
     }

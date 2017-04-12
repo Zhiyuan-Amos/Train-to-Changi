@@ -33,6 +33,7 @@ extension UIEntityDrawer {
                            origin: CGPoint, interactive: Bool) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: UIControlState.normal)
+        button.titleLabel?.numberOfLines = 2
         button.setTitleColor(UIColor.black, for: UIControlState.normal)
         button.backgroundColor = backgroundColor
         button.titleLabel?.font = Constants.UI.CommandButton.buttonTitleFont
@@ -97,12 +98,12 @@ extension UIEntityDrawer {
                               width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
         case .jumpIfZero:
-            return drawButton(title: "jumpifzero", backgroundColor: Constants.UI.Colors.commandBlue,
-                              width: Constants.UI.CommandButton.widthLongest,
+            return drawButton(title: "jumpif\nzero", backgroundColor: Constants.UI.Colors.commandBlue,
+                              width: Constants.UI.CommandButton.widthShort,
                               origin: origin, interactive: interactive)
         case .jumpIfNegative:
-            return drawButton(title: "jumpifnegative", backgroundColor: Constants.UI.Colors.commandBlue,
-                              width: Constants.UI.CommandButton.widthLongest,
+            return drawButton(title: "jumpif\nnegative", backgroundColor: Constants.UI.Colors.commandBlue,
+                              width: Constants.UI.CommandButton.widthMid,
                               origin: origin, interactive: interactive)
         case .jumpTarget:
             return drawButton(title: "", backgroundColor: Constants.UI.Colors.commandBlue,
