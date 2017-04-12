@@ -141,6 +141,12 @@ class LogicManager: Logic {
             }
             notifySceneToMove(to: .memory(
                 layout: layout, index: command.index, action: .compute(expected: expected)))
+        case let command as SubCommand:
+            guard let expected = model.getValueOnPerson() else {
+                fatalError("Error in executing SubCommand")
+            }
+            notifySceneToMove(to: .memory(
+                layout: layout, index: command.index, action: .compute(expected: expected)))
         default:
             break
         }

@@ -93,13 +93,10 @@ extension GameScene {
     // Pass `levelState` to specify the locations of each sprite. If it's nil then re init from start.
     // Static elements are not refreshed again.
     func rePresentDynamicElements(levelState: LevelState? = nil) {
-        inboxNodes.forEach { $0.removeFromParent() }
-        inboxNodes.removeAll()
-        outboxNodes.forEach { $0.removeFromParent() }
-        outboxNodes.removeAll()
-        memoryNodes.forEach { $1.removeFromParent() }
-        memoryNodes.removeAll()
         player.removeAllChildren()
+        enumerateChildNodes(withName: Constants.Payload.imageName, using: { node, _ in
+            node.removeFromParent()
+        })
         if let levelState = levelState { // stepBack button pressed
             initConveyorNodes(inboxValues: levelState.inputs, outboxValues: levelState.outputs)
             guard let memoryLayout = memoryLayout else {

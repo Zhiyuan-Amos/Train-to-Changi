@@ -15,6 +15,7 @@ class Payload: SKSpriteNode {
         let texture = SKTexture(imageNamed: Constants.Payload.imageName)
         // this initializer is the only designated one
         super.init(texture: texture, color: UIColor.clear, size: Constants.Memory.size)
+        self.name = Constants.Payload.imageName
         self.size = Constants.Payload.size
         self.position = position
         self.zRotation = Constants.Payload.rotationAngle
