@@ -27,8 +27,15 @@ class CommandDataParser {
         case .add(let index):
             let index = returnIndex(index)
             return AddCommand(model: model, memoryIndex: index)
+        case .sub(let index):
+            let index = returnIndex(index)
+            return SubCommand(model: model, memoryIndex: index)
         case .jump:
             return JumpCommand(iterator: iterator)
+        case .jumpIfZero:
+            return JumpIfZeroCommand(model: model, iterator: iterator)
+        case .jumpIfNegative:
+            return JumpIfNegativeCommand(model: model, iterator: iterator)
         case .jumpTarget:
             return JumpTarget()
         }
