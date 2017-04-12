@@ -63,15 +63,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOm-RY-VSo">
-                                <rect key="frame" x="445" y="371" width="128" height="68"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="landingachieve"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lI-OS-wWJ">
-                                <rect key="frame" x="445" y="447" width="128" height="60"/>
+                                <rect key="frame" x="445" y="374" width="128" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="landingsettings"/>
+                                <state key="normal" backgroundImage="logout"/>
                                 <connections>
                                     <action selector="signOutButtonPressed:" destination="3c2-mi-wt9" eventType="touchUpInside" id="mRZ-nV-1lB"/>
                                 </connections>
@@ -990,10 +985,9 @@
         <image name="editor" width="142" height="142"/>
         <image name="exit" width="176" height="87"/>
         <image name="landingImage" width="1999" height="1125"/>
-        <image name="landingachieve" width="1716" height="383"/>
         <image name="landingplay" width="850" height="383"/>
-        <image name="landingsettings" width="1463" height="383"/>
         <image name="loadprogram" width="131" height="131"/>
+        <image name="logout" width="1232" height="383"/>
         <image name="maxspeed" width="48" height="29"/>
         <image name="minspeed" width="23" height="29"/>
         <image name="music" width="153" height="154"/>
