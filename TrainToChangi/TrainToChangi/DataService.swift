@@ -16,6 +16,10 @@ protocol DataServiceLoadSavedProgramNamesDelegate: class {
     func load(savedProgramNames: [[String]])
 }
 
+protocol DataServiceLoadUnlockedAchievementsDelegate: class {
+    func load(unlockedAchievements: [String])
+}
+
 class DataService {
 
     private static let _instance = DataService()
@@ -24,6 +28,7 @@ class DataService {
     private let commandDataListInfoKey = "commandDataListInfo"
     private let autoSavedCommandDataListInfoKey = "autoSavedCommandDataListInfo"
     private let autoSavedKey = "autoSaved"
+    private let achievementsKey = "achievements"
 
     static var instance: DataService {
         return _instance
@@ -130,6 +135,31 @@ class DataService {
                     }
                 }
                 loadSavedProgramNamesDelegate.load(savedProgramNames: userAddedCommandsArray)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+
+    // Saves unlocked achievement to database
+    func unlockAchievement(userId: String,
+                           achievementString: String) {
+        // Convert achievementString to anyObject
+        let data = [achievementString: true as AnyObject]
+        let path = "\(userId)/\(achievementsKey)"
+        usersRef.child(path).updateChildValues(data)
+    }
+
+    func loadUnlockedAchievements(userId: String,
+                                  loadUnlockedAchievementsDelegate: DataServiceLoadUnlockedAchievementsDelegate) {
+        let ref = usersRef.child(userId)
+                          .child(achievementsKey)
+
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            if let unlockedAchievementsDict = snapshot.value as? [String: AnyObject] {
+                loadUnlockedAchievementsDelegate.load(unlockedAchievements: Array(unlockedAchievementsDict.keys))
+            } else {
+                loadUnlockedAchievementsDelegate.load(unlockedAchievements: [])
             }
         }) { (error) in
             print(error.localizedDescription)

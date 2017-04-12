@@ -8,7 +8,6 @@
 
 class ApplicationManager {
 
-    let achievementsManager = AchievementsManager()
     let automaticFirebaseSaver = AutomaticFirebaseSaver()
 
     init() {

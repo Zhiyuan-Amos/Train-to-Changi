@@ -17,12 +17,13 @@ class LandingViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         // Makes sure that user is logged in.
-        guard FIRAuth.auth()?.currentUser != nil else {
+        guard AuthService.instance.currentUserId != nil else {
             // show login viewcontroller
             performSegue(withIdentifier: "login", sender: nil)
             return
         }
         preloadCommandDataList()
+        loadUnlockedAchievements()
     }
 
     override func viewDidLoad() {
@@ -60,6 +61,17 @@ class LandingViewController: UIViewController {
             return
         }
         DataService.instance.preloadUserPrograms(userId: userId)
+    }
+
+    // Loads user's unlocked achievements from firebase.
+    // This function cannot be placed inside AchievementsManager's init because
+    // it will be initialised before user has logged in.
+    private func loadUnlockedAchievements() {
+        guard let userId = AuthService.instance.currentUserId else {
+            return
+        }
+        DataService.instance.loadUnlockedAchievements(userId: userId,
+                                                      loadUnlockedAchievementsDelegate: AchievementsManager.sharedInstance)
     }
 
     @IBAction func signOutButtonPressed(_ sender: UIButton) {
