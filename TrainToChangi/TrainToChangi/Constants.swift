@@ -172,7 +172,7 @@ struct Constants {
         static let topEdgeInset: CGFloat = 10
         static let rightEdgeInset: CGFloat = 10
 
-        static let availableCommandsPaddingX: CGFloat = 10
+        static let availableCommandsPaddingX: CGFloat = -20
 
         static let numberOfSectionsInCollectionView = 1
         static let minimumLineSpacingForSection: CGFloat = 10
@@ -203,6 +203,7 @@ struct Constants {
             static let widthShort: CGFloat = 60
             static let widthMid: CGFloat = 80
             static let widthLong: CGFloat = 100
+            static let widthLongest: CGFloat = 130
 
             static let buttonTitleFont = UIFont(name: "Futura-Bold", size: 14)
             static let cornerRadius: CGFloat = 5.0
@@ -308,7 +309,10 @@ struct Constants {
             static let inbox = CommandData.inbox
             static let outbox = CommandData.outbox
             static let jump = CommandData.jump
+            static let jumpIfZero = CommandData.jumpIfZero
+            static let jumpIfNegative = CommandData.jumpIfNegative
             static let add = CommandData.add(memoryIndex: 0)
+            static let sub = CommandData.sub(memoryIndex: 0)
             static let copyTo = CommandData.copyTo(memoryIndex: 0)
             static let copyFrom = CommandData.copyFrom(memoryIndex: 0)
         }

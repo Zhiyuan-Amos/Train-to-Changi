@@ -67,18 +67,15 @@ extension LevelData where Self: RandomizedInputsLevel {
 
 struct LevelOneData: LevelData, RandomizedInputsLevel {
 
-    let levelName = "The Beginning"
+    let levelName = "Kent Ridge"
 
     let levelDescription = "The MRT needs your help to power up!"
                            + Helper.newLine
-                           + "Drag and drop commands to move all boxes to Outbox."
+                           + "You are given some commands. Tap on them to add them to the editor, then drag and drop to move them around. Get all boxes to Outbox!"
 
     let availableCommands: [CommandData] = [Cmd.inbox,
                                             Cmd.outbox,
-                                            Cmd.add,
-                                            Cmd.copyTo,
-                                            Cmd.jump,
-                                            Cmd.copyFrom]
+                                            Cmd.jump]
 
     let memoryValues: [Int?] = [nil, nil]
 
@@ -99,64 +96,81 @@ struct LevelOneData: LevelData, RandomizedInputsLevel {
 
 struct LevelTwoData: LevelData, RandomizedInputsLevel {
 
-    let levelName = "What is going on?"
+    let levelName = "City Hall"
 
-    let levelDescription = "Wow, that's a whole lot of boxes!"
+    let levelDescription = "The boxes do not provide enough power on their own."
                            + Helper.newLine
-                           + "Can you power up the MRT, "
-                           + "using only one inbox and outbox command?."
+                           + "Can you sum the boxes up before moving them to outbox?"
+                           + "The combined power of four boxes will do, so sum up four of them and then move this sum to outbox. Repeat this until all the inbox has no more boxes!"
 
     let availableCommands: [CommandData] = [Cmd.inbox,
                                             Cmd.outbox,
+                                            Cmd.copyTo,
+                                            Cmd.add,
                                             Cmd.jump]
 
-    let memoryValues: [Int?] = []
+    let memoryValues: [Int?] = [nil, nil]
 
     let start = 0
     let end = 20
-    let count = 20
+    let count = 8
 
     func algorithm(inputs: [Int]) -> [Int] {
-        return moveInputsOver(inputs: inputs)
+        return sumUpFours(inputs: inputs)
     }
 
-    // Algorithm for level one: move all boxes from inbox to outbox
-    private func moveInputsOver(inputs: [Int]) -> [Int] {
-        return inputs
+    // Algorithm for level three: sum up pairs of boxes
+    // Inputs must be divisible by 4
+    private func sumUpFours(inputs: [Int]) -> [Int] {
+        guard inputs.count % 4 == 0 else {
+            preconditionFailure("Inputs must be divisible by 4!")
+        }
+        var outputs: [Int] = []
+        for index in stride(from: 0, to: inputs.count, by: 4) {
+            let first = inputs[index]
+            let second = inputs[index + 1]
+            let third = inputs[index + 2]
+            let fourth = inputs[index + 3]
+            outputs.append(first + second + third + fourth)
+        }
+        return outputs
     }
 
 }
 
 struct LevelThreeData: LevelData, RandomizedInputsLevel {
 
-    let levelName = "You know how to add, right?"
+    let levelName = "Changi"
 
-    let levelDescription = "The boxes do not provide enough power by themselves."
+    let levelDescription = "We want the boxes with higher power."
                            + Helper.newLine
-                           + "Notice that you are provided with locations "
-                           + "to place boxes down on the floor, "
-                           + "and the COPYTO, ADD functionality. "
-                           + "Sum up each pair of boxes, before moving them to outbox."
+                           + "For each two boxes in inbox, "
+                           + "place only the bigger of the two in outbox. "
+                           + "If they are equal, either one will do! "
 
     let availableCommands: [CommandData] = [Cmd.inbox,
                                             Cmd.outbox,
-                                            Cmd.jump,
+                                            Cmd.copyFrom,
+                                            Cmd.copyTo,
                                             Cmd.add,
-                                            Cmd.copyTo]
+                                            Cmd.sub,
+                                            Cmd.jump,
+                                            Cmd.jumpIfZero,
+                                            Cmd.jumpIfNegative]
 
     let memoryValues: [Int?] = [nil, nil]
 
     let start = 1
-    let end = 4
+    let end = 20
     let count = 8
 
     func algorithm(inputs: [Int]) -> [Int] {
-        return sumUpPairs(inputs: inputs)
+        return outputLargerOfEachPair(inputs: inputs)
     }
 
-    // Algorithm for level three: sum up pairs of boxes
+    // Algorithm for level three: output the larger number of each pair
     // Inputs must have an even count
-    private func sumUpPairs(inputs: [Int]) -> [Int] {
+    private func outputLargerOfEachPair(inputs: [Int]) -> [Int] {
         guard inputs.count % 2 == 0 else {
             preconditionFailure("Inputs must have even count!")
         }
@@ -164,7 +178,8 @@ struct LevelThreeData: LevelData, RandomizedInputsLevel {
         for index in stride(from: 0, to: inputs.count, by: 2) {
             let first = inputs[index]
             let second = inputs[index + 1]
-            outputs.append(first + second)
+            let larger = first > second ? first : second
+            outputs.append(larger)
         }
         return outputs
     }

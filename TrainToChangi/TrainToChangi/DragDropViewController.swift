@@ -372,7 +372,7 @@ extension DragDropViewController {
         let penultimateIndexPath = IndexPath(item: model.userEnteredCommands.count - 2, section: 0)
         let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
 
-        if command == CommandData.jump {
+        if command.isJumpCommand {
             currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
             renderJumpArrows()
         } else {

@@ -98,11 +98,11 @@ extension UIEntityDrawer {
                               origin: origin, interactive: interactive)
         case .jumpIfZero:
             return drawButton(title: "jumpifzero", backgroundColor: Constants.UI.Colors.commandBlue,
-                              width: Constants.UI.CommandButton.widthShort,
+                              width: Constants.UI.CommandButton.widthLongest,
                               origin: origin, interactive: interactive)
         case .jumpIfNegative:
             return drawButton(title: "jumpifnegative", backgroundColor: Constants.UI.Colors.commandBlue,
-                              width: Constants.UI.CommandButton.widthShort,
+                              width: Constants.UI.CommandButton.widthLongest,
                               origin: origin, interactive: interactive)
         case .jumpTarget:
             return drawButton(title: "", backgroundColor: Constants.UI.Colors.commandBlue,
