@@ -31,7 +31,7 @@ class GameScene: SKScene {
 
     fileprivate var level: Level! // implicit unwrap because scene can't recover from a nil `level`
 
-    fileprivate let player = SKSpriteNode(imageNamed: "player")
+    fileprivate let player = SKSpriteNode(imageNamed: "r2d2")
     fileprivate var playerPreviousPositions = Stack<CGPoint>()
 
     fileprivate let inbox = SKSpriteNode(imageNamed: "conveyor-belt-1")
