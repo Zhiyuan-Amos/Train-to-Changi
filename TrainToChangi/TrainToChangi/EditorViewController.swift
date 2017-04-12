@@ -117,6 +117,7 @@ class EditorViewController: UIViewController {
         NotificationCenter.default.post(name: Constants.NotificationNames.userAddCommandEvent,
                                         object: command,
                                         userInfo: nil)
+        presentEditorView()
     }
 }
 
