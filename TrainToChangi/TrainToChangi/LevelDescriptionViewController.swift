@@ -31,7 +31,6 @@ class LevelDescriptionViewController: UIViewController {
         levelDescriptionTextView.text = model.currentLevel.levelDescriptor
         levelDescriptionTextView.isScrollEnabled = true
         levelDescriptionTextView.font = Constants.UI.LevelDescription.font
-        levelDescriptionTextView.textColor = UIColor.black
     }
 
     private func setUpExpectedOutput() {
@@ -43,7 +42,6 @@ class LevelDescriptionViewController: UIViewController {
         expectedOutputTextView.text = outputString
         expectedOutputTextView.isScrollEnabled = true
         expectedOutputTextView.font = Constants.UI.LevelDescription.font
-        expectedOutputTextView.textColor = UIColor.black
     }
 
 

@@ -256,7 +256,6 @@ struct Constants {
             static let gameWonTrainFrames = [UIImage(named: "train_vert0")!,
                                              UIImage(named: "train_vert8")!]
             static let gameWonTrainAnimationDuration = 0.5
-            static let gameWonTrainAnimationRepeatCount = 3
         }
 
     }

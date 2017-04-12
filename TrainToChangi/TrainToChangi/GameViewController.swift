@@ -75,7 +75,6 @@ class GameViewController: UIViewController {
         trainUIImage.stopAnimating()
         trainUIImage.animationImages = Constants.UI.trainView.gameWonTrainFrames
         trainUIImage.animationDuration = Constants.UI.trainView.gameWonTrainAnimationDuration
-        trainUIImage.animationRepeatCount = Constants.UI.trainView.gameWonTrainAnimationRepeatCount
         trainUIImage.startAnimating()
     }
 
