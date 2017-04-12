@@ -116,22 +116,20 @@ struct LevelTwoData: LevelData, RandomizedInputsLevel {
     let count = 8
 
     func algorithm(inputs: [Int]) -> [Int] {
-        return sumUpFours(inputs: inputs)
+        return sumUpTwos(inputs: inputs)
     }
 
     // Algorithm for level three: sum up pairs of boxes
     // Inputs must be divisible by 4
-    private func sumUpFours(inputs: [Int]) -> [Int] {
-        guard inputs.count % 4 == 0 else {
+    private func sumUpTwos(inputs: [Int]) -> [Int] {
+        guard inputs.count % 2 == 0 else {
             preconditionFailure("Inputs must be divisible by 4!")
         }
         var outputs: [Int] = []
-        for index in stride(from: 0, to: inputs.count, by: 4) {
+        for index in stride(from: 0, to: inputs.count, by: 2) {
             let first = inputs[index]
             let second = inputs[index + 1]
-            let third = inputs[index + 2]
-            let fourth = inputs[index + 3]
-            outputs.append(first + second + third + fourth)
+            outputs.append(first + second)
         }
         return outputs
     }
