@@ -53,32 +53,6 @@ class DragDropViewController: UIViewController {
                                         userInfo: nil)
     }
 
-    @IBAction func loadButtonPressed(_ sender: UIButton) {
-        let identifier = Constants.UI.loadProgramViewControllerIdentifier
-        guard let loadProgramController = loadModalViewControllers(identifier: identifier) as? LoadProgramViewController else {
-            fatalError("Wrong controller loaded.")
-        }
-        loadProgramController.loadProgramDelegate = self
-        self.present(loadProgramController, animated: true, completion: nil)
-    }
-
-    @IBAction func saveButtonPressed(_ sender: UIButton) {
-        let identifier = Constants.UI.saveProgramViewControllerIdentifier
-        guard let saveProgramController = loadModalViewControllers(identifier: identifier) as? SaveProgramViewController else {
-            fatalError("Wrong controller loaded.")
-        }
-        saveProgramController.saveProgramDelegate = self
-        self.present(saveProgramController, animated: true, completion: nil)
-    }
-
-    private func loadModalViewControllers(identifier: String) -> UIViewController {
-        let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: identifier)
-        controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
-        controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        return controller
-    }
-
 }
 
 // MARK - DataServiceLoadProgramDelegate
