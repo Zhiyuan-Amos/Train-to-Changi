@@ -207,6 +207,7 @@ extension DragDropViewController {
             DragBundle.cellSnapshot?.center.y = location.y
             guard let indexPath = currentCommandsView.indexPathForItem(at: location),
                   let initialIndexPath = DragBundle.initialIndexPath,
+                  let _ = currentCommandsView.cellForItem(at: indexPath),
                   indexPath !=  initialIndexPath else {
                     return
             }
