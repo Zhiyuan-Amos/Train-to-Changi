@@ -3,13 +3,7 @@
 // successful.
 //
 
-struct CommandResult {
-    let errorMessage: ExecutionError?
-    var isSuccessful: Bool {
-        return errorMessage == nil
-    }
-
-    init(errorMessage: ExecutionError? = nil) {
-        self.errorMessage = errorMessage
-    }
+enum CommandResult {
+    case failure(error: ExecutionError)
+    case success(isJump: Bool)
 }

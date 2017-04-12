@@ -15,12 +15,12 @@ class InboxCommand: Command {
         prevValueOnPerson = model.getValueOnPerson()
 
         guard let value = model.dequeueValueFromInbox() else {
-            return CommandResult(errorMessage: .invalidOperation)
+            return .failure(error: .invalidOperation)
         }
 
         model.updateValueOnPerson(to: value)
 
-        return CommandResult()
+        return .success(isJump: false)
     }
 
     func undo() {

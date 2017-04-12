@@ -11,7 +11,7 @@ class JumpCommand: Command {
 
     func execute() -> CommandResult {
         iterator.jump()
-        return CommandResult()
+        return .success(isJump: true)
     }
 
     func undo() {}

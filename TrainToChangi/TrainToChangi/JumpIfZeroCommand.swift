@@ -18,12 +18,13 @@ class JumpIfZeroCommand: Command {
 
     func execute() -> CommandResult {
         guard let personValue = model.getValueOnPerson() else {
-            return CommandResult(errorMessage: .invalidOperation)
+            return .failure(error: .invalidOperation)
         }
         if personValue == 0 {
             iterator.jump()
+            return .success(isJump: true)
         }
-        return CommandResult()
+        return .success(isJump: false)
     }
 
     func undo() {}

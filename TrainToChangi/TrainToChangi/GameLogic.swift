@@ -21,12 +21,12 @@ class GameLogic {
     // Parses the `commandData` and executes the corresponding command.
     // Returns nil if `commandData` is nil. Returns the executed command otherwise.
     // Updates `model.runState` accordingly as well.
-    func stepForward(commandData: CommandData?) -> Command? {
+    func stepForward(commandData: CommandData?) -> (Command?, CommandResult?) {
         // If there's no `commandData` and game hasn't been won, it implies
         // that there are no commands left to be executed i.e game lost.
         guard let commandData = commandData else {
             model.runState = .lost(error: .incompleteOutboxValues)
-            return nil
+            return (nil, nil)
         }
 
         let command = parser.parse(commandData: commandData)
@@ -36,6 +36,6 @@ class GameLogic {
             model.numSteps = gameLogicDelegate.numCommandsExecuted
         }
 
-        return command
+        return (command, commandResult)
     }
 }

@@ -69,7 +69,8 @@ class LogicManager: Logic {
                                                      object: nil, userInfo: nil))
 
         // The undoing of JumpCommand or JumpTarget does not require update in scene.
-        if !(command is JumpCommand || command is JumpTarget) {
+        if !(command is JumpCommand || command is JumpTarget || command is JumpIfNegativeCommand
+            || command is JumpIfZeroCommand) {
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.resetGameScene,
                                                          object: model.levelState, userInfo: nil))
         }
@@ -82,12 +83,12 @@ class LogicManager: Logic {
         // as we only store the current index after execution of command, jumpCommand
         // will alter the index, thus we have to store the value of the previous index
         let currentIndex = iterator.index
-        let executedCommand = gameLogic.stepForward(commandData: iterator.current)
+        let tuple = gameLogic.stepForward(commandData: iterator.current)
         if case .lost = model.runState {
             model.incrementNumLost()
             return
         }
-        guard let index = currentIndex, let command = executedCommand else {
+        guard let index = currentIndex, let command = tuple.0, let commandResult = tuple.1 else {
             fatalError("Misconfiguration of iterator and game logic")
         }
         postSceneNotifications(command)
@@ -96,7 +97,10 @@ class LogicManager: Logic {
         // If the command executed is JumpCommand , then there's no need to further
         // move the iterator to the next position since the execution has already moved
         // the iterator's position.
-        if !(executedCommand is JumpCommand) {
+        switch commandResult {
+        case .success(isJump: true):
+            break
+        default:
             iterator.next()
         }
 

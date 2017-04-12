@@ -13,14 +13,14 @@ class OutboxCommand: Command {
 
     func execute() -> CommandResult {
         guard let value = model.getValueOnPerson() else {
-            return CommandResult(errorMessage: .invalidOperation)
+            return .failure(error: .invalidOperation)
         }
 
         prevValueOnPerson = value
         model.updateValueOnPerson(to: nil)
         model.appendValueIntoOutbox(value)
 
-        return CommandResult()
+        return .success(isJump: false)
     }
 
     func undo() {
