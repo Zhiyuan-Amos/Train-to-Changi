@@ -10,5 +10,5 @@ import UIKit
 
 protocol LineNumberUpdateDelegate: class {
     func updateLineNumbers()
-    func scrollToCommand(offset: CGPoint)
+    func scrollToOffset(offset: CGPoint)
 }
