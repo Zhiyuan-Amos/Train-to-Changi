@@ -92,6 +92,18 @@ extension ControlPanelViewController {
         NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleUpdateCommandIndex(notification:)),
+            name: Constants.NotificationNames.updateCommandIndexEvent, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleCancelUpdateCommandIndex(notification:)),
+            name: Constants.NotificationNames.cancelUpdateCommandIndexEvent, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleCancelUpdateCommandIndex(notification:)),
+            name: Constants.NotificationNames.userSelectedIndexEvent, object: nil)
     }
 
     // Updates whether the buttons are enabled.
@@ -104,8 +116,7 @@ extension ControlPanelViewController {
         stepForwardButton.isEnabled = stepForwardButtonIsEnabled
     }
 
-    // Updates whether the buttons are enabled depending on the `model.runState`.
-    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
+    private func updateButtonsBasedOnRunState() {
         switch model.runState {
         case .running:
             updateButtons(stopButtonIsEnabled: true, stepBackButtonIsEnabled: true,
@@ -134,5 +145,19 @@ extension ControlPanelViewController {
                           playPauseButtonIsEnabled: true, stepForwardButtonIsEnabled: true)
             playPauseButton.setImage(Constants.UI.ControlPanel.playButtonImage, for: .normal)
         }
+    }
+
+    @objc fileprivate func handleUpdateCommandIndex(notification: Notification) {
+        updateButtons(stopButtonIsEnabled: false, stepBackButtonIsEnabled: false,
+                      playPauseButtonIsEnabled: false, stepForwardButtonIsEnabled: false)
+    }
+
+    @objc fileprivate func handleCancelUpdateCommandIndex(notification: Notification) {
+        updateButtonsBasedOnRunState()
+    }
+
+    // Updates whether the buttons are enabled depending on the `model.runState`.
+    @objc fileprivate func handleRunStateUpdate(notification: Notification) {
+        updateButtonsBasedOnRunState()
     }
 }

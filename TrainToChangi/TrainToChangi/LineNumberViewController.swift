@@ -120,13 +120,13 @@ extension LineNumberViewController {
         if let index = notification.userInfo?["index"] as? Int {
             UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
                            animations: {
-                            // Means zero
-                            if self.previousCounterIndex == nil {
-                                self.programCounter.frame.origin.y += CGFloat(50)
-                            } else {
-                                let diff = index - self.previousCounterIndex!
-                                self.programCounter.frame.origin.y += CGFloat(diff) * CGFloat(50)
-                            }
+                // Means zero
+                if self.previousCounterIndex == nil {
+                    self.programCounter.frame.origin.y += CGFloat(50)
+                } else {
+                    let diff = index - self.previousCounterIndex!
+                    self.programCounter.frame.origin.y += CGFloat(diff) * CGFloat(50)
+                }
                             self.previousCounterIndex = index
             })
         }
