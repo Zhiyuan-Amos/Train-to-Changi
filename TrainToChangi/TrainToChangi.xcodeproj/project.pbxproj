@@ -16,6 +16,7 @@
 		22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC750125724E9BA28BA9EB /* Memory.swift */; };
 		22DC7EA1D5735A3F88CAD5B5 /* GameScene+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC74693A950CEF64754224 /* GameScene+Notifications.swift */; };
 		3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */; };
+		3B04A7D41E8BE13C00B317ED /* LineNumnerCollectionViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04A7D31E8BE13C00B317ED /* LineNumnerCollectionViewController+.swift */; };
 		3B05F91F1E94FFBF009B4F5F /* SpeechBubbleSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B05F91E1E94FFBF009B4F5F /* SpeechBubbleSprite.swift */; };
 		3B10D8491E9272C300EFCDAC /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10D8481E9272C300EFCDAC /* ArrowView.swift */; };
 		3B16804B1E778773002286F6 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B16804A1E778773002286F6 /* ModelManager.swift */; };
@@ -25,9 +26,11 @@
 		3B3B4E981E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */; };
 		3B3B4E9A1E9CEEB300DCF9E7 /* MapSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */; };
 		3B3B4E9C1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */; };
-		3B3B4E9E1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9D1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift */; };
+		3B3B4E9E1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9D1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift */; };
 		3B3B4EA01E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */; };
 		3B3B4EA21E9CF69F00DCF9E7 /* SaveProgramDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */; };
+		3B3B4EA61EA0B98000DCF9E7 /* DragDropViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4EA51EA0B98000DCF9E7 /* DragDropViewController+.swift */; };
+		3B3B4EA81EA0B9EC00DCF9E7 /* LoadProgramViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4EA71EA0B9EC00DCF9E7 /* LoadProgramViewController+.swift */; };
 		3B5D5A481E9A91F9001BC438 /* LevelDescriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */; };
 		3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */; };
 		3B6C7CD41E9A19AD000933C1 /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */; };
@@ -90,7 +93,7 @@
 		D76FA8341E76ADC400CCCFBE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8331E76ADC400CCCFBE /* Assets.xcassets */; };
 		D76FA8371E76ADC400CCCFBE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */; };
 		D77D3EBD1E9B899C004E5AA9 /* AchievementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */; };
-		D77D3EBF1E9B91B7004E5AA9 /* TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D3EBE1E9B91B7004E5AA9 /* TableViewExtensions.swift */; };
+		D77D3EBF1E9B91B7004E5AA9 /* EndGameViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D3EBE1E9B91B7004E5AA9 /* EndGameViewController+.swift */; };
 		D77D4B9D1E993ACC004A16F8 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */; };
 		D788BCDA1E9B1781003B92DA /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D788BCD91E9B1781003B92DA /* Achievement.swift */; };
 		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
@@ -128,7 +131,7 @@
 		22DC7A12469B8258C38128E2 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 		22DC7FCA2DB761ACDD3C58D0 /* GameScene+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+Init.swift"; sourceTree = "<group>"; };
 		38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.release.xcconfig"; sourceTree = "<group>"; };
-		3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewControllersExtensions.swift; sourceTree = "<group>"; };
+		3B04A7D31E8BE13C00B317ED /* LineNumnerCollectionViewController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LineNumnerCollectionViewController+.swift"; sourceTree = "<group>"; };
 		3B05F91E1E94FFBF009B4F5F /* SpeechBubbleSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechBubbleSprite.swift; sourceTree = "<group>"; };
 		3B10D8481E9272C300EFCDAC /* ArrowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrowView.swift; sourceTree = "<group>"; };
 		3B16804A1E778773002286F6 /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
@@ -138,9 +141,11 @@
 		3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewControllerDelegate.swift; sourceTree = "<group>"; };
 		3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSceneDelegate.swift; sourceTree = "<group>"; };
 		3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationLevelNodeDelegate.swift; sourceTree = "<group>"; };
-		3B3B4E9D1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewCommandDelegate.swift; sourceTree = "<group>"; };
+		3B3B4E9D1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCommandsDelegate.swift; sourceTree = "<group>"; };
 		3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberUpdateDelegate.swift; sourceTree = "<group>"; };
 		3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveProgramDelegate.swift; sourceTree = "<group>"; };
+		3B3B4EA51EA0B98000DCF9E7 /* DragDropViewController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DragDropViewController+.swift"; sourceTree = "<group>"; };
+		3B3B4EA71EA0B9EC00DCF9E7 /* LoadProgramViewController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoadProgramViewController+.swift"; sourceTree = "<group>"; };
 		3B5D5A471E9A91F9001BC438 /* LevelDescriptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelDescriptionViewController.swift; sourceTree = "<group>"; };
 		3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndGameViewController.swift; sourceTree = "<group>"; };
 		3B6C7CD31E9A19AD000933C1 /* LandingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
@@ -208,7 +213,7 @@
 		D76FA8361E76ADC400CCCFBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D76FA8381E76ADC400CCCFBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementCell.swift; sourceTree = "<group>"; };
-		D77D3EBE1E9B91B7004E5AA9 /* TableViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewExtensions.swift; sourceTree = "<group>"; };
+		D77D3EBE1E9B91B7004E5AA9 /* EndGameViewController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EndGameViewController+.swift"; sourceTree = "<group>"; };
 		D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		D788BCD91E9B1781003B92DA /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* JumpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpCommand.swift; sourceTree = "<group>"; };
@@ -326,13 +331,13 @@
 		3B3B4EA41E9CF7C100DCF9E7 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */,
 				3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */,
 				3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */,
 				3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */,
-				3B3B4E9D1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift */,
+				3B3B4E9D1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift */,
 				3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */,
 				3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */,
+				D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -375,9 +380,10 @@
 		3B78A6911E91554F00A652D9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */,
-				D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */,
-				D77D3EBE1E9B91B7004E5AA9 /* TableViewExtensions.swift */,
+				3B3B4EA51EA0B98000DCF9E7 /* DragDropViewController+.swift */,
+				3B04A7D31E8BE13C00B317ED /* LineNumnerCollectionViewController+.swift */,
+				D77D3EBE1E9B91B7004E5AA9 /* EndGameViewController+.swift */,
+				3B3B4EA71EA0B9EC00DCF9E7 /* LoadProgramViewController+.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -397,9 +403,9 @@
 			isa = PBXGroup;
 			children = (
 				D7E0E7491E84B78500237705 /* Tiles.sks */,
+				76745B6C1E8855870039A771 /* MapScene.sks */,
 				D76FA8301E76ADC400CCCFBE /* Main.storyboard */,
 				D76FA8351E76ADC400CCCFBE /* LaunchScreen.storyboard */,
-				76745B6C1E8855870039A771 /* MapScene.sks */,
 			);
 			name = InterfaceBuilder;
 			sourceTree = "<group>";
@@ -407,12 +413,12 @@
 		76745B711E8859890039A771 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */,
 				A712096A1E8189060039B257 /* CommandCell.swift */,
 				3B78A68D1E91545700A652D9 /* LineNumberCell.swift */,
 				A7357FAF1E9C92BF00348CD3 /* LoadProgramHeaderView.swift */,
 				A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */,
 				3B10D8481E9272C300EFCDAC /* ArrowView.swift */,
-				D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -842,7 +848,8 @@
 				D7A267D11E7796B800DE5774 /* CommandResult.swift in Sources */,
 				A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */,
 				A7357FB01E9C92BF00348CD3 /* LoadProgramHeaderView.swift in Sources */,
-				3B3B4E9E1E9CF33F00DCF9E7 /* AddNewCommandDelegate.swift in Sources */,
+				3B3B4EA61EA0B98000DCF9E7 /* DragDropViewController+.swift in Sources */,
+				3B3B4E9E1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,
@@ -862,10 +869,11 @@
 				3B1E83A21E9B8813007E4670 /* LoadProgramViewController.swift in Sources */,
 				3B3B4EA01E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift in Sources */,
 				D7A267DD1E77A01D00DE5774 /* Stack.swift in Sources */,
-				D77D3EBF1E9B91B7004E5AA9 /* TableViewExtensions.swift in Sources */,
+				D77D3EBF1E9B91B7004E5AA9 /* EndGameViewController+.swift in Sources */,
 				D75BC4261E76BA9000ED2A1B /* Command.swift in Sources */,
 				A70192451E9517520058D7CD /* DataService.swift in Sources */,
-				3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */,
+				3B04A7D41E8BE13C00B317ED /* LineNumnerCollectionViewController+.swift in Sources */,
+				3B3B4EA81EA0B9EC00DCF9E7 /* LoadProgramViewController+.swift in Sources */,
 				22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */,
 				22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */,
 				A77D49D11E9DDEAB00FC6696 /* SubCommand.swift in Sources */,

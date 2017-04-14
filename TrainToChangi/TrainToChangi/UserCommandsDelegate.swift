@@ -6,6 +6,7 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-protocol AddNewCommandDelegate: class {
+protocol UserCommandsDelegate: class {
     func addNewCommand(command: CommandData)
+    func resetCommands()
 }

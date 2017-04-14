@@ -29,13 +29,14 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
 
         // load .sks file
-        guard let scene = GKScene(fileNamed: MapScene.fileName) else {
-            assertionFailure("Did you rename the .sks file?")
+
+        guard let scene = GKScene(fileNamed: Constants.Map.mapSceneName) else {
+            assertionFailure(Constants.Errors.mapSceneNameNotFound)
             return
         }
         // cast to custom MapScene
         guard let sceneNode = scene.rootNode as? MapScene else {
-            assertionFailure("Did you set custom class in \(MapScene.fileName).sks?")
+            assertionFailure(Constants.Errors.mapSceneNotSubclassed)
             return
         }
         sceneNode.mapSceneDelegate = self
@@ -43,7 +44,7 @@ class MapViewController: UIViewController {
 
         // cast own view so can present scene
         guard let skView = view as? SKView else {
-            assertionFailure("Did you set custom class of storyboard scene's view?")
+            assertionFailure(Constants.Errors.gameViewNotSKView)
             return
         }
         skView.presentScene(sceneNode)
@@ -53,23 +54,23 @@ class MapViewController: UIViewController {
         switch segue.identifier {
         case Constants.SegueIds.startLevel?:
             guard let levelName = sender as? String else {
-                assertionFailure("sender should be a non-nil String")
+                assertionFailure(Constants.Errors.mapSceneToStartLevelStringNil)
                 break
             }
             guard let gameVC = segue.destination as? GameViewController else {
-                assertionFailure("Segue should point to GameViewController")
+                assertionFailure(Constants.Errors.wrongViewControllerLoaded)
                 break
             }
             gameVC.initLevel(name: levelName)
 
-        case Constants.SegueIds.cancelLevelSelect?:
+        case Constants.SegueIds.cancelFromLevelSelectionWithSegue?:
             guard let _ = segue.destination as? LandingViewController else {
-                assertionFailure("Segue should point to LandingViewController")
+                assertionFailure(Constants.Errors.wrongViewControllerLoaded)
                 break
             }
             
         default:
-            assertionFailure("Segue has a name unaccounted for")
+            assertionFailure(Constants.Errors.segueIdNotFound)
         }
     }
 
@@ -78,6 +79,7 @@ class MapViewController: UIViewController {
     }
 }
 
+// MARK - MapSceneDelegate
 extension MapViewController: MapSceneDelegate {
     func didTouchStation(name: String?) {
         guard let name = name else { return }

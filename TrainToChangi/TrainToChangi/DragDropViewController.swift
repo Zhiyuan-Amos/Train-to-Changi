@@ -45,7 +45,7 @@ class DragDropViewController: UIViewController {
 
     private func loadCommandDataList() {
         guard let userId = AuthService.instance.currentUserId else {
-            fatalError("Must be logged in")
+            fatalError(Constants.Errors.userNotLoggedIn)
         }
         DataService.instance.loadAutoSavedUserProgram(userId: userId,
                                                       levelIndex: model.currentLevelIndex,
@@ -74,12 +74,38 @@ extension DragDropViewController: DataServiceLoadProgramDelegate {
 extension DragDropViewController: SaveProgramDelegate {
     func saveProgram(saveName: String) {
         guard let userId = AuthService.instance.currentUserId else {
-            fatalError("User must be logged in!")
+            fatalError(Constants.Errors.userNotLoggedIn)
         }
         DataService.instance.saveUserProgram(userId: userId,
                                              levelIndex: model.currentLevelIndex,
                                              saveName: saveName,
                                              commandDataListInfo: model.getCommandDataListInfo())
+    }
+}
+
+// MARK - UserCommandsDelegate
+extension DragDropViewController: UserCommandsDelegate {
+    func addNewCommand(command: CommandData) {
+        let penultimateIndexPath = IndexPath(item: model.userEnteredCommands.count - 2, section: 0)
+        let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
+
+        if command.isJumpCommand {
+            currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
+            renderJumpArrows()
+        } else {
+            currentCommandsView.insertItems(at: [lastIndexPath])
+        }
+        currentCommandsView.scrollToItem(at: lastIndexPath,
+                                         at: UICollectionViewScrollPosition.top,
+                                         animated: true)
+        lineNumberUpdateDelegate.updateLineNumbers()
+    }
+
+    func resetCommands() {
+        model.clearAllCommands()
+        removeAllJumpArrows()
+        currentCommandsView.reloadData()
+        lineNumberUpdateDelegate.updateLineNumbers()
     }
 }
 
@@ -281,11 +307,6 @@ extension DragDropViewController {
             object: nil)
 
         NotificationCenter.default.addObserver(
-            self, selector: #selector(handleResetCommand(notification:)),
-            name: Constants.NotificationNames.userResetCommandEvent,
-            object: nil)
-
-        NotificationCenter.default.addObserver(
             self, selector: #selector(handleProgramCounterUpdate(notification:)),
             name: Constants.NotificationNames.moveProgramCounter,
             object: nil)
@@ -341,30 +362,5 @@ extension DragDropViewController {
                                              animated: true)
             currentCommandsView.isUserInteractionEnabled = true
         }
-    }
-
-    @objc private func handleResetCommand(notification: Notification) {
-        model.clearAllCommands()
-        removeAllJumpArrows()
-        currentCommandsView.reloadData()
-        lineNumberUpdateDelegate.updateLineNumbers()
-    }
-}
-
-extension DragDropViewController: AddNewCommandDelegate {
-    func addNewCommand(command: CommandData) {
-        let penultimateIndexPath = IndexPath(item: model.userEnteredCommands.count - 2, section: 0)
-        let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
-
-        if command.isJumpCommand {
-            currentCommandsView.insertItems(at: [penultimateIndexPath, lastIndexPath])
-            renderJumpArrows()
-        } else {
-            currentCommandsView.insertItems(at: [lastIndexPath])
-        }
-        currentCommandsView.scrollToItem(at: lastIndexPath,
-                                         at: UICollectionViewScrollPosition.top,
-                                         animated: true)
-        lineNumberUpdateDelegate.updateLineNumbers()
     }
 }

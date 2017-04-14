@@ -6,14 +6,19 @@ extension EndGameViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "achievement"
+        let cellIdentifier = Constants.UI.achievementTableViewCellIdentifier
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier,
                                                        for: indexPath) as? AchievementCell else {
-            fatalError("Cell not assigned the proper view subclass!")
+            fatalError(Constants.Errors.cellNotAssignedCorrectViewSubclass)
         }
 
-        cell.setText(text: achievements.currentLevelUnlockedAchievements[indexPath.item].name.toAchievementName())
-        cell.setImage(image: UIImage(named: achievements.currentLevelUnlockedAchievements[indexPath.item].name.toImagePath())!)
+        let index = indexPath.item
+        let text = achievements.currentLevelUnlockedAchievements[index].name.toAchievementName()
+        guard let image = UIImage(named: achievements.currentLevelUnlockedAchievements[index].name.toImagePath()) else {
+            fatalError(Constants.Errors.achievementImageNotSet)
+        }
+
+        cell.setup(text: text, image: image)
         return cell
     }
 
@@ -24,11 +29,11 @@ extension EndGameViewController: UITableViewDataSource {
 
 extension EndGameViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "You have unlocked these achievements:"
+        return Constants.UI.Achievement.headerTitle
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return Constants.UI.Achievement.headerHeight
     }
 }
 

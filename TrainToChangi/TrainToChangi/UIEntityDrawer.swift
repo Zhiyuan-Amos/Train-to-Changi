@@ -39,7 +39,7 @@ extension UIEntityDrawer {
         button.titleLabel?.font = Constants.UI.CommandButton.buttonTitleFont
         button.frame.origin = origin
         button.frame.size.width = width
-        button.frame.size.height = Constants.UI.collectionCellHeight
+        button.frame.size.height = Constants.UI.commandCollectionCellHeight
         button.layer.cornerRadius = Constants.UI.CommandButton.cornerRadius
         button.isUserInteractionEnabled = interactive
         return button
@@ -53,7 +53,7 @@ extension UIEntityDrawer {
         memoryIndexLabel.backgroundColor = backgroundColor
         memoryIndexLabel.frame.origin = origin
         memoryIndexLabel.frame.size.width = Constants.UI.CommandIndex.indexLabelWidth
-        memoryIndexLabel.frame.size.height = Constants.UI.collectionCellHeight
+        memoryIndexLabel.frame.size.height = Constants.UI.commandCollectionCellHeight
         memoryIndexLabel.clipsToBounds = true
         memoryIndexLabel.layer.cornerRadius = Constants.UI.CommandIndex.cornerRadius
         memoryIndexLabel.textAlignment = .center
@@ -128,7 +128,7 @@ extension UIEntityDrawer {
 
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / Constants.UI.arrowView.arrowIndexDivisor))
+        let width = Constants.UI.ArrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / Constants.UI.ArrowView.arrowIndexDivisor))
 
         return reversed ? generateReverseArrowView(origin: origin, height: height, width: width)
                         : generateArrowView(origin: origin, height: height, width: width)
@@ -141,8 +141,8 @@ extension UIEntityDrawer {
 
     static func getMidYOfCell(at indexPath: IndexPath) -> CGFloat {
         return (CGFloat(indexPath.item + 1)
-             * (Constants.UI.collectionCellHeight + Constants.UI.minimumLineSpacingForSection))
-             - (0.5 * Constants.UI.collectionCellHeight)
+             * (Constants.UI.commandCollectionCellHeight + Constants.UI.minimumLineSpacingForSection))
+             - (0.5 * Constants.UI.commandCollectionCellHeight)
     }
 
     static func getHeightBetweenIndexPaths(_ indexPathOne: IndexPath,

@@ -1,14 +1,12 @@
 import UIKit
 
 class AchievementCell: UITableViewCell {
+
     @IBOutlet weak var achievementImage: UIImageView!
     @IBOutlet weak var achievementText: UILabel!
 
-    func setImage(image: UIImage) {
-        achievementImage.image = image
-    }
-
-    func setText(text: String) {
+    func setup(text: String, image: UIImage) {
         achievementText.text = text
+        achievementImage.image = image
     }
 }

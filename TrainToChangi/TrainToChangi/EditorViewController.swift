@@ -13,10 +13,11 @@ class EditorViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
 
-    weak var resetGameDelegate: ResetGameDelegate!
+
     weak var dataServiceLoadProgramDelegate: DataServiceLoadProgramDelegate!
+    weak var resetGameDelegate: ResetGameDelegate!
     weak var saveProgramDelegate: SaveProgramDelegate!
-    weak var addCommandDelegate: AddNewCommandDelegate!
+    weak var userCommandsDelegate: UserCommandsDelegate!
 
     var model: Model!
     private var dragDropVC: DragDropViewController?
@@ -32,19 +33,16 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var descriptionView: UIView!
 
     @IBAction func resetButtonPressed(_ sender: UIButton) {
-        NotificationCenter.default.post(name: Constants.NotificationNames.userResetCommandEvent,
-                                        object: nil,
-                                        userInfo: nil)
         resetGameDelegate.tryResetGame()
         presentEditorView()
+        userCommandsDelegate.resetCommands()
     }
-
 
     @IBAction func loadButtonPressed(_ sender: UIButton) {
         let identifier = Constants.UI.loadProgramViewControllerIdentifier
         guard let loadProgramController = loadModalViewControllers(identifier: identifier)
             as? LoadProgramViewController else {
-                fatalError("Wrong controller loaded.")
+                fatalError(Constants.Errors.wrongViewControllerLoaded)
         }
         loadProgramController.loadProgramDelegate = dataServiceLoadProgramDelegate
         self.present(loadProgramController, animated: true, completion: nil)
@@ -54,7 +52,7 @@ class EditorViewController: UIViewController {
         let identifier = Constants.UI.saveProgramViewControllerIdentifier
         guard let saveProgramController = loadModalViewControllers(identifier: identifier)
             as? SaveProgramViewController else {
-            fatalError("Wrong controller loaded.")
+            fatalError(Constants.Errors.wrongViewControllerLoaded)
         }
         saveProgramController.saveProgramDelegate = saveProgramDelegate
         self.present(saveProgramController, animated: true, completion: nil)
@@ -81,7 +79,7 @@ class EditorViewController: UIViewController {
             saveProgramDelegate = embeddedVC
             embeddedVC.model = self.model
             embeddedVC.resetGameDelegate = resetGameDelegate
-            self.addCommandDelegate = embeddedVC
+            self.userCommandsDelegate = embeddedVC
             self.dragDropVC = embeddedVC
 
             if lineNumberVC != nil {
@@ -132,7 +130,8 @@ class EditorViewController: UIViewController {
             commandButton.tag = commandTag
             commandButton.addTarget(self, action: #selector(commandButtonPressed), for: .touchUpInside)
             commandButton.frame = view.convert(commandButton.frame, to: availableCommandsView)
-            availableCommandsView.frame.size.height += commandButton.frame.size.height + Constants.UI.minimumLineSpacingForSection
+            availableCommandsView.frame.size.height += commandButton.frame.size.height
+                                                        + Constants.UI.minimumLineSpacingForSection
             availableCommandsView.addSubview(commandButton)
 
         }
@@ -142,7 +141,7 @@ class EditorViewController: UIViewController {
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
-        addCommandDelegate.addNewCommand(command: command)
+        userCommandsDelegate.addNewCommand(command: command)
         presentEditorView()
     }
 

@@ -79,11 +79,7 @@ class ControlPanelViewController: UIViewController {
     }
 
     override func viewDidLoad() {
-        initSlider()
         registerObservers()
-    }
-
-    private func initSlider() {
         speedSlider.value = 0.0
     }
 
@@ -101,6 +97,7 @@ extension ControlPanelViewController {
     // Updates whether the buttons are enabled.
     private func updateButtons(stopButtonIsEnabled: Bool, stepBackButtonIsEnabled: Bool,
                                playPauseButtonIsEnabled: Bool, stepForwardButtonIsEnabled: Bool) {
+
         stopButton.isEnabled = stopButtonIsEnabled
         stepBackButton.isEnabled = stepBackButtonIsEnabled
         playPauseButton.isEnabled = playPauseButtonIsEnabled

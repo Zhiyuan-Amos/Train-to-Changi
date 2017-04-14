@@ -43,6 +43,4 @@ class LevelDescriptionViewController: UIViewController {
         expectedOutputTextView.isScrollEnabled = true
         expectedOutputTextView.font = Constants.UI.LevelDescription.font
     }
-
-
 }

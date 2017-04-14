@@ -13,7 +13,9 @@ class LineNumberViewController: UIViewController {
     var model: Model!
     let semaphore = DispatchSemaphore(value: 0)
 
-    var programCounter: UIImageView!
+    fileprivate var programCounter: UIImageView!
+    fileprivate var previousCounterIndex: Int?
+    
     @IBOutlet weak var lineNumberCollection: UICollectionView!
 
     override func viewDidLoad() {
@@ -45,11 +47,11 @@ class LineNumberViewController: UIViewController {
     }
 
     fileprivate func setupProgramCounter() {
-        programCounter = UIImageView(image: UIImage(named: "program-counter"))
+        programCounter = UIImageView(image: Constants.UI.ProgramCounter.programCounterImage)
         programCounter.frame.origin.x = 0
         programCounter.frame.origin.y = 0
-        programCounter.frame.size.height = Constants.UI.collectionCellHeight
-        programCounter.frame.size.width = 20
+        programCounter.frame.size.height = Constants.UI.commandCollectionCellHeight
+        programCounter.frame.size.width = Constants.UI.ProgramCounter.programCountWidth
         programCounter.isHidden = true
         programCounter.frame = view.convert(programCounter.frame, to: lineNumberCollection)
         lineNumberCollection.addSubview(programCounter)
@@ -57,7 +59,21 @@ class LineNumberViewController: UIViewController {
 
     fileprivate func resetProgramCounter() {
         programCounter.frame.origin.x = 0
-        programCounter.frame.origin.y = 10
+        programCounter.frame.origin.y = Constants.UI.ProgramCounter.programCounterOffsetY
+    }
+}
+
+// MARK -- LineNumberUpdateDelegate
+extension LineNumberViewController: LineNumberUpdateDelegate {
+    func updateLineNumbers() {
+        lineNumberCollection.reloadData()
+        programCounter.isHidden = true
+    }
+
+    func scrollToCommand(offset: CGPoint) {
+        var contentOffset = lineNumberCollection.contentOffset
+        contentOffset.y = offset.y
+        lineNumberCollection.setContentOffset(contentOffset, animated: false)
     }
 }
 
@@ -101,9 +117,18 @@ extension LineNumberViewController {
     }
 
     private func updateProgramCounterCoordinates(notification: Notification) {
-        if let _ = notification.userInfo?["index"] as? Int {
+        if let index = notification.userInfo?["index"] as? Int {
             UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
-                           animations: { self.programCounter.frame.origin.y += CGFloat(50) })
+                           animations: {
+                            // Means zero
+                            if self.previousCounterIndex == nil {
+                                self.programCounter.frame.origin.y += CGFloat(50)
+                            } else {
+                                let diff = index - self.previousCounterIndex!
+                                self.programCounter.frame.origin.y += CGFloat(diff) * CGFloat(50)
+                            }
+                            self.previousCounterIndex = index;
+            })
         }
     }
 
@@ -128,18 +153,5 @@ extension LineNumberViewController {
         default:
             break
         }
-    }
-}
-
-extension LineNumberViewController: LineNumberUpdateDelegate {
-    func updateLineNumbers() {
-        lineNumberCollection.reloadData()
-        programCounter.isHidden = true
-    }
-
-    func scrollToCommand(offset: CGPoint) {
-        var contentOffset = lineNumberCollection.contentOffset
-        contentOffset.y = offset.y
-        lineNumberCollection.setContentOffset(contentOffset, animated: false)
     }
 }

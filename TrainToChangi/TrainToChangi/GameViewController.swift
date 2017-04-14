@@ -11,12 +11,12 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
-    @IBOutlet weak var trainUIImage: UIImageView!
-    @IBOutlet weak var musicButton: UIButton!
-
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var scene: GameScene!
+
+    @IBOutlet weak var trainUIImage: UIImageView!
+    @IBOutlet weak var musicButton: UIButton!
 
     @IBAction func musicButtonPressed(_ sender: UIButton) {
         AudioPlayer.sharedInstance.toggleBackgroundMusic()
@@ -62,8 +62,8 @@ class GameViewController: UIViewController {
 
     private func animateTrain() {
         var trainFrames = [UIImage]()
-        for index in 0...Constants.UI.trainView.numTrainFrames {
-            let frame = UIImage(named: "train_vert\(index)")!
+        for index in 0...Constants.UI.TrainView.numTrainFrames {
+            let frame = UIImage(named: Constants.UI.TrainView.trainImageName + "\(index)")!
             trainFrames.append(frame)
         }
         trainUIImage.animationImages = trainFrames
@@ -73,8 +73,8 @@ class GameViewController: UIViewController {
 
     fileprivate func animateTrainWhenGameWon() {
         trainUIImage.stopAnimating()
-        trainUIImage.animationImages = Constants.UI.trainView.gameWonTrainFrames
-        trainUIImage.animationDuration = Constants.UI.trainView.gameWonTrainAnimationDuration
+        trainUIImage.animationImages = Constants.UI.TrainView.gameWonTrainFrames
+        trainUIImage.animationDuration = Constants.UI.TrainView.gameWonTrainAnimationDuration
         trainUIImage.startAnimating()
     }
 
@@ -89,8 +89,9 @@ class GameViewController: UIViewController {
     /// Use GameScene to move/animate the game objects
     private func presentGameScene() {
         scene = GameScene(model.currentLevel, size: view.bounds.size)
+
         guard let skView = view as? SKView else {
-            assertionFailure("View should be a SpriteKit View!")
+            assertionFailure(Constants.Errors.gameViewNotSKView)
             return
         }
         scene.scaleMode = .resizeFill
@@ -142,7 +143,7 @@ extension GameViewController {
 extension GameViewController: MapViewControllerDelegate {
     func initLevel(name: String?) {
         guard let name = name else {
-            fatalError("Station must have a name!")
+            fatalError(Constants.Errors.stationNameNotSet)
         }
         let levelIndex = indexOfStation(name: name)
         model = ModelManager(levelIndex: levelIndex,
@@ -153,7 +154,7 @@ extension GameViewController: MapViewControllerDelegate {
     private func indexOfStation(name: String) -> Int {
         let levelNames = Constants.StationNames.stationNames
         guard let index = levelNames.index(where: { $0 == name }) else {
-            preconditionFailure("StationName does not exist!")
+            preconditionFailure(Constants.Errors.stationNameDoesNotExist)
         }
 
         return index
