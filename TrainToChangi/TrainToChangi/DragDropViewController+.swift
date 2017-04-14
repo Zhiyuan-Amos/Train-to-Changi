@@ -24,7 +24,7 @@ extension DragDropViewController: UICollectionViewDataSource {
         let cellIdentifier = Constants.UI.dragDropCollectionViewCellIdentifier
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier,
                                                             for: indexPath) as? CommandCell else {
-                                                                fatalError(Constants.Errors.cellNotAssignedCorrectViewSubclass)
+            fatalError(Constants.Errors.cellNotAssignedCorrectViewSubclass)
         }
 
         let command = model.userEnteredCommands[indexPath.item]

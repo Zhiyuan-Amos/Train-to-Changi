@@ -78,7 +78,6 @@ class LandingViewController: UIViewController {
         DataService.instance.preloadUserPrograms(userId: userId)
     }
 
-
     // Loads user's unlocked achievements from firebase.
     // This function cannot be placed inside AchievementsManager's init because
     // it will be initialised before user has logged in.
@@ -86,7 +85,9 @@ class LandingViewController: UIViewController {
         guard let userId = AuthService.instance.currentUserId else {
             return
         }
+        
+        let sharedInstance = AchievementsManager.sharedInstance
         DataService.instance.loadUnlockedAchievements(userId: userId,
-                                                      loadUnlockedAchievementsDelegate: AchievementsManager.sharedInstance)
+                                                      loadUnlockedAchievementsDelegate: sharedInstance)
     }
 }

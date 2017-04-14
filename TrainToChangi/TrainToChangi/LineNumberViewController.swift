@@ -15,7 +15,7 @@ class LineNumberViewController: UIViewController {
 
     fileprivate var programCounter: UIImageView!
     fileprivate var previousCounterIndex: Int?
-    
+
     @IBOutlet weak var lineNumberCollection: UICollectionView!
 
     override func viewDidLoad() {
@@ -127,7 +127,7 @@ extension LineNumberViewController {
                                 let diff = index - self.previousCounterIndex!
                                 self.programCounter.frame.origin.y += CGFloat(diff) * CGFloat(50)
                             }
-                            self.previousCounterIndex = index;
+                            self.previousCounterIndex = index
             })
         }
     }

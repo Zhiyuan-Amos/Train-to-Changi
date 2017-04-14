@@ -128,7 +128,8 @@ extension UIEntityDrawer {
 
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        let width = Constants.UI.ArrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / Constants.UI.ArrowView.arrowIndexDivisor))
+        let width = Constants.UI.ArrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex)
+                  / Constants.UI.ArrowView.arrowIndexDivisor))
 
         return reversed ? generateReverseArrowView(origin: origin, height: height, width: width)
                         : generateArrowView(origin: origin, height: height, width: width)

@@ -47,7 +47,7 @@ struct Constants {
 
         static let defaultSpeed: CGFloat = 0.33
         static let speedRange: CGFloat = 1 - defaultSpeed
-        
+
         static let gameTrainAnimationDuration = 1.5
     }
 
@@ -75,7 +75,7 @@ struct Constants {
 
         static let controlPanelGradientStartColor = UIColor(rgb: 0x383838).cgColor
         static let controlPanelGradientEndColor = UIColor(rgb: 0x636363).cgColor
-        
+
     }
 
     struct Concurrency {
@@ -249,7 +249,6 @@ struct Constants {
         static let loadProgramCollectionViewCellIdentifier = "programCell"
         static let loadProgramCollectionViewHeaderViewIdentifier = "programHeaderView"
         static let lineNumberCollectionViewCellIdentifier = "LineNumberCell"
-
 
         static let dragDropCollectionCellWidth: CGFloat = 180
         static let lineNumberCollectionCellWidth: CGFloat = 40

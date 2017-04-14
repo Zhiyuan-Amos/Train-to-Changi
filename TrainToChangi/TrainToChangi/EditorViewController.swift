@@ -13,7 +13,6 @@ class EditorViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
 
-
     weak var dataServiceLoadProgramDelegate: DataServiceLoadProgramDelegate!
     weak var resetGameDelegate: ResetGameDelegate!
     weak var saveProgramDelegate: SaveProgramDelegate!
