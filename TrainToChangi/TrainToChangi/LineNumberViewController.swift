@@ -70,7 +70,7 @@ extension LineNumberViewController: LineNumberUpdateDelegate {
         programCounter.isHidden = true
     }
 
-    func scrollToCommand(offset: CGPoint) {
+    func scrollToOffset(offset: CGPoint) {
         var contentOffset = lineNumberCollection.contentOffset
         contentOffset.y = offset.y
         lineNumberCollection.setContentOffset(contentOffset, animated: false)
