@@ -26,8 +26,8 @@ class GameScene: SKScene {
     fileprivate var memorySlots = [MemorySlot]()
     fileprivate var outboxNodes = [Payload]()
     fileprivate var holdingNode: Payload?
-    fileprivate var jedi: JediSprite
-    fileprivate var speechBubble: SpeechBubbleSprite
+    fileprivate var jedi: JediSprite!
+    fileprivate var speechBubble: SpeechBubbleSprite!
 
     fileprivate var memoryLayout: Memory.Layout?
 
@@ -35,32 +35,19 @@ class GameScene: SKScene {
 
     init(_ level: Level, size: CGSize) {
         self.level = level
-
-        jedi = JediSprite(texture: Constants.Jedi.texture,
-                          color: UIColor.white,
-                          size: CGSize(width: Constants.Jedi.width, height: Constants.Jedi.height))
-        jedi.position = CGPoint(x: Constants.Jedi.positionX, y: Constants.Jedi.positionY)
-
-        speechBubble = SpeechBubbleSprite(text: "",
-                                          size: CGSize(width: Constants.SpeechBubble.width,
-                                                       height: Constants.SpeechBubble.height))
-        speechBubble.position = CGPoint(x: Constants.SpeechBubble.positionX,
-                                        y: Constants.SpeechBubble.positionY)
-
         super.init(size: size)
     }
 
     override func didMove(to view: SKView) {
         initBackground()
         initPlayer()
+        initJedi()
         initInbox(values: level.initialState.inputs)
         initOutbox()
         initNotification()
         initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout, valuesOnly: false)
         initSpeed()
 
-        addChild(jedi)
-        addChild(speechBubble)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -123,6 +110,22 @@ extension GameScene {
                                           tileSize: size, fillWith: bgTile)
         backgroundTileMap.position = CGPoint(x: view!.frame.midX, y: view!.frame.midY)
         addChild(backgroundTileMap)
+    }
+
+    fileprivate func initJedi() {
+        jedi = JediSprite(texture: Constants.Jedi.texture,
+                          color: UIColor.white,
+                          size: CGSize(width: Constants.Jedi.width, height: Constants.Jedi.height))
+        jedi.position = CGPoint(x: Constants.Jedi.positionX, y: Constants.Jedi.positionY)
+
+        speechBubble = SpeechBubbleSprite(text: "",
+                                          size: CGSize(width: Constants.SpeechBubble.width,
+                                                       height: Constants.SpeechBubble.height))
+        speechBubble.position = CGPoint(x: Constants.SpeechBubble.positionX,
+                                        y: Constants.SpeechBubble.positionY)
+
+        addChild(jedi)
+        addChild(speechBubble)
     }
 
     fileprivate func initPlayer() {

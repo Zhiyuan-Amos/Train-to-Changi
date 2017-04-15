@@ -3,7 +3,6 @@
 // Copyright (c) 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 // Stores the location that can be reached by player sprite.
