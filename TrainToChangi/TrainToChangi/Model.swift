@@ -68,8 +68,8 @@ protocol Model: class {
 
     // MARK - API for Logic.
 
-    // Makes an iterator for `Logic` that returns `CommandData` in order.
-    func makeCommandDataListIterator() -> CommandDataListIterator
+    // Makes an program counter for `Logic` that returns `CommandData` in order.
+    func makeCommandDataListCounter() -> CommandDataListCounter
 
     // Returns the dequeued value from inbox. If inbox is empty, returns nil.
     func dequeueValueFromInbox() -> Int?

@@ -1,5 +1,6 @@
 //
-// The command that causes the iterator to point to the corresponding jumpTarget.
+// Each jump command will have its corresponding `JumpTarget` as an indicator
+// of where the program counter will jump to. As such, this command does nothing.
 //
 
 class JumpTarget: Command {

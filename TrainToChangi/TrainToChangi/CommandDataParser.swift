@@ -1,17 +1,17 @@
 //
-// Parses CommandData to Command.
+// Parses `CommandData` enum to `Command`.
 //
 
 class CommandDataParser {
     private unowned let model: Model
-    private unowned let iterator: CommandDataListIterator
+    private unowned let programCounter: CommandDataListCounter
 
-    init(model: Model, iterator: CommandDataListIterator) {
+    init(model: Model, programCounter: CommandDataListCounter) {
         self.model = model
-        self.iterator = iterator
+        self.programCounter = programCounter
     }
 
-    // Parses CommandData to Command.
+    // Parses `commandData` to `Command`.
     func parse(commandData: CommandData) -> Command {
         switch commandData {
         case .inbox:
@@ -19,34 +19,21 @@ class CommandDataParser {
         case .outbox:
             return OutboxCommand(model: model)
         case .copyFrom(let index):
-            let index = returnIndex(index)
             return CopyFromCommand(model: model, memoryIndex: index)
         case .copyTo(let index):
-            let index = returnIndex(index)
             return CopyToCommand(model: model, memoryIndex: index)
         case .add(let index):
-            let index = returnIndex(index)
             return AddCommand(model: model, memoryIndex: index)
         case .sub(let index):
-            let index = returnIndex(index)
             return SubCommand(model: model, memoryIndex: index)
         case .jump:
-            return JumpCommand(iterator: iterator)
+            return JumpCommand(programCounter: programCounter)
         case .jumpIfZero:
-            return JumpIfZeroCommand(model: model, iterator: iterator)
+            return JumpIfZeroCommand(model: model, programCounter: programCounter)
         case .jumpIfNegative:
-            return JumpIfNegativeCommand(model: model, iterator: iterator)
+            return JumpIfNegativeCommand(model: model, programCounter: programCounter)
         case .jumpTarget:
             return JumpTarget()
         }
-    }
-
-    // Helper function for returning `index`.
-    private func returnIndex(_ index: Int?) -> Int {
-        guard let index = index else {
-            fatalError("User should not be allowed to set index to nil")
-        }
-
-        return index
     }
 }

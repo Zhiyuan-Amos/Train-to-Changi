@@ -12,7 +12,3 @@ protocol Command {
     func execute() -> CommandResult
     func undo()
 }
-
-protocol MemoryCommand {
-    var index: Int { get }
-}

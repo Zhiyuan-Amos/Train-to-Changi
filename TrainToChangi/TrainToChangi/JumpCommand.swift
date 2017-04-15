@@ -1,16 +1,16 @@
 //
-// The command that causes the iterator to point to the corresponding jumpTarget.
+// The command that causes the `programCounter` to point to the corresponding `jumpTarget`.
 //
 
 class JumpCommand: Command {
-    private unowned let iterator: CommandDataListIterator
+    private unowned let programCounter: CommandDataListCounter
 
-    init(iterator: CommandDataListIterator) {
-        self.iterator = iterator
+    init(programCounter: CommandDataListCounter) {
+        self.programCounter = programCounter
     }
 
     func execute() -> CommandResult {
-        iterator.jump()
+        programCounter.jump()
         return .success(isJump: true)
     }
 

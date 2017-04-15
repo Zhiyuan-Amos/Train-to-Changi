@@ -34,6 +34,7 @@ class GameViewController: UIViewController {
 
     @IBAction func exitButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: {
+            self.resetGame(isAnimating: false)
             AudioPlayer.sharedInstance.stopBackgroundMusic()
         })
     }
@@ -129,7 +130,7 @@ extension GameViewController {
     @objc fileprivate func handleAnimationEnd(notification: Notification) {
         if model.runState == .running(isAnimating: true) {
             model.runState = .running(isAnimating: false)
-        } else if model.runState == .stepping(isAnimating: true) {
+        } else if case .stepping = model.runState {
             model.runState = .paused
         } else if model.runState == .won {
             animateTrainWhenGameWon()

@@ -1,13 +1,11 @@
 //
-// The command that causes the `Person` to add the value of the item located
+// The command that causes the `Person` to add the value of the payload located
 // at the memory at `memoryIndex` with the value that he is currently holding on.
 //
 
-import Foundation
-
-class AddCommand: Command {
-    private let model: Model
-    fileprivate let memoryIndex: Int
+class AddCommand: MemoryCommand {
+    private unowned let model: Model
+    let memoryIndex: Int
     private var prevValueOnPerson: Int?
 
     init(model: Model, memoryIndex: Int) {
@@ -39,10 +37,4 @@ class AddCommand: Command {
         model.updateValueOnPerson(to: value)
     }
 
-}
-
-extension AddCommand: MemoryCommand {
-    var index: Int {
-        return memoryIndex
-    }
 }

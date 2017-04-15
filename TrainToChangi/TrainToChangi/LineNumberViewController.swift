@@ -85,10 +85,6 @@ extension LineNumberViewController {
             object: nil)
 
         NotificationCenter.default.addObserver(
-            self, selector: #selector(handleEndOfCommandExecution(notification:)),
-            name: Constants.NotificationNames.endOfCommandExecution, object: nil)
-
-        NotificationCenter.default.addObserver(
             self, selector: #selector(handleRunStateUpdate(notification:)),
             name: Constants.NotificationNames.runStateUpdated, object: nil)
 
@@ -103,7 +99,6 @@ extension LineNumberViewController {
         let serialQueue = DispatchQueue(label: Constants.Concurrency.serialQueue)
 
         serialQueue.async {
-            self.semaphore.wait()
             if self.model.runState == .running(isAnimating: true)
                 || self.model.runState == .stepping(isAnimating: true) {
                 self.semaphore.wait()
@@ -128,10 +123,6 @@ extension LineNumberViewController {
     }
 
     @objc fileprivate func handleAnimationEnd(notification: Notification) {
-        semaphore.signal()
-    }
-
-    @objc fileprivate func handleEndOfCommandExecution(notification: Notification) {
         semaphore.signal()
     }
 

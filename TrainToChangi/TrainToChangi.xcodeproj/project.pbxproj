@@ -95,6 +95,7 @@
 		D77D3EBD1E9B899C004E5AA9 /* AchievementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */; };
 		D77D3EBF1E9B91B7004E5AA9 /* EndGameViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D3EBE1E9B91B7004E5AA9 /* EndGameViewController+.swift */; };
 		D77D4B9D1E993ACC004A16F8 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */; };
+		D7836FB31EA2235A002AB91C /* MemoryCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7836FB21EA2235A002AB91C /* MemoryCommand.swift */; };
 		D788BCDA1E9B1781003B92DA /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = D788BCD91E9B1781003B92DA /* Achievement.swift */; };
 		D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE11E76D9A400E650ED /* JumpCommand.swift */; };
 		D7983CE61E76E99C00E650ED /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7983CE51E76E99C00E650ED /* Queue.swift */; };
@@ -215,6 +216,7 @@
 		D77D3EBC1E9B899C004E5AA9 /* AchievementCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementCell.swift; sourceTree = "<group>"; };
 		D77D3EBE1E9B91B7004E5AA9 /* EndGameViewController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EndGameViewController+.swift"; sourceTree = "<group>"; };
 		D77D4B9C1E993ACC004A16F8 /* UIColor+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		D7836FB21EA2235A002AB91C /* MemoryCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCommand.swift; sourceTree = "<group>"; };
 		D788BCD91E9B1781003B92DA /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		D7983CE11E76D9A400E650ED /* JumpCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpCommand.swift; sourceTree = "<group>"; };
 		D7983CE51E76E99C00E650ED /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
@@ -270,20 +272,21 @@
 		3B1680431E77848E002286F6 /* Commands */ = {
 			isa = PBXGroup;
 			children = (
+				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
 				D75BC4251E76BA9000ED2A1B /* Command.swift */,
 				D70CFCC21E7C279C00D28B86 /* CommandData.swift */,
-				A77D49D01E9DDEAB00FC6696 /* SubCommand.swift */,
-				A77D49D21E9DDF1300FC6696 /* JumpIfZeroCommand.swift */,
-				A77D49D41E9DDFDD00FC6696 /* JumpIfNegativeCommand.swift */,
-				D744CA541E79715C004CCABD /* ExecutionError.swift */,
 				D7A267D01E7796B800DE5774 /* CommandResult.swift */,
-				D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */,
-				D75BC4311E76D6CA00ED2A1B /* OutboxCommand.swift */,
 				D7A267D41E7796C300DE5774 /* CopyFromCommand.swift */,
 				D7A267D51E7796C300DE5774 /* CopyToCommand.swift */,
-				D75BC4271E76C3A500ED2A1B /* AddCommand.swift */,
+				D744CA541E79715C004CCABD /* ExecutionError.swift */,
+				D75BC42D1E76C6D200ED2A1B /* InboxCommand.swift */,
 				D7983CE11E76D9A400E650ED /* JumpCommand.swift */,
+				A77D49D21E9DDF1300FC6696 /* JumpIfZeroCommand.swift */,
+				A77D49D41E9DDFDD00FC6696 /* JumpIfNegativeCommand.swift */,
 				D7C22B541E9523A200A55324 /* JumpTarget.swift */,
+				D7836FB21EA2235A002AB91C /* MemoryCommand.swift */,
+				D75BC4311E76D6CA00ED2A1B /* OutboxCommand.swift */,
+				A77D49D01E9DDEAB00FC6696 /* SubCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -304,11 +307,11 @@
 		3B16804C1E778779002286F6 /* Logic */ = {
 			isa = PBXGroup;
 			children = (
-				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
-				A71209681E81888A0039B257 /* Logic.swift */,
 				D7CEF1311E78EBBB00564FF5 /* CommandDataParser.swift */,
-				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
+				A71209681E81888A0039B257 /* Logic.swift */,
+				D75BC42B1E76C55600ED2A1B /* LogicManager.swift */,
 				D7430DE81E88D9F900B84F14 /* GameLogic.swift */,
+				D744CA501E7959F9004CCABD /* RunStateUpdater.swift */,
 				3B1680431E77848E002286F6 /* Commands */,
 			);
 			name = Logic;
@@ -815,6 +818,7 @@
 				D76FA82F1E76ADC400CCCFBE /* GameViewController.swift in Sources */,
 				3B78A6931E915A1E00A652D9 /* LineNumberViewController.swift in Sources */,
 				3B5D5A481E9A91F9001BC438 /* LevelDescriptionViewController.swift in Sources */,
+				D7836FB31EA2235A002AB91C /* MemoryCommand.swift in Sources */,
 				D744CA511E7959F9004CCABD /* RunStateUpdater.swift in Sources */,
 				3B6D98591E89129C0026872B /* UIEntityDrawer.swift in Sources */,
 				D7A267E11E77ABEB00DE5774 /* Model.swift in Sources */,

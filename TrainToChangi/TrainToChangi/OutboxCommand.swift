@@ -1,10 +1,10 @@
 //
-// The command that causes the `Person` to put the item that he is currently 
+// The command that causes the `Person` to put the payload that he is currently 
 // holding, onto the output conveyor belt.
 //
 
 class OutboxCommand: Command {
-    private let model: Model
+    private unowned let model: Model
     private var prevValueOnPerson: Int?
 
     init(model: Model) {

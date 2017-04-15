@@ -6,9 +6,11 @@ import Foundation
 class LogicManager: Logic {
     unowned private let model: Model
     private let gameLogic: GameLogic
-    private var iterator: CommandDataListIterator!
+    private let updater: RunStateUpdater
+    private var programCounter: CommandDataListCounter!
     // Contains the index of the command inside `model.currentInputs` and the corresponding `Command`.
-    fileprivate(set) var executedCommands: Stack<(Int, Command)>
+    private var executedCommands: Stack<(Int, Command)>
+    private var binarySemaphore: DispatchSemaphore
 
     var canUndo: Bool {
         return executedCommands.isEmpty
@@ -18,41 +20,48 @@ class LogicManager: Logic {
         self.model = model
         self.executedCommands = Stack()
         self.gameLogic = GameLogic(model: model)
-        self.gameLogic.gameLogicDelegate = self
+        self.updater = RunStateUpdater(model: model)
+        self.binarySemaphore = DispatchSemaphore(value: 0)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleAnimationEnd(notification:)),
+            name: Constants.NotificationNames.animationEnded, object: nil)
     }
 
     // Executes the list of commands that user has selected.
     // As this method will busy-wait, it is run in background thread.
     func run() {
-        let binarySemaphore = DispatchSemaphore(value: 0)
         DispatchQueue.global(qos: .background).async {
             while case .running = self.model.runState {
-                // execution of command must be done on main thread to allow the update
-                // of UI buttons during the change of run states.
-                DispatchQueue.main.async {
-                    self.stepForward()
-                    binarySemaphore.signal()
-                }
+                // execution of command must be done on main thread as it will need
+                // to update UI.
+                self.executeCommandInMainThread()
 
                 // Allows only 1 `self.stepForward()` to be queued in main thread.
                 // This ensures that `self.stepForward()` is done executing before
                 // checking for while loop condition.
+                self.binarySemaphore.wait()
+
+                // After the command has finished execution, the UI will animate.
+                // As such, waits for animation to end before executing the next command.
+                self.busyWaitWhileAnimating()
+            }
+        }
+    }
+
+    // Helper function - executes command in main thread and signals `binarySemaphore` when done.
+    private func executeCommandInMainThread() {
+        DispatchQueue.main.async {
+            self.stepForward()
+            self.binarySemaphore.signal()
+        }
+    }
+
+    // Helper function - sleeps current thread while game UI is animating
+    private func busyWaitWhileAnimating() {
+        if self.model.runState == .running(isAnimating: true)
+            || self.model.runState == .stepping(isAnimating: true) {
                 binarySemaphore.wait()
-
-                // Busy wait while the game scene is animating.
-                while self.model.runState == .running(isAnimating: true)
-                    || self.model.runState == .stepping(isAnimating: true) {
-                        usleep(Constants.Time.oneMillisecond)
-                }
-            }
-
-            // If the while loop above is broken because user pressed the
-            // stepBack or stepForward button, toggle the runState to .paused.
-            DispatchQueue.main.async {
-                if self.model.runState == .stepping(isAnimating: false) {
-                    self.model.runState = .paused
-                }
-            }
         }
     }
 
@@ -63,14 +72,11 @@ class LogicManager: Logic {
         }
 
         gameLogic.stepBack(command)
-        iterator.moveIterator(to: index)
+        programCounter.moveCounter(to: index)
 
-        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
-                                                     object: nil, userInfo: nil))
-
-        // The undoing of JumpCommand or JumpTarget does not require update in scene.
-        if !(command is JumpCommand || command is JumpTarget || command is JumpIfNegativeCommand
-            || command is JumpIfZeroCommand) {
+        // The undo-ing of jump related commands do not require update in scene.
+        if !(command is JumpCommand || command is JumpTarget
+            || command is JumpIfNegativeCommand || command is JumpIfZeroCommand) {
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.resetGameScene,
                                                          object: model.levelState, userInfo: nil))
         }
@@ -78,30 +84,47 @@ class LogicManager: Logic {
 
     // Executes the next command.
     func stepForward() {
-        createIteratorIfNil()
+        createCounterIfNil()
 
-        // as we only store the current index after execution of command, jumpCommand
-        // will alter the index, thus we have to store the value of the previous index
-        let currentIndex = iterator.index
-        let tuple = gameLogic.stepForward(commandData: iterator.current)
-        if case .lost = model.runState {
-            model.incrementNumLost()
+        // as jump related commands may alter the index after execution,
+        // thus we have to store the value of the current index which will be used later
+        let currentIndex = programCounter.index
+
+        let commandAndResult = execute()
+        
+        guard let index = currentIndex, let command = commandAndResult.0,
+            let commandResult = commandAndResult.1 else {
             return
         }
-        guard let index = currentIndex, let command = tuple.0, let commandResult = tuple.1 else {
-            fatalError("Misconfiguration of iterator and game logic")
+
+        postExecutionUpdate(index: index, command: command, commandResult: commandResult)
+    }
+
+    // Helper function - executes the next command and updates the run state accordingly.
+    // Returns the executed command and the command result, if any.
+    private func execute() -> (Command?, CommandResult?) {
+        let commandAndResult = gameLogic.stepForward(commandData: programCounter.current)
+        guard let commandResult = commandAndResult.1 else {
+            fatalError("Misconfiguration of game logic")
         }
+        updater.updateRunState(commandResult: commandResult, numCommandsExecuted: executedCommands.count)
+        if case .lost = model.runState {
+            return (nil, nil)
+        }
+
+        return commandAndResult
+    }
+
+    // Helper function - executes necessary miscellaneous updates after command execution.
+    private func postExecutionUpdate(index: Int, command: Command, commandResult: CommandResult) {
         postSceneNotifications(command)
         executedCommands.push(index, command)
 
-        // If the command executed is JumpCommand , then there's no need to further
-        // move the iterator to the next position since the execution has already moved
-        // the iterator's position.
-        switch commandResult {
-        case .success(isJump: true):
-            break
-        default:
-            iterator.next()
+        // If the command executed is jump related commands, then there's no need to further
+        // move the programCounter to the next position since the execution has already moved
+        // the programCounter's position.
+        if commandResult == .success(isJump: false) {
+            programCounter.next()
         }
 
         // Commands with animations will automatically toggle `model.runState`
@@ -112,23 +135,25 @@ class LogicManager: Logic {
         if model.runState == .stepping(isAnimating: false) {
             model.runState = .paused
         }
-
-        NotificationCenter.default.post(Notification(name: Constants.NotificationNames.endOfCommandExecution,
-                                                     object: nil, userInfo: nil))
     }
 
+    // Resets the current play state
     func resetPlayState() {
         executedCommands = Stack()
-        iterator = nil
+        programCounter = nil
+        binarySemaphore = DispatchSemaphore(value: 0)
     }
 
-    private func createIteratorIfNil() {
-        if iterator == nil {
-            iterator = model.makeCommandDataListIterator()
-            gameLogic.parser = CommandDataParser(model: model, iterator: iterator)
+    // Helper function - Creates `programCounter` and passes it to the classes that require
+    // it.
+    private func createCounterIfNil() {
+        if programCounter == nil {
+            programCounter = model.makeCommandDataListCounter()
+            gameLogic.parser = CommandDataParser(model: model, programCounter: programCounter)
         }
     }
 
+    // MARK - Notification
     private func postSceneNotifications(_ command: Command) {
         let layout = model.currentLevel.memoryLayout
         switch command {
@@ -137,21 +162,21 @@ class LogicManager: Logic {
         case is OutboxCommand:
             notifySceneToMove(to: .outbox)
         case let command as CopyFromCommand:
-            notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .get))
+            notifySceneToMove(to: .memory(layout: layout, index: command.memoryIndex, action: .get))
         case let command as CopyToCommand:
-            notifySceneToMove(to: .memory(layout: layout, index: command.index, action: .put))
+            notifySceneToMove(to: .memory(layout: layout, index: command.memoryIndex, action: .put))
         case let command as AddCommand:
             guard let expected = model.getValueOnPerson() else {
                 fatalError("Error in executing AddCommand")
             }
             notifySceneToMove(to: .memory(
-                layout: layout, index: command.index, action: .compute(expected: expected)))
+                layout: layout, index: command.memoryIndex, action: .compute(expected: expected)))
         case let command as SubCommand:
             guard let expected = model.getValueOnPerson() else {
                 fatalError("Error in executing SubCommand")
             }
             notifySceneToMove(to: .memory(
-                layout: layout, index: command.index, action: .compute(expected: expected)))
+                layout: layout, index: command.memoryIndex, action: .compute(expected: expected)))
         default:
             break
         }
@@ -162,10 +187,8 @@ class LogicManager: Logic {
             name: Constants.NotificationNames.movePersonInScene,
             object: nil, userInfo: ["destination": dest]))
     }
-}
 
-extension LogicManager: GameLogicDelegate {
-    var numCommandsExecuted: Int {
-        return executedCommands.count
+    @objc fileprivate func handleAnimationEnd(notification: Notification) {
+        binarySemaphore.signal()
     }
 }

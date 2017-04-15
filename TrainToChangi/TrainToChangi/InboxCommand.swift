@@ -1,10 +1,10 @@
 //
-// The command that causes the `Person` to retrieve the first item from the 
+// The command that causes the `Person` to retrieve the first payload from the 
 // input conveyor belt.
 //
 
 class InboxCommand: Command {
-    private let model: Model
+    private unowned let model: Model
     private var prevValueOnPerson: Int?
 
     init(model: Model) {

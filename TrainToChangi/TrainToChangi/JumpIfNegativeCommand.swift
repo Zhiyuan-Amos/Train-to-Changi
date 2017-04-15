@@ -1,18 +1,13 @@
 //
-//  JumpIfNegativeCommand.swift
-//  TrainToChangi
+// The command that causes the `programCounter` to point to the corresponding `jumpTarget`
+// if the value of the payload that `Person` is currently holding is negative.
 //
-//  Created by Yong Lin Han on 12/4/17.
-//  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
-//
-
-// Jumps if currently holding a negative number (less than zero).
 class JumpIfNegativeCommand: Command {
-    private unowned let iterator: CommandDataListIterator
-    private let model: Model
+    private unowned let programCounter: CommandDataListCounter
+    private unowned let model: Model
 
-    init(model: Model, iterator: CommandDataListIterator) {
-        self.iterator = iterator
+    init(model: Model, programCounter: CommandDataListCounter) {
+        self.programCounter = programCounter
         self.model = model
     }
 
@@ -21,7 +16,7 @@ class JumpIfNegativeCommand: Command {
             return .failure(error: .invalidOperation)
         }
         if personValue < 0 {
-            iterator.jump()
+            programCounter.jump()
             return .success(isJump: true)
         }
         return .success(isJump: false)

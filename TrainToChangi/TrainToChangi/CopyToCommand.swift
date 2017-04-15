@@ -1,11 +1,11 @@
 //
-// The command that causes the `Person` to store the item that he is currently holding
+// The command that causes the `Person` to store the payload that he is currently holding
 // on to the memory located at `memoryIndex`.
 //
 
-class CopyToCommand: Command {
-    private let model: Model
-    fileprivate let memoryIndex: Int
+class CopyToCommand: MemoryCommand {
+    private unowned let model: Model
+    let memoryIndex: Int
     private var prevValueOnMemory: Int?
 
     init(model: Model, memoryIndex: Int) {
@@ -27,11 +27,5 @@ class CopyToCommand: Command {
 
     func undo() {
         model.putValueIntoMemory(prevValueOnMemory, at: memoryIndex)
-    }
-}
-
-extension CopyToCommand: MemoryCommand {
-    var index: Int {
-        return memoryIndex
     }
 }

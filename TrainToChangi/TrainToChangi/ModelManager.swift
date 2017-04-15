@@ -19,30 +19,37 @@ class ModelManager: Model {
         // State machine
         set(newState) {
             switch runState {
-            case .running, .paused, .start:
+            case .running, .paused:
                 levelState.runState = newState
             case .won:
                 // when game is won, user should not be allowed to set the `runState`
-                // to `.running`, `.paused` or `.lost`
-                break
+                // to anything else
+                return
+            case .start:
+                switch newState {
+                case .paused, .won:
+                    return
+                default:
+                    levelState.runState = newState
+                }
             case .lost:
                 switch newState {
-                case .paused, .stepping(isAnimating: false):
+                case .paused, .stepping(isAnimating: false), .start:
                     levelState.runState = newState
                 default:
-                    break
+                    return
                 }
             case .stepping:
                 switch newState {
                 case .running:
-                    break
+                    return
                 default:
                     levelState.runState = newState
                 }
             }
 
             let notification = Notification(name: Constants.NotificationNames.runStateUpdated,
-                                            object: newState, userInfo: nil)
+                                            object: levelState.runState, userInfo: nil)
             NotificationCenter.default.post(notification)
         }
     }
@@ -137,8 +144,8 @@ class ModelManager: Model {
 
     // MARK - API for Logic.
 
-    func makeCommandDataListIterator() -> CommandDataListIterator {
-        return _userEnteredCommands.makeIterator()
+    func makeCommandDataListCounter() -> CommandDataListCounter {
+        return _userEnteredCommands.makeCounter()
     }
 
     func dequeueValueFromInbox() -> Int? {

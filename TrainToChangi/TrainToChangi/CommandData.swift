@@ -14,6 +14,7 @@ enum CommandData {
     case jumpIfNegative
     case jumpTarget
 
+    // Returns true if self is `.jump`, `.jumpIfZero` or `.jumpIfNegative`.
     var isJumpCommand: Bool {
         return self == .jump || self == .jumpIfZero || self == .jumpIfNegative
     }
@@ -40,35 +41,6 @@ enum CommandData {
             return "jumpIfNegative"
         case .jumpTarget:
             return "jumpTarget"
-        }
-    }
-
-    init(commandString: String) {
-        let commandArr = commandString.characters.split{$0 == "_"}.map(String.init)
-
-        switch commandArr[0] {
-        case "inbox":
-            self = CommandData.inbox
-        case "outbox":
-            self = CommandData.outbox
-        case "copyFrom":
-            self = CommandData.copyFrom(memoryIndex: Int(commandArr[1])!)
-        case "copyTo":
-            self = CommandData.copyTo(memoryIndex: Int(commandArr[1])!)
-        case "add":
-            self =  CommandData.add(memoryIndex: Int(commandArr[1])!)
-        case "sub":
-            self =  CommandData.sub(memoryIndex: Int(commandArr[1])!)
-        case "jump":
-            self = CommandData.jump
-        case "jumpIfZero":
-            self = CommandData.jumpIfZero
-        case "jumpIfNegative":
-            self = CommandData.jumpIfNegative
-        case "jumpTarget":
-            self = CommandData.jumpTarget
-        default:
-            fatalError("Should never happen, undefined enum.")
         }
     }
 }

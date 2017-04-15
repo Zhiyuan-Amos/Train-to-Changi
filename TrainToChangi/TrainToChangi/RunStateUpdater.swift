@@ -1,5 +1,5 @@
 //
-// Updates the run state of the game.
+// Updates the run state of the game after execution of a command.
 //
 
 class RunStateUpdater {
@@ -9,15 +9,22 @@ class RunStateUpdater {
         self.model = model
     }
 
-    // Updates the run state depending on `model`'s values and
-    // the `commandResult` returned from executing the previous command.
-    func updateRunState(commandResult: CommandResult) {
+    // Updates the run state depending on `model`'s values using
+    // the `commandResult` returned from executing the current command.
+    func updateRunState(commandResult: CommandResult, numCommandsExecuted: Int) {
         if hasMetWinCondition() {
             model.runState = .won
-        } else if case .failure(let error) = commandResult {
-            model.runState = .lost(error: error)
+            model.numSteps = numCommandsExecuted
+        } else if commandResult == .failure(error: .invalidOperation) {
+            model.runState = .lost(error: .invalidOperation)
+        } else if commandResult == .failure(error: .incompleteOutboxValues) {
+            model.runState = .lost(error: .incompleteOutboxValues)
         } else if !isOutputValid() {
             model.runState = .lost(error: .wrongOutboxValue)
+        }
+
+        if case .lost = model.runState {
+            model.incrementNumLost()
         }
     }
 

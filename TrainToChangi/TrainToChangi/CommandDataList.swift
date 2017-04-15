@@ -69,8 +69,8 @@ protocol CommandDataList {
     // Returns the `CommandDataList` as an array.
     func toArray() -> [CommandData]
 
-    // Returns an iterator for the CommandDataList.
-    func makeIterator() -> CommandDataListIterator
+    // Returns a program counter for the CommandDataList.
+    func makeCounter() -> CommandDataListCounter
 
     // Returns a representation of the `CommandDataList` used for storage.
     func asListInfo() -> CommandDataListInfo
@@ -394,8 +394,8 @@ class CommandDataLinkedList: CommandDataList {
 }
 
 extension CommandDataLinkedList {
-    func makeIterator() -> CommandDataListIterator {
-        return CommandDataListIterator(self)
+    func makeCounter() -> CommandDataListCounter {
+        return CommandDataListCounter(self)
     }
 }
 
@@ -428,8 +428,8 @@ extension CommandDataLinkedList {
     }
 }
 
-//TODO: Rename
-class CommandDataListIterator {
+// Works in similar fashion as a Program Counter.
+class CommandDataListCounter {
     private unowned var commandDataLinkedList: CommandDataLinkedList
 
     private var currentNode: CommandDataListNode? {
@@ -455,7 +455,7 @@ class CommandDataListIterator {
         self.currentNode = commandDataLinkedList.first
     }
 
-    func makeIterator() -> CommandDataListIterator {
+    func makeCounter() -> CommandDataListCounter {
         return self
     }
 
@@ -472,7 +472,7 @@ class CommandDataListIterator {
     }
 
     // This function is only called by jump-related commands during `undo`.
-    func moveIterator(to index: Int) {
+    func moveCounter(to index: Int) {
         currentNode = commandDataLinkedList.node(atIndex: index)
     }
 }
