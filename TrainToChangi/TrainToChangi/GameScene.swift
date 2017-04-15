@@ -9,22 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-// Stores the location that can be reached by player sprite.
-enum WalkDestination {
-    case inbox, outbox, memory(layout: Memory.Layout, index: Int, action: Memory.Action)
-
-    var point: CGPoint {
-        switch self {
-        case .inbox:
-            return Constants.Inbox.goto
-        case .outbox:
-            return Constants.Outbox.goto
-        case let .memory(layout, index, _):
-            return layout.locations[index]
-        }
-    }
-}
-
 class GameScene: SKScene {
     // works like a semaphore, except it doesn't pause the thread when value == 0
     fileprivate var suspendDispatch = 0

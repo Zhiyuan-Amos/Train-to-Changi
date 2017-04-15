@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7A12469B8258C38128E2 /* Payload.swift */; };
 		22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */; };
+		22DC762BD77326EB7E427991 /* WalkDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC710D9893B237EC4E7B27 /* WalkDestination.swift */; };
 		22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E79326E3E327A4B086 /* MemorySlot.swift */; };
 		22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC750125724E9BA28BA9EB /* Memory.swift */; };
 		3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */; };
@@ -56,9 +57,8 @@
 		A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */; };
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		A7AB9DDF1E9A45CA00989F58 /* AchievementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */; };
-		A7AB9DE11E9A45DA00989F58 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* Achievements.swift */; };
-		A7AB9DE31E9A469E00989F58 /* AutomaticFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */; };
 		A7AB9DE11E9A45DA00989F58 /* AchievementsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */; };
+		A7AB9DE31E9A469E00989F58 /* AutomaticFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */; };
 		A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */; };
 		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
 		BC0162FF8448453D3B94C649 /* Pods_TrainToChangi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */; };
@@ -109,6 +109,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22DC710D9893B237EC4E7B27 /* WalkDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkDestination.swift; sourceTree = "<group>"; };
 		22DC750125724E9BA28BA9EB /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
 		22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		22DC76E79326E3E327A4B086 /* MemorySlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemorySlot.swift; sourceTree = "<group>"; };
@@ -162,9 +163,8 @@
 		A7A10D071E86A6C20040DA21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
 		A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsManager.swift; sourceTree = "<group>"; };
-		A7AB9DE01E9A45DA00989F58 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
-		A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomaticFirebaseSaver.swift; sourceTree = "<group>"; };
 		A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsEnum.swift; sourceTree = "<group>"; };
+		A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomaticFirebaseSaver.swift; sourceTree = "<group>"; };
 		A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
 		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
@@ -307,6 +307,7 @@
 			children = (
 				3B6D98581E89129C0026872B /* UIEntityDrawer.swift */,
 				3B6D98531E8904500026872B /* AnimationHelper.swift */,
+				22DC710D9893B237EC4E7B27 /* WalkDestination.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -825,6 +826,7 @@
 				A70192431E9517520058D7CD /* AuthService.swift in Sources */,
 				22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */,
 				22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */,
+				22DC762BD77326EB7E427991 /* WalkDestination.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
