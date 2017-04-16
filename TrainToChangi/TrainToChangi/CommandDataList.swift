@@ -89,16 +89,13 @@ class CommandDataLinkedList: CommandDataList {
 
     // MARK - API implementations
 
-    fileprivate var isEmpty: Bool {
-        return head == nil
-    }
-
     func append(commandData: CommandData) {
         let newNode = initNode(commandData: commandData)
         if let jumpNode = newNode as? JumpListNode {
             guard let jumpTargetNode = jumpNode.jumpTarget else {
                 fatalError("All jump nodes should have a jump target!")
             }
+            // jumpTargetNode's next is set to jumpNode in initNode().
             append(node: jumpTargetNode)
         } else {
             append(node: newNode)
@@ -127,6 +124,8 @@ class CommandDataLinkedList: CommandDataList {
         guard let node = node(atIndex: index) else {
             preconditionFailure("Index is not valid.")
         }
+
+        // Remove corresponding pair.
         if let jumpNode = node as? JumpListNode {
             guard let jumpTargetNode = jumpNode.jumpTarget else {
                 fatalError("All jump nodes should have a jump target!")
@@ -170,11 +169,15 @@ class CommandDataLinkedList: CommandDataList {
 
     // MARK - Private helpers
 
+    private var isEmpty: Bool {
+        return head == nil
+    }
+
     fileprivate var first: Node? {
         return head
     }
 
-    fileprivate var last: Node? {
+    private var last: Node? {
         guard var node = head else {
             return nil
         }
@@ -196,7 +199,7 @@ class CommandDataLinkedList: CommandDataList {
         return count
     }
 
-    fileprivate func initNode(commandData: CommandData) -> CommandDataListNode {
+    private func initNode(commandData: CommandData) -> CommandDataListNode {
         if commandData.isJumpCommand {
             // Init target node as well.
             let jumpListNode = JumpListNode(commandData: commandData)
@@ -215,6 +218,7 @@ class CommandDataLinkedList: CommandDataList {
 
     fileprivate func append(node: Node) {
         guard let lastNode = last else {
+            // Empty list.
             head = node
             return
         }
@@ -223,36 +227,45 @@ class CommandDataLinkedList: CommandDataList {
     }
 
     fileprivate func node(atIndex index: Int) -> Node? {
-        if index >= 0 {
-            var node = head
-            var i = index
-            while node != nil {
-                if i == 0 { return node }
-                i -= 1
-                node = node!.next
-            }
+        guard index >= 0 else {
+            return nil
         }
+        var node = head
+        var currIndex = 0
+        while node != nil {
+            if currIndex == index {
+                return node
+            }
+            currIndex += 1
+            node = node?.next
+        }
+
         return nil
     }
 
     private func nodesBeforeAndAfter(index: Int) -> (Node?, Node?) {
-        assert(index >= 0)
+        guard index >= 0 else {
+            preconditionFailure("Invalid index!")
+        }
 
-        var i = index
+        var currIndex = 0
         var next = head
         var prev: Node?
 
-        while next != nil && i > 0 {
-            i -= 1
+        while next != nil && currIndex != index {
+            currIndex += 1
             prev = next
-            next = next!.next
+            next = next?.next
         }
-        assert(i == 0)  // if > 0, then specified index was too large
+
+        guard currIndex == index else {
+            preconditionFailure("Specified index was too large")
+        }
 
         return (prev, next)
     }
 
-    fileprivate func insert(node: Node, atIndex index: Int) {
+    private func insert(node: Node, atIndex index: Int) {
         let (prev, next) = nodesBeforeAndAfter(index: index)
 
         node.previous = prev
@@ -260,6 +273,7 @@ class CommandDataLinkedList: CommandDataList {
         prev?.next = node
         next?.previous = node
 
+        // Inserted at front of list.
         if prev == nil {
             head = node
         }
@@ -272,6 +286,7 @@ class CommandDataLinkedList: CommandDataList {
         if let prev = prev {
             prev.next = next
         } else {
+            // Removed first item in list.
             head = next
         }
         next?.previous = prev
@@ -287,13 +302,6 @@ class CommandDataLinkedList: CommandDataList {
         insert(node: node, atIndex: toIndex)
     }
 
-    private func removeLast() -> CommandData {
-        guard let last = last else {
-            preconditionFailure("List cannot be empty!")
-        }
-        return remove(node: last)
-    }
-
     private func jumpParentOf(node: Node) -> Node? {
         var curr = head
         while curr != nil {
@@ -307,13 +315,13 @@ class CommandDataLinkedList: CommandDataList {
 
     fileprivate func indexOf(node: Node) -> Int {
         var curr = head
-        var index = 0
+        var currIndex = 0
         while curr != nil {
             if curr === node {
-                return index
+                return currIndex
             }
             curr = curr?.next
-            index += 1
+            currIndex += 1
         }
         preconditionFailure("Node must exist!")
     }
