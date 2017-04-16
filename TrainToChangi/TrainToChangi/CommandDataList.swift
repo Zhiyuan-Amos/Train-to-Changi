@@ -75,7 +75,6 @@ protocol CommandDataList {
     // Returns a representation of the `CommandDataList` used for storage.
     func asListInfo() -> CommandDataListInfo
 
-    // TODO: ADT _checkrep, make sure both sides are connected, jump and target connected.
 }
 
 // TODO: Refactor and define boundary conditions properly
@@ -85,11 +84,14 @@ class CommandDataLinkedList: CommandDataList {
 
     private var head: Node?
 
-    init() {}
+    init() {
+        _checkRep()
+    }
 
     // MARK - API implementations
 
     func append(commandData: CommandData) {
+        _checkRep()
         let newNode = initNode(commandData: commandData)
         if let jumpNode = newNode as? JumpListNode {
             guard let jumpTargetNode = jumpNode.jumpTarget else {
@@ -100,9 +102,11 @@ class CommandDataLinkedList: CommandDataList {
         } else {
             append(node: newNode)
         }
+        _checkRep()
     }
 
     func insert(commandData: CommandData, atIndex index: Int) {
+        _checkRep()
         let newNode = initNode(commandData: commandData)
         insert(node: newNode, atIndex: index)
         if let jumpNode = newNode as? JumpListNode {
@@ -111,16 +115,20 @@ class CommandDataLinkedList: CommandDataList {
             }
             insert(node: jumpTargetNode, atIndex: index)
         }
+        _checkRep()
     }
 
     func move(sourceIndex: Int, destIndex: Int) {
+        _checkRep()
         guard let node = node(atIndex: sourceIndex) else {
             preconditionFailure("Index is not valid")
         }
         move(node: node, toIndex: destIndex)
+        _checkRep()
     }
 
     func remove(atIndex index: Int) -> CommandData {
+        _checkRep()
         guard let node = node(atIndex: index) else {
             preconditionFailure("Index is not valid.")
         }
@@ -134,11 +142,13 @@ class CommandDataLinkedList: CommandDataList {
         } else if let jumpParentNode = jumpParentOf(node: node) as? JumpListNode {
             _ = remove(node: jumpParentNode)
         }
-
-        return remove(node: node)
+        let removedNode = remove(node: node)
+        _checkRep()
+        return removedNode
     }
 
     func removeAll() {
+        _checkRep()
         // To prevent circular reference and memory leaks, remove in naive way.
         // This ensures that both previous and next links are broken upon removal.
         // This is a workaround because setting properties to weak
@@ -146,9 +156,11 @@ class CommandDataLinkedList: CommandDataList {
         while let head = head {
             _ = remove(node: head)
         }
+        _checkRep()
     }
 
     func toArray() -> [CommandData] {
+        _checkRep()
         guard var node = head else {
             return []
         }
@@ -160,11 +172,16 @@ class CommandDataLinkedList: CommandDataList {
             node = next
             array.append(node.commandData)
         }
+        _checkRep()
         return array
     }
 
     func asListInfo() -> CommandDataListInfo {
-        return CommandDataListInfo(commandDataArray: toArray(), jumpMappings: getJumpMappings())
+        _checkRep()
+
+        let listInfo =  CommandDataListInfo(commandDataArray: toArray(), jumpMappings: getJumpMappings())
+        _checkRep()
+        return listInfo
     }
 
     // MARK - Private helpers
@@ -344,6 +361,36 @@ class CommandDataLinkedList: CommandDataList {
         return map
     }
 
+    fileprivate func _checkRep() {
+        _checkRepForNextAndPrevConnectivity()
+        _checkRepForJumpAndTargetConnectivity()
+    }
+
+    private func _checkRepForNextAndPrevConnectivity() {
+        var curr = head
+        while curr != nil {
+            let next = curr?.next
+            if next == nil {
+                break
+            }
+            assert(next?.previous != nil && next?.previous === curr,
+                   "All nodes must be connected on their next and previous links!")
+
+            curr = next
+        }
+    }
+
+    private func _checkRepForJumpAndTargetConnectivity() {
+        var curr = head
+        while curr != nil {
+            if let jumpNode = curr as? JumpListNode {
+                assert(jumpNode.jumpTarget != nil,
+                       "All jump nodes must have a connected jump target!")
+            }
+            curr = curr?.next
+        }
+    }
+
 }
 
 extension CommandDataLinkedList {
@@ -355,8 +402,10 @@ extension CommandDataLinkedList {
 extension CommandDataLinkedList {
     convenience init(commandDataListInfo: CommandDataListInfo) {
         self.init()
+        _checkRep()
         setUpListNodes(commandDataArray: commandDataListInfo.commandDataArray)
         setUpJumpReferences(jumpMappings: commandDataListInfo.jumpMappings)
+        _checkRep()
     }
 
     private func setUpListNodes(commandDataArray: [CommandData]) {
