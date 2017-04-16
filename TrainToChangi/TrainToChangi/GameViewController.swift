@@ -17,6 +17,7 @@ class GameViewController: UIViewController {
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var scene: GameScene!
+    @IBOutlet weak var exitButton: UIButton!
 
     @IBOutlet weak var trainUIImage: UIImageView!
     @IBOutlet weak var musicButton: UIButton!
@@ -146,6 +147,7 @@ extension GameViewController {
         } else if case .stepping = model.runState {
             model.runState = .paused
         } else if model.runState == .won {
+            exitButton.isEnabled = false;
             animateTrainWhenGameWon()
             scene.playJediGameWonAnimation()
 

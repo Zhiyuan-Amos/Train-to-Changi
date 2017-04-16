@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3c2-mi-wt9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3c2-mi-wt9">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -378,6 +378,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="exitButton" destination="nei-Dn-LjP" id="zMk-7l-vfx"/>
                         <outlet property="musicButton" destination="qg3-AH-9Q8" id="om7-QS-Szx"/>
                         <outlet property="trainUIImage" destination="pir-D3-pGS" id="rru-u9-rPA"/>
                     </connections>
