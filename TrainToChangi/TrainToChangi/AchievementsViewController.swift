@@ -38,7 +38,7 @@ extension AchievementsViewController: DataServiceLoadUnlockedAchievementsDelegat
     func load(unlockedAchievements: [String]) {
         for unlockedAchievementStr in unlockedAchievements {
             guard let achievementsEnum = AchievementsEnum(rawValue: unlockedAchievementStr) else {
-                fatalError("Cannot be initalised, wrong string value.")
+                fatalError(Constants.Errors.wrongAchievementStringValue)
             }
             achievements.append(Achievement(name: achievementsEnum, isUnlocked: true))
         }

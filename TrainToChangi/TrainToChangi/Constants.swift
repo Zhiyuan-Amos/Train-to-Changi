@@ -96,6 +96,7 @@ struct Constants {
         static let stationNameDoesNotExist = "Station must have a name"
         static let userNotLoggedIn = "User not logged in"
         static let wrongViewControllerLoaded = "Wrong view controller loaded."
+        static let wrongAchievementStringValue = "Cannot be initalised, wrong string value."
 
     }
 
