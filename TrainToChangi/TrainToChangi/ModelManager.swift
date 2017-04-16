@@ -201,4 +201,8 @@ class ModelManager: Model {
         NotificationCenter.default.post(notification)
     }
 
+    deinit {
+        // Prevent memory leak
+        _userEnteredCommands.removeAll()
+    }
 }
