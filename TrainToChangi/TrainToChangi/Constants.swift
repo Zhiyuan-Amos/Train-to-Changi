@@ -346,8 +346,8 @@ struct Constants {
         struct ProgramCounter {
             static let programCounterImage = UIImage(named: "program-counter")
             static let programCounterOffsetY: CGFloat = 10
-            static let programCountWidth: CGFloat = 20
-
+            static let programCounterWidth: CGFloat = 20
+            static let programCounterChangeOffset: CGFloat = 20
         }
 
         struct Snapshot {

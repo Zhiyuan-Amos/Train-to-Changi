@@ -14,7 +14,6 @@ class LineNumberViewController: UIViewController {
     let semaphore = DispatchSemaphore(value: 0)
 
     fileprivate var programCounter: UIImageView!
-    fileprivate var previousCounterIndex: Int?
 
     @IBOutlet weak var lineNumberCollection: UICollectionView!
 
@@ -51,7 +50,7 @@ class LineNumberViewController: UIViewController {
         programCounter.frame.origin.x = 0
         programCounter.frame.origin.y = 0
         programCounter.frame.size.height = Constants.UI.commandCollectionCellHeight
-        programCounter.frame.size.width = Constants.UI.ProgramCounter.programCountWidth
+        programCounter.frame.size.width = Constants.UI.ProgramCounter.programCounterWidth
         programCounter.isHidden = true
         programCounter.frame = view.convert(programCounter.frame, to: lineNumberCollection)
         lineNumberCollection.addSubview(programCounter)
@@ -118,16 +117,12 @@ extension LineNumberViewController {
 
     private func updateProgramCounterCoordinates(notification: Notification) {
         if let index = notification.userInfo?["index"] as? Int {
-            UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration,
-                           animations: {
-                // Means zero
-                if self.previousCounterIndex == nil {
-                    self.programCounter.frame.origin.y += CGFloat(50)
-                } else {
-                    let diff = index - self.previousCounterIndex!
-                    self.programCounter.frame.origin.y += CGFloat(diff) * CGFloat(50)
+            UIView.animate(withDuration: Constants.Animation.programCounterMovementDuration, animations: {
+                guard let cell = self.lineNumberCollection.cellForItem(at: IndexPath(item: index, section: 0)) else {
+                    return
                 }
-                            self.previousCounterIndex = index
+                self.programCounter.frame.origin.y = cell.frame.midY
+                    - Constants.UI.ProgramCounter.programCounterChangeOffset
             })
         }
     }
@@ -144,15 +139,14 @@ extension LineNumberViewController {
     @objc fileprivate func handleRunStateUpdate(notification: Notification) {
         if programCounter.isHidden {
             resetProgramCounter()
-            programCounter.isHidden = false
+            programCounter.isHidden = true
         }
 
         switch model.runState {
         case .start, .lost:
             programCounter.isHidden = true
         default:
-            print(model.runState)
-            break
+            programCounter.isHidden = false
         }
     }
 }

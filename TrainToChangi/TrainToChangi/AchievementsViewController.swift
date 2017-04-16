@@ -23,7 +23,7 @@ class AchievementsViewController: UIViewController {
         achievementsTableView.layoutIfNeeded()
 
         guard let userId = AuthService.instance.currentUserId else {
-            fatalError("User must be logged in!")
+            fatalError(Constants.Errors.userNotLoggedIn)
         }
         DataService.instance.loadUnlockedAchievements(userId: userId,
                                                       loadUnlockedAchievementsDelegate: self)
