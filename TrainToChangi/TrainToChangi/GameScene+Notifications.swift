@@ -43,7 +43,7 @@ extension GameScene {
         guard let sliderValue = notification.userInfo?["sliderValue"] as? Float else {
             fatalError("Notification sender is not configured properly")
         }
-        updateSpeed(sliderValue: sliderValue)
+        updateSpeed(sliderValue: CGFloat(sliderValue))
     }
 }
 
