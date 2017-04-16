@@ -334,6 +334,7 @@ extension DragDropViewController {
     // Handles the scrolling during program execution
     @objc fileprivate func handleProgramCounterUpdate(notification: Notification) {
         if let index = notification.userInfo?["index"] as? Int {
+            print(index)
             currentCommandsView.scrollToItem(at: IndexPath(item: index, section: 0),
                                              at: UICollectionViewScrollPosition.bottom,
                                              animated: true)
@@ -377,11 +378,13 @@ extension DragDropViewController {
         switch model.runState {
         case .running, .won, .stepping:
             currentCommandsView.isUserInteractionEnabled = false
-        case .paused, .lost, .start:
+        case .lost, .start:
             currentCommandsView.scrollToItem(at: IndexPath(item: 0, section: 0),
                                              at: UICollectionViewScrollPosition.bottom,
                                              animated: true)
             currentCommandsView.isUserInteractionEnabled = true
+        default:
+            break
         }
     }
 }
