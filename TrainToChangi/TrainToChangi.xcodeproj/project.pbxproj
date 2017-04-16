@@ -43,6 +43,7 @@
 		A70192471E9517520058D7CD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70192421E9517520058D7CD /* LoginViewController.swift */; };
 		A71209691E81888A0039B257 /* Logic.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71209681E81888A0039B257 /* Logic.swift */; };
 		A712096C1E8189060039B257 /* CommandCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A712096A1E8189060039B257 /* CommandCell.swift */; };
+		A71818291EA360AB00DAF390 /* AchievementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71818281EA360AB00DAF390 /* AchievementsViewController.swift */; };
 		A7357FB01E9C92BF00348CD3 /* LoadProgramHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7357FAF1E9C92BF00348CD3 /* LoadProgramHeaderView.swift */; };
 		A76693B81E9C3D3E00D2BB44 /* SaveProgramViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */; };
 		A76693BA1E9C4E9A00D2BB44 /* ProgramCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */; };
@@ -146,6 +147,7 @@
 		A70192421E9517520058D7CD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A71209681E81888A0039B257 /* Logic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logic.swift; sourceTree = "<group>"; };
 		A712096A1E8189060039B257 /* CommandCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandCell.swift; sourceTree = "<group>"; };
+		A71818281EA360AB00DAF390 /* AchievementsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsViewController.swift; sourceTree = "<group>"; };
 		A7357FAF1E9C92BF00348CD3 /* LoadProgramHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadProgramHeaderView.swift; sourceTree = "<group>"; };
 		A76693B71E9C3D3E00D2BB44 /* SaveProgramViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveProgramViewController.swift; sourceTree = "<group>"; };
 		A76693B91E9C4E9A00D2BB44 /* ProgramCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramCell.swift; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 			children = (
 				3B78A6911E91554F00A652D9 /* Extensions */,
 				3B6D98511E88FE970026872B /* ControlPanelViewController.swift */,
+				A71818281EA360AB00DAF390 /* AchievementsViewController.swift */,
 				3B78A68B1E9124CF00A652D9 /* DragDropViewController.swift */,
 				3B6D984F1E88FCD70026872B /* EditorViewController.swift */,
 				3B6BE0AC1E96362000B27AB7 /* EndGameViewController.swift */,
@@ -748,6 +751,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A71818291EA360AB00DAF390 /* AchievementsViewController.swift in Sources */,
 				A70192471E9517520058D7CD /* LoginViewController.swift in Sources */,
 				D75BC4281E76C3A500ED2A1B /* AddCommand.swift in Sources */,
 				3B6D98521E88FE970026872B /* ControlPanelViewController.swift in Sources */,
