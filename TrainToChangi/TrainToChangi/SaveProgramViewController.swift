@@ -8,34 +8,25 @@
 
 import UIKit
 
-protocol SaveProgramDelegate: class {
-    func saveProgram(saveName: String)
-}
-
+/**
+ * View controller responsible for the save program view
+ */
 class SaveProgramViewController: UIViewController {
+
+    weak var saveProgramDelegate: SaveProgramDelegate?
 
     @IBOutlet private var textInput: UITextField!
     @IBOutlet weak var errorMessageLabel: UILabel!
 
-    weak var saveProgramDelegate: SaveProgramDelegate?
-
-    override func viewDidLoad() {
-        errorMessageLabel.isHidden = true;
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-
     @IBAction func confirmButtonPressed(_ sender: UIButton) {
         guard let saveProgramDelegate = saveProgramDelegate else {
-            fatalError("Delegate not set up!")
+            fatalError(Constants.Errors.delegateNotSet)
         }
 
         guard let saveName = textInput.text,
             isUserInputSaveNameValid(userInput: saveName) else {
-                errorMessageLabel.isHidden = false;
-            return
+                errorMessageLabel.isHidden = false
+                return
         }
 
         saveProgramDelegate.saveProgram(saveName: saveName)
@@ -44,6 +35,14 @@ class SaveProgramViewController: UIViewController {
 
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
         dismiss(animated: true)
+    }
+
+    override func viewDidLoad() {
+        errorMessageLabel.isHidden = true
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
 
     // Checks if `userInput` for a level name is valid.

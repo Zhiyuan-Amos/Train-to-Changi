@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ * View controller responsible for the level description view
+ */
 class LevelDescriptionViewController: UIViewController {
 
     var model: Model!
@@ -43,6 +46,4 @@ class LevelDescriptionViewController: UIViewController {
         expectedOutputTextView.isScrollEnabled = true
         expectedOutputTextView.font = Constants.UI.LevelDescription.font
     }
-
-
 }

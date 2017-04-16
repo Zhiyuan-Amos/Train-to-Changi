@@ -8,9 +8,14 @@
 
 import UIKit
 
+/**
+ * View controller responsible for the end game view
+ */
 class EndGameViewController: UIViewController {
-    @IBOutlet weak var achievementsTableView: UITableView!
+
     private(set) var achievements = AchievementsManager.sharedInstance
+
+    @IBOutlet weak var achievementsTableView: UITableView!
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -20,8 +25,7 @@ class EndGameViewController: UIViewController {
         achievementsTableView.isHidden = achievements.currentLevelUnlockedAchievements.isEmpty
 
         achievementsTableView.layoutIfNeeded()
-        achievementsTableView.frame.size.height =
-            min(achievementsTableView.contentSize.height, CGFloat(160))
+        achievementsTableView.frame.size.height = achievementsTableView.contentSize.height
     }
 
     @IBAction func returnButtonPressed(_ sender: UIButton) {

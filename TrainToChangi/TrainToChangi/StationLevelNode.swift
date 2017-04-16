@@ -8,9 +8,7 @@
 
 import SpriteKit
 
-protocol StationLevelNodeDelegate: class {
-    func didTouchStation(name: String?)
-}
+
 
 class StationLevelNode: SKSpriteNode {
     weak var delegate: StationLevelNodeDelegate?

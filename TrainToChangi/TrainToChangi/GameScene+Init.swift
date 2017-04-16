@@ -96,8 +96,7 @@ extension GameScene {
                           size: CGSize(width: Constants.Jedi.width, height: Constants.Jedi.height))
         jedi.position = CGPoint(x: Constants.Jedi.positionX, y: Constants.Jedi.positionY)
 
-        speechBubble = SpeechBubbleSprite(text: "",
-                                          size: CGSize(width: Constants.SpeechBubble.width,
+        speechBubble = SpeechBubbleSprite(size: CGSize(width: Constants.SpeechBubble.width,
                                                        height: Constants.SpeechBubble.height))
         speechBubble.position = CGPoint(x: Constants.SpeechBubble.positionX,
                                         y: Constants.SpeechBubble.positionY)

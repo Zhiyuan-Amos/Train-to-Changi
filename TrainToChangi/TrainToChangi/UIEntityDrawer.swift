@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ * Helper class for drawing UI entities
+ */
 class UIEntityDrawer {
 
     static func snapshotOfCell(inputView: UIView) -> UIView {
@@ -39,7 +42,7 @@ extension UIEntityDrawer {
         button.titleLabel?.font = Constants.UI.CommandButton.buttonTitleFont
         button.frame.origin = origin
         button.frame.size.width = width
-        button.frame.size.height = Constants.UI.collectionCellHeight
+        button.frame.size.height = Constants.UI.commandCollectionCellHeight
         button.layer.cornerRadius = Constants.UI.CommandButton.cornerRadius
         button.isUserInteractionEnabled = interactive
         return button
@@ -53,7 +56,7 @@ extension UIEntityDrawer {
         memoryIndexLabel.backgroundColor = backgroundColor
         memoryIndexLabel.frame.origin = origin
         memoryIndexLabel.frame.size.width = Constants.UI.CommandIndex.indexLabelWidth
-        memoryIndexLabel.frame.size.height = Constants.UI.collectionCellHeight
+        memoryIndexLabel.frame.size.height = Constants.UI.commandCollectionCellHeight
         memoryIndexLabel.clipsToBounds = true
         memoryIndexLabel.layer.cornerRadius = Constants.UI.CommandIndex.cornerRadius
         memoryIndexLabel.textAlignment = .center
@@ -74,6 +77,7 @@ extension UIEntityDrawer {
         }
     }
 
+    // Draws the command button
     static func drawCommandButton(command: CommandData, origin: CGPoint,
                                   interactive: Bool) -> UIButton {
         switch command {
@@ -128,12 +132,14 @@ extension UIEntityDrawer {
 
         let origin = getArrowOrigin(at: topIndexPath)
         let height = getHeightBetweenIndexPaths(topIndexPath, bottomIndexPath)
-        let width = Constants.UI.arrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex) / Constants.UI.arrowView.arrowIndexDivisor))
+        let width = Constants.UI.ArrowView.arrowWidth * (1.0 + CGFloat(Float(arrowWidthIndex)
+                  / Constants.UI.ArrowView.arrowIndexDivisor))
 
         return reversed ? generateReverseArrowView(origin: origin, height: height, width: width)
                         : generateArrowView(origin: origin, height: height, width: width)
     }
 
+    // Gets the starting point to draw the arrow
     static func getArrowOrigin(at indexPath: IndexPath) -> CGPoint {
         return CGPoint(Constants.UI.CommandButton.widthShort,
                        getMidYOfCell(at: indexPath))
@@ -141,10 +147,11 @@ extension UIEntityDrawer {
 
     static func getMidYOfCell(at indexPath: IndexPath) -> CGFloat {
         return (CGFloat(indexPath.item + 1)
-             * (Constants.UI.collectionCellHeight + Constants.UI.minimumLineSpacingForSection))
-             - (0.5 * Constants.UI.collectionCellHeight)
+             * (Constants.UI.commandCollectionCellHeight + Constants.UI.minimumLineSpacingForSection))
+             - (0.5 * Constants.UI.commandCollectionCellHeight)
     }
 
+    // Gets the length of the arrow
     static func getHeightBetweenIndexPaths(_ indexPathOne: IndexPath,
                                            _ indexPathTwo: IndexPath) -> CGFloat {
         return abs(getMidYOfCell(at: indexPathOne)
@@ -152,6 +159,7 @@ extension UIEntityDrawer {
 
     }
 
+    // Generates the actual ArrowView for the jump arrows
     static func generateArrowView(origin: CGPoint, height: CGFloat, width: CGFloat) -> ArrowView {
         let arrowSize = CGSize(width: width,
                                height: height)
@@ -160,6 +168,7 @@ extension UIEntityDrawer {
         return arrowView
     }
 
+    // Generates the actual ArrowView for the jump arrows but in vertical flipped order
     static func generateReverseArrowView(origin: CGPoint, height: CGFloat, width: CGFloat) -> ArrowView {
         let arrowSize = CGSize(width: width,
                                height: height)

@@ -8,9 +8,12 @@
 
 import SpriteKit
 
+/**
+ * Sprite for a Speech Bubble that contains labels with text
+ */
 class SpeechBubbleSprite: SKSpriteNode {
 
-    init(text: String, size: CGSize) {
+    init(size: CGSize) {
         super.init(texture: Constants.SpeechBubble.texture, color: UIColor.white, size: size)
         self.isHidden = true
         self.zPosition = Constants.SpeechBubble.zPosition
@@ -21,8 +24,10 @@ class SpeechBubbleSprite: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // Adds label nodes based on the length of the text 
+    // on top of the SpeechBubble SKSpriteNode
     fileprivate func addLabelNodes(longText: String) {
-        let textArr = longText.characters.split{$0 == " "}.map(String.init)
+        let textArr = longText.characters.split { $0 == " " }.map(String.init)
 
         var text = ""
         var labelNodeIndex = 0
@@ -36,7 +41,10 @@ class SpeechBubbleSprite: SKSpriteNode {
                 labelNodeIndex += 1
             }
         }
-        if (text.characters.count > 1) {
+
+        // Prevents adding another node if the last node is able to contain
+        // the remaining tokens
+        if text.characters.count > 1 {
             self.addChild(makeLabelNode(text: text, labelNodeIndex: labelNodeIndex))
         }
     }
@@ -67,7 +75,7 @@ extension SpeechBubbleSprite {
 
     @objc fileprivate func handleToggleSpeech(notification: Notification) {
         self.removeAllChildren()
-        addLabelNodes(longText: "Siao liao lah. Train breakdown again.")
+        addLabelNodes(longText: Constants.SpeechBubble.speechDefault)
         self.isHidden = !self.isHidden
     }
 
@@ -81,15 +89,19 @@ extension SpeechBubbleSprite {
             switch error {
             case .invalidOperation:
                 self.removeAllChildren()
-                addLabelNodes(longText: "You are not allowed to execute this command!")
+                addLabelNodes(longText: Constants.SpeechBubble.speechInvalidOperation)
+
             case .wrongOutboxValue:
                 self.removeAllChildren()
-                addLabelNodes(longText: "The output is incorrect!")
+                addLabelNodes(longText: Constants.SpeechBubble.speechWrongOutput)
+
             case .incompleteOutboxValues:
                 self.removeAllChildren()
-                addLabelNodes(longText: "There should be more values!")
+                addLabelNodes(longText: Constants.SpeechBubble.speechIncompleteOutput)
             }
+
             isHidden = false
+
         default:
             break
         }

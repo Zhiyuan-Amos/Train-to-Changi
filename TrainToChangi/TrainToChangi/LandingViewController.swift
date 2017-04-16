@@ -15,11 +15,26 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var titleImageView: UIImageView!
     @IBOutlet weak var trainImageView: UIImageView!
 
+    @IBAction func signOutButtonPressed(_ sender: UIButton) {
+        do {
+            try FIRAuth.auth()?.signOut()
+            GIDSignIn.sharedInstance().signOut()
+
+            performSegue(withIdentifier: "login", sender: nil)
+            return
+        } catch let signOutError as NSError {
+            print ("Error signing out: \(signOutError)")
+        }
+    }
+
+    @IBAction func cancelFromLevelSelection(segue: UIStoryboardSegue) {
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         // Makes sure that user is logged in.
         guard AuthService.instance.currentUserId != nil else {
             // show login viewcontroller
-            performSegue(withIdentifier: "login", sender: nil)
+            performSegue(withIdentifier: Constants.SegueIds.login, sender: nil)
             return
         }
         preloadCommandDataList()
@@ -35,20 +50,20 @@ class LandingViewController: UIViewController {
     }
 
     private func animateTitleUpMotion(center: CGFloat) {
-        UIView.animate(withDuration: 2, animations: {
-            self.titleImageView.center.y = center - 15
+        UIView.animate(withDuration: Constants.Animation.titleAnimationDuration, animations: {
+            self.titleImageView.center.y = center - Constants.Animation.titleVerticalDisplacement
         }, completion: { _ in self.animateTitleDownMotion(center: center) })
     }
 
     private func animateTitleDownMotion(center: CGFloat) {
-        UIView.animate(withDuration: 2, animations: {
-            self.titleImageView.center.y = center + 15
+        UIView.animate(withDuration:  Constants.Animation.titleAnimationDuration, animations: {
+            self.titleImageView.center.y = center + Constants.Animation.titleVerticalDisplacement
         }, completion: { _ in self.animateTitleUpMotion(center: center) })
     }
 
     private func animateTrainMovingMotion(center: CGFloat) {
-        UIView.animate(withDuration: 5, animations: {
-            self.trainImageView.center.x = center + 1500
+        UIView.animate(withDuration: Constants.Animation.landingTrainMotionDuration, animations: {
+            self.trainImageView.center.x = center + Constants.Animation.landingTrainHorizontalDisplacement
         }, completion: { _ in
             self.trainImageView.center.x = center
             self.animateTrainMovingMotion(center: center)
@@ -70,22 +85,9 @@ class LandingViewController: UIViewController {
         guard let userId = AuthService.instance.currentUserId else {
             return
         }
+
+        let sharedInstance = AchievementsManager.sharedInstance
         DataService.instance.loadUnlockedAchievements(userId: userId,
-                                                      loadUnlockedAchievementsDelegate: AchievementsManager.sharedInstance)
-    }
-
-    @IBAction func signOutButtonPressed(_ sender: UIButton) {
-        do {
-            try FIRAuth.auth()?.signOut()
-            GIDSignIn.sharedInstance().signOut()
-
-            performSegue(withIdentifier: "login", sender: nil)
-            return
-        } catch let signOutError as NSError {
-            print ("Error signing out: \(signOutError)")
-        }
-    }
-
-    @IBAction func cancelFromLevelSelection(segue: UIStoryboardSegue) {
+                                                      loadUnlockedAchievementsDelegate: sharedInstance)
     }
 }

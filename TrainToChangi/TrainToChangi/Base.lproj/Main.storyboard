@@ -253,7 +253,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="achievement" id="h99-qz-c8V" customClass="AchievementCell" customModule="TrainToChangi" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AchievementCell" id="h99-qz-c8V" customClass="AchievementCell" customModule="TrainToChangi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="444" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h99-qz-c8V" id="txm-xr-qE5">
@@ -302,7 +302,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="achievementsTableView" destination="Ueo-9d-vt8" id="u9l-Z2-sUC"/>
@@ -723,7 +723,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="errorMessageLabel" destination="2Kt-tp-GYZ" id="jrR-tO-FRv"/>
@@ -782,7 +782,7 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerView" id="7Vp-Af-eLj" customClass="LoadProgramHeaderView" customModule="TrainToChangi" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="programHeaderView" id="7Vp-Af-eLj" customClass="LoadProgramHeaderView" customModule="TrainToChangi" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -818,7 +818,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="programCollectionView" destination="xxG-xB-6Cf" id="Wag-dt-SUH"/>

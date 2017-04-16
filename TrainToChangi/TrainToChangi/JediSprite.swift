@@ -8,6 +8,9 @@
 
 import SpriteKit
 
+/**
+ * Sprite representing the passenger of the game
+ */
 class JediSprite: SKSpriteNode {
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
@@ -23,10 +26,10 @@ class JediSprite: SKSpriteNode {
         NotificationCenter.default.post(Notification(name: Constants.NotificationNames.toggleSpeechEvent,
                                                      object: self.index, userInfo: nil))
     }
-    
+
     func playGameWonAnimation() {
         let animationTextures = [SKTexture(imageNamed: "jedi_01"), SKTexture(imageNamed: "jedi_05")]
-        let animation = SKAction.repeatForever(SKAction.animate(with: animationTextures, timePerFrame: 0.1))
+        let animation = SKAction.repeatForever(SKAction.animate(with: animationTextures, timePerFrame: 0.2))
         self.run(animation)
     }
 }

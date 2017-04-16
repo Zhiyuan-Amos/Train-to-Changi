@@ -9,10 +9,6 @@
 import SpriteKit
 import GameplayKit
 
-protocol MapSceneDelegate: class {
-    func didTouchStation(name: String?)
-}
-
 // Scene that presents the railway map, which represents the levels and progress of player.
 // Interface is mostly drawn using the MapScene.sks file. The map can be much bigger than
 // the camera, just pan and navigate around the map.

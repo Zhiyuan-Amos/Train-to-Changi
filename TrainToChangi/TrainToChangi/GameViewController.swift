@@ -9,14 +9,34 @@
 import UIKit
 import SpriteKit
 
+/**
+ * Parent view controller of the different container views in the game view
+ */
 class GameViewController: UIViewController {
-
-    @IBOutlet weak var trainUIImage: UIImageView!
-    @IBOutlet weak var musicButton: UIButton!
 
     fileprivate var model: Model!
     fileprivate var logic: Logic!
     fileprivate var scene: GameScene!
+
+    @IBOutlet weak var trainUIImage: UIImageView!
+    @IBOutlet weak var musicButton: UIButton!
+
+    @IBAction func musicButtonPressed(_ sender: UIButton) {
+        AudioPlayer.sharedInstance.toggleBackgroundMusic()
+        if AudioPlayer.sharedInstance.isMute() {
+            musicButton.setBackgroundImage(Constants.UI.Music.noMusicImage,
+                                           for: UIControlState.normal)
+        } else {
+            musicButton.setBackgroundImage(Constants.UI.Music.musicImage,
+                                           for: UIControlState.normal)
+        }
+    }
+
+    @IBAction func exitButtonPressed(_ sender: UIButton) {
+        dismiss(animated: true, completion: {
+            AudioPlayer.sharedInstance.stopBackgroundMusic()
+        })
+    }
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -43,44 +63,28 @@ class GameViewController: UIViewController {
         }
     }
 
-    @IBAction func musicButtonPressed(_ sender: UIButton) {
-        AudioPlayer.sharedInstance.toggleBackgroundMusic()
-        if AudioPlayer.sharedInstance.isMute() {
-            musicButton.setBackgroundImage(UIImage(named: "nomusic"),
-                                           for: UIControlState.normal)
-        } else {
-            musicButton.setBackgroundImage(UIImage(named: "music"),
-                                           for: UIControlState.normal)
-        }
-    }
-
-    @IBAction func exitButtonPressed(_ sender: UIButton) {
-        dismiss(animated: true, completion: {
-            AudioPlayer.sharedInstance.stopBackgroundMusic()
-        })
-    }
-
     private func animateTrain() {
         var trainFrames = [UIImage]()
-        for index in 0...Constants.UI.trainView.numTrainFrames {
-            let frame = UIImage(named: "train_vert\(index)")!
+        for index in 0...Constants.UI.TrainView.numTrainFrames {
+            let frame = UIImage(named: Constants.UI.TrainView.trainImageName + "\(index)")!
             trainFrames.append(frame)
         }
         trainUIImage.animationImages = trainFrames
-        trainUIImage.animationDuration = 1.5
+        trainUIImage.animationDuration = Constants.Animation.gameTrainAnimationDuration
         trainUIImage.startAnimating()
     }
 
     fileprivate func animateTrainWhenGameWon() {
         trainUIImage.stopAnimating()
-        trainUIImage.animationImages = Constants.UI.trainView.gameWonTrainFrames
-        trainUIImage.animationDuration = Constants.UI.trainView.gameWonTrainAnimationDuration
+        trainUIImage.animationImages = Constants.UI.TrainView.gameWonTrainFrames
+        trainUIImage.animationDuration = Constants.UI.TrainView.gameWonTrainAnimationDuration
         trainUIImage.startAnimating()
     }
 
     fileprivate func initEndGameScreen() -> UIViewController {
         let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: Constants.UI.endGameViewControllerIdentifier)
+        let identifier = Constants.UI.endGameViewControllerIdentifier
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier)
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         return controller
@@ -89,8 +93,9 @@ class GameViewController: UIViewController {
     /// Use GameScene to move/animate the game objects
     private func presentGameScene() {
         scene = GameScene(model.currentLevel, size: view.bounds.size)
+
         guard let skView = view as? SKView else {
-            assertionFailure("View should be a SpriteKit View!")
+            assertionFailure(Constants.Errors.gameViewNotSKView)
             return
         }
         scene.scaleMode = .resizeFill
@@ -98,7 +103,7 @@ class GameViewController: UIViewController {
     }
 }
 
-// MARK -- Event Handling
+// MARK: - Event Handling
 extension GameViewController {
     fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
@@ -129,19 +134,22 @@ extension GameViewController {
         } else if model.runState == .won {
             animateTrainWhenGameWon()
             scene.playJediGameWonAnimation()
+
             let controller = self.initEndGameScreen()
             AchievementsManager.sharedInstance.updateAchievements(model: self.model)
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Duration.endGameScreenDisplayDelay), execute: {
+            let delay = Constants.UI.Delay.endGameScreenDisplayDelay
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
                 self.present(controller, animated: true, completion: nil)
             })
         }
     }
 }
 
+// MARK: - MapViewControllerDelegate
 extension GameViewController: MapViewControllerDelegate {
     func initLevel(name: String?) {
         guard let name = name else {
-            fatalError("Station must have a name!")
+            fatalError(Constants.Errors.stationNameNotSet)
         }
         let levelIndex = indexOfStation(name: name)
         model = ModelManager(levelIndex: levelIndex,
@@ -152,13 +160,14 @@ extension GameViewController: MapViewControllerDelegate {
     private func indexOfStation(name: String) -> Int {
         let levelNames = Constants.StationNames.stationNames
         guard let index = levelNames.index(where: { $0 == name }) else {
-            preconditionFailure("StationName does not exist!")
+            preconditionFailure(Constants.Errors.stationNameDoesNotExist)
         }
 
         return index
     }
 }
 
+// MARK: - ResetGameDelegate
 extension GameViewController: ResetGameDelegate {
 
     func resetGame(isAnimating: Bool) {

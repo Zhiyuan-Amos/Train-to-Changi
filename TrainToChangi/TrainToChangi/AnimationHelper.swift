@@ -8,11 +8,14 @@
 
 import UIKit
 
+/**
+ *  Helper class for running animation for drag and drop commands view
+ */
 class AnimationHelper {
 
     static func swipeDeleteAnimation(cell: UICollectionViewCell, indexPath: IndexPath,
                                      deleteFunction: @escaping (IndexPath) -> Void) {
-        let duration = Constants.UI.Duration.swipeAnimationDuration
+        let duration = Constants.Animation.swipeAnimationDuration
         UIView.animate(withDuration: duration, animations: { () -> Void in
             cell.center.x += 300
             cell.alpha = 0.0
@@ -27,12 +30,12 @@ class AnimationHelper {
         })
     }
 
-    static func dragBeganAnimation(location: CGPoint, cell: UICollectionViewCell) {
-        let duration = Constants.UI.Duration.dragAnimationDuration
+    static func dragBeganAnimation(location: CGPoint, cell: UICollectionViewCell, dragBundle: DragBundle) {
+        let duration = Constants.Animation.dragAnimationDuration
         UIView.animate(withDuration: duration, animations: { () -> Void in
-            DragBundle.cellSnapshot?.center.y = location.y
-            DragBundle.cellSnapshot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-            DragBundle.cellSnapshot?.alpha = 0.98
+            dragBundle.cellSnapshot?.center.y = location.y
+            dragBundle.cellSnapshot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+            dragBundle.cellSnapshot?.alpha = 0.98
             cell.alpha = 0.0
 
         }, completion: { (finished) -> Void in
@@ -42,18 +45,18 @@ class AnimationHelper {
         })
     }
 
-    static func dragEndedAnimation(cell: UICollectionViewCell) {
-        let duration = Constants.UI.Duration.dragAnimationDuration
+    static func dragEndedAnimation(cell: UICollectionViewCell, dragBundle: DragBundle) {
+        let duration = Constants.Animation.dragAnimationDuration
         UIView.animate(withDuration: duration, animations: { () -> Void in
-            DragBundle.cellSnapshot?.center = cell.center
-            DragBundle.cellSnapshot?.transform = CGAffineTransform.identity
-            DragBundle.cellSnapshot?.alpha = 0.0
+            dragBundle.cellSnapshot?.center = cell.center
+            dragBundle.cellSnapshot?.transform = CGAffineTransform.identity
+            dragBundle.cellSnapshot?.alpha = 0.0
             cell.alpha = 1.0
         }, completion: { (finished) -> Void in
             if finished {
-                DragBundle.initialIndexPath = nil
-                DragBundle.cellSnapshot!.removeFromSuperview()
-                DragBundle.cellSnapshot = nil
+                dragBundle.initialIndexPath = nil
+                dragBundle.cellSnapshot!.removeFromSuperview()
+                dragBundle.cellSnapshot = nil
                 cell.isHidden = false
             }
         })
