@@ -10,6 +10,30 @@ import SpriteKit
 /// or used to later re-initialize elements during gameplay.
 extension GameScene {
 
+    func initElements(level: Level) {
+        initBackground()
+        initPlayer()
+        initJedi()
+        initInbox(values: level.initialState.inputs)
+        initOutbox()
+        initMemory(from: level.initialState.memoryValues, layout: level.memoryLayout, valuesOnly: false)
+        initSpeed()
+    }
+
+    func initNotification() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleMovePerson(notification:)),
+            name: Constants.NotificationNames.movePersonInScene, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(handleResetScene(notification:)),
+            name: Constants.NotificationNames.resetGameScene, object: nil)
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(updateNodesSpeed(notification:)),
+            name: Constants.NotificationNames.sliderShifted, object: nil)
+    }
+
     // Dynamic elements include `player` position, `player` value,
     // `payload`s on the inbox and outbox belt and on memory.
     // This method is called when scene is changed abruptly, by buttons "Stop", "Step backward".
@@ -45,7 +69,8 @@ extension GameScene {
         speechBubble.isHidden = true
     }
 
-    func initBackground() {
+    // MARK: - Background
+    fileprivate func initBackground() {
         let rows = Constants.Background.rows
         let columns = Constants.Background.columns
         let size = Constants.Background.size
@@ -64,7 +89,8 @@ extension GameScene {
         addChild(backgroundTileMap)
     }
 
-    func initJedi() {
+    // MARK: - Jedi
+    fileprivate func initJedi() {
         jedi = JediSprite(texture: Constants.Jedi.texture,
                           color: UIColor.white,
                           size: CGSize(width: Constants.Jedi.width, height: Constants.Jedi.height))
@@ -80,12 +106,13 @@ extension GameScene {
         addChild(speechBubble)
     }
 
-    func initPlayer() {
+    // MARK: - Player
+    fileprivate func initPlayer() {
         setPlayerAttributes()
         addChild(player)
     }
 
-    func setPlayerAttributes(position: CGPoint? = nil, payloadValue: Int? = nil) {
+    fileprivate func setPlayerAttributes(position: CGPoint? = nil, payloadValue: Int? = nil) {
         // - If position is nil, payloadValue must be nil as well. This is to set Player at the start of the game.
         // - When position is set, payloadValue should also be set (however payloadValue may be nil as the player
         //   may not hold anything).
@@ -113,58 +140,22 @@ extension GameScene {
         bootstrapPayload(payload)
     }
 
-    func initInbox(values: [Int]) {
+    // MARK: - Conveyor
+    fileprivate func initInbox(values: [Int]) {
         inbox.size = Constants.Inbox.size
         inbox.position = Constants.Inbox.position
         addChild(inbox)
         initConveyorNodes(inboxValues: values)
     }
 
-    func initOutbox() {
+    fileprivate func initOutbox() {
         outbox.size = Constants.Outbox.size
         outbox.position = Constants.Outbox.position
 
         addChild(outbox)
     }
 
-    func initNotification() {
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleMovePerson(notification:)),
-            name: Constants.NotificationNames.movePersonInScene, object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(handleResetScene(notification:)),
-            name: Constants.NotificationNames.resetGameScene, object: nil)
-
-        NotificationCenter.default.addObserver(
-            self, selector: #selector(updateNodesSpeed(notification:)),
-            name: Constants.NotificationNames.sliderShifted, object: nil)
-    }
-
-    func initMemory(from memoryValues: [Int?], layout: Memory.Layout, valuesOnly: Bool) {
-        self.memoryLayout = layout
-        self.memoryNodes.removeAll(keepingCapacity: true)
-        for (index, value) in memoryValues.enumerated() {
-            guard layout.locations.count == memoryValues.count else {
-                fatalError("[GameScene:initMemory] " +
-                               "Number of memory values differ from the layout specified. Check level data.")
-            }
-            if !valuesOnly {
-                let node = MemorySlot(index: index, layout: layout)
-                addChild(node)
-                memorySlots.append(node)
-            }
-
-            guard let value = value else {
-                continue
-            }
-            let memorySprite = Payload(position: layout.locations[index], value: value)
-            addChild(memorySprite)
-            memoryNodes[index] = memorySprite
-        }
-    }
-
-    func initConveyorNodes(inboxValues: [Int], outboxValues: [Int]? = nil) {
+    fileprivate func initConveyorNodes(inboxValues: [Int], outboxValues: [Int]? = nil) {
         inboxNodes = []
 
         for (index, value) in inboxValues.enumerated() {
@@ -202,7 +193,33 @@ extension GameScene {
         return CGPoint(x: x, y: y)
     }
 
-    func initSpeed() {
+
+    // MARK: - Memory
+    fileprivate func initMemory(from memoryValues: [Int?], layout: Memory.Layout, valuesOnly: Bool) {
+        self.memoryLayout = layout
+        self.memoryNodes.removeAll(keepingCapacity: true)
+        for (index, value) in memoryValues.enumerated() {
+            guard layout.locations.count == memoryValues.count else {
+                fatalError("[GameScene:initMemory] " +
+                               "Number of memory values differ from the layout specified. Check level data.")
+            }
+            if !valuesOnly {
+                let node = MemorySlot(index: index, layout: layout)
+                addChild(node)
+                memorySlots.append(node)
+            }
+
+            guard let value = value else {
+                continue
+            }
+            let memorySprite = Payload(position: layout.locations[index], value: value)
+            addChild(memorySprite)
+            memoryNodes[index] = memorySprite
+        }
+    }
+
+    // MARK: - Speed
+    fileprivate func initSpeed() {
         let defaultSpeed = Constants.Animation.defaultSpeed
         player.speed = defaultSpeed
         inbox.speed = defaultSpeed
