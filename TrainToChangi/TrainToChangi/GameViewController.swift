@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
 
     fileprivate var model: Model!
     fileprivate var logic: Logic!
-    fileprivate var scene: GameScene!
+    fileprivate var scene: GameScene?
     @IBOutlet weak var exitButton: UIButton!
 
     @IBOutlet weak var trainUIImage: UIImageView!
@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
             } else {
                 self.resetGame(isAnimating: false)
             }
-
+            self.scene = nil
             AudioPlayer.sharedInstance.stopBackgroundMusic()
         })
     }
@@ -113,7 +113,7 @@ class GameViewController: UIViewController {
             assertionFailure(Constants.Errors.gameViewNotSKView)
             return
         }
-        scene.scaleMode = .resizeFill
+        scene?.scaleMode = .resizeFill
         skView.presentScene(scene)
     }
 }
@@ -149,7 +149,7 @@ extension GameViewController {
         } else if model.runState == .won {
             exitButton.isEnabled = false;
             animateTrainWhenGameWon()
-            scene.playJediGameWonAnimation()
+            scene?.playJediGameWonAnimation()
 
             let delay = Constants.UI.Delay.endGameScreenDisplayDelay
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
