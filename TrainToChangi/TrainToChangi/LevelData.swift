@@ -114,9 +114,8 @@ struct LevelTwoData: LevelData, RandomizedInputsLevel {
                                             Cmd.add,
                                             Cmd.jump]
 
-    let memoryLayout = Memory.Layout.twoByTwo
-    let memoryValues: [Int?] = [nil, nil,
-                                nil, nil]
+    let memoryLayout = Memory.Layout.twoByOne
+    let memoryValues: [Int?] = [nil, nil]
 
     let start = 0
     let end = 20
@@ -163,10 +162,8 @@ struct LevelThreeData: LevelData, RandomizedInputsLevel {
                                             Cmd.jumpIfZero,
                                             Cmd.jumpIfNegative]
 
-    let memoryLayout = Memory.Layout.threeByThree
-    let memoryValues: [Int?] = [nil, nil, nil,
-                                nil, nil, nil,
-                                nil, nil, nil]
+    let memoryLayout = Memory.Layout.twoByOne
+    let memoryValues: [Int?] = [nil, nil]
 
     let start = 1
     let end = 20
