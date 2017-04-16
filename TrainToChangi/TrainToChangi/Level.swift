@@ -6,7 +6,9 @@
 //  Copyright © 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
-// The Model's representation of a LevelData.
+// The Model's representation of a `LevelData`.
+// Contains the `initialState` of the level, along with other fields that
+// will not change during gameplay.
 class Level {
     let levelName: String
     let initialState: LevelState

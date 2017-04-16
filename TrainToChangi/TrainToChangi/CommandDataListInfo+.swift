@@ -18,6 +18,8 @@ import FirebaseDatabase
 // e.g. "jump_2" implies that its jumpTarget is at index 2.
 extension CommandDataListInfo {
 
+    typealias CDE = Constants.CommandDataEnum
+
     static func fromSnapshot(snapshot: FIRDataSnapshot) -> CommandDataListInfo? {
         guard let array = snapshot.value as? [String] else {
             return nil
@@ -36,7 +38,7 @@ extension CommandDataListInfo {
             guard let jumpStr = dict[jumpParentIndexStr] else {
                 fatalError("Jump indexes not stored properly!")
             }
-            let appendedJumpStr = jumpStr + "_" + String(jumpTargetIndex)
+            let appendedJumpStr = jumpStr + CDE.delimiter + String(jumpTargetIndex)
             dict[jumpParentIndexStr] = appendedJumpStr
         }
         return dict
@@ -55,29 +57,39 @@ extension CommandDataListInfo {
         var jumpMappings: [Int: Int] = [:]
 
         for (index, commandString) in array.enumerated() {
-            let commandArr = commandString.characters.split{$0 == "_"}.map(String.init)
-            switch commandArr[0] {
+            let commandArr = commandString.characters.split { $0 == "_" } // Cannot extract this.
+                                                     .map(String.init)
+            let commandString = commandArr[0]
+
+            switch commandString {
             case "inbox":
                 commandData.append(CommandData.inbox)
             case "outbox":
                 commandData.append(CommandData.outbox)
             case "copyFrom":
-                commandData.append(CommandData.copyFrom(memoryIndex: Int(commandArr[1])!))
+                let memoryIndex = guardAndReturnIndex(indexStr: commandArr[1])
+                commandData.append(CommandData.copyFrom(memoryIndex: memoryIndex))
             case "copyTo":
-                commandData.append(CommandData.copyTo(memoryIndex: Int(commandArr[1])!))
+                let memoryIndex = guardAndReturnIndex(indexStr: commandArr[1])
+                commandData.append(CommandData.copyTo(memoryIndex: memoryIndex))
             case "add":
-                commandData.append(CommandData.add(memoryIndex: Int(commandArr[1])!))
+                let memoryIndex = guardAndReturnIndex(indexStr: commandArr[1])
+                commandData.append(CommandData.add(memoryIndex: memoryIndex))
             case "sub":
-                commandData.append(CommandData.sub(memoryIndex: Int(commandArr[1])!))
+                let memoryIndex = guardAndReturnIndex(indexStr: commandArr[1])
+                commandData.append(CommandData.sub(memoryIndex: memoryIndex))
             case "jump":
+                let jumpTargetIndex = guardAndReturnIndex(indexStr: commandArr[1])
                 commandData.append(CommandData.jump)
-                jumpMappings[index] = Int(commandArr[1])
+                jumpMappings[index] = jumpTargetIndex
             case "jumpIfZero":
+                let jumpTargetIndex = guardAndReturnIndex(indexStr: commandArr[1])
                 commandData.append(CommandData.jumpIfZero)
-                jumpMappings[index] = Int(commandArr[1])
+                jumpMappings[index] = jumpTargetIndex
             case "jumpIfNegative":
+                let jumpTargetIndex = guardAndReturnIndex(indexStr: commandArr[1])
                 commandData.append(CommandData.jumpIfNegative)
-                jumpMappings[index] = Int(commandArr[1])
+                jumpMappings[index] = jumpTargetIndex
             case "jumpTarget":
                 commandData.append(CommandData.jumpTarget)
             default:
@@ -85,6 +97,14 @@ extension CommandDataListInfo {
             }
         }
         return CommandDataListInfo(commandDataArray: commandData, jumpMappings: jumpMappings)
+    }
+
+    private static func guardAndReturnIndex(indexStr: String?) -> Int {
+        guard let indexStr = indexStr,
+              let index = Int(indexStr) else {
+            fatalError("Should never be optional and not convertible to Int.")
+        }
+        return index
     }
 
 }

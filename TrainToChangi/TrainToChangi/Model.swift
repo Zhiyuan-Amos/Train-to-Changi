@@ -30,6 +30,7 @@ protocol Model: class {
     // The current level loaded in Model.
     var currentLevel: Level { get }
 
+    // The index of the current level loaded in Model.
     var currentLevelIndex: Int { get }
 
     // MARK - API for GameViewController.
@@ -57,8 +58,12 @@ protocol Model: class {
     // Reinitialises Model play state.
     func resetPlayState()
 
+    // Loads the `commandDataListInfo` into `commandDataList` which represents
+    // the commands entered by user in editor.
     func loadCommandDataListInfo(commandDataListInfo: CommandDataListInfo)
 
+    // Returns the `commandDataListInfo` for the current editor,
+    // which represents the commands entered by user.
     func getCommandDataListInfo() -> CommandDataListInfo
 
     // MARK - API for Logic.
@@ -87,17 +92,19 @@ protocol Model: class {
 
     // Returns the value that is stored in the memory located at `index`
     // If the memory location is empty, returns nil.
-    // @param forUndo: Indicates whether this method is called to get
-    //                 value in order to prepare for `undo()`
     func getValueFromMemory(at index: Int) -> Int?
 
     // Put `value` into memory located at `index`.
     func putValueIntoMemory(_ value: Int?, at index: Int)
 
+    // Increments the number of times user have lost the current level.
     func incrementNumLost()
 
-    // MARK - API for Achievement.
+    // MARK - API for Achievements.
 
+    // Returns the time that has elapsed since the level has begun.
     func getTimeElapsed() -> Double
+
+    // Returns the number of times user have lost the current level.
     func getNumLost() -> Int
 }

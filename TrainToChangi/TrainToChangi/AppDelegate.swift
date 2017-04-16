@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-
 }
 
 extension AppDelegate: GIDSignInDelegate {
@@ -48,7 +47,9 @@ extension AppDelegate: GIDSignInDelegate {
 
         // Get googleID token and google access token
         // and exchange for Firebase credential
-        guard let authentication = user.authentication else { return }
+        guard let authentication = user.authentication else {
+            return
+        }
         let credential = FIRGoogleAuthProvider.credential(withIDToken: authentication.idToken,
                                                           accessToken: authentication.accessToken)
 

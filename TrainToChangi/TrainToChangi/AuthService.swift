@@ -44,7 +44,7 @@ class AuthService {
     func loginAnonymously() {
         FIRAuth.auth()?.signInAnonymously { (user, error) in
             if let error = error {
-                print(error)
+                print(error.localizedDescription)
                 return
             }
             // User signed into firebase
@@ -54,7 +54,6 @@ class AuthService {
                 return
             }
             DataService.instance.saveUser(userId: user.uid)
-            // TODO: Get reference in better way
             guard let controller = GIDSignIn.sharedInstance().uiDelegate as? LoginViewController else {
                 fatalError("Controller not set up properly")
             }

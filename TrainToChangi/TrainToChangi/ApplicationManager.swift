@@ -10,7 +10,4 @@ class ApplicationManager {
 
     let automaticFirebaseSaver = AutomaticFirebaseSaver()
 
-    init() {
-    }
-
 }

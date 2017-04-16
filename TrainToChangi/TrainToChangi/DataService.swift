@@ -25,6 +25,8 @@ class DataService {
     private static let _instance = DataService()
     private let usersKey = "users"
     private let profileKey = "profile"
+    private let firstNameKey = "firstName"
+    private let lastNameKey = "lastName"
     private let commandDataListInfoKey = "commandDataListInfo"
     private let autoSavedCommandDataListInfoKey = "autoSavedCommandDataListInfo"
     private let autoSavedKey = "autoSaved"
@@ -43,7 +45,8 @@ class DataService {
     }
 
     func saveUser(userId: String) {
-        let profile: [String: AnyObject] = ["firstName": "" as AnyObject, "lastName": "" as AnyObject]
+        let profile: [String: AnyObject] = [firstNameKey: "" as AnyObject,
+                                            lastNameKey: "" as AnyObject]
         usersRef.child(userId)
                 .child(profileKey)
                 .setValue(profile)
@@ -58,8 +61,8 @@ class DataService {
         let commandDataListInfo = commandDataListInfo.toAnyObject()
         let data: [String: AnyObject] = [autoSavedKey: commandDataListInfo]
         let ref = usersRef.child(userId)
-            .child(autoSavedCommandDataListInfoKey)
-            .child(String(levelIndex))
+                          .child(autoSavedCommandDataListInfoKey)
+                          .child(String(levelIndex))
         ref.setValue(data)
     }
 
@@ -146,8 +149,7 @@ class DataService {
                            achievementString: String) {
         // Convert achievementString to anyObject
         let data = [achievementString: true as AnyObject]
-        let path = "\(userId)/\(achievementsKey)"
-        usersRef.child(path).updateChildValues(data)
+        usersRef.child(userId).child(achievementsKey).updateChildValues(data)
     }
 
     func loadUnlockedAchievements(userId: String,

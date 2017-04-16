@@ -8,7 +8,7 @@
 
 import Foundation
 
-// Wrapper struct that contains all information needed to init a CommandDataList.
+// Wrapper struct that contains all information needed to init a CommandDataList from storage.
 struct CommandDataListInfo {
     let commandDataArray: [CommandData]
     let jumpMappings: [Int: Int]

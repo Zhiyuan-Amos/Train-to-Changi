@@ -1,4 +1,6 @@
 PODS:
+  - Firebase (3.11.1):
+    - Firebase/Core (= 3.11.1)
   - Firebase/Auth (3.11.1):
     - Firebase/Core
     - FirebaseAuth (= 3.1.0)
@@ -55,6 +57,7 @@ PODS:
   - SwiftLint (0.16.0)
 
 DEPENDENCIES:
+  - Firebase
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -77,6 +80,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 6f8d8b28b7e345549ac471071608170b31cb4977
   SwiftLint: 90665265ae50b58167c674a11c680bbabe9d6513
 
-PODFILE CHECKSUM: 836e52bc94baf0ba116733000bb7069f3f4bc81f
+PODFILE CHECKSUM: 47585c515435ef853d4e80a329c93a72af9625b3
 
 COCOAPODS: 1.2.0

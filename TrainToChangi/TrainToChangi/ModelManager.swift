@@ -182,7 +182,7 @@ class ModelManager: Model {
         levelState.numLost += 1
     }
 
-    // API for Achievement
+    // MARK - API for Achievement
     func getTimeElapsed() -> Double {
         return levelState.timeElapsed
     }

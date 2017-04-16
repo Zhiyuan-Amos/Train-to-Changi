@@ -13,6 +13,7 @@ target 'TrainToChangi' do
 
   target 'TrainToChangiTests' do
     inherit! :search_paths
+    pod 'Firebase'
     pod 'SwiftLint'
     # Pods for testing
   end
