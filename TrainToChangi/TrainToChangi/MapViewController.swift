@@ -33,13 +33,13 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
 
         // load .sks file
-        guard let scene = GKScene(fileNamed: "MapScene") else {
+        guard let scene = GKScene(fileNamed: MapScene.fileName) else {
             assertionFailure("Did you rename the .sks file?")
             return
         }
         // cast to custom MapScene
         guard let sceneNode = scene.rootNode as? MapScene else {
-            assertionFailure("Did you set custom class in MapView.sks?")
+            assertionFailure("Did you set custom class in \(MapScene.fileName).sks?")
             return
         }
         sceneNode.mapSceneDelegate = self
@@ -66,7 +66,7 @@ class MapViewController: UIViewController {
             }
             gameVC.initLevel(name: levelName)
 
-        case "cancelFromLevelSelectionWithSegue"?:
+        case Constants.SegueIds.cancelLevelSelect?:
             guard let _ = segue.destination as? LandingViewController else {
                 assertionFailure("Segue should point to LandingViewController")
                 break

@@ -157,6 +157,8 @@ struct Constants {
     struct SegueIds {
         static let startLevel = "startLevel"
         static let login = "login"
+        static let cancelLevelSelect = "cancelFromLevelSelectionWithSegue"
+
     }
 
     // swiftlint:disable type_name
