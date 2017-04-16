@@ -70,7 +70,10 @@ struct LevelOneData: LevelData, RandomizedInputsLevel {
 
     let levelDescription = "The MRT needs your help to power up!"
                            + Helper.newLine
-                           + "You are given some commands. Tap on them to add them to the editor, then drag and drop to move them around. Get all boxes to Outbox!"
+                           + "You are given some commands. "
+                           + "Tap on them to add them to the editor, "
+                           + "then drag and drop to move them around. "
+                           + "Get all boxes to Outbox!"
 
     let availableCommands: [CommandData] = [Cmd.inbox,
                                             Cmd.outbox,
@@ -101,7 +104,9 @@ struct LevelTwoData: LevelData, RandomizedInputsLevel {
     let levelDescription = "The boxes do not provide enough power on their own."
                            + Helper.newLine
                            + "Can you sum the boxes up before moving them to outbox?"
-                           + "The combined power of two boxes will do, so sum up each pair and then move this sum to outbox. Repeat this until all the inbox has no more boxes!"
+                           + "The combined power of two boxes will do, "
+                           + "so sum up each pair and then move this sum to outbox. "
+                           + "Repeat this until all the inbox has no more boxes!"
 
     let availableCommands: [CommandData] = [Cmd.inbox,
                                             Cmd.outbox,

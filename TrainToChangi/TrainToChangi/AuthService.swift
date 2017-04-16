@@ -44,7 +44,7 @@ class AuthService {
     func loginAnonymously() {
         FIRAuth.auth()?.signInAnonymously { (user, error) in
             if let error = error {
-                print(error)
+                print(error.localizedDescription)
                 return
             }
             // User signed into firebase
