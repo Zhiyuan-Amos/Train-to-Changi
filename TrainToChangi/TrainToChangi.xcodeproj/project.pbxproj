@@ -487,10 +487,10 @@
 			isa = PBXGroup;
 			children = (
 				D76FA8261E76ADC400CCCFBE /* AppDelegate.swift */,
-				A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */,
 				A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */,
 				D788BCD91E9B1781003B92DA /* Achievement.swift */,
 				A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */,
+				A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */,
 				A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */,
 				A7D163481E90CC860073EC46 /* GameLevels */,
 			);

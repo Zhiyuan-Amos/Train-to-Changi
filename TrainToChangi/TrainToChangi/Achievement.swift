@@ -1,4 +1,6 @@
-import Foundation
+//
+// Represents an achievement that the user can unlock.
+//
 
 class Achievement {
     let name: AchievementsEnum

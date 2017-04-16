@@ -91,7 +91,7 @@ class LogicManager: Logic {
         let currentIndex = programCounter.index
 
         let commandAndResult = execute()
-        
+
         guard let index = currentIndex, let command = commandAndResult.0,
             let commandResult = commandAndResult.1 else {
             return

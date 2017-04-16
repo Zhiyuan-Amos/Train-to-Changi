@@ -1,5 +1,5 @@
 //
-// 
+// Parses `CommandData` and does the execution and undoing of commands.
 //
 
 class GameLogic {

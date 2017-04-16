@@ -13,6 +13,8 @@ import UIKit
  */
 class EndGameViewController: UIViewController {
 
+    var model: Model!
+
     private(set) var achievements = AchievementsManager.sharedInstance
 
     @IBOutlet weak var achievementsTableView: UITableView!
@@ -22,8 +24,8 @@ class EndGameViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        achievements.updateAchievements(model: model)
         achievementsTableView.isHidden = achievements.currentLevelUnlockedAchievements.isEmpty
-
         achievementsTableView.layoutIfNeeded()
         achievementsTableView.frame.size.height = achievementsTableView.contentSize.height
     }

@@ -32,10 +32,6 @@ class ControlPanelViewController: UIViewController {
     @IBAction func stopButtonPressed(_ sender: UIButton) {
         if model.runState == .running(isAnimating: true)
             || model.runState == .stepping(isAnimating: true) {
-            NotificationCenter.default.post(Notification(
-                name: Constants.NotificationNames.animationEnded,
-                object: nil, userInfo: nil))
-
             resetGameDelegate.resetGame(isAnimating: true)
         } else {
             resetGameDelegate.resetGame(isAnimating: false)

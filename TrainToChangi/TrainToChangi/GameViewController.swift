@@ -34,7 +34,15 @@ class GameViewController: UIViewController {
 
     @IBAction func exitButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: {
-            self.resetGame(isAnimating: false)
+            // To ensure proper deinit of LogicManager. Due to concurrency,
+            // we have to ensure that LogicManager stops executing first.
+            if self.model.runState == .stepping(isAnimating: true)
+                || self.model.runState == .running(isAnimating: true) {
+                self.resetGame(isAnimating: true)
+            } else {
+                self.resetGame(isAnimating: false)
+            }
+
             AudioPlayer.sharedInstance.stopBackgroundMusic()
         })
     }
@@ -82,13 +90,18 @@ class GameViewController: UIViewController {
         trainUIImage.startAnimating()
     }
 
-    fileprivate func initEndGameScreen() -> UIViewController {
+    fileprivate func presentEndGameScreen() {
         let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
         let identifier = Constants.UI.endGameViewControllerIdentifier
         let controller = storyboard.instantiateViewController(withIdentifier: identifier)
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        return controller
+
+        if let embeddedVC = controller as? EndGameViewController {
+            embeddedVC.model = self.model
+        }
+
+        present(controller, animated: true, completion: nil)
     }
 
     /// Use GameScene to move/animate the game objects
@@ -136,11 +149,9 @@ extension GameViewController {
             animateTrainWhenGameWon()
             scene.playJediGameWonAnimation()
 
-            let controller = self.initEndGameScreen()
-            AchievementsManager.sharedInstance.updateAchievements(model: self.model)
             let delay = Constants.UI.Delay.endGameScreenDisplayDelay
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
-                self.present(controller, animated: true, completion: nil)
+                self.presentEndGameScreen()
             })
         }
     }
@@ -172,6 +183,13 @@ extension GameViewController: MapViewControllerDelegate {
 extension GameViewController: ResetGameDelegate {
 
     func resetGame(isAnimating: Bool) {
+        // necessary to end animation to ensure proper deinit of classes
+        if isAnimating {
+            NotificationCenter.default.post(Notification(
+                name: Constants.NotificationNames.animationEnded,
+                object: nil, userInfo: nil))
+        }
+
         model.resetPlayState()
         model.runState = .start // explicit assignment to trigger didSet
         logic.resetPlayState()
