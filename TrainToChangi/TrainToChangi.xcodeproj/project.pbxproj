@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22DC724A5B62D214EC78D58C /* GameScene+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC75E309FE831BE1978F1C /* GameScene+Animation.swift */; };
 		22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7A12469B8258C38128E2 /* Payload.swift */; };
 		22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */; };
+		22DC750831EC75F3A4E37E4C /* GameScene+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC7FCA2DB761ACDD3C58D0 /* GameScene+Init.swift */; };
+		22DC762BD77326EB7E427991 /* WalkDestination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC710D9893B237EC4E7B27 /* WalkDestination.swift */; };
 		22DC7A179D5E450DC80FFFDC /* MemorySlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC76E79326E3E327A4B086 /* MemorySlot.swift */; };
 		22DC7D66372DC4E7228650F9 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC750125724E9BA28BA9EB /* Memory.swift */; };
+		22DC7EA1D5735A3F88CAD5B5 /* GameScene+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC74693A950CEF64754224 /* GameScene+Notifications.swift */; };
 		3B04A7D41E8BE13C00B317ED /* CollectionViewControllersExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */; };
 		3B05F91F1E94FFBF009B4F5F /* SpeechBubbleSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B05F91E1E94FFBF009B4F5F /* SpeechBubbleSprite.swift */; };
 		3B10D8491E9272C300EFCDAC /* ArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B10D8481E9272C300EFCDAC /* ArrowView.swift */; };
@@ -109,10 +113,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22DC710D9893B237EC4E7B27 /* WalkDestination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkDestination.swift; sourceTree = "<group>"; };
+		22DC74693A950CEF64754224 /* GameScene+Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+Notifications.swift"; sourceTree = "<group>"; };
 		22DC750125724E9BA28BA9EB /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		22DC75E309FE831BE1978F1C /* GameScene+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+Animation.swift"; sourceTree = "<group>"; };
 		22DC76E5DD3EDF7200D38E08 /* CGPoint+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+.swift"; sourceTree = "<group>"; };
 		22DC76E79326E3E327A4B086 /* MemorySlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemorySlot.swift; sourceTree = "<group>"; };
 		22DC7A12469B8258C38128E2 /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
+		22DC7FCA2DB761ACDD3C58D0 /* GameScene+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameScene+Init.swift"; sourceTree = "<group>"; };
 		38AF24F8831559F296F10573 /* Pods-TrainToChangiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangiTests/Pods-TrainToChangiTests.release.xcconfig"; sourceTree = "<group>"; };
 		3B04A7D31E8BE13C00B317ED /* CollectionViewControllersExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewControllersExtensions.swift; sourceTree = "<group>"; };
 		3B05F91E1E94FFBF009B4F5F /* SpeechBubbleSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechBubbleSprite.swift; sourceTree = "<group>"; };
@@ -307,6 +315,7 @@
 			children = (
 				3B6D98581E89129C0026872B /* UIEntityDrawer.swift */,
 				3B6D98531E8904500026872B /* AnimationHelper.swift */,
+				22DC710D9893B237EC4E7B27 /* WalkDestination.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -316,6 +325,9 @@
 			children = (
 				76745B6E1E8857EC0039A771 /* MapScene.swift */,
 				D76FA82C1E76ADC400CCCFBE /* GameScene.swift */,
+				22DC7FCA2DB761ACDD3C58D0 /* GameScene+Init.swift */,
+				22DC75E309FE831BE1978F1C /* GameScene+Animation.swift */,
+				22DC74693A950CEF64754224 /* GameScene+Notifications.swift */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -827,6 +839,10 @@
 				A70192431E9517520058D7CD /* AuthService.swift in Sources */,
 				22DC73F822B7CBFF19E9B7CF /* Payload.swift in Sources */,
 				22DC744FFA7999118BBEC42F /* CGPoint+.swift in Sources */,
+				22DC762BD77326EB7E427991 /* WalkDestination.swift in Sources */,
+				22DC750831EC75F3A4E37E4C /* GameScene+Init.swift in Sources */,
+				22DC724A5B62D214EC78D58C /* GameScene+Animation.swift in Sources */,
+				22DC7EA1D5735A3F88CAD5B5 /* GameScene+Notifications.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

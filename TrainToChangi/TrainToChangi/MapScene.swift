@@ -20,6 +20,7 @@ protocol MapSceneDelegate: class {
 // Note that in the MapScene.sks file, the custom class must be set to "MapScene".
 // All station nodes must be named ***Station, e.g. ChangiStation
 class MapScene: SKScene {
+    static let fileName = "MapScene"
     private var cam: SKCameraNode!
 
     // The bound that the camera is allowed to move in.
