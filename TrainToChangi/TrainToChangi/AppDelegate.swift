@@ -64,13 +64,13 @@ extension AppDelegate: GIDSignInDelegate {
         return GIDSignIn.sharedInstance().handle(url,
                                                  sourceApplication: sourceApplication,
                                                  annotation: annotation)
+    }
 
     @available(iOS 9.0, *)
     func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
-            -> Bool {
+        -> Bool {
             return GIDSignIn.sharedInstance().handle(url,
-                                sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
-                                    annotation: [:])
-        }
+                                                     sourceApplication:options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                     annotation: [:])
     }
 }

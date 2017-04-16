@@ -8,7 +8,7 @@ import SpriteKit
 // MARK: - Animations
 /// This extension includes methods that are used to do animations in GameScene.
 extension GameScene {
-
+    typealias CAN = Constants.Animation
     func playJediGameWonAnimation() {
         self.jedi.playGameWonAnimation()
     }
@@ -63,6 +63,12 @@ extension GameScene {
                                  resize: false, restore: true),
                 count: Constants.Animation.conveyorBeltAnimationCount)
             self.inbox.run(inboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
+
+        })
+        let duration = CAN.rotatePlayerDuration + CAN.moveToConveyorBeltDuration +
+            CAN.conveyorBeltTimePerFrame * Double(CAN.conveyorBeltAnimationCount)
+        let wait = SKAction.wait(forDuration: duration)
+        player.run(wait, completion: {
             NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
                                                          object: nil, userInfo: nil))
         })
@@ -103,21 +109,22 @@ extension GameScene {
         let move = SKAction.move(to: destination, duration: Constants.Animation.moveToConveyorBeltDuration)
 
         player.run(SKAction.sequence([rotate, move]), completion: {
-            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
-                                                         object: nil, userInfo: nil))
+            self.outboxNodes.forEach { self.moveConveyorBelt($0) }
+            let outboxAnimation = SKAction.repeat(
+                SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
+                                 timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
+                                 resize: false, restore: true),
+                count: Constants.Animation.conveyorBeltAnimationCount)
+            self.outbox.run(outboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
+
+            self.putToOutbox()
         })
 
-        self.outboxNodes.forEach { self.moveConveyorBelt($0) }
-        let outboxAnimation = SKAction.repeat(
-            SKAction.animate(with: Constants.Animation.conveyorBeltFrames,
-                             timePerFrame: Constants.Animation.conveyorBeltTimePerFrame,
-                             resize: false, restore: true),
-            count: Constants.Animation.conveyorBeltAnimationCount)
-        self.outbox.run(outboxAnimation, withKey: Constants.Animation.outboxAnimationKey)
-
-        let wait = SKAction.wait(forDuration: Constants.Animation.moveToConveyorBeltDuration)
-        player.run(wait, completion: {
-            self.putToOutbox()
+        let duration = CAN.rotatePlayerDuration + CAN.moveToConveyorBeltDuration +
+            CAN.conveyorBeltTimePerFrame * Double(CAN.conveyorBeltAnimationCount) + CAN.payloadOnToPlayerDuration
+        player.run(SKAction.wait(forDuration: duration), completion: {
+            NotificationCenter.default.post(Notification(name: Constants.NotificationNames.animationEnded,
+                                                         object: nil, userInfo: nil))
         })
     }
 
