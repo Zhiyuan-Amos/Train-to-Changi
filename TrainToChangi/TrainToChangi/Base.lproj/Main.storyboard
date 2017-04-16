@@ -302,7 +302,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="achievementsTableView" destination="Ueo-9d-vt8" id="u9l-Z2-sUC"/>
@@ -723,7 +723,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="errorMessageLabel" destination="2Kt-tp-GYZ" id="jrR-tO-FRv"/>
@@ -818,7 +818,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="programCollectionView" destination="xxG-xB-6Cf" id="Wag-dt-SUH"/>

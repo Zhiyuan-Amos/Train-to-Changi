@@ -8,6 +8,9 @@
 
 import SpriteKit
 
+/**
+ * Sprite representing the passenger of the game
+ */
 class JediSprite: SKSpriteNode {
 
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {

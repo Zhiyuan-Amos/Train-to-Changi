@@ -151,6 +151,7 @@ extension LineNumberViewController {
         case .start, .lost:
             programCounter.isHidden = true
         default:
+            print(model.runState)
             break
         }
     }

@@ -36,9 +36,8 @@ extension LoadProgramViewController: UICollectionViewDataSource {
 
         let reuseIdentifier = Constants.UI.loadProgramCollectionViewHeaderViewIdentifier
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                           withReuseIdentifier: reuseIdentifier,
-                                                                           for: indexPath) as? LoadProgramHeaderView else {
-                                                                            fatalError(Constants.Errors.headerViewNotAssignedCorrectViewSubclass)
+                withReuseIdentifier: reuseIdentifier, for: indexPath) as? LoadProgramHeaderView else {
+                    fatalError(Constants.Errors.headerViewNotAssignedCorrectViewSubclass)
         }
 
         let labelText = Constants.StationNames.stationNames[indexPath.section]
@@ -49,7 +48,8 @@ extension LoadProgramViewController: UICollectionViewDataSource {
 
 extension LoadProgramViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // load the appropriate thing, reloadData, dismiss view
+
+        // load the appropriate program, reloadData, dismiss view
         let levelIndex = indexPath.section
         let saveName = savedProgramNames[levelIndex][indexPath.row]
         guard let userId = AuthService.instance.currentUserId else {

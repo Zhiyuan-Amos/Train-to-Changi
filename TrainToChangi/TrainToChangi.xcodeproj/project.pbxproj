@@ -26,7 +26,7 @@
 		3B3B4E981E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */; };
 		3B3B4E9A1E9CEEB300DCF9E7 /* MapSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */; };
 		3B3B4E9C1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */; };
-		3B3B4E9E1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9D1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift */; };
+		3B3B4E9E1E9CF33F00DCF9E7 /* CommandEditorUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9D1E9CF33F00DCF9E7 /* CommandEditorUpdateDelegate.swift */; };
 		3B3B4EA01E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */; };
 		3B3B4EA21E9CF69F00DCF9E7 /* SaveProgramDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */; };
 		3B3B4EA61EA0B98000DCF9E7 /* DragDropViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3B4EA51EA0B98000DCF9E7 /* DragDropViewController+.swift */; };
@@ -141,7 +141,7 @@
 		3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewControllerDelegate.swift; sourceTree = "<group>"; };
 		3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSceneDelegate.swift; sourceTree = "<group>"; };
 		3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationLevelNodeDelegate.swift; sourceTree = "<group>"; };
-		3B3B4E9D1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCommandsDelegate.swift; sourceTree = "<group>"; };
+		3B3B4E9D1E9CF33F00DCF9E7 /* CommandEditorUpdateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEditorUpdateDelegate.swift; sourceTree = "<group>"; };
 		3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberUpdateDelegate.swift; sourceTree = "<group>"; };
 		3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveProgramDelegate.swift; sourceTree = "<group>"; };
 		3B3B4EA51EA0B98000DCF9E7 /* DragDropViewController+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DragDropViewController+.swift"; sourceTree = "<group>"; };
@@ -334,7 +334,7 @@
 				3B3B4E971E9CEE8500DCF9E7 /* MapViewControllerDelegate.swift */,
 				3B3B4E991E9CEEB300DCF9E7 /* MapSceneDelegate.swift */,
 				3B3B4E9B1E9CEED700DCF9E7 /* StationLevelNodeDelegate.swift */,
-				3B3B4E9D1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift */,
+				3B3B4E9D1E9CF33F00DCF9E7 /* CommandEditorUpdateDelegate.swift */,
 				3B3B4E9F1E9CF42F00DCF9E7 /* LineNumberUpdateDelegate.swift */,
 				3B3B4EA11E9CF69F00DCF9E7 /* SaveProgramDelegate.swift */,
 				D7F7ECAC1E97AB8200520941 /* ResetGameDelegate.swift */,
@@ -849,7 +849,7 @@
 				A77AAE9B1E8D341100261A3A /* CommandDataListInfo.swift in Sources */,
 				A7357FB01E9C92BF00348CD3 /* LoadProgramHeaderView.swift in Sources */,
 				3B3B4EA61EA0B98000DCF9E7 /* DragDropViewController+.swift in Sources */,
-				3B3B4E9E1E9CF33F00DCF9E7 /* UserCommandsDelegate.swift in Sources */,
+				3B3B4E9E1E9CF33F00DCF9E7 /* CommandEditorUpdateDelegate.swift in Sources */,
 				D7CEF1321E78EBBB00564FF5 /* CommandDataParser.swift in Sources */,
 				D7A267D61E7796C300DE5774 /* CopyFromCommand.swift in Sources */,
 				D744CA661E7A387F004CCABD /* Level.swift in Sources */,

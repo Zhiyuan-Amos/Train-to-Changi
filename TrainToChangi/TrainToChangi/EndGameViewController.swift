@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ * View controller responsible for the end game view
+ */
 class EndGameViewController: UIViewController {
 
     private(set) var achievements = AchievementsManager.sharedInstance

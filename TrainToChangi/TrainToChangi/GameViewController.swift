@@ -80,7 +80,8 @@ class GameViewController: UIViewController {
 
     fileprivate func initEndGameScreen() -> UIViewController {
         let storyboard = UIStoryboard(name: Constants.UI.mainStoryboardIdentifier, bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: Constants.UI.endGameViewControllerIdentifier)
+        let identifier = Constants.UI.endGameViewControllerIdentifier
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier)
         controller.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         controller.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         return controller
@@ -133,13 +134,15 @@ extension GameViewController {
 
             let controller = self.initEndGameScreen()
             AchievementsManager.sharedInstance.updateAchievements(model: self.model)
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(Constants.UI.Delay.endGameScreenDisplayDelay), execute: {
+            let delay = Constants.UI.Delay.endGameScreenDisplayDelay
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delay), execute: {
                 self.present(controller, animated: true, completion: nil)
             })
         }
     }
 }
 
+// MARK - MapViewControllerDelegate
 extension GameViewController: MapViewControllerDelegate {
     func initLevel(name: String?) {
         guard let name = name else {
@@ -161,6 +164,7 @@ extension GameViewController: MapViewControllerDelegate {
     }
 }
 
+// MARK - ResetGameDelegate
 extension GameViewController: ResetGameDelegate {
 
     func resetGame(isAnimating: Bool) {

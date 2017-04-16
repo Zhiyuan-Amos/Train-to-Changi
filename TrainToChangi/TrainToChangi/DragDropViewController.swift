@@ -14,6 +14,9 @@ class DragBundle {
     var initialIndexPath: IndexPath?
 }
 
+/**
+ * View Controller responsible for the drag and drop commands editor
+ */
 class DragDropViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
@@ -43,6 +46,7 @@ class DragDropViewController: UIViewController {
         currentCommandsView.delegate = self
     }
 
+    // Loads the user's saved data for this level
     private func loadCommandDataList() {
         guard let userId = AuthService.instance.currentUserId else {
             fatalError(Constants.Errors.userNotLoggedIn)
@@ -83,8 +87,9 @@ extension DragDropViewController: SaveProgramDelegate {
     }
 }
 
-// MARK - UserCommandsDelegate
-extension DragDropViewController: UserCommandsDelegate {
+// MARK - CommandsEditorUpdateDelegate
+extension DragDropViewController: CommandsEditorUpdateDelegate {
+
     func addNewCommand(command: CommandData) {
         let penultimateIndexPath = IndexPath(item: model.userEnteredCommands.count - 2, section: 0)
         let lastIndexPath = IndexPath(item: model.userEnteredCommands.count - 1, section: 0)
@@ -126,6 +131,11 @@ extension DragDropViewController {
 
     }
 
+    // Handle tap gestures on the drag and drop commands editor 
+    // for user to change memory indices. It checks if a change 
+    // process is ongoing and if so, cancels that process else it
+    // will begin that process and store the indexPath of the command
+    // being updated
     @objc private func handleTap(gesture: UISwipeGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
@@ -172,6 +182,7 @@ extension DragDropViewController {
                                         userInfo: nil)
     }
 
+    // Handles swipe gestures for deleting commands
     @objc private func handleSwipe(gesture: UISwipeGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
@@ -186,9 +197,11 @@ extension DragDropViewController {
         resetGameDelegate.tryResetGame()
     }
 
+    // Handles long press gestures for drag and drop
     @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
         let location = gesture.location(in: currentCommandsView)
 
+        // prevent long press and tap gestures to be activated at the same time
         if updatingCellIndexPath != nil {
             return
         }
@@ -202,26 +215,30 @@ extension DragDropViewController {
             }
 
             initDragBundleAtGestureBegan(indexPath: indexPath, cell: cell)
-            currentCommandsView.addSubview(dragBundle.cellSnapshot!)
+            currentCommandsView.addSubview(dragBundle.cellSnapshot!) 
             Animator.dragBeganAnimation(location: location, cell: cell, dragBundle: dragBundle)
 
         case .changed:
             dragBundle.cellSnapshot?.center.y = location.y
+            // Only activate if the cell is dragged to new IndexPath
             guard let indexPath = currentCommandsView.indexPathForItem(at: location),
                   let initialIndexPath = dragBundle.initialIndexPath,
-                  indexPath !=  initialIndexPath else {
+                  indexPath != initialIndexPath else {
                     return
             }
+
+            // Update the collection view and model
             currentCommandsView.moveItem(at: initialIndexPath, to: indexPath)
             model.moveCommand(fromIndex: initialIndexPath.item, toIndex: indexPath.item)
 
             renderJumpArrows()
-            dragBundle.initialIndexPath = indexPath
+            dragBundle.initialIndexPath = indexPath //update the initialIndexPath to the new indexPath
 
         default:
+            // Prevents dragging to an indexPath that is not visible
             guard let indexPath = dragBundle.initialIndexPath,
                   let cell = currentCommandsView.cellForItem(at: indexPath) else {
-                    break
+                    return
             }
             cell.isHidden = false
             cell.alpha = 0.0
@@ -230,9 +247,11 @@ extension DragDropViewController {
         resetGameDelegate.tryResetGame()
     }
 
+    // Sync the scrolling between line numbers collection view 
+    // and the current commands collection view
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = currentCommandsView.contentOffset
-        lineNumberUpdateDelegate.scrollToCommand(offset: offset)
+        lineNumberUpdateDelegate.scrollToOffset(offset: offset)
     }
 
     private func initDragBundleAtGestureBegan(indexPath: IndexPath, cell: UICollectionViewCell) {
@@ -312,6 +331,7 @@ extension DragDropViewController {
             object: nil)
     }
 
+    // Handles the scrolling during program execution
     @objc fileprivate func handleProgramCounterUpdate(notification: Notification) {
         if let index = notification.userInfo?["index"] as? Int {
             currentCommandsView.scrollToItem(at: IndexPath(item: index, section: 0),
@@ -320,6 +340,7 @@ extension DragDropViewController {
         }
     }
 
+    // Update the user's new choice of index
     @objc fileprivate func handleSelectedIndex(notification: Notification) {
         guard let index = notification.object as? Int,
               let indexPath = updatingCellIndexPath,

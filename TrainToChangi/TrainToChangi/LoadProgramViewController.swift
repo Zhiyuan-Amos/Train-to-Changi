@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ * View controller responsible for the load program view
+ */
 class LoadProgramViewController: UIViewController {
 
     internal var savedProgramNames: [[String]] = []

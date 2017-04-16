@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ *  Helper class for running animation for drag and drop commands view
+ */
 class AnimationHelper {
 
     static func swipeDeleteAnimation(cell: UICollectionViewCell, indexPath: IndexPath,

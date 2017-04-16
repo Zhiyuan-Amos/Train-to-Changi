@@ -9,6 +9,9 @@
 import UIKit
 import Foundation
 
+/**
+ * View Controller responsible for the commands editor
+ */
 class EditorViewController: UIViewController {
 
     fileprivate typealias Drawer = UIEntityDrawer
@@ -16,7 +19,7 @@ class EditorViewController: UIViewController {
     weak var dataServiceLoadProgramDelegate: DataServiceLoadProgramDelegate!
     weak var resetGameDelegate: ResetGameDelegate!
     weak var saveProgramDelegate: SaveProgramDelegate!
-    weak var userCommandsDelegate: UserCommandsDelegate!
+    weak var commandsEditorUpdateDelegate: CommandsEditorUpdateDelegate!
 
     var model: Model!
     private var dragDropVC: DragDropViewController?
@@ -34,9 +37,10 @@ class EditorViewController: UIViewController {
     @IBAction func resetButtonPressed(_ sender: UIButton) {
         resetGameDelegate.tryResetGame()
         presentEditorView()
-        userCommandsDelegate.resetCommands()
+        commandsEditorUpdateDelegate.resetCommands()
     }
 
+    // Setup and present the load program modal view
     @IBAction func loadButtonPressed(_ sender: UIButton) {
         let identifier = Constants.UI.loadProgramViewControllerIdentifier
         guard let loadProgramController = loadModalViewControllers(identifier: identifier)
@@ -47,6 +51,7 @@ class EditorViewController: UIViewController {
         self.present(loadProgramController, animated: true, completion: nil)
     }
 
+    // Setup and present the save program modal view
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         let identifier = Constants.UI.saveProgramViewControllerIdentifier
         guard let saveProgramController = loadModalViewControllers(identifier: identifier)
@@ -74,12 +79,12 @@ class EditorViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let embeddedVC = segue.destination as? DragDropViewController {
-            dataServiceLoadProgramDelegate = embeddedVC
-            saveProgramDelegate = embeddedVC
             embeddedVC.model = self.model
             embeddedVC.resetGameDelegate = resetGameDelegate
-            self.userCommandsDelegate = embeddedVC
-            self.dragDropVC = embeddedVC
+            dataServiceLoadProgramDelegate = embeddedVC
+            saveProgramDelegate = embeddedVC
+            commandsEditorUpdateDelegate = embeddedVC
+            dragDropVC = embeddedVC
 
             if lineNumberVC != nil {
                 embeddedVC.lineNumberUpdateDelegate = lineNumberVC
@@ -140,7 +145,7 @@ class EditorViewController: UIViewController {
     @objc private func commandButtonPressed(sender: UIButton) {
         let command = model.currentLevel.availableCommands[sender.tag]
         model.addCommand(commandEnum: command)
-        userCommandsDelegate.addNewCommand(command: command)
+        commandsEditorUpdateDelegate.addNewCommand(command: command)
         presentEditorView()
     }
 

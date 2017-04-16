@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ * View controller responsible for the save program view
+ */
 class SaveProgramViewController: UIViewController {
 
     weak var saveProgramDelegate: SaveProgramDelegate?
@@ -33,7 +36,7 @@ class SaveProgramViewController: UIViewController {
     @IBAction func cancelButtonPressed(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    
+
     override func viewDidLoad() {
         errorMessageLabel.isHidden = true
     }

@@ -45,7 +45,7 @@ class MemorySlot: SKSpriteNode {
     }
 }
 
-// MARK -- Event Handling
+// MARK - Event Handling
 extension MemorySlot {
     fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(

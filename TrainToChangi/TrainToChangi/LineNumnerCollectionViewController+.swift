@@ -64,7 +64,3 @@ extension LineNumberViewController: UICollectionViewDelegateFlowLayout {
         return Constants.UI.minimumInteritemSpacingForSection
     }
 }
-
-
-
-
