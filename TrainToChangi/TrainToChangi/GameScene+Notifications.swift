@@ -43,14 +43,7 @@ extension GameScene {
         guard let sliderValue = notification.userInfo?["sliderValue"] as? Float else {
             fatalError("Notification sender is not configured properly")
         }
-        let resultantSpeed = CGFloat(sliderValue) * Constants.Animation.speedRange +
-            Constants.Animation.defaultSpeed
-
-        player.speed = resultantSpeed
-        inbox.speed = resultantSpeed
-        outbox.speed = resultantSpeed
-        inboxNodes.forEach({ $0.speed = resultantSpeed })
-        outboxNodes.forEach({ $0.speed = resultantSpeed })
+        updateSpeed(sliderValue: sliderValue)
     }
 }
 

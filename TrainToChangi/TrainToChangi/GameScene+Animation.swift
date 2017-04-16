@@ -33,6 +33,17 @@ extension GameScene {
         }
     }
 
+    func updateSpeed(sliderValue: CGFloat) {
+        let resultantSpeed = CGFloat(sliderValue) * Constants.Animation.speedRange +
+            Constants.Animation.defaultSpeed
+
+        player.speed = resultantSpeed
+        inbox.speed = resultantSpeed
+        outbox.speed = resultantSpeed
+        inboxNodes.forEach({ $0.speed = resultantSpeed })
+        outboxNodes.forEach({ $0.speed = resultantSpeed })
+    }
+
     private func animateGoToInbox() {
         playerPreviousPositions.push(player.position)
 
