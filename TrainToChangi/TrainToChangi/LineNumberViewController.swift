@@ -11,8 +11,7 @@ import UIKit
 class LineNumberViewController: UIViewController {
 
     var model: Model!
-    let semaphore = DispatchSemaphore(value: 0)
-
+    fileprivate let semaphore = DispatchSemaphore(value: 0)
     fileprivate var programCounter: UIImageView!
 
     @IBOutlet weak var lineNumberCollection: UICollectionView!

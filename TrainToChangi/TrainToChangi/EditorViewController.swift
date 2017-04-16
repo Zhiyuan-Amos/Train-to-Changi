@@ -117,7 +117,7 @@ class EditorViewController: UIViewController {
     }
 
     // Load the available commands from model for the current level
-    func setupAvailableCommandsView() {
+    fileprivate func setupAvailableCommandsView() {
         let initialY = availableCommandsView.frame.origin.y + Constants.UI.minimumLineSpacingForSection
         let initialX = availableCommandsView.frame.origin.x +  Constants.UI.availableCommandsPaddingX
         availableCommandsView.frame.size.height = 0
