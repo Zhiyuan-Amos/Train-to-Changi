@@ -115,10 +115,7 @@ extension GameScene {
         // - If position is nil, payloadValue must be nil as well. This is to set Player at the start of the game.
         // - When position is set, payloadValue should also be set (however payloadValue may be nil as the player
         //   may not hold anything).
-        guard (position != nil) || (payloadValue == nil) else {
-            assertionFailure("Can't specify payload value without specifying position")
-            return
-        }
+
         player.size = Constants.Player.size
         player.zPosition = Constants.Player.zPosition
 
