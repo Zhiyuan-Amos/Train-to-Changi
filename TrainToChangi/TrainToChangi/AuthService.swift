@@ -54,7 +54,6 @@ class AuthService {
                 return
             }
             DataService.instance.saveUser(userId: user.uid)
-            // TODO: Get reference in better way
             guard let controller = GIDSignIn.sharedInstance().uiDelegate as? LoginViewController else {
                 fatalError("Controller not set up properly")
             }

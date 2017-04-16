@@ -11,10 +11,9 @@ protocol LevelData {
     var levelName: String { get }
     var levelDescription: String { get }
     var availableCommands: [CommandData] { get }
+    var memoryLayout: Memory.Layout { get }
     var memoryValues: [Int?] { get }
     var inputs: [Int] { get }
-
-    // TODO: Add hints, speech bubble to hand hold user a little
 
     // The algorithm to run on level inputs to get expected outputs.
     func algorithm(inputs: [Int]) -> [Int]
@@ -77,6 +76,7 @@ struct LevelOneData: LevelData, RandomizedInputsLevel {
                                             Cmd.outbox,
                                             Cmd.jump]
 
+    let memoryLayout = Memory.Layout.twoByOne
     let memoryValues: [Int?] = [nil, nil]
 
     let start = 0
@@ -101,7 +101,7 @@ struct LevelTwoData: LevelData, RandomizedInputsLevel {
     let levelDescription = "The boxes do not provide enough power on their own."
                            + Helper.newLine
                            + "Can you sum the boxes up before moving them to outbox?"
-                           + "The combined power of four boxes will do, so sum up four of them and then move this sum to outbox. Repeat this until all the inbox has no more boxes!"
+                           + "The combined power of two boxes will do, so sum up each pair and then move this sum to outbox. Repeat this until all the inbox has no more boxes!"
 
     let availableCommands: [CommandData] = [Cmd.inbox,
                                             Cmd.outbox,
@@ -109,7 +109,9 @@ struct LevelTwoData: LevelData, RandomizedInputsLevel {
                                             Cmd.add,
                                             Cmd.jump]
 
-    let memoryValues: [Int?] = [nil, nil]
+    let memoryLayout = Memory.Layout.twoByTwo
+    let memoryValues: [Int?] = [nil, nil,
+                                nil, nil]
 
     let start = 0
     let end = 20
@@ -120,10 +122,10 @@ struct LevelTwoData: LevelData, RandomizedInputsLevel {
     }
 
     // Algorithm for level three: sum up pairs of boxes
-    // Inputs must be divisible by 4
+    // Inputs must be divisible by 2
     private func sumUpTwos(inputs: [Int]) -> [Int] {
         guard inputs.count % 2 == 0 else {
-            preconditionFailure("Inputs must be divisible by 4!")
+            preconditionFailure("Inputs must be divisible by 2!")
         }
         var outputs: [Int] = []
         for index in stride(from: 0, to: inputs.count, by: 2) {
@@ -156,7 +158,9 @@ struct LevelThreeData: LevelData, RandomizedInputsLevel {
                                             Cmd.jumpIfZero,
                                             Cmd.jumpIfNegative]
 
-    let memoryValues: [Int?] = [nil, nil]
+    let memoryLayout = Memory.Layout.threeByThree
+    let memoryValues: [Int?] = [nil, nil, nil,
+                                nil, nil, nil]
 
     let start = 1
     let end = 20

@@ -56,11 +56,10 @@
 		A7A10D061E86A6C20040DA21 /* TrainToChangiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D051E86A6C20040DA21 /* TrainToChangiTests.swift */; };
 		A7A10D0E1E86A6CC0040DA21 /* CommandDataListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */; };
 		A7AB9DDF1E9A45CA00989F58 /* AchievementsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */; };
-		A7AB9DE11E9A45DA00989F58 /* Achievements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* Achievements.swift */; };
-		A7AB9DE31E9A469E00989F58 /* AutomaticFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */; };
 		A7AB9DE11E9A45DA00989F58 /* AchievementsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */; };
+		A7AB9DE31E9A469E00989F58 /* AutomaticFirebaseSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */; };
 		A7AB9DE51E9A46F200989F58 /* ApplicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */; };
-		A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* Levels.swift */; };
+		A7D1634A1E90CC9D0073EC46 /* GameLevelsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D163491E90CC9D0073EC46 /* GameLevelsData.swift */; };
 		BC0162FF8448453D3B94C649 /* Pods_TrainToChangi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A682A4AB4C1E8DBE0E5FEAF2 /* Pods_TrainToChangi.framework */; };
 		D70CFCC31E7C279C00D28B86 /* CommandData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70CFCC21E7C279C00D28B86 /* CommandData.swift */; };
 		D71B88551E86AAC1006BC3E9 /* main-track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D71B88541E86AAC1006BC3E9 /* main-track.mp3 */; };
@@ -162,11 +161,10 @@
 		A7A10D071E86A6C20040DA21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7A10D0D1E86A6CC0040DA21 /* CommandDataListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandDataListTests.swift; sourceTree = "<group>"; };
 		A7AB9DDE1E9A45CA00989F58 /* AchievementsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsManager.swift; sourceTree = "<group>"; };
-		A7AB9DE01E9A45DA00989F58 /* Achievements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievements.swift; sourceTree = "<group>"; };
-		A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomaticFirebaseSaver.swift; sourceTree = "<group>"; };
 		A7AB9DE01E9A45DA00989F58 /* AchievementsEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementsEnum.swift; sourceTree = "<group>"; };
+		A7AB9DE21E9A469E00989F58 /* AutomaticFirebaseSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutomaticFirebaseSaver.swift; sourceTree = "<group>"; };
 		A7AB9DE41E9A46F200989F58 /* ApplicationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationManager.swift; sourceTree = "<group>"; };
-		A7D163491E90CC9D0073EC46 /* Levels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Levels.swift; sourceTree = "<group>"; };
+		A7D163491E90CC9D0073EC46 /* GameLevelsData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLevelsData.swift; sourceTree = "<group>"; };
 		C3CE013B2C315609DC5674DE /* Pods-TrainToChangi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrainToChangi.release.xcconfig"; path = "Pods/Target Support Files/Pods-TrainToChangi/Pods-TrainToChangi.release.xcconfig"; sourceTree = "<group>"; };
 		D70CFCC21E7C279C00D28B86 /* CommandData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandData.swift; sourceTree = "<group>"; };
 		D71B88541E86AAC1006BC3E9 /* main-track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "main-track.mp3"; path = "Audio/main-track.mp3"; sourceTree = SOURCE_ROOT; };
@@ -470,7 +468,7 @@
 		A7D163481E90CC860073EC46 /* GameLevels */ = {
 			isa = PBXGroup;
 			children = (
-				A7D163491E90CC9D0073EC46 /* Levels.swift */,
+				A7D163491E90CC9D0073EC46 /* GameLevelsData.swift */,
 				A7A10CEA1E865AD10040DA21 /* LevelData.swift */,
 			);
 			name = GameLevels;
@@ -774,7 +772,7 @@
 				D7983CE21E76D9A400E650ED /* JumpCommand.swift in Sources */,
 				D7983CE61E76E99C00E650ED /* Queue.swift in Sources */,
 				3B6BE0AD1E96362000B27AB7 /* EndGameViewController.swift in Sources */,
-				A7D1634A1E90CC9D0073EC46 /* Levels.swift in Sources */,
+				A7D1634A1E90CC9D0073EC46 /* GameLevelsData.swift in Sources */,
 				3B6D98501E88FCD70026872B /* EditorViewController.swift in Sources */,
 				D75BC4321E76D6CA00ED2A1B /* OutboxCommand.swift in Sources */,
 				3B10D8491E9272C300EFCDAC /* ArrowView.swift in Sources */,

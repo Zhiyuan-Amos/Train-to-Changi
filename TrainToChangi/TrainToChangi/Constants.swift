@@ -317,4 +317,8 @@ struct Constants {
             static let copyFrom = CommandData.copyFrom(memoryIndex: 0)
         }
     }
+
+    struct CommandDataEnum {
+        static let delimiter = "_"
+    }
 }

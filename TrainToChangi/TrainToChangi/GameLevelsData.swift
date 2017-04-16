@@ -1,5 +1,5 @@
 //
-//  Levels.swift
+//  GameLevelsData.swift
 //  TrainToChangi
 //
 //  Created by Yong Lin Han on 2/4/17.

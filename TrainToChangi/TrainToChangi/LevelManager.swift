@@ -3,6 +3,8 @@
 // Copyright (c) 2017 nus.cs3217.a0139655u. All rights reserved.
 //
 
+// Manages the LevelState in Model, by initialising the state
+// with `LevelData`.
 class LevelManager {
     private var levelData: LevelData
     private(set) var level: Level! // use ! to silence xcode use of self in init
@@ -26,6 +28,7 @@ class LevelManager {
         let levelName = levelData.levelName
         let inputsShownToUser = levelData.inputs
         let availableCommands = levelData.availableCommands
+        let memoryLayout = levelData.memoryLayout
         let levelDescriptor = levelData.levelDescription
         let expectedOutputs = levelData.algorithm(inputs: inputsShownToUser)
 
@@ -35,8 +38,7 @@ class LevelManager {
         return Level(levelName: levelName,
                      initialState: initialState,
                      availableCommands: availableCommands,
-                     // TODO: store memoryLayout type for each level
-                     memoryLayout: .twoByOne,
+                     memoryLayout: memoryLayout,
                      levelDescriptor: levelDescriptor,
                      expectedOutputs: expectedOutputs)
     }
