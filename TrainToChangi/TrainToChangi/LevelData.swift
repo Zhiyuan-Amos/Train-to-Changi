@@ -165,6 +165,7 @@ struct LevelThreeData: LevelData, RandomizedInputsLevel {
 
     let memoryLayout = Memory.Layout.threeByThree
     let memoryValues: [Int?] = [nil, nil, nil,
+                                nil, nil, nil,
                                 nil, nil, nil]
 
     let start = 1
