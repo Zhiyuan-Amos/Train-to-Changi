@@ -55,7 +55,7 @@ class ControlPanelViewController: UIViewController {
     // to `.stepping` and stops after current command execution.
     @IBAction func stepForwardButtonPressed(_ sender: UIButton) {
         if model.runState == .running(isAnimating: false) {
-            model.runState = .stepping(isAnimating: false)
+            model.runState = .paused
         } else if model.runState == .running(isAnimating: true) {
             model.runState = .stepping(isAnimating: true)
         } else {
