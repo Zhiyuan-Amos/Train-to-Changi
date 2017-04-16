@@ -159,7 +159,7 @@ class EditorViewController: UIViewController {
     }
 }
 
-//MARK -- Event Handling
+//MARK: - Event Handling
 extension EditorViewController {
     fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(

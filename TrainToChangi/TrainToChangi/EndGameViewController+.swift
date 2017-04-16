@@ -48,8 +48,8 @@ extension AchievementsViewController: UITableViewDataSource {
                                                        for: indexPath) as? AchievementCell else {
                                                         fatalError("Cell not assigned the proper view subclass!")
         }
-        cell.setText(text: achievements[indexPath.item].name.toAchievementName())
-        cell.setImage(image: UIImage(named: achievements[indexPath.item].name.toImagePath())!)
+        cell.setup(text: achievements[indexPath.item].name.toAchievementName(),
+                   image: UIImage(named: achievements[indexPath.item].name.toImagePath())!)
         return cell
     }
 

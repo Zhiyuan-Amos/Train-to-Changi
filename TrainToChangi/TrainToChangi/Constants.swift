@@ -107,6 +107,7 @@ struct Constants {
         static let goto = CGPoint(x: position.x - size.width / 2, y: position.y - size.height / 2)
         static let imagePadding: CGFloat = 10
         static let payloadStartingX = position.x - size.width / 2 + Payload.size.width / 2 + imagePadding
+        static let imageNamed = "conveyor-belt-1"
     }
 
     struct Jedi {
@@ -178,6 +179,7 @@ struct Constants {
         static let entryPosition = CGPoint(x: position.x + size.width / 2
             - Payload.size.width / 2 - 10, y: position.y + Payload.imageOffsetY)
         static let imagePadding: CGFloat = 10
+        static let imageNamed = "conveyor-belt-1"
     }
 
     struct Payload {
@@ -200,6 +202,7 @@ struct Constants {
         static let position = CGPoint(x: ViewDimensions.width * 0.2, y: ViewDimensions.height / 2)
         static let zPosition = CGFloat(10)
         static let pickupOffsetY = CGFloat(-50)
+        static let imageNamed = "r2d2"
     }
 
     struct SegueIds {

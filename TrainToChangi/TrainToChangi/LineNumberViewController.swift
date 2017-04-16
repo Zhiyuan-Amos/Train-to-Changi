@@ -63,7 +63,7 @@ class LineNumberViewController: UIViewController {
     }
 }
 
-// MARK -- LineNumberUpdateDelegate
+// MARK: - LineNumberUpdateDelegate
 extension LineNumberViewController: LineNumberUpdateDelegate {
     func updateLineNumbers() {
         lineNumberCollection.reloadData()
@@ -77,7 +77,7 @@ extension LineNumberViewController: LineNumberUpdateDelegate {
     }
 }
 
-// MARK -- Event Handling
+// MARK: - Event Handling
 extension LineNumberViewController {
     fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(

@@ -64,7 +64,7 @@ class DragDropViewController: UIViewController {
     }
 }
 
-// MARK - DataServiceLoadProgramDelegate
+// MARK: - DataServiceLoadProgramDelegate
 extension DragDropViewController: DataServiceLoadProgramDelegate {
     func load(commandDataListInfo: CommandDataListInfo) {
         model.loadCommandDataListInfo(commandDataListInfo: commandDataListInfo)
@@ -74,7 +74,7 @@ extension DragDropViewController: DataServiceLoadProgramDelegate {
     }
 }
 
-// MARK - SaveProgramDelegate
+// MARK: - SaveProgramDelegate
 extension DragDropViewController: SaveProgramDelegate {
     func saveProgram(saveName: String) {
         guard let userId = AuthService.instance.currentUserId else {
@@ -87,7 +87,7 @@ extension DragDropViewController: SaveProgramDelegate {
     }
 }
 
-// MARK - CommandsEditorUpdateDelegate
+// MARK: - CommandsEditorUpdateDelegate
 extension DragDropViewController: CommandsEditorUpdateDelegate {
 
     func addNewCommand(command: CommandData) {
@@ -311,7 +311,7 @@ extension DragDropViewController {
     }
 }
 
-// MARK -- Event Handling
+// MARK: - Event Handling
 extension DragDropViewController {
 
     fileprivate func registerObservers() {

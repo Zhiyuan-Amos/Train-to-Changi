@@ -88,7 +88,7 @@ class ControlPanelViewController: UIViewController {
 
 }
 
-// MARK -- Event Handling
+// MARK: - Event Handling
 extension ControlPanelViewController {
 
     fileprivate func registerObservers() {

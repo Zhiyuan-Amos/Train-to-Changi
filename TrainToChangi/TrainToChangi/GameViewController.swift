@@ -9,6 +9,9 @@
 import UIKit
 import SpriteKit
 
+/**
+ * Parent view controller of the different container views in the game view
+ */
 class GameViewController: UIViewController {
 
     fileprivate var model: Model!
@@ -100,7 +103,7 @@ class GameViewController: UIViewController {
     }
 }
 
-// MARK -- Event Handling
+// MARK: - Event Handling
 extension GameViewController {
     fileprivate func registerObservers() {
         NotificationCenter.default.addObserver(
@@ -142,7 +145,7 @@ extension GameViewController {
     }
 }
 
-// MARK - MapViewControllerDelegate
+// MARK: - MapViewControllerDelegate
 extension GameViewController: MapViewControllerDelegate {
     func initLevel(name: String?) {
         guard let name = name else {
@@ -164,7 +167,7 @@ extension GameViewController: MapViewControllerDelegate {
     }
 }
 
-// MARK - ResetGameDelegate
+// MARK: - ResetGameDelegate
 extension GameViewController: ResetGameDelegate {
 
     func resetGame(isAnimating: Bool) {

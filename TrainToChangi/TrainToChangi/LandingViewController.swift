@@ -85,7 +85,7 @@ class LandingViewController: UIViewController {
         guard let userId = AuthService.instance.currentUserId else {
             return
         }
-        
+
         let sharedInstance = AchievementsManager.sharedInstance
         DataService.instance.loadUnlockedAchievements(userId: userId,
                                                       loadUnlockedAchievementsDelegate: sharedInstance)

@@ -68,7 +68,7 @@ class MapViewController: UIViewController {
                 assertionFailure(Constants.Errors.wrongViewControllerLoaded)
                 break
             }
-            
+
         default:
             assertionFailure(Constants.Errors.segueIdNotFound)
         }
@@ -79,7 +79,7 @@ class MapViewController: UIViewController {
     }
 }
 
-// MARK - MapSceneDelegate
+// MARK: - MapSceneDelegate
 extension MapViewController: MapSceneDelegate {
     func didTouchStation(name: String?) {
         guard let name = name else { return }

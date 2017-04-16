@@ -41,7 +41,7 @@ class SpeechBubbleSprite: SKSpriteNode {
                 labelNodeIndex += 1
             }
         }
-        
+
         // Prevents adding another node if the last node is able to contain
         // the remaining tokens
         if text.characters.count > 1 {
@@ -72,7 +72,7 @@ extension SpeechBubbleSprite {
             name: Constants.NotificationNames.runStateUpdated, object: nil)
 
     }
-    
+
     @objc fileprivate func handleToggleSpeech(notification: Notification) {
         self.removeAllChildren()
         addLabelNodes(longText: Constants.SpeechBubble.speechDefault)

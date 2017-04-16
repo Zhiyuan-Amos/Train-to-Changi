@@ -7,5 +7,6 @@
 //
 
 protocol MapSceneDelegate: class {
+
     func didTouchStation(name: String?)
 }

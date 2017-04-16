@@ -7,5 +7,6 @@
 //
 
 protocol MapViewControllerDelegate: class {
+    // init the level in the game view controller
     func initLevel(name: String?)
 }
